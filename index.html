@@ -1,0 +1,1366 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="POS App">
+<meta name="theme-color" content="#111111">
+<link rel="manifest" href="manifest.json">
+<title>POS App</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  button { border-radius: 50px !important; font-family: 'Poppins', sans-serif; }
+  body {
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  @media (max-width: 480px) {
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    body { display: block !important; }
+    .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
+    .notch { display: none !important; }
+    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; }
+    .android-navbar { display: none !important; }
+    .demo-hint { display: none !important; }
+    .statusbar { display: none !important; }
+    .page-header { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
+    .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
+  }
+  .phone {
+    width: 390px;
+    background: #1a1a1a;
+    border-radius: 50px;
+    padding: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px #333;
+    position: relative;
+  }
+  .notch {
+    width: 130px;
+    height: 30px;
+    background: #1a1a1a;
+    border-radius: 0 0 20px 20px;
+    margin: 0 auto 0;
+    position: relative;
+    z-index: 20;
+  }
+  .phone-inner {
+    background: #111;
+    border-radius: 38px;
+    overflow: hidden;
+    height: 780px;
+    display: flex;
+    flex-direction: column;
+  }
+  .android-navbar {
+    flex-shrink: 0;
+    height: 48px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    border-radius: 0 0 26px 26px;
+  }
+  .android-navbar .anb-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.75;
+    cursor: pointer;
+  }
+  .android-navbar .anb-btn:active { opacity: 0.4; }
+  .statusbar {
+    background: #111;
+    padding: 10px 22px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .statusbar .time { font-size: 13px; font-weight: 600; color: #fff; }
+  .statusbar .icons { display: flex; gap: 6px; align-items: center; color: #fff; font-size: 14px; }
+
+  .screen-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+  .page { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+  .page.active { display: flex; }
+
+  /* Black header zone */
+  .page-header {
+    background: #111;
+    padding: 14px 18px;
+    flex-shrink: 0;
+  }
+  .page-header h1 { font-size: 18px; font-weight: 600; color: #fff; }
+  .page-header-row { display: flex; align-items: center; justify-content: space-between; }
+  .page-header-light { background: #fff; border-bottom: 1px solid #f0f0f0; }
+  .page-header-light h1 { color: #111 !important; }
+  .page-header-light .tb-icon { color: #111; background: transparent; }
+  .page-header-light .tb-icon i { color: #111; }
+
+  /* White rounded surface */
+  .content-surface {
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top bar (for detail/sub pages) */
+  .topbar {
+    background: #111;
+    padding: 10px 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .topbar h1 { font-size: 17px; font-weight: 600; color: #fff; flex: 1; text-align: center; }
+  .tb-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 20px; cursor: pointer; border-radius: 50%; }
+  .tb-icon:hover { background: rgba(255,255,255,0.1); }
+  .page-header-light .tb-icon { background: transparent; color: #111; }
+  .page-header-light .tb-icon i { color: #111; }
+  .page-header-light .tb-icon:hover { background: #f0f0f0; }
+
+  /* Warning banner */
+  .warn-banner {
+    background: #c62828;
+    color: #fff;
+    padding: 9px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .warn-banner:hover { background: #d32f2f; }
+
+  /* Tabs */
+  .tabs {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 16px;
+    border-bottom: 0.5px solid #e8e8e8;
+    flex-shrink: 0;
+    overflow-x: auto;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+    background: #fff;
+    border: none;
+    line-height: 1;
+  }
+  .tab .badge {
+    background: #e0e0e0;
+    color: #555;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    min-width: 22px;
+    height: 20px;
+    line-height: 16px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab.active {
+    background: #e8e8e8;
+    color: #111;
+  }
+  .tab.active .badge {
+    background: #d0d0d0;
+    color: #555;
+  }
+
+  /* Scroll area */
+  .scroll { flex: 1; overflow-y: auto; background: #f7f7f7; padding-bottom: 120px; }
+  .scroll::-webkit-scrollbar { width: 3px; }
+  .scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+
+  /* Order card */
+  .ocard {
+    background: #fff;
+    border-bottom: 0.5px solid #ebebeb;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .ocard-row {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    padding: 24px 24px 12px;
+  }
+  .ocard-actions {
+    padding: 0 24px 16px;
+  }
+  .ocard-actions .mbtn { width: 100%; justify-content: center; }
+  .ocard:hover { background: #fafafa; }
+  .ocard:active { background: #f0f0f0; }
+
+  /* Time column */
+  .tcol { width: 58px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .sched-badge {
+    display: inline-block;
+    background: #ede7f6;
+    color: #4527a0;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* Middle column */
+  .mcol { flex: 1; min-width: 0; }
+  .dname { font-size: 14px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .daddr { font-size: 14px; color: #888; margin-top: 4px; line-height: 1.4; min-height: calc(14px * 1.4 * 2); }
+  .oid { font-size: 14px; color: #888; margin-top: 2px; }
+  .coll-badge {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #0d47a1;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+
+  /* Right column */
+  .rcol { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; justify-content: space-between; }
+  .rcol .mbtn, .rcol .mbtn-out { margin-top: auto; }
+  .price { font-size: 14px; font-weight: 500; color: #111; }
+  .bp { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .bp-paid { background: #f0f0f0; color: #555; }
+  .bp-pending { background: #fff3e0; color: #7a4100; }
+  .mbtn, .mbtn-out {
+    background: #fff;
+    color: #111;
+    border: 1.5px solid #ddd;
+    padding: 7px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-family: 'Poppins', sans-serif;
+  }
+  .mbtn:hover, .mbtn-out:hover { background: #f5f5f5; }
+
+  /* Detail page */
+  .time-warn {
+    background: #fff8e1;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 0.5px solid #ffe082;
+    flex-shrink: 0;
+  }
+  .dsec { background: #fff; padding: 14px 16px; border-bottom: 0.5px solid #f0f0f0; }
+  .dsec h3 { font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; font-weight: 600; }
+  .drow { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+  .drow .dl { color: #999; }
+  .drow .dv { color: #111; font-weight: 500; text-align: right; max-width: 200px; }
+  .irow { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 0.5px solid #f5f5f5; }
+  .irow:last-child { border-bottom: none; }
+  .iname { font-size: 14px; color: #111; font-weight: 500; }
+  .inote { font-size: 12px; color: #bbb; margin-top: 2px; }
+  .iright { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .iqty { font-size: 14px; color: #bbb; }
+  .iprice { font-size: 14px; font-weight: 600; color: #111; }
+  .total-row { display: flex; justify-content: space-between; padding: 10px 0 0; border-top: 1.5px solid #111; margin-top: 6px; }
+  .total-row span { font-size: 14px; font-weight: 600; color: #111; }
+  .action-bar {
+    background: #fff;
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    border-top: 0.5px solid #e8e8e8;
+    flex-shrink: 0;
+  }
+  .abtn { flex: 1; padding: 12px; border-radius: 9px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; text-align: center; transition: all 0.1s; }
+  .abtn-o { background: #fff; border: 1px solid #ddd; color: #333; }
+  .abtn-o:hover { background: #f5f5f5; }
+  .abtn-p { background: #111; color: #fff; }
+  .abtn-p:hover { background: #333; }
+
+  /* Archive */
+  .stat-row { display: flex; gap: 8px; padding: 12px; background: #f7f7f7; }
+  .scard { flex: 1; background: #fff; border-radius: 9px; padding: 10px; text-align: center; border: 0.5px solid #ebebeb; }
+  .slabel { font-size: 10px; color: #bbb; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sval { font-size: 20px; font-weight: 700; color: #111; }
+  .filter-bar { background: #fff; padding: 8px 12px; border-bottom: 0.5px solid #ebebeb; display: flex; gap: 6px; overflow-x: auto; flex-shrink: 0; }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .fchip { padding: 5px 14px; border-radius: 20px; border: none; font-size: 12px; cursor: pointer; white-space: nowrap; font-weight: 500; }
+  .fchip.active { background: #111; color: #fff; }
+  .fchip:not(.active) { background: #f0f0f0; color: #555; }
+  .sec-label { background: #f7f7f7; padding: 6px 16px; font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #ebebeb; }
+
+  /* Floating Tab Bar */
+  .navbar {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 24px calc(env(safe-area-inset-bottom) + 24px);
+    pointer-events: none;
+  }
+  .navbar .navbar-pill { pointer-events: all; }
+  .navbar-pill {
+    flex-shrink: 0;
+    width: 100%;
+    justify-content: space-around;
+    background: rgba(240,240,240,0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 4px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18), 0 1px 8px rgba(0,0,0,0.10);
+    border: 1px solid rgba(0,0,0,0.10);
+  }
+  .ni {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .ni i {
+    font-size: 22px;
+    color: #555;
+    transition: color 0.15s;
+  }
+  .ni span { display: none; }
+  .ni.active { background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.12); }
+  .ni.active i { color: #000; }
+  .ni .ico-inactive, .ni .ico-active {
+    display: flex;
+    align-items: center;
+  }
+  .ni .ico-active { display: none; }
+  .ni.active .ico-inactive { display: none; }
+  .ni.active .ico-active { display: flex; }
+  .ni:hover:not(.active) { background: rgba(0,0,0,0.06); }
+  .ni .ico-inactive svg path { stroke: #555 !important; }
+  .ni .ico-inactive svg path[fill="white"] { fill: #555 !important; stroke: none !important; }
+  .ni .ico-inactive svg line { stroke: #555 !important; }
+  .ni.active .ico-active svg path { stroke: #000 !important; }
+  .ni.active .ico-active svg path[fill="white"] { fill: #000 !important; }
+  .ni.active .ico-active svg line { stroke: #000 !important; }
+  .ni-wrap { position: relative; display: inline-flex; }
+  .reddot { width: 8px; height: 8px; background: #e53935; border-radius: 50%; position: absolute; top: -3px; right: -3px; border: 1.5px solid rgba(240,240,240,0.8); }
+
+  /* New order notification */
+  .notif-overlay {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 24px 24px 24px;
+  }
+  .notif-overlay.show { display: flex; }
+  .notif-card {
+    background: #fff;
+    border-radius: 26px;
+    padding: 20px;
+    width: 100%;
+    animation: slideUp 0.28s cubic-bezier(0.22,1,0.36,1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(32px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .notif-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .notif-dot { width: 12px; height: 12px; background: #4caf50; border-radius: 50%; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+  @keyframes tabBump { 0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)} }
+  .mtoggle { width:40px;height:24px;border-radius:12px;background:#e5e5ea;position:relative;cursor:pointer;flex-shrink:0;transition:background 0.22s ease;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,0.06); }
+  .mtoggle.on { background:#111;box-shadow:none; }
+  .mtoggle::after { content:'';width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform 0.22s cubic-bezier(0.25,1,0.5,1);box-shadow:0 2px 6px rgba(0,0,0,0.22),0 0.5px 1px rgba(0,0,0,0.12);background-repeat:no-repeat;background-position:center;background-size:11px 11px; }
+  .mtoggle.on::after { transform:translateX(16px);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M2.5 7L5.5 10L11.5 4' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  /* Menu dropdown */
+  .mdd-item { display:flex;align-items:center;gap:12px;padding:12px 18px;font-size:14px;font-weight:500;color:#111;cursor:pointer; }
+  .mdd-item:hover { background:#f5f5f5; }
+  .mdd-item.mdd-item-active { background:#f5f5f5;font-weight:700; }
+  .mdd-item i { font-size:18px;color:#555;width:20px;text-align:center; }
+  /* Menu page redesign */
+  .mcat-header { display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;cursor:pointer;user-select:none; }
+  .mcat-left { display:flex;align-items:center;gap:6px; }
+  .mcat-arrow { transition:transform 0.2s ease;flex-shrink:0; }
+  .mcat-header.collapsed .mcat-arrow { transform:rotate(-90deg); }
+  .mcat-name { font-size:13px;font-weight:700;color:#111;letter-spacing:0.01em; }
+  .mcat-count { font-size:12px;color:#aaa;font-weight:500; }
+  .mcat-body { overflow:hidden;transition:max-height 0.22s ease; }
+  .mcat-body.collapsed { max-height:0 !important; }
+  .mrow { display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #f2f2f2; }
+  .mrow:last-child { border-bottom:none; }
+  .mrow-thumb { width:44px;height:44px;background:#f5f5f5;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px; }
+  .mrow-info { flex:1;min-width:0; }
+  .mrow-name { font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .mrow-price { font-size:12px;color:#888;margin-top:2px; }
+  .mbadge { font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;flex-shrink:0;white-space:nowrap; }
+  .mbadge-active { background:#e6f9ee;color:#1a7f45; }
+  .mbadge-draft { background:#e8f0fe;color:#1a5fc8; }
+  .tab.bump { animation: tabBump 0.25s ease; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="phone-inner">
+    <div class="statusbar">
+      <span class="time" id="clock">9:41</span>
+      <div class="icons">
+        <i class="ti ti-wifi"></i>
+        <i class="ti ti-battery"></i>
+        <span style="font-size:12px;font-weight:600">100%</span>
+      </div>
+    </div>
+
+    <div class="screen-content">
+
+      <!-- ===== ORDERS PAGE ===== -->
+      <div class="page active" id="p-orders">
+        <div class="page-header" style="position:relative">
+          <div class="page-header-row">
+            <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">All orders <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="white" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+            <div class="tb-icon"><i class="ti ti-filter" id="bell-icon"></i></div>
+          </div>
+          <div id="orders-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
+            <div class="mdd-item mdd-item-active"><i class="ti ti-clipboard-list"></i> Bestellingen</div>
+            <div class="mdd-item"><i class="ti ti-truck-delivery"></i> Bezorgingen</div>
+            <div class="mdd-item"><i class="ti ti-shopping-bag"></i> Afhalen</div>
+            <div class="mdd-item"><i class="ti ti-archive"></i> Archief</div>
+          </div>
+        </div>
+
+        <div class="content-surface">
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(this,'new')">New <span class="tab-count" style="font-weight:600;color:#111">10</span></div>
+            <div class="tab" onclick="switchTab(this,'kitchen')">Kitchen <span class="tab-count" style="font-weight:600;color:#111">2</span></div>
+            <div class="tab" onclick="switchTab(this,'delivery')">Delivering <span class="tab-count" style="font-weight:600;color:#111">0</span></div>
+          </div>
+
+        <div class="scroll">
+          <!-- NEW -->
+          <div id="t-new">
+            <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen')">
+              <div class="ocard-row"><div class="tcol late">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-9</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">Tochtstraat 40</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#36 · 5 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen')">
+              <div class="ocard-row"><div class="tcol urgent">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">Thomas Jefferson</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#37 · 3 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('26','3062 WB','Lusthofstraat 27A','#26','€73.59','Pending','Delivery','2','kitchen')">
+              <div class="ocard-row"><div class="tcol urgent">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg>
+                <span style="font-size:10px;color:#111;font-weight:500;margin-top:2px">16:30</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">Lusthofstraat 27A</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#26 · 4 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('38','3035 GW','1e Pijnackerstraat 120B','#38','€73.59','Paid','Delivery','17','kitchen')">
+              <div class="ocard-row"><div class="tcol">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="47.47" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">17</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">1e Pijnackerstraat 120B</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#38 · 6 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('40','T4','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen')">
+              <div class="ocard-row"><div class="tcol">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="78.19" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">28</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">T4</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#40 · 2 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('41','3018 VP','Schiedamseweg 112','#41','€29.50','Paid','Delivery','19','kitchen')">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="53.06" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">19</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#41 · 3 items</div></div></div>
+              <div class="rcol"><span class="price">€29.50</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Pending','Collection','7','kitchen')">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Emma Jansen</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#42 · 4 items</div></div></div>
+              <div class="rcol"><span class="price">€52.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('43','3072 AL','Vossenburchkade 44','#43','€67.00','Paid','Delivery','33','kitchen')">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="92.15" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">33</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Vossenburchkade 44</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#43 · 5 items</div></div></div>
+              <div class="rcol"><span class="price">€67.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('44','3014 GH','Proveniersstraat 8B','#44','€18.00','Paid','Delivery','41','kitchen')">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="114.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">41</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Proveniersstraat 8B</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#44 · 2 items</div></div></div>
+              <div class="rcol"><span class="price">€18.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+            <div class="ocard" onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Pending','Collection','12','kitchen')">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="33.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">12</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Lotte de Vries</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#45 · 3 items</div></div></div>
+              <div class="rcol"><span class="price">€44.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+          </div>
+
+          <!-- KITCHEN -->
+          <div id="t-kitchen" style="display:none">
+            <div class="ocard" onclick="goDetail('33','3041 NN','Bergselaan 88','#33','€41.50','Paid','Delivery','4','delivery')">
+              <div class="ocard-row"><div class="tcol late">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-4</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">Bergselaan 88</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#33 · 4 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€41.50</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Delivering</button></div></div>
+            <div class="ocard" onclick="goDetail('34','Sophie Bakker','Collection order','#34','€28.00','Paid','Collection','8','delivery')">
+              <div class="ocard-row"><div class="tcol">
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="22.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">8</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+              </div>
+              <div class="mcol">
+                <div class="dname">Sophie Bakker</div>
+                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#34 · 3 items</div></div>
+              </div>
+              <div class="rcol">
+                <span class="price">€28.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Delivering</button></div></div>
+          </div>
+
+          <!-- DELIVERY -->
+          <div id="t-delivery" style="display:none">
+            <div style="display:flex;align-items:center;justify-content:center;padding:48px 24px">
+              <div style="font-size:14px;font-weight:500;color:#888">Geen actieve bezorgingen</div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /content-surface -->
+
+        <div class="navbar"><div class="navbar-pill" id="nb-orders">
+          <div class="ni active" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+      <!-- ===== DETAIL PAGE ===== -->
+      <div class="page" id="p-detail">
+        <div class="page-header page-header-light">
+          <div class="page-header-row">
+            <div class="tb-icon" onclick="goPage('orders')"><i class="ti ti-arrow-left"></i></div>
+            <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center">#37</h1>
+            <div class="tb-icon" onclick="openActionsSheet()"><i class="ti ti-dots"></i></div>
+          </div>
+        </div>
+        <div class="content-surface" style="border-radius:0">
+        <div class="scroll" style="background:#fff">
+          <!-- Top info card -->
+          <div style="padding:20px 20px 16px;border-bottom:1px solid #f0f0f0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+            <div style="flex:1;min-width:0">
+              <div id="d-name" style="font-size:18px;font-weight:700;color:#111;margin-bottom:6px">Thomas Jefferson</div>
+              <div id="d-addr" style="font-size:14px;color:#888;margin-bottom:10px">—</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                <span id="d-type-chip" style="font-size:12px;font-weight:600;color:#111;background:#f0f0f0;padding:4px 10px;border-radius:20px">Collection</span>
+                <span id="d-pay" class="bp bp-pending" style="font-size:12px;padding:4px 10px">Pending</span>
+                <span id="d-oid" style="font-size:12px;color:#888;font-weight:500">#37</span>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:14px">
+                <button class="abtn abtn-p" id="d-next-btn" onclick="goPage('orders')" style="flex:1;height:44px;font-size:14px">→ Kitchen</button>
+                <button class="abtn abtn-o" onclick="goPage('print')" style="flex:1;height:44px;font-size:14px">Print label</button>
+              </div>
+              <div id="d-note-section" style="display:none;margin-top:12px;background:#f5f5f5;border-radius:10px;padding:12px 14px;display:none;align-items:flex-start;gap:10px">
+                <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:1px"><path d="M2 1H12C14.2091 1 16 2.79086 16 5V18C16 18.5523 15.5523 19 15 19H2C1.44772 19 1 18.5523 1 18V2C1 1.44772 1.44772 1 2 1Z" stroke="#888" stroke-width="2"/><path d="M11 1H12C14.2091 1 16 2.79086 16 5V6C16 6.55228 15.5523 7 15 7H11C10.4477 7 10 6.55228 10 6V2C10 1.44772 10.4477 1 11 1Z" stroke="#888" stroke-width="2"/><line x1="5" y1="9" x2="8" y2="9" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="13" x2="11" y2="13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>
+                <div id="d-note-text" style="font-size:14px;color:#444;line-height:1.5">Extra napkins please</div>
+              </div>
+            </div>
+            <svg id="d-timer-svg" width="72" height="72" viewBox="0 0 48 48" style="flex-shrink:0">
+              <circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="3"/>
+              <circle id="d-timer-arc" cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/>
+              <text id="d-timer-num" x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text>
+              <text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#888" font-family="Poppins,sans-serif">min</text>
+            </svg>
+          </div>
+
+          <!-- Items dropdown -->
+          <div style="border-top:1px solid #f0f0f0">
+            <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.cart-arrow').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(180deg)'" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none">
+              <div style="display:flex;align-items:center;gap:16px">
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.8545 5.14844L18.4795 15.2832C18.4121 15.7788 17.9885 16.1484 17.4883 16.1484H4.51172C4.01149 16.1484 3.5879 15.7788 3.52051 15.2832L2.14551 5.14844H19.8545Z" stroke="black" stroke-width="2"/><path d="M8 9.32031L8.52174 12.4507" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M14.043 9.32031L13.5212 12.4507" stroke="black" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="5.14844" x2="21" y2="5.14844" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M7.42188 1L5.51022 5.09343" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M14.4199 1L16.1803 5.13331" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
+                <span style="font-size:15px;font-weight:500;color:#111">Product list (4 items)</span>
+              </div>
+              <svg class="cart-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;transform:rotate(180deg)"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="padding:0 20px 8px">
+              <!-- Item 1 -->
+              <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">2</span>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Burger Deluxe</div>
+                    <div style="font-size:13px;color:#999;margin-top:3px">Extra cheese</div>
+                    <div style="font-size:13px;color:#999">No pickles</div>
+                  </div>
+                  <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 28.00</span>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">2</span>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Fries Large</div>
+                  </div>
+                  <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 10.00</span>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">3</span>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Cola 0.5L</div>
+                  </div>
+                  <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 9.00</span>
+                </div>
+              </div>
+              <!-- Item 4 -->
+              <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                  <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">1</span>
+                  <div style="flex:1">
+                    <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Delivery fee</div>
+                  </div>
+                  <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 3.00</span>
+                </div>
+              </div>
+              <!-- Subtotal -->
+              <div style="display:flex;justify-content:space-between;padding:14px 0 6px;border-top:1px solid #e0e0e0;margin-top:4px">
+                <span style="font-size:15px;font-weight:700;color:#111">Subtotal</span>
+                <span id="d-total" style="font-size:15px;font-weight:700;color:#111">€ 50.00</span>
+              </div>
+            </div>
+          </div>
+          <div style="padding-bottom:calc(env(safe-area-inset-bottom) + 100px)"></div>
+        </div>
+        </div><!-- /content-surface -->
+        <div class="navbar"><div class="navbar-pill">
+          <div class="ni active" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+      <!-- ===== PRINT PAGE ===== -->
+      <div class="page" id="p-print">
+        <div class="page-header page-header-light">
+          <div class="page-header-row">
+            <div class="tb-icon" onclick="goPage('detail')"><i class="ti ti-arrow-left"></i></div>
+            <h1 style="font-size:18px;font-weight:600;flex:1;text-align:center">Print</h1>
+            <div class="tb-icon" style="opacity:0;pointer-events:none"><i class="ti ti-printer"></i></div>
+          </div>
+        </div>
+        <div class="content-surface" style="border-radius:0">
+        <div class="scroll" style="padding:0 0 120px">
+          <!-- Receipt -->
+          <div style="background:#fff;padding:28px 24px 24px;text-align:center">
+            <!-- Logo -->
+            <div style="margin-bottom:12px">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="12" fill="#f5f5f5"/>
+                <path d="M24 10C17.373 10 12 15.373 12 22C12 26.418 14.418 30.273 18 32.459V38H30V32.459C33.582 30.273 36 26.418 36 22C36 15.373 30.627 10 24 10Z" fill="#222"/>
+                <rect x="20" y="36" width="8" height="2" rx="1" fill="#222"/>
+                <line x1="21" y1="20" x2="21" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="27" y1="18" x2="27" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="24" y1="16" x2="24" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <!-- Restaurant info -->
+            <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">
+              Burger Palace, Hoofdstraat 12, 1234 AB Amsterdam<br>Tel.: 020-1234567
+            </div>
+            <!-- Order number -->
+            <div id="pr-oid" style="font-size:28px;font-weight:700;color:#111;letter-spacing:1px;margin-bottom:4px">#36</div>
+            <div id="pr-date" style="font-size:12px;color:#888;margin-bottom:20px">2026/06/22 14:35</div>
+            <div style="border-top:1px solid #ddd;margin-bottom:20px"></div>
+            <!-- Order type + time -->
+            <div id="pr-type" style="font-size:18px;font-weight:700;color:#111;margin-bottom:6px">Delivery</div>
+            <div style="font-size:14px;color:#111;margin-bottom:4px"><b>Confirmed time:</b> <span id="pr-time">14:50</span></div>
+            <div style="font-size:14px;color:#555;margin-bottom:20px">Requested time: <span id="pr-req-time">14:50</span></div>
+            <!-- Address -->
+            <div id="pr-addr-block" style="text-align:left;font-size:14px;color:#111;line-height:1.8;margin-bottom:20px">
+              <div id="pr-addr">Tochtstraat 40</div>
+              <div id="pr-city">1324 KK Amsterdam</div>
+              <div id="pr-phone">06-12345678</div>
+            </div>
+            <div style="border-top:1px solid #ddd;margin-bottom:20px"></div>
+            <!-- Items -->
+            <div style="text-align:left">
+              <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:12px">Delivered items:</div>
+              <!-- Item rows -->
+              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
+                <span style="min-width:24px;font-weight:600">2×</span>
+                <span style="flex:1">Burger Deluxe</span>
+                <span style="font-weight:600">€ 28,00</span>
+              </div>
+              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
+                <span style="min-width:24px;font-weight:600">2×</span>
+                <span style="flex:1">Fries Large</span>
+                <span style="font-weight:600">€ 10,00</span>
+              </div>
+              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
+                <span style="min-width:24px;font-weight:600">3×</span>
+                <span style="flex:1">Cola 0.5L</span>
+                <span style="font-weight:600">€ 9,00</span>
+              </div>
+              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#555">
+                <span style="min-width:24px;font-weight:600">1×</span>
+                <span style="flex:1">Delivery fee</span>
+                <span style="font-weight:600">€ 3,00</span>
+              </div>
+              <!-- Total -->
+              <div style="border-top:1.5px solid #111;margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:#111">
+                <span>Total</span>
+                <span id="pr-total">€ 50,00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+            <!-- Print button -->
+            <div style="padding:16px 24px calc(env(safe-area-inset-bottom) + 100px)">
+              <button style="width:100%;height:52px;font-size:15px;font-weight:700;background:#e65100;color:#fff;border:none;cursor:pointer;border-radius:50px;font-family:Poppins,sans-serif" onclick="alert('Printing...')">Print</button>
+            </div>
+        </div><!-- /content-surface -->
+      </div>
+
+      <!-- ===== ARCHIVE PAGE ===== -->
+      <div class="page" id="p-archive">
+        <div class="page-header">
+          <div class="page-header-row">
+            <h1>Archive</h1>
+            <div class="tb-icon"><i class="ti ti-calendar"></i></div>
+          </div>
+        </div>
+        <div class="content-surface">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'arch-today')">Today</div>
+          <div class="tab" onclick="switchTab(this,'arch-yesterday')">Yesterday</div>
+          <div class="tab" onclick="switchTab(this,'arch-7days')">Last 7 days</div>
+          <div class="tab" onclick="switchTab(this,'arch-month')">This month</div>
+        </div>
+        <div class="scroll">
+          <div class="sec-label">Today — 19 Jun 2026</div>
+          <div class="ocard" onclick="goDetail('36','3036 SK','Tochtstraat 40','#36','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:45</div></div><div class="mcol"><div class="dname">Tochtstraat 40</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#36 · Delivery</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
+          <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:20</div></div><div class="mcol"><div class="dname">Thomas Jefferson</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#37 · Collection</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
+          <div class="ocard" onclick="goDetail('26','3062 WB','Lusthofstraat 27A','#26','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:55</div></div><div class="mcol"><div class="dname">Lusthofstraat 27A</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#26 · Delivery</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
+          <div class="ocard" onclick="goDetail('25','3035 KH','Zwaanshals 299','#25','€44.00','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:30</div></div><div class="mcol"><div class="dname">Zwaanshals 299</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#25 · Delivery</div></div></div><div class="rcol"><span class="price">€44.00</span></div></div></div>
+          <div class="ocard" onclick="goDetail('24','Sophie Bakker','Collection order','#24','€28.00','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:10</div></div><div class="mcol"><div class="dname">Sophie Bakker</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#24 · Collection</div></div></div><div class="rcol"><span class="price">€28.00</span></div></div></div>
+        </div>
+        </div><!-- /content-surface -->
+        <div class="navbar"><div class="navbar-pill">
+          <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni active" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+      <!-- ===== DASHBOARD PAGE ===== -->
+      <div class="page" id="p-dashboard">
+        <div class="page-header">
+          <div class="page-header-row">
+            <h1>Dashboard</h1>
+            <div class="tb-icon"><i class="ti ti-refresh"></i></div>
+          </div>
+        </div>
+        <div class="content-surface">
+          <!-- Summary tabs -->
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(this,'dash-summary')">Samenvatting</div>
+            <div class="tab" onclick="switchTab(this,'dash-details')">Details</div>
+            <div class="tab" onclick="switchTab(this,'dash-cancelled')">Geannuleerd</div>
+          </div>
+          <div class="scroll" style="padding:16px;gap:12px;display:flex;flex-direction:column">
+            <!-- Two stat cards -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <!-- Sales card -->
+              <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
+                <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:10px">Omzet</div>
+                <div style="font-size:24px;font-weight:700;color:#111;line-height:1.1">€688</div>
+                <div style="font-size:10px;color:#aaa;margin-top:3px">Incl. kosten</div>
+                <div style="font-size:18px;font-weight:600;color:#111;margin-top:10px">€564</div>
+                <div style="font-size:10px;color:#aaa;margin-top:3px">Excl. kosten</div>
+              </div>
+              <!-- Orders card -->
+              <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
+                <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:10px">Bestellingen</div>
+                <div style="font-size:32px;font-weight:700;color:#111;line-height:1.1">47</div>
+                <div style="margin-top:14px;display:flex;flex-direction:column;gap:5px">
+                  <div style="font-size:11px;color:#666">43 bezorging</div>
+                  <div style="font-size:11px;color:#aaa">€560.00</div>
+                  <div style="font-size:11px;color:#666;margin-top:4px">4 afhalen</div>
+                  <div style="font-size:11px;color:#aaa">€128.00</div>
+                </div>
+              </div>
+            </div>
+            <!-- Avg order value -->
+            <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-size:12px;color:#888;font-weight:500">Gem. bestelwaarde</div>
+                <div style="font-size:22px;font-weight:700;color:#111;margin-top:4px">€14.64</div>
+              </div>
+              <div style="font-size:11px;color:#4caf50;font-weight:600;background:#f0faf0;padding:4px 10px;border-radius:20px">↑ +8%</div>
+            </div>
+            <!-- Busiest hour -->
+            <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
+              <div style="font-size:12px;color:#888;font-weight:500;margin-bottom:12px">Orders per uur</div>
+              <div style="display:flex;align-items:flex-end;gap:5px;height:60px">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:25%"></div><span style="font-size:9px;color:#bbb">11</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:40%"></div><span style="font-size:9px;color:#bbb">12</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#111;border-radius:3px 3px 0 0;width:100%;height:80%"></div><span style="font-size:9px;color:#bbb">13</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#111;border-radius:3px 3px 0 0;width:100%;height:100%"></div><span style="font-size:9px;color:#bbb">14</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:60%"></div><span style="font-size:9px;color:#bbb">15</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:30%"></div><span style="font-size:9px;color:#bbb">16</span></div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /content-surface -->
+        <div class="navbar"><div class="navbar-pill">
+          <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni active" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+      <!-- ===== MENU PAGE ===== -->
+      <div class="page" id="p-menu">
+        <div class="page-header" style="position:relative">
+          <div class="page-header-row">
+            <h1 onclick="toggleMenuDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">Products <svg id="menu-dd-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="white" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+            <div class="tb-icon"><i class="ti ti-plus"></i></div>
+          </div>
+          <!-- Dropdown -->
+          <div id="menu-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
+            <div class="mdd-item mdd-item-active"><i class="ti ti-tag"></i> Products</div>
+            <div class="mdd-item"><i class="ti ti-list"></i> Choices menu</div>
+            <div class="mdd-item"><i class="ti ti-folder"></i> Categories</div>
+          </div>
+        </div>
+        <div class="content-surface">
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(this,'menu-all')">Alle</div>
+            <div class="tab" onclick="switchTab(this,'menu-active')">Actief</div>
+            <div class="tab" onclick="switchTab(this,'menu-concept')">Concept</div>
+            <div class="tab" onclick="switchTab(this,'menu-archived')">Gearchiveerd</div>
+          </div>
+        <div class="scroll">
+          <!-- Category: Burgers -->
+          <div class="mcat-header" onclick="toggleCat(this)">
+            <div class="mcat-left">
+              <svg class="mcat-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="mcat-name">Burgers</span>
+            </div>
+            <span class="mcat-count">3 producten</span>
+          </div>
+          <div class="mcat-body">
+            <div class="mrow">
+              <div class="mrow-thumb">🍔</div>
+              <div class="mrow-info"><div class="mrow-name">Burger Deluxe</div></div>
+              <div class="mtoggle on" onclick="toggleMenu(this)"></div>
+            </div>
+            <div class="mrow">
+              <div class="mrow-thumb">🍔</div>
+              <div class="mrow-info"><div class="mrow-name">Classic Burger</div></div>
+              <div class="mtoggle on" onclick="toggleMenu(this)"></div>
+            </div>
+            <div class="mrow">
+              <div class="mrow-thumb">🍔</div>
+              <div class="mrow-info"><div class="mrow-name">Veggie Burger</div></div>
+              <div class="mtoggle" onclick="toggleMenu(this)"></div>
+            </div>
+          </div>
+          <!-- Category: Sides -->
+          <div class="mcat-header" onclick="toggleCat(this)">
+            <div class="mcat-left">
+              <svg class="mcat-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="mcat-name">Sides</span>
+            </div>
+            <span class="mcat-count">2 producten</span>
+          </div>
+          <div class="mcat-body">
+            <div class="mrow">
+              <div class="mrow-thumb">🍟</div>
+              <div class="mrow-info"><div class="mrow-name">Fries Large</div></div>
+              <div class="mtoggle on" onclick="toggleMenu(this)"></div>
+            </div>
+            <div class="mrow">
+              <div class="mrow-thumb">🥗</div>
+              <div class="mrow-info"><div class="mrow-name">Side Salad</div></div>
+              <div class="mtoggle on" onclick="toggleMenu(this)"></div>
+            </div>
+          </div>
+          <!-- Category: Dranken -->
+          <div class="mcat-header" onclick="toggleCat(this)">
+            <div class="mcat-left">
+              <svg class="mcat-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="mcat-name">Dranken</span>
+            </div>
+            <span class="mcat-count">2 producten</span>
+          </div>
+          <div class="mcat-body">
+            <div class="mrow">
+              <div class="mrow-thumb">🥤</div>
+              <div class="mrow-info"><div class="mrow-name">Cola</div></div>
+              <div class="mtoggle on" onclick="toggleMenu(this)"></div>
+            </div>
+            <div class="mrow">
+              <div class="mrow-thumb">🍺</div>
+              <div class="mrow-info"><div class="mrow-name">Bier</div></div>
+              <div class="mtoggle" onclick="toggleMenu(this)"></div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /content-surface -->
+        <div class="navbar"><div class="navbar-pill">
+          <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni active" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+      <!-- ===== SETTINGS PAGE ===== -->
+      <div class="page" id="p-settings">
+        <div class="page-header">
+          <div class="page-header-row">
+            <h1>Settings</h1>
+          </div>
+        </div>
+        <div class="content-surface">
+        <div class="scroll" style="background:#f7f7f7">
+
+          <!-- Restaurant -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Restaurant</span></div>
+          <div style="background:#fff;border-radius:14px;margin:0 16px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <span style="font-size:15px;color:#111">Open</span>
+              <div class="mtoggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:0 16px 16px;border-top:1px solid #f2f2f2">
+              <i class="ti ti-help-circle" style="font-size:18px;color:#aaa;margin-top:1px;flex-shrink:0"></i>
+              <span style="font-size:13px;color:#888;line-height:1.5">You can open or close your restaurant only during restaurant opening hours.</span>
+            </div>
+          </div>
+
+          <!-- Default times -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Default times</span></div>
+          <div style="background:#fff;border-radius:14px;margin:0 16px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <i class="ti ti-truck-delivery" style="font-size:20px;color:#555"></i>
+                <span style="font-size:15px;color:#111">Delivery takes</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">−</div>
+                <div style="text-align:center;min-width:36px"><div class="tval" style="font-size:16px;font-weight:700;color:#111">35</div><div style="font-size:11px;color:#aaa">min</div></div>
+                <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f2f2f2">
+              <div style="display:flex;align-items:center;gap:10px">
+                <i class="ti ti-shopping-bag" style="font-size:20px;color:#555"></i>
+                <span style="font-size:15px;color:#111">Takeaway takes</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">−</div>
+                <div style="text-align:center;min-width:36px"><div class="tval" style="font-size:16px;font-weight:700;color:#111">20</div><div style="font-size:11px;color:#aaa">min</div></div>
+                <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pin settings -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Pin settings</span></div>
+          <div style="background:#fff;border-radius:14px;margin:0 16px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <span style="font-size:15px;color:#111">Enable pin</span>
+              <div class="mtoggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+
+          <!-- Notification settings -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Notifications</span></div>
+          <div style="background:#fff;border-radius:14px;margin:0 16px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <span style="font-size:15px;color:#111">Sound new order</span>
+              <div class="mtoggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f2f2f2">
+              <span style="font-size:15px;color:#111">Wake screen on order</span>
+              <div class="mtoggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+
+          <!-- Delivery display -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Delivery display settings</span></div>
+          <div style="background:#fff;border-radius:14px;margin:0 16px 120px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <span style="font-size:15px;color:#111">Show address</span>
+              <div class="mtoggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+
+        </div>
+        </div><!-- /content-surface -->
+        <div class="navbar"><div class="navbar-pill">
+          <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
+          <div class="ni" onclick="goPage('archive')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.59086H2V3.86362C2 3.11053 2.60708 2.5 3.35593 2.5H16.6441C17.3929 2.5 18 3.11053 18 3.86362V6.59086Z" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" fill="white"/><path d="M16.6475 6.58984V16.1352C16.6475 16.8883 16.0404 17.4988 15.2916 17.4988H4.71531C3.96646 17.4988 3.35938 16.8883 3.35938 16.1352V6.58984" stroke="white" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.64453 10.3203H11.3564" stroke="rgba(24,24,24,0.85)" stroke-width="1.72" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
+          <div class="ni active" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <!-- New order notification overlay -->
+    <div class="notif-overlay" id="notif-overlay" onclick="closeNotif()">
+      <div class="notif-card" onclick="event.stopPropagation()">
+        <div class="notif-header">
+          <span style="font-size:16px;font-weight:700;color:#111">Nieuwe bezorging</span>
+          <div onclick="closeNotif()" style="margin-left:auto;width:28px;height:28px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <i class="ti ti-x" style="font-size:14px;color:#555"></i>
+          </div>
+        </div>
+        <div style="margin-bottom:14px">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M17.439 8.19336C18.0192 8.1345 18.6042 8.1316 19.1851 8.18359L19.4946 8.21094C20.043 8.26004 20.5864 8.3576 21.1177 8.50195L21.1763 8.51758C21.7962 8.68601 22.3956 8.92203 22.9644 9.2207C23.4247 9.46247 23.8633 9.74453 24.2739 10.0635L24.4761 10.2207C24.869 10.5259 25.2368 10.8624 25.5747 11.2275L25.6724 11.334C25.9477 11.6315 26.1987 11.9512 26.4214 12.29C26.7247 12.7515 26.9748 13.2462 27.1675 13.7637L27.2534 13.9941L27.5093 15.0371L27.6226 15.8496V16.5674L27.5044 17.6416C27.3956 18.1477 27.2519 18.6455 27.0718 19.1309L27.0679 19.1426L27.062 19.1562L27.0581 19.1699L26.7622 20.0332L26.4692 20.6787L25.9438 21.6074L25.2778 22.5586L24.0181 24.0137L22.6147 25.418L18.9761 28.2949L18.5229 28.6328L15.7896 26.585L13.6255 24.624L12.3042 23.2979L11.5532 22.3057C11.1889 21.8244 10.8634 21.3041 10.5874 20.7656C10.2588 20.1245 9.9948 19.4429 9.80811 18.749L9.76611 18.5938C9.63769 18.1163 9.55202 17.6283 9.50928 17.1357L9.49561 16.9785C9.42545 16.1696 9.48749 15.3542 9.68018 14.5654C9.83264 13.9414 10.0658 13.3398 10.3726 12.7754L10.4194 12.6885C10.7809 12.0236 11.2322 11.4113 11.7612 10.8701L11.8071 10.8242C12.258 10.3629 12.7586 9.95283 13.3003 9.60254L13.6167 9.39746L14.2437 9.09961C14.7031 8.88112 15.179 8.69748 15.6665 8.55176L15.7358 8.53125C16.2915 8.36518 16.862 8.25191 17.439 8.19336Z" stroke="#111" stroke-width="2.2"/><circle cx="18.6827" cy="15.7193" r="2.18571" stroke="#111" stroke-width="2.2"/><path d="M23.611 23.3858C22.5964 22.0622 20.9656 21.412 18.6825 21.1953C16.3995 21.412 15.0948 22.0622 13.7539 23.3858" stroke="#111" stroke-width="2.2" stroke-linecap="round"/></svg>
+            <div style="font-size:13px;color:#111">3044 AB — Bergweg 18</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><mask id="n-path-1" fill="white"><path d="M9.5752 10C9.5752 8.89543 10.4706 8 11.5752 8H22.4252C25.1866 8 27.4252 10.2386 27.4252 13V27C27.4252 28.1046 26.5298 29 25.4252 29H11.5752C10.4706 29 9.5752 28.1046 9.5752 27V10Z"/></mask><path d="M9.5752 10C9.5752 8.89543 10.4706 8 11.5752 8H22.4252C25.1866 8 27.4252 10.2386 27.4252 13V27C27.4252 28.1046 26.5298 29 25.4252 29H11.5752C10.4706 29 9.5752 28.1046 9.5752 27V10Z" stroke="#111" stroke-width="4.4" mask="url(#n-path-1)"/><mask id="n-path-2" fill="white"><path d="M19.0249 10C19.0249 8.89543 19.9203 8 21.0249 8H22.4249C25.1863 8 27.4249 10.2386 27.4249 13V14.4C27.4249 15.5046 26.5295 16.4 25.4249 16.4H21.0249C19.9203 16.4 19.0249 15.5046 19.0249 14.4V10Z"/></mask><path d="M19.0249 10C19.0249 8.89543 19.9203 8 21.0249 8H22.4249C25.1863 8 27.4249 10.2386 27.4249 13V14.4C27.4249 15.5046 26.5295 16.4 25.4249 16.4H21.0249C19.9203 16.4 19.0249 15.5046 19.0249 14.4V10Z" stroke="#111" stroke-width="4.4" mask="url(#n-path-2)"/><line x1="14.8749" y1="17.4" x2="17.9249" y2="17.4" stroke="#111" stroke-width="2.2" stroke-linecap="round"/><line x1="14.8749" y1="21.5992" x2="21.0749" y2="21.5992" stroke="#111" stroke-width="2.2" stroke-linecap="round"/></svg>
+            <div style="font-size:13px;color:#111">Geen uien, extra saus graag</div>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:#111;margin-top:10px;padding-top:10px;border-top:1px solid #ebebeb">€67.50 <span style="background:#f0f0f0;color:#555;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:4px">Paid</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button onclick="closeNotif()" style="height:52px;border-radius:8px;border:none;background:#111;color:#fff;font-size:14px;font-weight:600;cursor:pointer">Bekijk bestelling</button>
+          <button onclick="closeNotif()" style="height:52px;border-radius:8px;border:1px solid #ddd;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#333;display:flex;align-items:center;justify-content:center;gap:6px">Print label</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order actions bottom sheet -->
+    <div class="notif-overlay" id="actions-overlay" onclick="closeActionsSheet()">
+      <div class="notif-card" onclick="event.stopPropagation()">
+        <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:14px">Acties</div>
+        <div style="display:flex;flex-direction:column">
+          <div onclick="closeActionsSheet()" style="display:flex;align-items:center;gap:14px;padding:14px 4px;cursor:pointer">
+            <i class="ti ti-copy" style="font-size:20px;color:#111"></i>
+            <span style="font-size:15px;color:#111">Dupliceren</span>
+          </div>
+          <div onclick="closeActionsSheet()" style="display:flex;align-items:center;gap:14px;padding:14px 4px;cursor:pointer">
+            <i class="ti ti-share-2" style="font-size:20px;color:#111"></i>
+            <span style="font-size:15px;color:#111">Delen</span>
+          </div>
+          <div onclick="closeActionsSheet()" style="display:flex;align-items:center;gap:14px;padding:14px 4px;cursor:pointer">
+            <i class="ti ti-trash" style="font-size:20px;color:#c62828"></i>
+            <span style="font-size:15px;color:#c62828">Bestelling annuleren</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Demo: trigger new order after 4 seconds -->
+<div class="demo-hint" style="text-align:center;margin-top:16px;color:#888;font-size:13px">
+  👆 Klik op bestellingen om detail te zien &nbsp;|&nbsp;
+  <button onclick="triggerNewOrder()" style="background:#111;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer;font-weight:500">🔔 Simuleer nieuwe bestelling</button>
+</div>
+
+<script>
+  // Clock
+  function updateClock(){
+    var now=new Date();
+    var h=now.getHours().toString().padStart(2,'0');
+    var m=now.getMinutes().toString().padStart(2,'0');
+    document.getElementById('clock').textContent=h+':'+m;
+  }
+  updateClock();
+  setInterval(updateClock,10000);
+
+  function goPage(p){
+    document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
+    document.getElementById('p-'+p).classList.add('active');
+  }
+
+  function goDetail(id,name,addr,oid,price,pay,type,mins,next){
+    document.getElementById('d-name').textContent=name;
+    var cleanAddr=(addr&&addr!=='Collection order'&&addr!=='Restaurant')?addr:'—';
+    document.getElementById('d-addr').textContent=cleanAddr;
+    document.getElementById('d-oid').textContent=oid;
+    document.getElementById('d-page-title').textContent=oid;
+    document.getElementById('d-total').textContent=price;
+    document.getElementById('d-type-chip').textContent=type;
+    var minsNum=parseInt(mins);
+    var color=minsNum<0?'#c62828':minsNum<=10?'#e65100':'#4caf50';
+    var offset=minsNum<=0?0:Math.max(0,125.66-(minsNum/45)*125.66);
+    var arc=document.getElementById('d-timer-arc');
+    var num=document.getElementById('d-timer-num');
+    arc.setAttribute('stroke',color);
+    arc.setAttribute('stroke-dashoffset',offset);
+    num.setAttribute('fill',color);
+    num.textContent=mins;
+    var pay_el=document.getElementById('d-pay');
+    pay_el.textContent=pay;
+    pay_el.className='bp '+(pay==='Paid'?'bp-paid':'bp-pending');
+    var nextLabel={kitchen:'Move to Kitchen',delivery:'Move to Delivery',archive:'Move to Archive'};
+    document.getElementById('d-next-btn').textContent=nextLabel[next]||'Move to Next';
+    var noteSection=document.getElementById('d-note-section');
+    var noteText=document.getElementById('d-note-text');
+    var hasNote=(type==='Collection'||id==='37');
+    noteSection.style.display=hasNote?'flex':'none';
+    if(hasNote) noteText.textContent='Extra napkins please';
+    goPage('detail');
+  }
+
+  var TAB_IDX = {new:0, kitchen:1, delivery:2};
+  var BTN_MAP = {
+    'Kitchen':   {from:'new',     to:'kitchen'},
+    'Delivering':{from:'kitchen', to:'delivery'},
+    'Archive':   {from:'delivery', to:null}
+  };
+
+  function moveCard(btn, e) {
+    e.stopPropagation();
+    var label = btn.textContent.trim();
+    var map   = BTN_MAP[label];
+    if (!map) return;
+    var card  = btn.closest('.ocard');
+
+    // Phase 1: slide right + fade (220ms)
+    card.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+    card.style.opacity    = '0';
+    card.style.transform  = 'translateX(55px)';
+
+    setTimeout(function() {
+      // Phase 2: collapse height (150ms)
+      var h  = card.offsetHeight;
+      var mb = parseInt(getComputedStyle(card).marginBottom) || 0;
+      card.style.transition  = 'none';
+      card.style.height      = h + 'px';
+      card.style.marginBottom = mb + 'px';
+      card.style.overflow    = 'hidden';
+      card.offsetHeight; // force reflow
+      card.style.transition   = 'height 0.15s ease, margin-bottom 0.15s ease';
+      card.style.height       = '0';
+      card.style.marginBottom = '0';
+
+      setTimeout(function() {
+        card.remove();
+        adjustTabCount(map.from, -1);
+        if (map.to) adjustTabCount(map.to, +1);
+      }, 155);
+    }, 225);
+  }
+
+  function adjustTabCount(tabId, delta) {
+    var idx = TAB_IDX[tabId];
+    var tabs = document.querySelectorAll('#p-orders .tab');
+    var tab  = tabs[idx];
+    if (!tab) return;
+    var countEl = tab.querySelector('.tab-count');
+    if (countEl) countEl.textContent = Math.max(0, parseInt(countEl.textContent) + delta);
+    // bump animation
+    tab.classList.remove('bump');
+    void tab.offsetWidth;
+    tab.classList.add('bump');
+    tab.addEventListener('animationend', function(){ tab.classList.remove('bump'); }, {once:true});
+  }
+
+  function switchTab(el,tab){
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
+    ['new','kitchen','delivery'].forEach(function(t){
+      var e=document.getElementById('t-'+t);
+      if(e) e.style.display=t===tab?'block':'none';
+    });
+  }
+
+  function toggleCat(header) {
+    header.classList.toggle('collapsed');
+    var body = header.nextElementSibling;
+    if (header.classList.contains('collapsed')) {
+      body.style.maxHeight = '0';
+      body.classList.add('collapsed');
+    } else {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.classList.remove('collapsed');
+      setTimeout(function(){ body.style.maxHeight = 'none'; }, 230);
+    }
+  }
+  function toggleOrdersDropdown() {
+    var dd = document.getElementById('orders-dropdown');
+    var arrow = document.getElementById('orders-dd-arrow');
+    var open = dd.style.display === 'block';
+    dd.style.display = open ? 'none' : 'block';
+    arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+  }
+  function toggleMenuDropdown() {
+    var dd = document.getElementById('menu-dropdown');
+    var arrow = document.getElementById('menu-dd-arrow');
+    var open = dd.style.display === 'block';
+    dd.style.display = open ? 'none' : 'block';
+    arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#menu-dropdown') && !e.target.closest('h1[onclick]')) {
+      var dd = document.getElementById('menu-dropdown');
+      var arrow = document.getElementById('menu-dd-arrow');
+      if (dd) { dd.style.display = 'none'; arrow.style.transform = 'rotate(0deg)'; }
+    }
+  });
+  function toggleMenu(el) {
+    el.classList.toggle('on');
+  }
+
+  function switchChip(el){
+    document.querySelectorAll('.fchip').forEach(function(c){c.classList.remove('active');});
+    el.classList.add('active');
+  }
+
+  function triggerNewOrder(){
+    document.getElementById('notif-overlay').classList.add('show');
+    // play beep
+    try{
+      var ctx=new(window.AudioContext||window.webkitAudioContext)();
+      [0,150,300].forEach(function(d){
+        setTimeout(function(){
+          var o=ctx.createOscillator();
+          var g=ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.frequency.value=880;
+          g.gain.setValueAtTime(0.3,ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+          o.start(ctx.currentTime); o.stop(ctx.currentTime+0.2);
+        },d);
+      });
+    }catch(e){}
+  }
+
+  function closeNotif(){
+    document.getElementById('notif-overlay').classList.remove('show');
+  }
+
+  function openActionsSheet(){
+    document.getElementById('actions-overlay').classList.add('show');
+  }
+  function closeActionsSheet(){
+    document.getElementById('actions-overlay').classList.remove('show');
+  }
+
+  // Auto trigger disabled
+  // setTimeout(triggerNewOrder, 5000);
+
+  // Floating navbar scroll behavior
+  var lastScrollY = 0;
+  var scrollTimer = null;
+
+  function initScrollListeners() {
+    document.querySelectorAll('.scroll').forEach(function(el) {
+      el.addEventListener('scroll', function() {
+        var pills = document.querySelectorAll('.navbar-pill');
+        var currentY = el.scrollTop;
+        var delta = currentY - lastScrollY;
+
+        lastScrollY = currentY;
+      }, { passive: true });
+    });
+  }
+
+  initScrollListeners();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
