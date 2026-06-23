@@ -470,9 +470,9 @@
 
       <!-- ===== ORDERS PAGE ===== -->
       <div class="page active" id="p-orders">
-        <div class="page-header" style="position:relative">
+        <div class="page-header page-header-light" style="position:relative">
           <div class="page-header-row">
-            <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">All orders <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="white" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+            <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">All orders <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
             <div class="tb-icon"><i class="ti ti-filter" id="bell-icon"></i></div>
           </div>
           <div id="orders-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
@@ -483,7 +483,7 @@
           </div>
         </div>
 
-        <div class="content-surface">
+        <div class="content-surface" style="border-radius:0">
           <div class="tabs">
             <div class="tab active" onclick="switchTab(this,'new')">New <span class="tab-count" style="font-weight:600;color:#111">10</span></div>
             <div class="tab" onclick="switchTab(this,'kitchen')">Kitchen <span class="tab-count" style="font-weight:600;color:#111">2</span></div>
