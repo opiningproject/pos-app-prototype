@@ -132,7 +132,7 @@
     flex-shrink: 0;
   }
   .topbar h1 { font-size: 17px; font-weight: 600; color: #fff; flex: 1; text-align: center; }
-  .tb-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 20px; cursor: pointer; border-radius: 50%; }
+  .tb-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.8); font-size: 20px; cursor: pointer; border-radius: 50%; }
   .tb-icon:hover { background: rgba(255,255,255,0.1); }
   .page-header-light .tb-icon { background: transparent; color: #111; }
   .page-header-light .tb-icon i { color: #111; }
@@ -481,7 +481,11 @@
         <div class="page-header page-header-light" style="position:relative">
           <div class="page-header-row">
             <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">All orders <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon"><i class="ti ti-filter" id="bell-icon"></i></div>
+            <div class="tb-icon" id="bell-icon"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.907227 0.90625H16.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+<path d="M3.90723 6.34766H13.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+<path d="M6.90723 11.7891H10.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+</svg></div>
           </div>
           <div id="orders-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
             <div class="mdd-item mdd-item-active"><i class="ti ti-clipboard-list"></i> Bestellingen</div>
@@ -619,7 +623,9 @@
       <div class="page" id="p-detail">
         <div class="page-header page-header-light">
           <div class="page-header-row">
-            <div class="tb-icon" onclick="goPage('orders')"><i class="ti ti-arrow-left"></i></div>
+            <div class="tb-icon" onclick="goPage('orders')"><svg width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.2002 1.19922L1.2002 9.19922L8.2002 17.1992" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
             <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center">#37</h1>
             <div class="tb-icon" onclick="openActionsSheet()"><i class="ti ti-dots"></i></div>
           </div>
@@ -627,42 +633,80 @@
         <div class="content-surface" style="border-radius:0">
         <div class="scroll" style="background:#fff">
           <!-- Top info card -->
-          <div style="padding:20px 20px 16px;border-bottom:1px solid #f0f0f0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-            <div style="flex:1;min-width:0">
-              <div id="d-name" style="font-size:18px;font-weight:700;color:#111;margin-bottom:6px">Thomas Jefferson</div>
-              <div id="d-addr" style="font-size:14px;color:#888;margin-bottom:10px">—</div>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-                <span id="d-type-chip" style="font-size:12px;font-weight:600;color:#111;background:#f0f0f0;padding:4px 10px;border-radius:20px">Collection</span>
-                <span id="d-pay" class="bp bp-pending" style="font-size:12px;padding:4px 10px">Pending</span>
-                <span id="d-oid" style="font-size:12px;color:#888;font-weight:500">#37</span>
+          <div style="padding:20px 20px 16px;border-bottom:1px solid #f0f0f0">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div style="flex:1;min-width:0">
+                <div id="d-name" style="font-size:18px;font-weight:700;color:#111;margin-bottom:6px">Collection</div>
+                <div id="d-wished-inline" style="font-size:14px;color:#888;font-weight:500">ASAP</div>
               </div>
-              <div style="display:flex;gap:10px;margin-top:14px">
-                <button class="abtn abtn-p" id="d-next-btn" onclick="goPage('orders')" style="flex:1;height:44px;font-size:14px">→ Kitchen</button>
-                <button class="abtn abtn-o" onclick="goPage('print')" style="flex:1;height:44px;font-size:14px">Print label</button>
+              <svg id="d-timer-svg" width="72" height="72" viewBox="0 0 48 48" style="flex-shrink:0">
+                <circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="3"/>
+                <circle id="d-timer-arc" cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/>
+                <text id="d-timer-num" x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text>
+                <text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#888" font-family="Poppins,sans-serif">min</text>
+              </svg>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:38px">
+              <button class="abtn abtn-p" id="d-next-btn" onclick="goPage('orders')" style="width:100%;height:44px;font-size:14px">→ Kitchen</button>
+              <button class="abtn abtn-o" onclick="goPage('print')" style="width:100%;height:44px;font-size:14px">Print label</button>
+            </div>
+          </div>
+
+          <!-- Order details dropdown -->
+          <div style="border-top:1px solid #f0f0f0">
+            <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.cart-arrow').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(180deg)'" style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;cursor:pointer;user-select:none">
+              <div style="display:flex;align-items:center;gap:16px">
+                <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.98145 1.18066C8.47679 1.13044 8.97577 1.12749 9.47168 1.17188L9.74023 1.19531C10.2088 1.23725 10.673 1.321 11.127 1.44434L11.1787 1.45801C11.7075 1.6017 12.219 1.80286 12.7041 2.05762C13.0969 2.26392 13.4709 2.50519 13.8213 2.77734L13.998 2.91406C14.3334 3.17454 14.6471 3.46178 14.9355 3.77344L15.0205 3.86621C15.2546 4.11915 15.468 4.39073 15.6572 4.67871C15.915 5.071 16.1272 5.49173 16.291 5.93164L16.3643 6.12695L16.582 7.01562L16.6777 7.69922V8.32031L16.5781 9.22363C16.509 9.54503 16.4241 9.86271 16.3213 10.1748L16.208 10.499L16.2041 10.5088L16.1943 10.5361L15.9434 11.2744L15.6904 11.8281L15.2402 12.626L14.6689 13.4414L13.5879 14.6904L12.3633 15.916L9.21289 18.4043L8.90918 18.6318L6.61719 16.915L4.75879 15.2295L3.60938 14.0781L2.96289 13.2227C2.6512 12.811 2.372 12.3661 2.13574 11.9053C1.85441 11.3565 1.62847 10.7725 1.46875 10.1787L1.43262 10.0439C1.32312 9.63686 1.25029 9.22076 1.21387 8.80078L1.20117 8.66406C1.14155 7.97627 1.19554 7.28296 1.35938 6.6123C1.48899 6.08191 1.68657 5.57056 1.94727 5.09082L1.98828 5.01562C2.29628 4.44892 2.68098 3.92706 3.13184 3.46582L3.1709 3.42578C3.55551 3.03231 3.98329 2.68259 4.44531 2.38379L4.71777 2.20703L5.25 1.95508C5.64295 1.76825 6.04992 1.6119 6.4668 1.4873L6.52637 1.46875C7.00097 1.3269 7.48863 1.23066 7.98145 1.18066Z" stroke="black" stroke-width="2.2"/>
+<path d="M9.04785 5.82617C10.0182 5.82632 10.8047 6.61363 10.8047 7.58398C10.8045 8.55421 10.0181 9.34067 9.04785 9.34082C8.0775 9.34082 7.29019 8.5543 7.29004 7.58398C7.29004 6.61354 8.07741 5.82617 9.04785 5.82617Z" stroke="black" stroke-width="2.2"/>
+<path d="M13.3341 14.2485C12.4518 13.0976 11.0338 12.5322 9.04847 12.3438C7.06318 12.5322 5.92872 13.0976 4.76269 14.2485" stroke="black" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
+                <span style="font-size:15px;font-weight:500;color:#111">Order details</span>
               </div>
-              <div id="d-note-section" style="display:none;margin-top:12px;background:#f5f5f5;border-radius:10px;padding:12px 14px;display:none;align-items:flex-start;gap:10px">
+              <svg class="cart-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;transform:rotate(180deg)"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div style="padding:0 24px 24px">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Customer</span>
+                <span id="d-detail-name" style="font-size:14px;font-weight:500;color:#111">Thomas Jefferson</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Order type</span>
+                <span id="d-detail-type" style="font-size:14px;font-weight:500;color:#111">Collection</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Payment</span>
+                <span id="d-detail-pay" style="font-size:14px;font-weight:500;color:#111">Pending</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Address</span>
+                <span id="d-detail-addr" style="font-size:14px;font-weight:500;color:#111;text-align:right">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Order placed</span>
+                <span id="d-placed" style="font-size:14px;font-weight:500;color:#111">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f0f0f0">
+                <span style="font-size:14px;color:#888">Wished time</span>
+                <span id="d-wished" style="font-size:14px;font-weight:500;color:#111">—</span>
+              </div>
+              <div id="d-note-section" style="display:none;margin-top:14px;background:#f5f5f5;border-radius:10px;padding:24px;align-items:flex-start;gap:24px">
                 <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:1px"><path d="M2 1H12C14.2091 1 16 2.79086 16 5V18C16 18.5523 15.5523 19 15 19H2C1.44772 19 1 18.5523 1 18V2C1 1.44772 1.44772 1 2 1Z" stroke="#888" stroke-width="2"/><path d="M11 1H12C14.2091 1 16 2.79086 16 5V6C16 6.55228 15.5523 7 15 7H11C10.4477 7 10 6.55228 10 6V2C10 1.44772 10.4477 1 11 1Z" stroke="#888" stroke-width="2"/><line x1="5" y1="9" x2="8" y2="9" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="13" x2="11" y2="13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>
                 <div id="d-note-text" style="font-size:14px;color:#444;line-height:1.5">Extra napkins please</div>
               </div>
             </div>
-            <svg id="d-timer-svg" width="72" height="72" viewBox="0 0 48 48" style="flex-shrink:0">
-              <circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="3"/>
-              <circle id="d-timer-arc" cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/>
-              <text id="d-timer-num" x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text>
-              <text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#888" font-family="Poppins,sans-serif">min</text>
-            </svg>
           </div>
 
           <!-- Items dropdown -->
           <div style="border-top:1px solid #f0f0f0">
-            <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.cart-arrow').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(180deg)'" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none">
+            <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.cart-arrow').style.transform=this.nextElementSibling.style.display==='none'?'rotate(0deg)':'rotate(180deg)'" style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;cursor:pointer;user-select:none">
               <div style="display:flex;align-items:center;gap:16px">
                 <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.8545 5.14844L18.4795 15.2832C18.4121 15.7788 17.9885 16.1484 17.4883 16.1484H4.51172C4.01149 16.1484 3.5879 15.7788 3.52051 15.2832L2.14551 5.14844H19.8545Z" stroke="black" stroke-width="2"/><path d="M8 9.32031L8.52174 12.4507" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M14.043 9.32031L13.5212 12.4507" stroke="black" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="5.14844" x2="21" y2="5.14844" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M7.42188 1L5.51022 5.09343" stroke="black" stroke-width="2" stroke-linecap="round"/><path d="M14.4199 1L16.1803 5.13331" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
                 <span style="font-size:15px;font-weight:500;color:#111">Product list (4 items)</span>
               </div>
               <svg class="cart-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;transform:rotate(180deg)"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div style="padding:0 20px 8px">
+            <div style="padding:0 24px 24px">
               <!-- Item 1 -->
               <div style="padding:12px 0;border-top:1px solid #f0f0f0">
                 <div style="display:flex;align-items:flex-start;gap:12px">
@@ -728,7 +772,9 @@
       <div class="page" id="p-print">
         <div class="page-header page-header-light">
           <div class="page-header-row">
-            <div class="tb-icon" onclick="goPage('detail')"><i class="ti ti-arrow-left"></i></div>
+            <div class="tb-icon" onclick="goPage('detail')"><svg width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.2002 1.19922L1.2002 9.19922L8.2002 17.1992" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
             <h1 style="font-size:18px;font-weight:600;flex:1;text-align:center">Print</h1>
             <div class="tb-icon" style="opacity:0;pointer-events:none"><i class="ti ti-printer"></i></div>
           </div>
@@ -800,8 +846,8 @@
           </div>
         </div>
             <!-- Print button -->
-            <div style="padding:16px 24px calc(env(safe-area-inset-bottom) + 100px)">
-              <button style="width:100%;height:52px;font-size:15px;font-weight:700;background:#e65100;color:#fff;border:none;cursor:pointer;border-radius:50px;font-family:Poppins,sans-serif" onclick="alert('Printing...')">Print</button>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 24px calc(env(safe-area-inset-bottom) + 24px);background:transparent">
+              <button style="width:100%;height:52px;font-size:15px;font-weight:700;background:#111;color:#fff;border:none;cursor:pointer;border-radius:50px;font-family:Poppins,sans-serif;box-shadow:0 4px 32px rgba(0,0,0,0.18),0 1px 8px rgba(0,0,0,0.10)" onclick="alert('Printing...')">Print</button>
             </div>
         </div><!-- /content-surface -->
       </div>
@@ -1174,13 +1220,21 @@
   }
 
   function goDetail(id,name,addr,oid,price,pay,type,mins,next){
-    document.getElementById('d-name').textContent=name;
+    document.getElementById('d-name').textContent=type==='Delivery'?'Delivery order':'Collection';
     var cleanAddr=(addr&&addr!=='Collection order'&&addr!=='Restaurant')?addr:'—';
-    document.getElementById('d-addr').textContent=cleanAddr;
-    document.getElementById('d-oid').textContent=oid;
     document.getElementById('d-page-title').textContent=oid;
     document.getElementById('d-total').textContent=price;
-    document.getElementById('d-type-chip').textContent=type;
+    document.getElementById('d-detail-name').textContent=name;
+    document.getElementById('d-detail-type').textContent=type;
+    document.getElementById('d-detail-pay').textContent=pay;
+    document.getElementById('d-detail-addr').textContent=cleanAddr;
+    var now=new Date();
+    var dateStr=now.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    var placedTime=new Date(now.getTime()-parseInt(mins)*60000);
+    var fmt=function(d){return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});};
+    document.getElementById('d-placed').textContent=dateStr+', '+fmt(placedTime);
+    document.getElementById('d-wished').textContent=dateStr+', '+fmt(now);
+    document.getElementById('d-wished-inline').textContent=(id==='26')?'16:30':'ASAP';
     var minsNum=parseInt(mins);
     var color=minsNum<0?'#c62828':minsNum<=10?'#e65100':'#4caf50';
     var offset=minsNum<=0?0:Math.max(0,125.66-(minsNum/45)*125.66);
@@ -1190,9 +1244,6 @@
     arc.setAttribute('stroke-dashoffset',offset);
     num.setAttribute('fill',color);
     num.textContent=mins;
-    var pay_el=document.getElementById('d-pay');
-    pay_el.textContent=pay;
-    pay_el.className='bp '+(pay==='Paid'?'bp-paid':'bp-pending');
     var nextLabel={kitchen:'Move to Kitchen',delivery:'Move to Delivery',archive:'Move to Archive'};
     document.getElementById('d-next-btn').textContent=nextLabel[next]||'Move to Next';
     var noteSection=document.getElementById('d-note-section');
