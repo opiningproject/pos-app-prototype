@@ -458,6 +458,46 @@
   .mbadge-active { background:#e6f9ee;color:#1a7f45; }
   .mbadge-draft { background:#e8f0fe;color:#1a5fc8; }
   .tab.bump { animation: tabBump 0.25s ease; }
+
+  /* Thermal receipt (80mm) */
+  .receipt-thermal {
+    width: 302px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    padding: 8mm 4mm 12mm;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #000;
+  }
+  .receipt-thermal .r-center { text-align: center; }
+  .receipt-thermal .r-bold { font-weight: 700; }
+  .receipt-thermal .r-lg { font-size: 15px; letter-spacing: 0.5px; }
+  .receipt-thermal .r-xl { font-size: 20px; letter-spacing: 1px; margin: 4px 0; }
+  .receipt-thermal .r-divider { white-space: nowrap; overflow: hidden; letter-spacing: -0.5px; margin: 8px 0; font-size: 12px; }
+  .receipt-thermal .r-row { display: flex; justify-content: space-between; gap: 10px; }
+  .receipt-thermal .r-sub { padding-left: 14px; font-size: 11px; color: #333; }
+  .receipt-thermal .r-total { font-size: 16px; font-weight: 700; padding: 4px 0; }
+  .receipt-thermal .r-btw-row { display: flex; font-size: 11px; }
+  .receipt-thermal .r-band { background: #2d2d2d; color: #fff; text-align: center; font-weight: 700; padding: 6px 0; margin: 12px -4mm; letter-spacing: 0.5px; }
+  .receipt-thermal .r-band:first-of-type { margin-top: 16px; }
+  .receipt-thermal .r-note { border: 1px solid #999; border-radius: 4px; padding: 8px; margin-top: 10px; font-size: 11px; }
+
+  @media print {
+    body * { visibility: hidden; }
+    #receipt-print-area, #receipt-print-area * { visibility: visible; }
+    #receipt-print-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 80mm;
+      box-shadow: none;
+      margin: 0;
+      padding: 8mm 4mm 12mm;
+    }
+    @page { margin: 0; size: 80mm auto; }
+  }
 </style>
 </head>
 <body>
@@ -780,74 +820,71 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
-        <div class="scroll" style="padding:0 0 120px">
-          <!-- Receipt -->
-          <div style="background:#fff;padding:28px 24px 24px;text-align:center">
-            <!-- Logo -->
-            <div style="margin-bottom:12px">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="12" fill="#f5f5f5"/>
-                <path d="M24 10C17.373 10 12 15.373 12 22C12 26.418 14.418 30.273 18 32.459V38H30V32.459C33.582 30.273 36 26.418 36 22C36 15.373 30.627 10 24 10Z" fill="#222"/>
-                <rect x="20" y="36" width="8" height="2" rx="1" fill="#222"/>
-                <line x1="21" y1="20" x2="21" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                <line x1="27" y1="18" x2="27" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                <line x1="24" y1="16" x2="24" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <!-- Restaurant info -->
-            <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">
-              Burger Palace, Hoofdstraat 12, 1234 AB Amsterdam<br>Tel.: 020-1234567
-            </div>
-            <!-- Order number -->
-            <div id="pr-oid" style="font-size:28px;font-weight:700;color:#111;letter-spacing:1px;margin-bottom:4px">#36</div>
-            <div id="pr-date" style="font-size:12px;color:#888;margin-bottom:20px">2026/06/22 14:35</div>
-            <div style="border-top:1px solid #ddd;margin-bottom:20px"></div>
-            <!-- Order type + time -->
-            <div id="pr-type" style="font-size:18px;font-weight:700;color:#111;margin-bottom:6px">Delivery</div>
-            <div style="font-size:14px;color:#111;margin-bottom:4px"><b>Confirmed time:</b> <span id="pr-time">14:50</span></div>
-            <div style="font-size:14px;color:#555;margin-bottom:20px">Requested time: <span id="pr-req-time">14:50</span></div>
-            <!-- Address -->
-            <div id="pr-addr-block" style="text-align:left;font-size:14px;color:#111;line-height:1.8;margin-bottom:20px">
-              <div id="pr-addr">Tochtstraat 40</div>
-              <div id="pr-city">1324 KK Amsterdam</div>
-              <div id="pr-phone">06-12345678</div>
-            </div>
-            <div style="border-top:1px solid #ddd;margin-bottom:20px"></div>
-            <!-- Items -->
-            <div style="text-align:left">
-              <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:12px">Delivered items:</div>
-              <!-- Item rows -->
-              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
-                <span style="min-width:24px;font-weight:600">2×</span>
-                <span style="flex:1">Burger Deluxe</span>
-                <span style="font-weight:600">€ 28,00</span>
-              </div>
-              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
-                <span style="min-width:24px;font-weight:600">2×</span>
-                <span style="flex:1">Fries Large</span>
-                <span style="font-weight:600">€ 10,00</span>
-              </div>
-              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#111">
-                <span style="min-width:24px;font-weight:600">3×</span>
-                <span style="flex:1">Cola 0.5L</span>
-                <span style="font-weight:600">€ 9,00</span>
-              </div>
-              <div style="display:flex;gap:12px;margin-bottom:8px;font-size:14px;color:#555">
-                <span style="min-width:24px;font-weight:600">1×</span>
-                <span style="flex:1">Delivery fee</span>
-                <span style="font-weight:600">€ 3,00</span>
-              </div>
-              <!-- Total -->
-              <div style="border-top:1.5px solid #111;margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:#111">
-                <span>Total</span>
-                <span id="pr-total">€ 50,00</span>
-              </div>
-            </div>
+        <div class="scroll" style="padding:24px 0 140px;background:#ececec">
+          <!-- Thermal receipt (80mm) -->
+          <div class="receipt-thermal" id="receipt-print-area">
+            <div class="r-center r-bold r-lg">PIZZA TIME</div>
+            <div class="r-center">PIZZA &middot; BURGER &middot; PANINI &middot; SANDWICH</div>
+            <div class="r-center" style="margin-top:6px">Zwartjanstraat 30A</div>
+            <div class="r-center">3035AT Rotterdam</div>
+            <div class="r-center">010-2104622</div>
+            <div class="r-center">www.pizzatime010.nl</div>
+
+            <div class="r-band">Info</div>
+            <div class="r-row"><span>Ordernr.</span><span id="pr-oid">250921A02</span></div>
+            <div class="r-row"><span>Besteld op</span><span>21-09-2025 12:34</span></div>
+            <div class="r-row"><span>Bron</span><span>Kassa</span></div>
+            <div class="r-row"><span>Afhaaltijd</span><span>ZSM</span></div>
+            <div class="r-row"><span>Betaalwijze</span><span>Contant</span></div>
+
+            <div class="r-band">Klant</div>
+            <div class="r-bold" id="pr-cust-name">Thomas Jefferson</div>
+            <div id="pr-cust-addr">Tochtstraat 40</div>
+            <div id="pr-cust-city">3036 SK Rotterdam</div>
+            <div id="pr-cust-phone">06-12345678</div>
+            <div class="r-note">Bellen, wanneer je bij de trap bent van de bieb</div>
+
+            <div class="r-band">Bestelling</div>
+
+            <div class="r-row"><span>1x Spicy chickenwrap menu</span><span>&euro;9,75</span></div>
+            <div class="r-sub">+ Mayonaise</div>
+            <div class="r-sub">+ Coca-Cola</div>
+            <div class="r-row" style="margin-top:6px"><span>1x Kip salade</span><span>&euro;6,50</span></div>
+            <div class="r-row" style="margin-top:6px"><span>1x Red Bull</span><span>&euro;3,00</span></div>
+            <div class="r-row" style="margin-top:6px"><span>1x Bestelset</span><span>&euro;1,00</span></div>
+            <div class="r-sub">(bestek + servet)</div>
+
+            <div class="r-divider">--------------------------------</div>
+
+            <div class="r-row"><span>Subtotaal producten</span><span>&euro;20,25</span></div>
+            <div class="r-row"><span>Korting</span><span>-&euro;2,50</span></div>
+            <div class="r-row r-bold"><span>Nieuw subtotaal</span><span>&euro;17,75</span></div>
+            <div class="r-row" style="margin-top:6px"><span>Transactiekosten</span><span>&euro;0,35</span></div>
+            <div class="r-row"><span>Statiegeld</span><span>&euro;0,15</span></div>
+
+            <div class="r-divider">================================</div>
+
+            <div class="r-row r-total"><span>TOTAAL TE BETALEN</span><span id="pr-total">&euro;18,25</span></div>
+
+            <div class="r-divider">================================</div>
+
+            <div class="r-bold" style="margin-bottom:4px">BTW-specificatie:</div>
+            <div class="r-btw-row r-bold"><span style="flex:1">BTW</span><span style="flex:1;text-align:right">GRONDSLAG</span><span style="flex:1;text-align:right">BTW</span></div>
+            <div class="r-btw-row"><span style="flex:1">9%</span><span style="flex:1;text-align:right">&euro;16,75</span><span style="flex:1;text-align:right">&euro;1,51</span></div>
+            <div class="r-btw-row"><span style="flex:1">21%</span><span style="flex:1;text-align:right">&euro;1,00</span><span style="flex:1;text-align:right">&euro;0,17</span></div>
+            <div class="r-row r-bold" style="margin-top:6px"><span>Totaal BTW</span><span>&euro;1,68</span></div>
+
+            <div class="r-divider">================================</div>
+
+            <div class="r-center" style="margin-top:4px">BTW-nummer: NL123456789B01</div>
+            <div class="r-center">KVK-nummer: 87339568</div>
+            <div class="r-center r-bold" style="margin-top:10px">Bedankt voor uw bestelling.</div>
+            <div class="r-center">Bestel online via onze website of app.</div>
           </div>
         </div>
             <!-- Print button -->
             <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 24px calc(env(safe-area-inset-bottom) + 24px);background:transparent">
-              <button style="width:100%;height:52px;font-size:15px;font-weight:700;background:#111;color:#fff;border:none;cursor:pointer;border-radius:50px;font-family:Poppins,sans-serif;box-shadow:0 4px 32px rgba(0,0,0,0.18),0 1px 8px rgba(0,0,0,0.10)" onclick="alert('Printing...')">Print</button>
+              <button style="width:100%;height:52px;font-size:15px;font-weight:700;background:#111;color:#fff;border:none;cursor:pointer;border-radius:50px;font-family:Poppins,sans-serif;box-shadow:0 4px 32px rgba(0,0,0,0.18),0 1px 8px rgba(0,0,0,0.10)" onclick="window.print()">Print</button>
             </div>
         </div><!-- /content-surface -->
       </div>
