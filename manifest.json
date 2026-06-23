@@ -1,7 +1,7 @@
 {
   "name": "POS App",
   "short_name": "POS",
-  "start_url": "./pos-app-preview.html",
+  "start_url": "./index.html",
   "display": "fullscreen",
   "background_color": "#111111",
   "theme_color": "#111111",
