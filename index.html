@@ -33,7 +33,7 @@
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
-    .page-header { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
+    .page-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 14px) !important; }
     .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
   }
   .phone {
@@ -155,9 +155,7 @@
 
   /* Tabs */
   .tabs {
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #fff;
     display: flex;
     align-items: center;
     gap: 6px;
