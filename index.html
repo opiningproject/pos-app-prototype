@@ -97,7 +97,7 @@
   /* Black header zone */
   .page-header {
     background: #111;
-    padding: 14px 18px;
+    padding: 14px 24px;
     flex-shrink: 0;
     height: 88px;
     box-sizing: border-box;
@@ -202,8 +202,11 @@
     justify-content: center;
   }
   .tab.active {
-    background: #e8e8e8;
-    color: #111;
+    background: #111;
+    color: #fff;
+  }
+  .tab.active .tab-count {
+    color: #fff !important;
   }
   .tab.active .badge {
     background: #d0d0d0;
@@ -211,19 +214,21 @@
   }
 
   /* Scroll area */
-  .scroll { flex: 1; overflow-y: auto; background: #f7f7f7; padding-bottom: 120px; }
+  .scroll { flex: 1; overflow-y: auto; background: #ececec; padding-bottom: 120px; }
   .scroll::-webkit-scrollbar { width: 3px; }
   .scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
 
   /* Order card */
   .ocard {
     background: #fff;
-    border-bottom: 0.5px solid #ebebeb;
+    border-radius: 0;
+    margin: 0 0 6px;
     padding: 0;
     display: flex;
     flex-direction: column;
     cursor: pointer;
     transition: background 0.1s;
+    overflow: hidden;
   }
   .ocard-row {
     display: flex;
@@ -286,6 +291,54 @@
     font-family: 'Poppins', sans-serif;
   }
   .mbtn:hover, .mbtn-out:hover { background: #f5f5f5; }
+
+  /* Accept order button with progress fill */
+  .accept-btn {
+    position: relative;
+    background: #555 !important;
+    color: #fff !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px !important;
+    box-sizing: border-box;
+  }
+  .accept-btn .accept-label {
+    width: 100%;
+    text-align: center;
+  }
+  .accept-btn .accept-timer {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    min-width: 44px;
+    text-align: center;
+  }
+  .accept-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .app-loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e5e5e5;
+    border-top-color: #111;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
 
   /* Detail page */
   .time-warn {
@@ -543,7 +596,7 @@
             <div class="tab" onclick="switchTab(this,'delivery')">Delivering <span class="tab-count" style="font-weight:600;color:#111">0</span></div>
           </div>
           <!-- NEW -->
-          <div id="t-new">
+          <div id="t-new" style="padding-top:6px">
             <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen')">
               <div class="ocard-row"><div class="tcol late">
                 <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-9</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -553,7 +606,7 @@
                 <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#36 · 5 items</div></div>
               </div>
               <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen')">
               <div class="ocard-row"><div class="tcol urgent">
                 <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -563,7 +616,7 @@
                 <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#37 · 3 items</div></div>
               </div>
               <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('26','3062 WB','Lusthofstraat 27A','#26','€73.59','Pending','Delivery','2','kitchen')">
               <div class="ocard-row"><div class="tcol urgent">
                 <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg>
@@ -574,7 +627,7 @@
                 <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#26 · 4 items</div></div>
               </div>
               <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('38','3035 GW','1e Pijnackerstraat 120B','#38','€73.59','Paid','Delivery','17','kitchen')">
               <div class="ocard-row"><div class="tcol">
                 <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="47.47" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">17</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -584,7 +637,7 @@
                 <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#38 · 6 items</div></div>
               </div>
               <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('40','T4','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen')">
               <div class="ocard-row"><div class="tcol">
                 <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="78.19" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">28</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -594,27 +647,27 @@
                 <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#40 · 2 items</div></div>
               </div>
               <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('41','3018 VP','Schiedamseweg 112','#41','€29.50','Paid','Delivery','19','kitchen')">
               <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="53.06" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">19</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
               <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#41 · 3 items</div></div></div>
-              <div class="rcol"><span class="price">€29.50</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+              <div class="rcol"><span class="price">€29.50</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Pending','Collection','7','kitchen')">
               <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
               <div class="mcol"><div class="dname">Emma Jansen</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#42 · 4 items</div></div></div>
-              <div class="rcol"><span class="price">€52.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+              <div class="rcol"><span class="price">€52.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('43','3072 AL','Vossenburchkade 44','#43','€67.00','Paid','Delivery','33','kitchen')">
               <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="92.15" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">33</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
               <div class="mcol"><div class="dname">Vossenburchkade 44</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#43 · 5 items</div></div></div>
-              <div class="rcol"><span class="price">€67.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+              <div class="rcol"><span class="price">€67.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('44','3014 GH','Proveniersstraat 8B','#44','€18.00','Paid','Delivery','41','kitchen')">
               <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="114.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">41</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
               <div class="mcol"><div class="dname">Proveniersstraat 8B</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#44 · 2 items</div></div></div>
-              <div class="rcol"><span class="price">€18.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+              <div class="rcol"><span class="price">€18.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
             <div class="ocard" onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Pending','Collection','12','kitchen')">
               <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="33.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">12</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
               <div class="mcol"><div class="dname">Lotte de Vries</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#45 · 3 items</div></div></div>
-              <div class="rcol"><span class="price">€44.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Kitchen</button></div></div>
+              <div class="rcol"><span class="price">€44.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
           </div>
 
           <!-- KITCHEN -->
@@ -1396,23 +1449,120 @@
     el.classList.add('active');
   }
 
-  function triggerNewOrder(){
-    document.getElementById('notif-overlay').classList.add('show');
-    // play beep
+  function playBeep(){
     try{
       var ctx=new(window.AudioContext||window.webkitAudioContext)();
-      [0,150,300].forEach(function(d){
+      var notes=[{f:783.99,d:0,len:0.16},{f:1046.50,d:130,len:0.28}];
+      notes.forEach(function(n){
         setTimeout(function(){
           var o=ctx.createOscillator();
           var g=ctx.createGain();
+          o.type='sine';
           o.connect(g); g.connect(ctx.destination);
-          o.frequency.value=880;
-          g.gain.setValueAtTime(0.3,ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
-          o.start(ctx.currentTime); o.stop(ctx.currentTime+0.2);
-        },d);
+          o.frequency.value=n.f;
+          g.gain.setValueAtTime(0.0001,ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.32,ctx.currentTime+0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+n.len);
+          o.start(ctx.currentTime); o.stop(ctx.currentTime+n.len);
+        },n.d);
       });
     }catch(e){}
+  }
+
+  function fmtCountdown(s){
+    var m = Math.floor(s/60);
+    var sec = s%60;
+    return m+':'+(sec<10?'0':'')+sec;
+  }
+
+  function startAcceptTimer(btn, seconds, withSound){
+    var timerEl = btn.querySelector('.accept-timer');
+    var remaining = seconds;
+    if (timerEl) timerEl.textContent = fmtCountdown(remaining);
+    btn._countdownInterval = setInterval(function(){
+      remaining--;
+      if (timerEl) timerEl.textContent = fmtCountdown(Math.max(0,remaining));
+      if (remaining <= 0) {
+        clearInterval(btn._countdownInterval);
+        btn._countdownInterval = null;
+        if (document.body.contains(btn)) acceptOrderClick(btn, {stopPropagation:function(){}});
+      }
+    }, 1000);
+    if (withSound) {
+      playBeep();
+      btn._tickInterval = setInterval(playBeep, 2500);
+    }
+  }
+
+  function clearAcceptTimer(btn){
+    if (btn._countdownInterval) { clearInterval(btn._countdownInterval); btn._countdownInterval = null; }
+    if (btn._tickInterval) { clearInterval(btn._tickInterval); btn._tickInterval = null; }
+  }
+
+  function acceptOrderClick(btn, e){
+    if (e) e.stopPropagation();
+    clearAcceptTimer(btn);
+    var card = btn.closest('.ocard');
+    var actions = btn.parentElement;
+    showFullscreenLoader();
+    setTimeout(function(){
+      actions.innerHTML = '<button class="mbtn" onclick="moveCard(this,event)">Kitchen</button>';
+      var list = document.getElementById('t-new');
+      list.appendChild(card);
+      hideFullscreenLoader();
+    }, 2000);
+  }
+
+  function showFullscreenLoader(){
+    var el = document.getElementById('app-loader');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'app-loader';
+      el.style.cssText = 'position:absolute;left:0;top:0;right:0;bottom:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:600;';
+      el.innerHTML = '<span class="app-loader-spinner"></span>';
+      document.getElementById('p-orders').appendChild(el);
+    }
+    el.style.display = 'flex';
+  }
+
+  function hideFullscreenLoader(){
+    var el = document.getElementById('app-loader');
+    if (el) el.style.display = 'none';
+  }
+
+  function initAcceptButtons(){
+    document.querySelectorAll('#t-new .accept-btn').forEach(function(btn){
+      startAcceptTimer(btn, 60, false);
+    });
+  }
+
+  var newOrderCounter = 46;
+  function triggerNewOrder(){
+    newOrderCounter++;
+    var id = String(newOrderCounter);
+    var card = document.createElement('div');
+    card.className = 'ocard';
+    card.setAttribute('onclick', "goDetail('"+id+"','3012 AB','Bergweg 18','#"+id+"','€38.50','Paid','Delivery','15','kitchen')");
+    card.innerHTML =
+      '<div class="ocard-row">'+
+        '<div class="tcol urgent">'+
+          '<svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="83.77" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">15</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg>'+
+          '<span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>'+
+        '</div>'+
+        '<div class="mcol">'+
+          '<div class="dname">Bergweg 18</div>'+
+          '<div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#'+id+' &middot; 3 items</div></div>'+
+        '</div>'+
+        '<div class="rcol"><span class="price">€38.50</span></div>'+
+      '</div>'+
+      '<div class="ocard-actions">'+
+        '<button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label">Accept</span><span class="accept-timer">1:00</span></button>'+
+      '</div>';
+    var list = document.getElementById('t-new');
+    list.insertBefore(card, list.firstChild);
+    adjustTabCount('new', 1);
+    var btn = card.querySelector('.accept-btn');
+    startAcceptTimer(btn, 60, true);
   }
 
   function closeNotif(){
@@ -1446,6 +1596,7 @@
   }
 
   initScrollListeners();
+  initAcceptButtons();
 </script>
 
 </body>
