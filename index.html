@@ -342,13 +342,13 @@
 
   .order-toast {
     position: absolute;
-    left: 16px;
-    right: 16px;
-    top: calc(env(safe-area-inset-top) + 56px);
+    left: 0;
+    right: 0;
+    top: 0;
     background: #111;
     color: #fff;
-    border-radius: 12px;
-    padding: 14px 24px;
+    border-radius: 0;
+    padding: calc(env(safe-area-inset-top) + 14px) 24px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -750,7 +750,7 @@
           <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="white"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="rgba(24,24,24,0.85)" stroke="rgba(24,24,24,0.85)" stroke-width="1.07309"/></svg></span></div>
           <div class="ni" onclick="goPage('settings')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2.5" y1="5.5" x2="17.5" y2="5.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="10" x2="17.5" y2="10" stroke="white" stroke-width="1.71694" stroke-linecap="round"/><line x1="2.5" y1="14.5" x2="17.5" y2="14.5" stroke="white" stroke-width="1.71694" stroke-linecap="round"/></svg></span></div>
         </div></div>
-        <button onclick="triggerNewOrder()" title="Simuleer nieuwe bestelling" style="position:absolute;right:16px;bottom:90px;width:52px;height:52px;border-radius:50%;background:#e53935;border:none;box-shadow:0 4px 14px rgba(0,0,0,0.35);z-index:650;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <button onclick="triggerNewOrder()" title="Simuleer nieuwe bestelling" style="position:absolute;right:40px;bottom:130px;width:52px;height:52px;border-radius:50%;background:#e53935;border:none;box-shadow:0 4px 14px rgba(0,0,0,0.35);z-index:650;display:flex;align-items:center;justify-content:center;cursor:pointer">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12.5523 2 13 2.44772 13 3V11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H13V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V13H3C2.44772 13 2 12.5523 2 12C2 11.4477 2.44772 11 3 11H11V3C11 2.44772 11.4477 2 12 2Z" fill="white"/></svg>
         </button>
       </div>
