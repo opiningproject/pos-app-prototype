@@ -90,8 +90,8 @@
   .statusbar .time { font-size: 13px; font-weight: 600; color: #fff; }
   .statusbar .icons { display: flex; gap: 6px; align-items: center; color: #fff; font-size: 14px; }
 
-  .screen-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
-  .page { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+  .screen-content { position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+  .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
   .page.active { display: flex; }
 
   /* Black header zone */
@@ -341,29 +341,24 @@
   }
 
   .order-toast {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    max-height: 0;
     background: #111;
     color: #fff;
-    border-radius: 0;
+    transition: max-height 0.3s ease;
+  }
+  .order-toast.show {
+    max-height: calc(88px + env(safe-area-inset-top));
+  }
+  .order-toast-inner {
     box-sizing: border-box;
-    min-height: calc(88px + env(safe-area-inset-top));
+    height: calc(88px + env(safe-area-inset-top));
     padding: calc(env(safe-area-inset-top) + 14px) 24px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    z-index: 700;
-    transform: translateY(-120%);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .order-toast.show {
-    transform: translateY(0);
-    opacity: 1;
   }
   .order-toast-title {
     font-size: 14px;
@@ -380,6 +375,33 @@
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
     white-space: nowrap;
+  }
+
+  .accepted-toast {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    top: 24px;
+    background: #2e7d32;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    z-index: 750;
+    transform: translateY(-120%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .accepted-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .accepted-toast-inner {
+    box-sizing: border-box;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
   }
 
   /* Detail page */
@@ -610,6 +632,17 @@
     </div>
 
     <div class="screen-content">
+
+      <div class="order-toast" id="order-toast">
+        <div class="order-toast-inner">
+          <span class="order-toast-title">New order</span>
+          <button class="order-toast-btn" onclick="reviewToastOrder()">Review</button>
+        </div>
+      </div>
+
+      <div class="accepted-toast" id="accepted-toast">
+        <div class="accepted-toast-inner" id="accepted-toast-text"></div>
+      </div>
 
       <!-- ===== ORDERS PAGE ===== -->
       <div class="page active" id="p-orders">
@@ -1504,16 +1537,20 @@
   function playBeep(){
     try{
       var ctx=new(window.AudioContext||window.webkitAudioContext)();
-      var notes=[{f:783.99,d:0,len:0.16},{f:1046.50,d:130,len:0.28}];
+      var notes=[];
+      for(var i=0;i<5;i++){
+        notes.push({f:1000,d:i*280,len:0.16});
+        notes.push({f:760,d:i*280+150,len:0.16});
+      }
       notes.forEach(function(n){
         setTimeout(function(){
           var o=ctx.createOscillator();
           var g=ctx.createGain();
-          o.type='sine';
+          o.type='square';
           o.connect(g); g.connect(ctx.destination);
           o.frequency.value=n.f;
           g.gain.setValueAtTime(0.0001,ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.32,ctx.currentTime+0.02);
+          g.gain.exponentialRampToValueAtTime(0.28,ctx.currentTime+0.015);
           g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+n.len);
           o.start(ctx.currentTime); o.stop(ctx.currentTime+n.len);
         },n.d);
@@ -1565,6 +1602,28 @@
     actions.innerHTML = '<button class="mbtn" onclick="moveCard(this,event)">Kitchen</button>';
     reorderNewList(card);
     if (card === toastOrderCard) closeOrderToast();
+    showAcceptedToast(card);
+  }
+
+  function getOrderCode(card){
+    var m = card.querySelector('.daddr');
+    var idMatch = m ? m.textContent.match(/#(\d+)/) : null;
+    var idNum = idMatch ? idMatch[1] : '00';
+    var now = new Date();
+    var yy = String(now.getFullYear()).slice(-2);
+    var mm = String(now.getMonth()+1).padStart(2,'0');
+    var dd = String(now.getDate()).padStart(2,'0');
+    var seq = String(idNum).padStart(2,'0');
+    return yy+mm+dd+'A'+seq;
+  }
+
+  function showAcceptedToast(card){
+    var el = document.getElementById('accepted-toast');
+    var text = document.getElementById('accepted-toast-text');
+    text.textContent = 'Order '+getOrderCode(card)+' has been accepted';
+    clearTimeout(el._hideTimeout);
+    el.classList.add('show');
+    el._hideTimeout = setTimeout(function(){ el.classList.remove('show'); }, 3000);
   }
 
   function acceptFromDetail(){
@@ -1651,23 +1710,14 @@
   var toastOrderCard = null;
   function showOrderToast(card){
     toastOrderCard = card;
-    var page = document.getElementById('p-orders');
     var el = document.getElementById('order-toast');
-    if (!el) {
-      el = document.createElement('div');
-      el.id = 'order-toast';
-      el.className = 'order-toast';
-      el.innerHTML = '<span class="order-toast-title">New order</span><button class="order-toast-btn" onclick="reviewToastOrder()">Review</button>';
-      page.appendChild(el);
-    }
     clearTimeout(el._hideTimeout);
-    requestAnimationFrame(function(){ el.classList.add('show'); });
+    el.classList.add('show');
     el._hideTimeout = setTimeout(closeOrderToast, 60000);
   }
 
   function reviewToastOrder(){
     var card = toastOrderCard;
-    closeOrderToast();
     if (card) card.click();
   }
 
