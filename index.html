@@ -1535,9 +1535,20 @@
     el.classList.add('active');
   }
 
+  var sharedAudioCtx = null;
+  function getAudioCtx(){
+    if (!sharedAudioCtx) {
+      sharedAudioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    }
+    if (sharedAudioCtx.state === 'suspended') {
+      sharedAudioCtx.resume();
+    }
+    return sharedAudioCtx;
+  }
+
   function playBeep(){
     try{
-      var ctx=new(window.AudioContext||window.webkitAudioContext)();
+      var ctx=getAudioCtx();
       var notes=[];
       for(var i=0;i<5;i++){
         notes.push({f:1000,d:i*280,len:0.16});
