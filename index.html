@@ -235,7 +235,7 @@
   .ocard-row {
     display: flex;
     gap: 24px;
-    align-items: stretch;
+    align-items: flex-start;
     padding: 24px 24px 12px;
   }
   .ocard-actions {
@@ -246,7 +246,14 @@
   .ocard:active { background: #f0f0f0; }
 
   /* Time column */
-  .tcol { width: 58px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .tcol { width: 58px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; order: 2; }
+  .oc-price { font-size: 14px; color: #888; font-weight: 500; margin-top: 4px; }
+  .oc-pay-badge { display:inline-block; font-size:12px; font-weight:600; padding:5px 12px; border-radius:100px; margin-top:10px; }
+  .oc-pay-paid { background:#e6f4ea; color:#2e7d32; }
+  .oc-pay-pending { background:#fdf3da; color:#a9750c; }
+  .oc-pay-cash { background:#f0f0f0; color:#555; }
+  .oc-action-btn { background:#111 !important; color:#fff !important; border:none !important; border-radius:100px !important; height:35px; font-weight:600; }
+  .oc-action-btn:hover { background:#000 !important; }
   .sched-badge {
     display: inline-block;
     background: #ede7f6;
@@ -259,7 +266,7 @@
   }
 
   /* Middle column */
-  .mcol { flex: 1; min-width: 0; }
+  .mcol { flex: 1; min-width: 0; order: 1; }
   .dname { font-size: 14px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .daddr { font-size: 14px; color: #888; margin-top: 4px; line-height: 1.4; min-height: calc(14px * 1.4 * 2); }
   .oid { font-size: 14px; color: #888; margin-top: 2px; }
@@ -767,101 +774,61 @@
           </div>
           <!-- NEW -->
           <div id="t-new" style="padding-top:6px">
-            <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen',this)">
+            <div class="ocard" data-oid="#37" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen',this)">
               <div class="ocard-row"><div class="tcol late">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-9</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">9</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">Tochtstraat 40</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#36 · 5 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen',this)">
+              <div class="mcol"><div class="dname">Tochtstraat 40</div><div class="oc-price">€73.59 (5)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#37" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Pending','Collection','2','kitchen',this)">
               <div class="ocard-row"><div class="tcol urgent">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">2</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">Thomas Jefferson</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#37 · 3 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A','#26','€73.59','Pending','Delivery','2','kitchen',this)">
+              <div class="mcol"><div class="dname">Thomas Jefferson</div><div class="oc-price">€73.59 (3)</div><div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#26" onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A||3062 WB Rotterdam','#26','€73.59','Pending','Delivery','2','kitchen',this)">
               <div class="ocard-row"><div class="tcol urgent">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">2</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="5.59" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">2</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg>
                 <span style="font-size:10px;color:#111;font-weight:500;margin-top:2px">16:30</span>
               </div>
-              <div class="mcol">
-                <div class="dname">Lusthofstraat 27A</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#26 · 4 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('38','Daan Visser','1e Pijnackerstraat 120B','#38','€73.59','Paid','Delivery','17','kitchen',this)">
+              <div class="mcol"><div class="dname">Lusthofstraat 27A</div><div class="oc-price">€73.59 (4)</div><div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#38" onclick="goDetail('38','Daan Visser','1e Pijnackerstraat 120B||3035 GW Rotterdam','#38','€73.59','Paid','Delivery','17','kitchen',this)">
               <div class="ocard-row"><div class="tcol">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="47.47" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">17</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="47.47" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">17</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">1e Pijnackerstraat 120B</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#38 · 6 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('40','Lars Jansen','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen',this)">
+              <div class="mcol"><div class="dname">1e Pijnackerstraat 120B</div><div class="oc-price">€73.59 (6)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#40" onclick="goDetail('40','Lars Jansen','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen',this)">
               <div class="ocard-row"><div class="tcol">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="78.19" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">28</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="78.19" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">28</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">T4</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#40 · 2 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€73.59</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('41','Mila van Dijk','Schiedamseweg 112','#41','€29.50','Paid','Delivery','19','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="53.06" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">19</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
-              <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#41 · 3 items</div></div></div>
-              <div class="rcol"><span class="price">€29.50</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Pending','Collection','7','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">7</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
-              <div class="mcol"><div class="dname">Emma Jansen</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#42 · 4 items</div></div></div>
-              <div class="rcol"><span class="price">€52.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('43','Noah Smit','Vossenburchkade 44','#43','€67.00','Paid','Delivery','33','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="92.15" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">33</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
-              <div class="mcol"><div class="dname">Vossenburchkade 44</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#43 · 5 items</div></div></div>
-              <div class="rcol"><span class="price">€67.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('44','Julia Mulder','Proveniersstraat 8B','#44','€18.00','Paid','Delivery','41','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="114.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">41</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
-              <div class="mcol"><div class="dname">Proveniersstraat 8B</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#44 · 2 items</div></div></div>
-              <div class="rcol"><span class="price">€18.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
-            <div class="ocard" onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Pending','Collection','12','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="33.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">12</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
-              <div class="mcol"><div class="dname">Lotte de Vries</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#45 · 3 items</div></div></div>
-              <div class="rcol"><span class="price">€44.00</span></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+              <div class="mcol"><div class="dname">T4</div><div class="oc-price">€73.59 (2)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#41" onclick="goDetail('41','Mila van Dijk','Schiedamseweg 112||3026 GP Rotterdam','#41','€29.50','Paid','Delivery','19','kitchen',this)">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="53.06" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">19</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="oc-price">€29.50 (3)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#42" onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Pending','Collection','7','kitchen',this)">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="19.55" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">7</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Emma Jansen</div><div class="oc-price">€52.00 (4)</div><div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#43" onclick="goDetail('43','Noah Smit','Vossenburchkade 44||3072 AL Rotterdam','#43','€67.00','Paid','Delivery','33','kitchen',this)">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="92.15" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">33</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Vossenburchkade 44</div><div class="oc-price">€67.00 (5)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#44" onclick="goDetail('44','Julia Mulder','Proveniersstraat 8B||3014 GH Rotterdam','#44','€18.00','Paid','Delivery','41','kitchen',this)">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="114.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">41</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Proveniersstraat 8B</div><div class="oc-price">€18.00 (2)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
+            <div class="ocard" data-oid="#45" onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Pending','Collection','12','kitchen',this)">
+              <div class="ocard-row"><div class="tcol"><svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="33.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">12</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span></div>
+              <div class="mcol"><div class="dname">Lotte de Vries</div><div class="oc-price">€44.00 (3)</div><div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div></div></div><div class="ocard-actions"><button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button></div></div>
           </div>
 
           <!-- KITCHEN -->
           <div id="t-kitchen" style="display:none">
-            <div class="ocard" onclick="goDetail('33','Tim de Groot','Bergselaan 88','#33','€41.50','Paid','Delivery','4','delivery')">
+            <div class="ocard" data-oid="#33" onclick="goDetail('33','Tim de Groot','Bergselaan 88||3038 CK Rotterdam','#33','€41.50','Paid','Delivery','4','delivery')">
               <div class="ocard-row"><div class="tcol late">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-4</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">4</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">Bergselaan 88</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#33 · 4 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€41.50</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Delivering</button></div></div>
-            <div class="ocard" onclick="goDetail('34','Sophie Bakker','Collection order','#34','€28.00','Paid','Collection','8','delivery')">
+              <div class="mcol"><div class="dname">Bergselaan 88</div><div class="oc-price">€41.50 (4)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn oc-action-btn" data-move="delivering" data-i18n="oc_move_delivery" onclick="moveCard(this,event)">Verplaats naar bezorging</button></div></div>
+            <div class="ocard" data-oid="#34" onclick="goDetail('34','Sophie Bakker','Collection order','#34','€28.00','Paid','Collection','8','delivery')">
               <div class="ocard-row"><div class="tcol">
-                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="22.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100" font-family="Poppins,sans-serif">8</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#e65100" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
+                <svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="22.35" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">8</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
               </div>
-              <div class="mcol">
-                <div class="dname">Sophie Bakker</div>
-                <div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#34 · 3 items</div></div>
-              </div>
-              <div class="rcol">
-                <span class="price">€28.00</span></div></div><div class="ocard-actions"><button class="mbtn" onclick="moveCard(this,event)">Delivering</button></div></div>
+              <div class="mcol"><div class="dname">Sophie Bakker</div><div class="oc-price">€28.00 (3)</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div><div class="ocard-actions"><button class="mbtn oc-action-btn" data-move="delivering" data-i18n="oc_move_delivery" onclick="moveCard(this,event)">Verplaats naar bezorging</button></div></div>
           </div>
 
           <!-- DELIVERY -->
@@ -919,6 +886,7 @@
               <span data-i18n="d_new_customer" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:5px 12px;white-space:nowrap">New Customer</span>
             </div>
             <div id="d-detail-addr" style="font-size:14px;color:#888;margin-top:6px">—</div>
+            <div id="d-detail-city" style="font-size:14px;color:#888;display:none">—</div>
             <a id="d-open-map" data-i18n="d_open_map" href="#" target="_blank" style="display:none;font-size:14px;font-weight:500;color:#1a73e8;margin-top:6px;text-decoration:none">Open Map</a>
           </div>
 
@@ -1066,11 +1034,11 @@
         </div>
         <div class="scroll">
           <div class="sec-label">Today — 19 Jun 2026</div>
-          <div class="ocard" onclick="goDetail('36','3036 SK','Tochtstraat 40','#36','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:45</div></div><div class="mcol"><div class="dname">Tochtstraat 40</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#36 · Delivery</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
-          <div class="ocard" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:20</div></div><div class="mcol"><div class="dname">Thomas Jefferson</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#37 · Collection</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
-          <div class="ocard" onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A','#26','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:55</div></div><div class="mcol"><div class="dname">Lusthofstraat 27A</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-cash" style="font-size:16px"></i>Cash</div><div>#26 · Delivery</div></div></div><div class="rcol"><span class="price">€73.59</span></div></div></div>
-          <div class="ocard" onclick="goDetail('25','3035 KH','Zwaanshals 299','#25','€44.00','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:30</div></div><div class="mcol"><div class="dname">Zwaanshals 299</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#25 · Delivery</div></div></div><div class="rcol"><span class="price">€44.00</span></div></div></div>
-          <div class="ocard" onclick="goDetail('24','Sophie Bakker','Collection order','#24','€28.00','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:10</div></div><div class="mcol"><div class="dname">Sophie Bakker</div><div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#24 · Collection</div></div></div><div class="rcol"><span class="price">€28.00</span></div></div></div>
+          <div class="ocard" data-oid="#36" onclick="goDetail('36','3036 SK','Tochtstraat 40','#36','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:45</div></div><div class="mcol"><div class="dname">Tochtstraat 40</div><div class="oc-price">€73.59</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div></div>
+          <div class="ocard" data-oid="#37" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:20</div></div><div class="mcol"><div class="dname">Thomas Jefferson</div><div class="oc-price">€73.59</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div></div>
+          <div class="ocard" data-oid="#26" onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A||3062 WB Rotterdam','#26','€73.59','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:55</div></div><div class="mcol"><div class="dname">Lusthofstraat 27A</div><div class="oc-price">€73.59</div><div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div></div></div></div>
+          <div class="ocard" data-oid="#25" onclick="goDetail('25','3035 KH','Zwaanshals 299','#25','€44.00','Paid','Delivery','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:30</div></div><div class="mcol"><div class="dname">Zwaanshals 299</div><div class="oc-price">€44.00</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div></div>
+          <div class="ocard" data-oid="#24" onclick="goDetail('24','Sophie Bakker','Collection order','#24','€28.00','Paid','Collection','0','archive')"><div class="ocard-row"><div class="tcol"><div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:10</div></div><div class="mcol"><div class="dname">Sophie Bakker</div><div class="oc-price">€28.00</div><div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div></div></div></div>
         </div>
         </div><!-- /content-surface -->
         <div class="navbar"><div class="navbar-pill">
@@ -1501,7 +1469,9 @@
       tab_menu_all:'All', tab_menu_active:'Active', tab_menu_concept:'Draft', tab_menu_archived:'Archived',
       d_new_customer:'New Customer', d_open_map:'Open Map', d_paid:'Paid', d_pending:'Pending',
       d_to_kitchen:'To kitchen', d_to_delivery:'To delivery', d_to_archive:'To archive', d_accept:'Accept',
-      accept_label:'Accept'
+      accept_label:'Accept',
+      oc_move_kitchen:'Move to kitchen', oc_move_delivery:'Move to delivery', oc_move_archive:'Move to archive',
+      oc_pay_paid:'Paid', oc_pay_pending:'Payment pending', oc_pay_cash:'Cash'
     },
     nl: {
       hdr_settings:'Instellingen', settings_language:'Taal', settings_restaurant:'Restaurant',
@@ -1524,7 +1494,9 @@
       tab_menu_all:'Alle', tab_menu_active:'Actief', tab_menu_concept:'Concept', tab_menu_archived:'Gearchiveerd',
       d_new_customer:'Nieuwe klant', d_open_map:'Open kaart', d_paid:'Betaald', d_pending:'In behandeling',
       d_to_kitchen:'Naar keuken', d_to_delivery:'Naar bezorging', d_to_archive:'Naar archief', d_accept:'Accepteren',
-      accept_label:'Accepteren'
+      accept_label:'Accepteren',
+      oc_move_kitchen:'Verplaats naar keuken', oc_move_delivery:'Verplaats naar bezorging', oc_move_archive:'Verplaats naar archief',
+      oc_pay_paid:'Betaald', oc_pay_pending:'Betaling in behandeling', oc_pay_cash:'Contant'
     }
   };
   var currentLang = 'en';
@@ -1563,11 +1535,17 @@
     var isUnaccepted = !!(cardEl && cardEl.querySelector('.accept-btn'));
     document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
     document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
-    var cleanAddr=(type==='Collection')?'Collection':((addr&&addr!=='Collection order'&&addr!=='Restaurant')?addr:'—');
+    var addrParts=(addr||'').split('||');
+    var streetAddr=addrParts[0];
+    var cityAddr=addrParts[1]||'';
+    var cleanAddr=(type==='Collection')?'Collection':((streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant')?streetAddr:'—');
     var openMap=document.getElementById('d-open-map');
-    var isDelivery=(type==='Delivery'&&addr&&addr!=='Collection order'&&addr!=='Restaurant');
+    var isDelivery=(type==='Delivery'&&streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant');
     openMap.style.display=isDelivery?'block':'none';
-    if(isDelivery) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(addr);
+    var cityEl=document.getElementById('d-detail-city');
+    cityEl.style.display=(isDelivery&&cityAddr)?'block':'none';
+    if(cityAddr) cityEl.textContent=cityAddr;
+    if(isDelivery) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
     document.getElementById('d-page-title').textContent=oid;
     document.getElementById('d-total').textContent=price;
     document.getElementById('d-detail-name').textContent=name;
@@ -1577,7 +1555,7 @@
     var color=minsNum<0?'#c62828':minsNum<=10?'#e65100':'#4caf50';
     var num=document.getElementById('d-timer-num');
     num.style.color=color;
-    num.textContent=mins;
+    num.textContent=Math.abs(minsNum);
     document.getElementById('d-timer-label').style.color=color;
     var nextKeyMap={kitchen:'d_to_kitchen',delivery:'d_to_delivery',archive:'d_to_archive'};
     var nextKey=nextKeyMap[next]||'d_to_kitchen';
@@ -1601,15 +1579,15 @@
 
   var TAB_IDX = {new:0, kitchen:1, delivery:2};
   var BTN_MAP = {
-    'Kitchen':   {from:'new',     to:'kitchen'},
-    'Delivering':{from:'kitchen', to:'delivery'},
-    'Archive':   {from:'delivery', to:null}
+    'kitchen':   {from:'new',     to:'kitchen'},
+    'delivering':{from:'kitchen', to:'delivery'},
+    'archive':   {from:'delivery', to:null}
   };
 
   function moveCard(btn, e) {
     e.stopPropagation();
-    var label = btn.textContent.trim();
-    var map   = BTN_MAP[label];
+    var action = btn.dataset.move || btn.textContent.trim().toLowerCase();
+    var map   = BTN_MAP[action];
     if (!map) return;
     var card  = btn.closest('.ocard');
 
@@ -1780,16 +1758,14 @@
     clearAcceptTimer(btn);
     var card = btn.closest('.ocard');
     var actions = btn.parentElement;
-    actions.innerHTML = '<button class="mbtn" onclick="moveCard(this,event)">Kitchen</button>';
+    actions.innerHTML = '<button class="mbtn oc-action-btn" data-move="kitchen" data-i18n="oc_move_kitchen" onclick="moveCard(this,event)">'+t('oc_move_kitchen')+'</button>';
     reorderNewList(card);
     if (card === toastOrderCard) closeOrderToast();
     showAcceptedToast(card);
   }
 
   function getOrderCode(card){
-    var m = card.querySelector('.daddr');
-    var idMatch = m ? m.textContent.match(/#(\d+)/) : null;
-    return '#'+(idMatch ? idMatch[1] : '00');
+    return card.dataset.oid || '#00';
   }
 
   function showAcceptedToast(card){
@@ -1858,21 +1834,23 @@
     var id = String(newOrderCounter);
     var card = document.createElement('div');
     card.className = 'ocard';
+    card.setAttribute('data-oid', '#'+id);
     card.setAttribute('onclick', "goDetail('"+id+"','3012 AB','Bergweg 18','#"+id+"','€38.50','Paid','Delivery','15','kitchen',this)");
     card.innerHTML =
       '<div class="ocard-row">'+
         '<div class="tcol urgent">'+
-          '<svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="83.77" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="22" text-anchor="middle" font-size="10" font-weight="600" fill="#4caf50" font-family="Poppins,sans-serif">15</text><text x="24" y="33" text-anchor="middle" font-size="9" font-weight="500" fill="#4caf50" font-family="Poppins,sans-serif">min</text></svg>'+
+          '<svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="83.77" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">15</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg>'+
+          ''+
           '<span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>'+
         '</div>'+
         '<div class="mcol">'+
           '<div class="dname">Bergweg 18</div>'+
-          '<div class="daddr"><div style="display:flex;align-items:center;gap:5px;line-height:1;margin-bottom:2px"><i class="ti ti-credit-card" style="font-size:16px"></i>Paid</div><div>#'+id+' &middot; 3 items</div></div>'+
+          '<div class="oc-price">€38.50 (3)</div>'+
+          '<div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">'+t('oc_pay_paid')+'</div>'+
         '</div>'+
-        '<div class="rcol"><span class="price">€38.50</span></div>'+
       '</div>'+
       '<div class="ocard-actions">'+
-        '<button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>'+
+        '<button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">'+t('accept_label')+'</span><span class="accept-timer">1:00</span></button>'+
       '</div>';
     var list = document.getElementById('t-new');
     list.insertBefore(card, list.firstChild);
