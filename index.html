@@ -649,6 +649,49 @@
   .mtoggle.on { background:#111;box-shadow:none; }
   .mtoggle::after { content:'';width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform 0.22s cubic-bezier(0.25,1,0.5,1);box-shadow:0 2px 6px rgba(0,0,0,0.22),0 0.5px 1px rgba(0,0,0,0.12);background-repeat:no-repeat;background-position:center;background-size:11px 11px; }
   .mtoggle.on::after { transform:translateX(16px);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M2.5 7L5.5 10L11.5 4' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  /* Filter overlay */
+  .filter-overlay { display:none; position:absolute; top:0; left:0; right:0; bottom:0; background:#fff; z-index:920; flex-direction:column; }
+  .filter-overlay.show { display:flex; }
+  .filter-header { display:flex; align-items:center; justify-content:space-between; height:88px; box-sizing:border-box; padding:14px 16px; flex-shrink:0; }
+  .filter-header-circle { width:44px;height:44px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0; }
+  .filter-header-title { font-size:17px;font-weight:700;color:#111; }
+  .filter-reset-btn { background:#f0f0f0;color:#bbb;border:none;border-radius:100px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer; }
+  .filter-reset-btn.active { color:#111;background:#ececec; }
+  .filter-list { flex:1; overflow-y:auto; padding:0 20px calc(env(safe-area-inset-bottom) + 40px); }
+  .filter-row { padding:16px 0; border-top:1px solid #f0f0f0; display:flex; align-items:center; justify-content:space-between; cursor:pointer; }
+  .filter-row:first-child { border-top:none; }
+  .filter-row-label { font-size:16px;color:#111;font-weight:500; }
+  .filter-chip-wrap { display:flex; flex-wrap:wrap; gap:8px; padding:10px 0 18px; }
+  .filter-chip { display:inline-flex; align-items:center; gap:6px; border:1px solid #ddd; border-radius:100px; padding:6px 12px; font-size:13px; color:#111; font-weight:500; }
+  .filter-chip .fc-x { cursor:pointer; color:#888; font-weight:700; }
+  .filter-detail-search { background:#f0f0f0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:8px;margin:16px 20px;color:#aaa;font-size:14px; }
+  .filter-mode-toggle { display:flex; gap:8px; margin:0 20px 6px; }
+  .filter-mode-btn { padding:8px 16px;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;background:#f0f0f0;color:#888; }
+  .filter-mode-btn.active { background:#e3e3e3;color:#111; }
+  .filter-option-row { display:flex;align-items:center;gap:14px;padding:16px 20px;border-top:1px solid #f0f0f0;cursor:pointer; }
+  .filter-checkbox { width:22px;height:22px;border-radius:6px;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+  .filter-checkbox.checked { background:#111;border-color:#111; }
+  .filter-checkbox svg { display:none; }
+  .filter-checkbox.checked svg { display:block; }
+  .tb-icon { position:relative; }
+  .filter-badge { position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:50%;background:#111;color:#fff;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 3px; }
+  .filter-date-toggle-row { display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid #f0f0f0; }
+  .filter-date-box { display:flex;align-items:center;justify-content:space-between;margin:0 20px 16px;padding:14px 16px;border:1.5px solid #e5e5e5;border-radius:12px;cursor:pointer; }
+  .filter-date-pill { background:#f0f0f0;border-radius:100px;padding:6px 14px;font-size:14px;color:#111;font-weight:500; }
+  .date-picker-backdrop { display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.25);z-index:940;align-items:center;justify-content:center; }
+  .date-picker-backdrop.show { display:flex; }
+  .date-picker-popup { background:#fff;border-radius:18px;padding:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);width:280px; }
+  .date-picker-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:10px; }
+  .date-picker-title { font-size:16px;font-weight:700;color:#111; }
+  .date-picker-nav { display:flex;gap:14px; }
+  .date-picker-nav span { cursor:pointer;color:#111;font-size:16px;font-weight:700; }
+  .date-picker-grid { display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center; }
+  .date-picker-grid .dow { font-size:11px;color:#888;font-weight:600;padding-bottom:4px; }
+  .date-picker-grid .day { font-size:15px;color:#111;padding:8px 0;border-radius:50%;cursor:pointer; }
+  .date-picker-grid .day.selected { background:#1a73e8;color:#fff; }
+  .date-picker-grid .day.empty { cursor:default; }
+  .filter-badge.show { display:flex; }
+
   /* Menu dropdown */
   .mdd-item { display:flex;align-items:center;gap:12px;padding:14px 16px;margin:2px 6px;border-radius:14px;font-size:15px;font-weight:500;color:#111;cursor:pointer; }
   .mdd-item:hover { background:#f5f5f5; }
@@ -750,11 +793,11 @@
         <div class="page-header page-header-light" style="position:relative">
           <div class="page-header-row">
             <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none"><span id="orders-header-title" data-i18n="dd_orders_live">Live orders</span> <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon" id="bell-icon"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="tb-icon" id="bell-icon" onclick="openFilterOverlay()"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.907227 0.90625H16.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
 <path d="M3.90723 6.34766H13.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
 <path d="M6.90723 11.7891H10.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
-</svg></div>
+</svg><span class="filter-badge" id="orders-filter-badge">0</span></div>
           </div>
           <div id="orders-dropdown-backdrop" onclick="toggleOrdersDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.12);z-index:190"></div>
           <div id="orders-dropdown" style="display:none;position:absolute;top:calc(100% - 6px);left:16px;background:#fff;border-radius:24px;z-index:200;min-width:260px;padding:8px;overflow:hidden">
@@ -1024,10 +1067,19 @@
 
       <!-- ===== ARCHIVE PAGE ===== -->
       <div class="page" id="p-archive">
-        <div class="page-header page-header-light">
+        <div class="page-header page-header-light" style="position:relative">
           <div class="page-header-row">
-            <h1 data-i18n="hdr_archive">Archive</h1>
-            <div class="tb-icon"><i class="ti ti-calendar"></i></div>
+            <h1 onclick="toggleArchiveDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none"><span id="archive-header-title" data-i18n="dd_orders_archive">Archive</span> <svg id="archive-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+            <div class="tb-icon" onclick="openFilterOverlay()"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.907227 0.90625H16.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+<path d="M3.90723 6.34766H13.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+<path d="M6.90723 11.7891H10.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
+</svg><span class="filter-badge" id="archive-filter-badge">0</span></div>
+          </div>
+          <div id="archive-dropdown-backdrop" onclick="toggleArchiveDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.12);z-index:190"></div>
+          <div id="archive-dropdown" style="display:none;position:absolute;top:calc(100% - 6px);left:16px;background:#fff;border-radius:24px;z-index:200;min-width:260px;padding:8px;overflow:hidden">
+            <div class="mdd-item" onclick="resetOrdersHeader()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="dd_orders_live">Live orders</span></div>
+            <div class="mdd-item mdd-item-active"><i class="ti ti-archive"></i> <span data-i18n="dd_orders_archive">Archive</span></div>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
@@ -1133,11 +1185,10 @@
         </div>
         <div class="content-surface" style="border-radius:0">
           <div class="scroll" style="display:flex;align-items:center;justify-content:center">
-            <div style="text-align:center;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:20px">
+            <div style="text-align:center;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;width:100%">
               <div data-i18n="create_order_desc" style="font-size:14px;font-weight:500;color:#888">Manually create a new order here</div>
-              <button onclick="triggerNewOrder()" title="Simuleer nieuwe bestelling" style="width:52px;height:52px;border-radius:50%;background:#e53935;border:none;box-shadow:0 4px 14px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12.5523 2 13 2.44772 13 3V11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H13V21C13 21.5523 12.5523 22 12 22C11.4477 22 11 21.5523 11 21V13H3C2.44772 13 2 12.5523 2 12C2 11.4477 2.44772 11 3 11H11V3C11 2.44772 11.4477 2 12 2Z" fill="white"/></svg>
-              </button>
+              <button onclick="triggerNewOrder('Delivery')" data-i18n="create_delivery_btn" style="width:100%;max-width:280px;height:44px;border-radius:100px;background:#111;color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer">Create new delivery order</button>
+              <button onclick="triggerNewOrder('Collection')" data-i18n="create_takeaway_btn" style="width:100%;max-width:280px;height:44px;border-radius:100px;background:#111;color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer">Create new takeaway order</button>
             </div>
           </div>
         </div><!-- /content-surface -->
@@ -1288,7 +1339,7 @@
               </div>
               <div style="display:flex;align-items:center;gap:12px">
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">-</div>
-                <div style="text-align:center;min-width:36px"><div class="tval" style="font-size:16px;font-weight:700;color:#111">35</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
+                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-delivery-mins" style="font-size:16px;font-weight:700;color:#111">35</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
               </div>
             </div>
@@ -1299,7 +1350,7 @@
               </div>
               <div style="display:flex;align-items:center;gap:12px">
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">-</div>
-                <div style="text-align:center;min-width:36px"><div class="tval" style="font-size:16px;font-weight:700;color:#111">20</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
+                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-takeaway-mins" style="font-size:16px;font-weight:700;color:#111">20</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
               </div>
             </div>
@@ -1397,6 +1448,33 @@
       </div>
     </div>
 
+    <!-- Filter overlay -->
+    <div class="filter-overlay" id="filter-overlay">
+      <div class="filter-header">
+        <div class="filter-header-circle" onclick="closeFilterOverlay()"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="filter-header-title" data-i18n="filter_by">Filter by</span>
+        <button class="filter-reset-btn" id="filter-reset-all-btn" onclick="resetAllFilters()" data-i18n="filter_reset">Reset</button>
+      </div>
+      <div class="filter-list" id="filter-list"></div>
+    </div>
+
+    <!-- Filter detail overlay -->
+    <div class="filter-overlay" id="filter-detail-overlay">
+      <div class="filter-header">
+        <div class="filter-header-circle" onclick="closeFilterDetail()"><svg width="9" height="16" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.2002 1.19922L1.2002 9.19922L8.2002 17.1992" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="filter-header-title" id="filter-detail-title">Status</span>
+        <button class="filter-reset-btn" id="filter-reset-cat-btn" onclick="resetCurrentFilterCategory()" data-i18n="filter_reset">Reset</button>
+      </div>
+      <div class="filter-mode-toggle" id="filter-mode-toggle">
+        <div class="filter-mode-btn" data-mode="is" onclick="setFilterMode('is')" data-i18n="filter_is">Is</div>
+        <div class="filter-mode-btn" data-mode="isnot" onclick="setFilterMode('isnot')" data-i18n="filter_isnot">Is not</div>
+      </div>
+      <div class="filter-list" id="filter-detail-options"></div>
+      <div class="date-picker-backdrop" id="date-picker-backdrop" onclick="closeDatePicker(event)">
+        <div class="date-picker-popup" id="date-picker-popup" onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+
     <!-- Main menu overlay -->
     <div class="main-menu-overlay" id="main-menu-overlay">
       <div class="mm-scroll">
@@ -1470,13 +1548,24 @@
       dash_delivery_word:'delivery', dash_takeaway_word:'takeaway',
       dash_avg:'Avg. order value', dash_orders_per_hour:'Orders per hour',
       hdr_create_order:'Create order', create_order_desc:'Manually create a new order here',
+      create_delivery_btn:'Create new delivery order', create_takeaway_btn:'Create new takeaway order',
       hdr_products:'Products', dd_products:'Products', dd_choices:'Choices menu', dd_categories:'Categories',
       tab_menu_all:'All', tab_menu_active:'Active', tab_menu_concept:'Draft', tab_menu_archived:'Archived',
       d_new_customer:'New Customer', d_open_map:'Open Map', d_paid:'Paid', d_cash:'Cash',
       d_to_kitchen:'To kitchen', d_to_delivery:'To delivery', d_to_archive:'Complete order', d_accept:'Accept',
       accept_label:'Accept',
       oc_move_kitchen:'Move to kitchen', oc_move_delivery:'Move to delivery', oc_move_archive:'Complete order',
-      oc_pay_paid:'Paid', oc_pay_cash:'Cash'
+      oc_pay_paid:'Paid', oc_pay_cash:'Cash',
+      filter_by:'Filter by', filter_reset:'Reset', filter_search:'Search options...', filter_is:'Is', filter_isnot:'Is not',
+      filter_cat_status:'Status', filter_cat_updated:'Updated at', filter_cat_created:'Created at', filter_cat_customer:'Customer', filter_cat_source:'Source', filter_cat_tags:'Tagged with',
+      filter_opt_new:'New', filter_opt_kitchen:'Kitchen', filter_opt_delivering:'Delivering',
+      filter_opt_today:'Today', filter_opt_7days:'Last 7 days', filter_opt_30days:'Last 30 days',
+      filter_opt_90days:'Last 90 days', filter_opt_12months:'Last 12 months', filter_opt_custom:'Custom',
+      filter_include_start:'Include start date', filter_include_end:'Include end date',
+      filter_start_date:'Start date', filter_end_date:'End date',
+      filter_opt_new_customer:'New customer', filter_opt_returning:'Returning customer',
+      filter_opt_app:'App', filter_opt_phone:'Phone', filter_opt_walkin:'Walk-in',
+      filter_opt_vip:'VIP', filter_opt_urgent:'Urgent', filter_opt_complaint:'Complaint'
     },
     nl: {
       hdr_settings:'Instellingen', settings_language:'Taal', settings_restaurant:'Restaurant',
@@ -1495,13 +1584,24 @@
       dash_delivery_word:'bezorging', dash_takeaway_word:'afhalen',
       dash_avg:'Gem. bestelwaarde', dash_orders_per_hour:'Bestellingen per uur',
       hdr_create_order:'Bestelling aanmaken', create_order_desc:'Maak hier handmatig een nieuwe bestelling aan',
+      create_delivery_btn:'Nieuwe bezorgbestelling aanmaken', create_takeaway_btn:'Nieuwe afhaalbestelling aanmaken',
       hdr_products:'Producten', dd_products:'Producten', dd_choices:'Keuzemenu', dd_categories:'Categorieën',
       tab_menu_all:'Alle', tab_menu_active:'Actief', tab_menu_concept:'Concept', tab_menu_archived:'Gearchiveerd',
       d_new_customer:'Nieuwe klant', d_open_map:'Open kaart', d_paid:'Betaald', d_cash:'Contant',
       d_to_kitchen:'Naar keuken', d_to_delivery:'Naar bezorging', d_to_archive:'Bestelling afronden', d_accept:'Accepteren',
       accept_label:'Accepteren',
       oc_move_kitchen:'Verplaats naar keuken', oc_move_delivery:'Verplaats naar bezorging', oc_move_archive:'Bestelling afronden',
-      oc_pay_paid:'Betaald', oc_pay_cash:'Contant'
+      oc_pay_paid:'Betaald', oc_pay_cash:'Contant',
+      filter_by:'Filteren op', filter_reset:'Opnieuw instellen', filter_search:'Zoek opties...', filter_is:'Is', filter_isnot:'Is niet',
+      filter_cat_status:'Status', filter_cat_updated:'Bijgewerkt op', filter_cat_created:'Aangemaakt op', filter_cat_customer:'Klant', filter_cat_source:'Bron', filter_cat_tags:'Getagd met',
+      filter_opt_new:'Nieuw', filter_opt_kitchen:'Keuken', filter_opt_delivering:'Bezorgen',
+      filter_opt_today:'Vandaag', filter_opt_7days:'Afgelopen 7 dagen', filter_opt_30days:'Afgelopen 30 dagen',
+      filter_opt_90days:'Afgelopen 90 dagen', filter_opt_12months:'Afgelopen 12 maanden', filter_opt_custom:'Aangepast',
+      filter_include_start:'Startdatum opnemen', filter_include_end:'Einddatum opnemen',
+      filter_start_date:'Startdatum', filter_end_date:'Einddatum',
+      filter_opt_new_customer:'Nieuwe klant', filter_opt_returning:'Terugkerende klant',
+      filter_opt_app:'App', filter_opt_phone:'Telefoon', filter_opt_walkin:'Walk-in',
+      filter_opt_vip:'VIP', filter_opt_urgent:'Urgent', filter_opt_complaint:'Klacht'
     }
   };
   var currentLang = 'en';
@@ -1668,6 +1768,15 @@
     if (backdrop) backdrop.style.display = open ? 'none' : 'block';
     arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
   }
+  function toggleArchiveDropdown() {
+    var dd = document.getElementById('archive-dropdown');
+    var backdrop = document.getElementById('archive-dropdown-backdrop');
+    var arrow = document.getElementById('archive-dd-arrow');
+    var open = dd.style.display === 'block';
+    dd.style.display = open ? 'none' : 'block';
+    if (backdrop) backdrop.style.display = open ? 'none' : 'block';
+    arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+  }
   function selectOrdersDropdown(item, page) {
     document.querySelectorAll('#orders-dropdown .mdd-item').forEach(function(el){
       el.classList.toggle('mdd-item-active', el === item);
@@ -1678,6 +1787,15 @@
     titleEl.textContent = t(titleKey);
     toggleOrdersDropdown();
     if (page === 'archive') goPage('archive');
+  }
+  function resetOrdersHeader() {
+    var titleEl = document.getElementById('orders-header-title');
+    titleEl.setAttribute('data-i18n', 'dd_orders_live');
+    titleEl.textContent = t('dd_orders_live');
+    document.querySelectorAll('#orders-dropdown .mdd-item').forEach(function(el){
+      el.classList.toggle('mdd-item-active', el.getAttribute('data-mdd-page') === 'orders');
+    });
+    goPage('orders');
   }
   function toggleMenuDropdown() {
     var dd = document.getElementById('menu-dropdown');
@@ -1799,10 +1917,11 @@
         var numEl = tcol ? tcol.querySelector('text') : null;
         if (!tcol || !ring || !numEl) return;
         var minEl = numEl.nextElementSibling;
-        var isLate = remaining < 0;
-        var color = isLate ? '#c62828' : remaining<=10 ? '#e65100' : '#4caf50';
+        var isLate = remaining <= 0;
+        var color = isLate ? '#c62828' : remaining<=15 ? '#e65100' : '#4caf50';
         var textColor = isLate ? '#c62828' : '#000';
-        var offset = remaining<=0 ? 0 : Math.max(0, 125.66-(remaining/45)*125.66);
+        var totalMins = parseInt(card.dataset.totalMins, 10) || 45;
+        var offset = remaining>=totalMins ? 125.66 : Math.max(0, Math.min(125.66, (remaining/totalMins)*125.66));
         ring.setAttribute('stroke', color);
         ring.setAttribute('stroke-dashoffset', offset);
         numEl.setAttribute('fill', textColor);
@@ -1810,7 +1929,7 @@
         if (minEl && minEl.tagName === 'text') minEl.setAttribute('fill', textColor);
         tcol.classList.remove('late','urgent');
         if (isLate) tcol.classList.add('late');
-        else if (remaining<=10) tcol.classList.add('urgent');
+        else if (remaining<=15) tcol.classList.add('urgent');
       });
       var sorted = cards.slice().sort(function(a,b){
         return parseInt(a.dataset.targetTime,10) - parseInt(b.dataset.targetTime,10);
@@ -1820,6 +1939,7 @@
   }
 
   initLiveTimers();
+  refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
 
   function acceptOrderClick(btn, e){
@@ -1909,29 +2029,36 @@
   ];
   var SIM_PAYS = ['Paid','Cash'];
 
-  function triggerNewOrder(){
+  function triggerNewOrder(type){
+    type = type || 'Delivery';
     newOrderCounter++;
     var id = String(newOrderCounter);
     var name = SIM_NAMES[Math.floor(Math.random()*SIM_NAMES.length)];
     var addr = SIM_ADDRS[Math.floor(Math.random()*SIM_ADDRS.length)];
-    var fullAddr = addr[0]+'||'+addr[1];
+    var fullAddr = type==='Delivery' ? (addr[0]+'||'+addr[1]) : 'Collection order';
     var pay = SIM_PAYS[Math.floor(Math.random()*SIM_PAYS.length)];
     var items = 1 + Math.floor(Math.random()*5);
     var price = (12 + Math.random()*48).toFixed(2);
     var payKey = pay==='Paid'?'oc_pay_paid':'oc_pay_cash';
     var payClass = pay==='Paid'?'oc-pay-paid':'oc-pay-cash';
+    var settingsId = type==='Delivery' ? 'settings-delivery-mins' : 'settings-takeaway-mins';
+    var settingsEl = document.getElementById(settingsId);
+    var mins = settingsEl ? (parseInt(settingsEl.textContent, 10) || 35) : 35;
+    var title = type==='Delivery' ? name : name;
     var card = document.createElement('div');
     card.className = 'ocard';
     card.setAttribute('data-oid', '#'+id);
-    card.setAttribute('onclick', "goDetail('"+id+"','"+name+"','"+fullAddr+"','#"+id+"','€"+price+"','"+pay+"','Delivery','15','kitchen',this)");
+    card.setAttribute('data-total-mins', String(mins));
+    card.setAttribute('data-target-time', String(Date.now() + mins*60000));
+    card.setAttribute('onclick', "goDetail('"+id+"','"+name+"','"+fullAddr+"','#"+id+"','€"+price+"','"+pay+"','"+type+"','"+mins+"','kitchen',this)");
     card.innerHTML =
       '<div class="ocard-row">'+
-        '<div class="tcol urgent">'+
-          '<svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="83.77" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">15</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg>'+
+        '<div class="tcol">'+
+          '<svg width="58" height="58" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="125.66" stroke-dashoffset="125.66" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">'+mins+'</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg>'+
           '<span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>'+
         '</div>'+
         '<div class="mcol">'+
-          '<div class="dname">'+name+'</div>'+
+          '<div class="dname">'+title+'</div>'+
           '<div class="oc-price">€'+price+' ('+items+')</div>'+
           '<div class="oc-pay-badge '+payClass+'" data-i18n="'+payKey+'">'+t(payKey)+'</div>'+
         '</div>'+
@@ -1947,6 +2074,7 @@
     var scrollEl = list.closest('.scroll');
     if (scrollEl) scrollEl.scrollTo({top:0, behavior:'smooth'});
     showOrderToast(card);
+    goPage('orders');
   }
 
   var toastOrderCard = null;
@@ -1980,6 +2108,236 @@
   }
   function closeActionsSheet(){
     document.getElementById('actions-overlay').classList.remove('show');
+  }
+
+  var FILTER_CATEGORIES = [
+    { key:'status', labelKey:'filter_cat_status', options:[
+      {key:'new', labelKey:'filter_opt_new'},
+      {key:'kitchen', labelKey:'filter_opt_kitchen'},
+      {key:'delivering', labelKey:'filter_opt_delivering'}
+    ]},
+    { key:'updated', labelKey:'filter_cat_updated', isDate:true, options:[
+      {key:'today', labelKey:'filter_opt_today'},
+      {key:'7days', labelKey:'filter_opt_7days'},
+      {key:'30days', labelKey:'filter_opt_30days'},
+      {key:'90days', labelKey:'filter_opt_90days'},
+      {key:'12months', labelKey:'filter_opt_12months'},
+      {key:'custom', labelKey:'filter_opt_custom'}
+    ]},
+    { key:'created', labelKey:'filter_cat_created', isDate:true, options:[
+      {key:'today', labelKey:'filter_opt_today'},
+      {key:'7days', labelKey:'filter_opt_7days'},
+      {key:'30days', labelKey:'filter_opt_30days'},
+      {key:'90days', labelKey:'filter_opt_90days'},
+      {key:'12months', labelKey:'filter_opt_12months'},
+      {key:'custom', labelKey:'filter_opt_custom'}
+    ]},
+    { key:'customer', labelKey:'filter_cat_customer', options:[
+      {key:'new_customer', labelKey:'filter_opt_new_customer'},
+      {key:'returning', labelKey:'filter_opt_returning'}
+    ]},
+    { key:'source', labelKey:'filter_cat_source', options:[
+      {key:'app', labelKey:'filter_opt_app'},
+      {key:'phone', labelKey:'filter_opt_phone'},
+      {key:'walkin', labelKey:'filter_opt_walkin'}
+    ]},
+    { key:'tags', labelKey:'filter_cat_tags', options:[
+      {key:'vip', labelKey:'filter_opt_vip'},
+      {key:'urgent', labelKey:'filter_opt_urgent'},
+      {key:'complaint', labelKey:'filter_opt_complaint'}
+    ]}
+  ];
+  var filterState = {};
+  function freshFilterState(){
+    var todayISO = new Date().toISOString().slice(0,10);
+    return { mode:'is', values:[], includeStart:true, includeEnd:true, customStart:todayISO, customEnd:todayISO };
+  }
+  FILTER_CATEGORIES.forEach(function(cat){ filterState[cat.key] = freshFilterState(); });
+  var currentFilterCat = null;
+  var datePickerTarget = null;
+  var datePickerViewDate = new Date();
+
+  function openFilterOverlay(){
+    renderFilterList();
+    document.getElementById('filter-overlay').classList.add('show');
+  }
+  function closeFilterOverlay(){
+    document.getElementById('filter-overlay').classList.remove('show');
+  }
+  function renderFilterList(){
+    var list = document.getElementById('filter-list');
+    list.innerHTML = '';
+    FILTER_CATEGORIES.forEach(function(cat){
+      var row = document.createElement('div');
+      row.innerHTML =
+        '<div class="filter-row" onclick="openFilterDetail(\''+cat.key+'\')">'+
+          '<span class="filter-row-label">'+t(cat.labelKey)+'</span>'+
+          '<svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '</div>';
+      list.appendChild(row.firstElementChild);
+      var st = filterState[cat.key];
+      if (st.values.length){
+        var chipWrap = document.createElement('div');
+        chipWrap.className = 'filter-chip-wrap';
+        var modeLabel = t(st.mode === 'is' ? 'filter_is' : 'filter_isnot');
+        var optLabels;
+        if (cat.isDate && st.values.indexOf('custom') !== -1 && st.values.length === 1){
+          optLabels = formatFilterDate(st.customStart)+' – '+formatFilterDate(st.customEnd);
+        } else {
+          optLabels = st.values.map(function(vk){
+            var opt = cat.options.filter(function(o){return o.key===vk;})[0];
+            return opt ? t(opt.labelKey) : vk;
+          }).join(', ');
+        }
+        chipWrap.innerHTML = '<span class="filter-chip">'+modeLabel+': '+optLabels+' <span class="fc-x" onclick="event.stopPropagation();clearFilterCategory(\''+cat.key+'\')">&times;</span></span>';
+        list.appendChild(chipWrap);
+      }
+    });
+    updateFilterResetButtons();
+  }
+  function clearFilterCategory(catKey){
+    filterState[catKey] = freshFilterState();
+    renderFilterList();
+    updateFilterBadge();
+  }
+  function resetAllFilters(){
+    FILTER_CATEGORIES.forEach(function(cat){ filterState[cat.key] = freshFilterState(); });
+    renderFilterList();
+    updateFilterBadge();
+  }
+  function openFilterDetail(catKey){
+    currentFilterCat = catKey;
+    var cat = FILTER_CATEGORIES.filter(function(c){return c.key===catKey;})[0];
+    document.getElementById('filter-detail-title').textContent = t(cat.labelKey);
+    renderFilterDetail();
+    document.getElementById('filter-detail-overlay').classList.add('show');
+  }
+  function closeFilterDetail(){
+    document.getElementById('filter-detail-overlay').classList.remove('show');
+    renderFilterList();
+  }
+  function renderFilterDetail(){
+    var cat = FILTER_CATEGORIES.filter(function(c){return c.key===currentFilterCat;})[0];
+    var st = filterState[currentFilterCat];
+    document.querySelectorAll('#filter-mode-toggle .filter-mode-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-mode') === st.mode);
+    });
+    var optionsList = document.getElementById('filter-detail-options');
+    optionsList.innerHTML = '';
+    cat.options.forEach(function(opt){
+      var checked = st.values.indexOf(opt.key) !== -1;
+      var row = document.createElement('div');
+      row.className = 'filter-option-row';
+      row.onclick = function(){ toggleFilterOption(opt.key); };
+      row.innerHTML =
+        '<span class="filter-checkbox'+(checked?' checked':'')+'"><svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
+        '<span style="font-size:15px;color:#111">'+t(opt.labelKey)+'</span>';
+      optionsList.appendChild(row);
+    });
+    if (cat.isDate && st.values.indexOf('custom') !== -1){
+      var customWrap = document.createElement('div');
+      customWrap.innerHTML =
+        '<div class="filter-date-toggle-row">'+
+          '<span style="font-size:15px;color:#111">'+t('filter_include_start')+'</span>'+
+          '<span class="filter-checkbox'+(st.includeStart?' checked':'')+'" onclick="toggleIncludeStart()"><svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
+        '</div>'+
+        (st.includeStart ? '<div class="filter-date-box" onclick="openDatePicker(\'start\')"><span style="font-size:14px;color:#888">'+t('filter_start_date')+'</span><span class="filter-date-pill">'+formatFilterDate(st.customStart)+'</span></div>' : '')+
+        '<div class="filter-date-toggle-row">'+
+          '<span style="font-size:15px;color:#111">'+t('filter_include_end')+'</span>'+
+          '<span class="filter-checkbox'+(st.includeEnd?' checked':'')+'" onclick="toggleIncludeEnd()"><svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
+        '</div>'+
+        (st.includeEnd ? '<div class="filter-date-box" onclick="openDatePicker(\'end\')"><span style="font-size:14px;color:#888">'+t('filter_end_date')+'</span><span class="filter-date-pill">'+formatFilterDate(st.customEnd)+'</span></div>' : '');
+      while (customWrap.firstChild) optionsList.appendChild(customWrap.firstChild);
+    }
+    updateFilterResetButtons();
+  }
+  function setFilterMode(mode){
+    filterState[currentFilterCat].mode = mode;
+    renderFilterDetail();
+  }
+  function toggleFilterOption(optKey){
+    var st = filterState[currentFilterCat];
+    var idx = st.values.indexOf(optKey);
+    if (idx === -1) st.values.push(optKey); else st.values.splice(idx,1);
+    renderFilterDetail();
+    updateFilterBadge();
+  }
+  function resetCurrentFilterCategory(){
+    filterState[currentFilterCat] = freshFilterState();
+    renderFilterDetail();
+    updateFilterBadge();
+  }
+  function toggleIncludeStart(){
+    var st = filterState[currentFilterCat];
+    st.includeStart = !st.includeStart;
+    renderFilterDetail();
+  }
+  function toggleIncludeEnd(){
+    var st = filterState[currentFilterCat];
+    st.includeEnd = !st.includeEnd;
+    renderFilterDetail();
+  }
+  function formatFilterDate(iso){
+    var d = new Date(iso+'T00:00:00');
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }
+  function openDatePicker(target){
+    datePickerTarget = target;
+    var st = filterState[currentFilterCat];
+    var baseIso = target === 'start' ? st.customStart : st.customEnd;
+    datePickerViewDate = new Date(baseIso+'T00:00:00');
+    renderDatePickerCalendar();
+    document.getElementById('date-picker-backdrop').classList.add('show');
+  }
+  function closeDatePicker(event){
+    if (event && event.target.id !== 'date-picker-backdrop') return;
+    document.getElementById('date-picker-backdrop').classList.remove('show');
+  }
+  function changeDatePickerMonth(delta){
+    datePickerViewDate = new Date(datePickerViewDate.getFullYear(), datePickerViewDate.getMonth()+delta, 1);
+    renderDatePickerCalendar();
+  }
+  function renderDatePickerCalendar(){
+    var popup = document.getElementById('date-picker-popup');
+    var year = datePickerViewDate.getFullYear();
+    var month = datePickerViewDate.getMonth();
+    var st = filterState[currentFilterCat];
+    var selectedIso = datePickerTarget === 'start' ? st.customStart : st.customEnd;
+    var monthLabel = datePickerViewDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    var firstDow = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month+1, 0).getDate();
+    var dows = ['S','M','T','W','T','F','S'];
+    var html = '<div class="date-picker-header"><span class="date-picker-title">'+monthLabel+'</span><div class="date-picker-nav"><span onclick="changeDatePickerMonth(-1)">&lsaquo;</span><span onclick="changeDatePickerMonth(1)">&rsaquo;</span></div></div>';
+    html += '<div class="date-picker-grid">';
+    dows.forEach(function(d){ html += '<div class="dow">'+d+'</div>'; });
+    for (var i=0;i<firstDow;i++) html += '<div class="day empty"></div>';
+    for (var day=1;day<=daysInMonth;day++){
+      var iso = year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      html += '<div class="day'+(iso===selectedIso?' selected':'')+'" onclick="selectCalendarDay(\''+iso+'\')">'+day+'</div>';
+    }
+    popup.innerHTML = html;
+  }
+  function selectCalendarDay(iso){
+    var st = filterState[currentFilterCat];
+    if (datePickerTarget === 'start') st.customStart = iso; else st.customEnd = iso;
+    document.getElementById('date-picker-backdrop').classList.remove('show');
+    renderFilterDetail();
+  }
+  function updateFilterResetButtons(){
+    var anyActive = FILTER_CATEGORIES.some(function(cat){ return filterState[cat.key].values.length > 0; });
+    var allBtn = document.getElementById('filter-reset-all-btn');
+    if (allBtn) allBtn.classList.toggle('active', anyActive);
+    var catBtn = document.getElementById('filter-reset-cat-btn');
+    if (catBtn && currentFilterCat) catBtn.classList.toggle('active', filterState[currentFilterCat].values.length > 0);
+  }
+  function updateFilterBadge(){
+    var count = FILTER_CATEGORIES.filter(function(cat){ return filterState[cat.key].values.length > 0; }).length;
+    ['orders-filter-badge','archive-filter-badge'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = String(count);
+      el.classList.toggle('show', count > 0);
+    });
   }
 
   function openMainMenu(){
