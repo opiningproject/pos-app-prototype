@@ -217,15 +217,20 @@
   }
 
   /* Scroll area */
-  .scroll { flex: 1; overflow-y: auto; background: #ececec; padding-bottom: 120px; }
+  .scroll { flex: 1; overflow-y: auto; background: #fff; padding-bottom: 120px; }
   .scroll::-webkit-scrollbar { width: 3px; }
   .scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
 
   /* Order card */
+  .tab-empty { display:none; flex-direction:column; align-items:center; justify-content:center; padding:60px 24px; gap:14px; text-align:center; }
+  .tab-empty svg { opacity:1; }
+  .tab-empty-title { font-size:16px; font-weight:600; color:#111; }
+  .tab-empty-sub { font-size:14px; color:#999; font-weight:400; line-height:1.5; }
   .ocard {
     background: #fff;
     border-radius: 0;
-    margin: 0 0 6px;
+    margin: 0;
+    border-bottom: 1px solid #f0f0f0;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -822,6 +827,11 @@
           </div>
           <!-- NEW -->
           <div id="t-new" style="padding-top:6px">
+            <div class="tab-empty" id="empty-new">
+              <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
+              <div class="tab-empty-title">No new orders</div>
+              <div class="tab-empty-sub">New incoming orders will appear here automatically.</div>
+            </div>
             <div class="ocard" data-oid="#37" onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Cash','Collection','2','kitchen',this)">
               <div class="ocard-row"><div class="tcol late">
                 <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="23" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">9</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -867,6 +877,11 @@
 
           <!-- KITCHEN -->
           <div id="t-kitchen" style="display:none">
+            <div class="tab-empty" id="empty-kitchen">
+              <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
+              <div class="tab-empty-title">Kitchen is clear</div>
+              <div class="tab-empty-sub">Orders sent to the kitchen will appear here.</div>
+            </div>
             <div class="ocard" data-oid="#33" onclick="goDetail('33','Tim de Groot','Bergselaan 88||3038 CK Rotterdam','#33','€41.50','Paid','Delivery','4','delivery')">
               <div class="ocard-row"><div class="tcol late">
                 <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="23" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">4</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#c62828" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -881,6 +896,11 @@
 
           <!-- DELIVERY -->
           <div id="t-delivery" style="display:none">
+            <div class="tab-empty" id="empty-delivery">
+              <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
+              <div class="tab-empty-title">Nothing out for delivery</div>
+              <div class="tab-empty-sub">Orders on their way to customers will appear here.</div>
+            </div>
             <div class="ocard" data-oid="#50" onclick="goDetail('50','Liam de Wit','Persoonshaven 12||3024 RD Rotterdam','#50','€36.90','Paid','Delivery','6','archive',this)">
               <div class="ocard-row"><div class="tcol">
                 <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="23" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="66.70" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">6</text><text x="24" y="36" text-anchor="middle" font-size="8" font-weight="500" fill="#000" font-family="Poppins,sans-serif">min</text></svg><span style="font-size:10px;color:#888;font-weight:500;margin-top:2px">ASAP</span>
@@ -1641,6 +1661,10 @@
   function goPage(p){
     document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
     document.getElementById('p-'+p).classList.add('active');
+    if(p==='orders'){
+      var newTab=document.querySelector('.tab[onclick*="\'new\'"]');
+      if(newTab) switchTab(newTab,'new');
+    }
   }
 
   function goDetail(id,name,addr,oid,price,pay,type,mins,next,cardEl){
@@ -1728,6 +1752,7 @@
         card.remove();
         adjustTabCount(map.from, -1);
         if (map.to) adjustTabCount(map.to, +1);
+        checkEmptyStates();
       }, 155);
     }, 225);
   }
@@ -1746,6 +1771,16 @@
     tab.addEventListener('animationend', function(){ tab.classList.remove('bump'); }, {once:true});
   }
 
+  function checkEmptyStates(){
+    ['new','kitchen','delivery'].forEach(function(t){
+      var tabEl=document.getElementById('t-'+t);
+      var emptyEl=document.getElementById('empty-'+t);
+      if(!tabEl||!emptyEl) return;
+      var hasCards=tabEl.querySelectorAll('.ocard').length>0;
+      emptyEl.style.display=hasCards?'none':'flex';
+    });
+  }
+
   function switchTab(el,tab){
     document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
     el.classList.add('active');
@@ -1753,6 +1788,7 @@
       var e=document.getElementById('t-'+t);
       if(e) e.style.display=t===tab?'block':'none';
     });
+    checkEmptyStates();
   }
 
   function toggleCat(header) {
