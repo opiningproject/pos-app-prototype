@@ -1168,54 +1168,73 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
-          <!-- Summary tabs -->
-          <div class="tabs">
-            <div class="tab active" onclick="switchTab(this,'dash-summary')" data-i18n="tab_summary">Summary</div>
-            <div class="tab" onclick="switchTab(this,'dash-details')" data-i18n="tab_details">Details</div>
-            <div class="tab" onclick="switchTab(this,'dash-cancelled')" data-i18n="tab_cancelled">Cancelled</div>
+          <!-- Tabs -->
+          <div class="tabs" id="dash-tabs">
+            <div class="tab active" onclick="switchDashTab(this)">Orders</div>
+            <div class="tab" onclick="switchDashTab(this)">Customers</div>
+            <div class="tab" onclick="switchDashTab(this)">Delivery and items</div>
           </div>
-          <div class="scroll" style="padding:16px;gap:12px;display:flex;flex-direction:column">
-            <!-- Two stat cards -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-              <!-- Sales card -->
-              <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
-                <div data-i18n="dash_revenue" style="font-size:12px;color:#888;font-weight:500;margin-bottom:10px">Revenue</div>
-                <div style="font-size:24px;font-weight:700;color:#111;line-height:1.1">€688</div>
-                <div data-i18n="dash_incl" style="font-size:10px;color:#aaa;margin-top:3px">Incl. costs</div>
-                <div style="font-size:18px;font-weight:600;color:#111;margin-top:10px">€564</div>
-                <div data-i18n="dash_excl" style="font-size:10px;color:#aaa;margin-top:3px">Excl. costs</div>
+          <div class="scroll" style="padding:16px 16px 120px;display:flex;flex-direction:column;gap:12px">
+            <!-- Time period -->
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:10px">Time period</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px 16px;cursor:pointer">
+                <span style="font-size:14px;color:#444">06-01-2026 - 12-01-2026</span>
+                <svg width="14" height="8" viewBox="0 0 14 8" fill="none"><path d="M1 1l6 6 6-6" stroke="#888" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <!-- Orders card -->
-              <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
-                <div data-i18n="dash_orders" style="font-size:12px;color:#888;font-weight:500;margin-bottom:10px">Orders</div>
-                <div style="font-size:32px;font-weight:700;color:#111;line-height:1.1">47</div>
-                <div style="margin-top:14px;display:flex;flex-direction:column;gap:5px">
-                  <div style="font-size:11px;color:#666">43 <span data-i18n="dash_delivery_word">delivery</span></div>
-                  <div style="font-size:11px;color:#aaa">€560.00</div>
-                  <div style="font-size:11px;color:#666;margin-top:4px">4 <span data-i18n="dash_takeaway_word">takeaway</span></div>
-                  <div style="font-size:11px;color:#aaa">€128.00</div>
+            </div>
+            <!-- Orders card -->
+            <div style="border:1.5px solid #e8e8e8;border-radius:16px;padding:20px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+                <span style="font-size:16px;font-weight:700;color:#111">Orders</span>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#888" stroke-width="1.5"/><path d="M9 8v5M9 6.5v.5" stroke="#888" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <!-- Compare toggle -->
+              <div style="background:#f5f5f5;border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+                <span style="font-size:14px;color:#444">Compare</span>
+                <div style="width:44px;height:26px;background:#ccc;border-radius:13px;position:relative;cursor:pointer">
+                  <div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></div>
                 </div>
               </div>
+              <!-- Stats -->
+              <div style="margin-bottom:20px">
+                <div style="font-size:13px;color:#555;margin-bottom:4px">Total successful orders</div>
+                <div style="font-size:40px;font-weight:700;color:#111;line-height:1.1">100</div>
+              </div>
+              <div style="margin-bottom:20px">
+                <div style="font-size:13px;color:#555;margin-bottom:4px">Total cancelled orders</div>
+                <div style="font-size:40px;font-weight:700;color:#111;line-height:1.1">20</div>
+              </div>
+              <!-- Legend -->
+              <div style="display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid #f0f0f0">
+                <div style="width:24px;height:2px;background:#111;border-radius:2px"></div>
+                <span style="font-size:12px;color:#555">Successful orders</span>
+              </div>
             </div>
-            <!-- Avg order value -->
-            <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef;display:flex;justify-content:space-between;align-items:center">
+            <!-- Revenue card -->
+            <div style="border:1.5px solid #e8e8e8;border-radius:16px;padding:20px">
+              <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:16px">Revenue</div>
+              <div style="margin-bottom:16px">
+                <div style="font-size:13px;color:#555;margin-bottom:4px">Total revenue</div>
+                <div style="font-size:36px;font-weight:700;color:#111;line-height:1.1">€688</div>
+              </div>
               <div>
-                <div data-i18n="dash_avg" style="font-size:12px;color:#888;font-weight:500">Avg. order value</div>
-                <div style="font-size:22px;font-weight:700;color:#111;margin-top:4px">€14.64</div>
+                <div style="font-size:13px;color:#555;margin-bottom:4px">Avg. order value</div>
+                <div style="font-size:36px;font-weight:700;color:#111;line-height:1.1">€14.64</div>
               </div>
-              <div style="font-size:11px;color:#4caf50;font-weight:600;background:#f0faf0;padding:4px 10px;border-radius:20px">? +8%</div>
             </div>
-            <!-- Busiest hour -->
-            <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #efefef">
-              <div data-i18n="dash_orders_per_hour" style="font-size:12px;color:#888;font-weight:500;margin-bottom:12px">Orders per hour</div>
-              <div style="display:flex;align-items:flex-end;gap:5px;height:60px">
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:25%"></div><span style="font-size:9px;color:#bbb">11</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:40%"></div><span style="font-size:9px;color:#bbb">12</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#111;border-radius:3px 3px 0 0;width:100%;height:80%"></div><span style="font-size:9px;color:#bbb">13</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#111;border-radius:3px 3px 0 0;width:100%;height:100%"></div><span style="font-size:9px;color:#bbb">14</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:60%"></div><span style="font-size:9px;color:#bbb">15</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="background:#e8e8e8;border-radius:3px 3px 0 0;width:100%;height:30%"></div><span style="font-size:9px;color:#bbb">16</span></div>
-              </div>
+            <!-- 3 stat cards -->
+            <div style="border:1.5px solid #e8e8e8;border-radius:16px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:13px;color:#555">Sales</div>
+              <div style="font-size:17px;font-weight:700;color:#111">$469.70</div>
+            </div>
+            <div style="border:1.5px solid #e8e8e8;border-radius:16px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:13px;color:#555">Orders</div>
+              <div style="font-size:17px;font-weight:700;color:#111">20</div>
+            </div>
+            <div style="border:1.5px solid #e8e8e8;border-radius:16px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:13px;color:#555">Average ticket size</div>
+              <div style="font-size:17px;font-weight:700;color:#111">$23.45</div>
             </div>
           </div>
         </div><!-- /content-surface -->
@@ -1771,20 +1790,18 @@
 
   function goPage(p){
     document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
-    document.getElementById('p-'+p).classList.add('active');
+    var targetPage = document.getElementById('p-'+p);
+    if(!targetPage) return;
+    targetPage.classList.add('active');
     if(p==='print') populatePrintPage();
-    // Always reset to first tab on every page
     if(p==='orders'){
       var newTab=document.querySelector('.tab[onclick*="\'new\'"]');
       if(newTab) switchTab(newTab,'new');
     } else {
-      var pageEl=document.getElementById('p-'+p);
-      if(pageEl){
-        var firstTabBar=pageEl.querySelector('.tabs');
-        if(firstTabBar){
-          var firstTab=firstTabBar.querySelector('.tab');
-          if(firstTab) firstTab.click();
-        }
+      var firstTabBar=targetPage.querySelector('.tabs');
+      if(firstTabBar){
+        var firstTab=firstTabBar.querySelector('.tab');
+        if(firstTab) try { firstTab.click(); } catch(e){}
       }
     }
   }
@@ -1960,6 +1977,11 @@
       var hasCards=tabEl.querySelectorAll('.ocard').length>0;
       emptyEl.style.display=hasCards?'none':'flex';
     });
+  }
+
+  function switchDashTab(el){
+    document.querySelectorAll('#dash-tabs .tab').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
   }
 
   function switchTab(el,tab){
