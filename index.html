@@ -953,7 +953,7 @@
             <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center;opacity:0;position:absolute;left:-9999px">#37</h1>
             <div style="flex:1"></div>
             <div style="display:flex;align-items:center;gap:8px">
-              <div class="tb-icon" onclick="goPage('print')" style="width:44px;height:44px;border-radius:50%;background:#f0f0f0"><svg width="14" height="20" viewBox="0 0 18 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.33398 21.7149C9.0738 21.8315 8.77581 21.8315 8.51563 21.7149L6.05762 20.6133C4.97568 20.1284 3.70962 20.3264 2.82715 21.1182L2.66797 21.2608C2.02421 21.8383 1.00032 21.3814 1 20.5166L1 4.47465C1 3.61016 2.02286 3.15295 2.66699 3.72954L2.82813 3.87309C3.71054 4.66298 4.97492 4.86032 6.05567 4.37602L8.51563 3.27348C8.77581 3.15687 9.0738 3.15687 9.33399 3.27348L11.7939 4.37602C12.8746 4.86015 14.1391 4.66283 15.0215 3.87309L15.1826 3.72954C15.8268 3.153 16.8496 3.61019 16.8496 4.47465L16.8496 20.5166C16.8496 21.3816 15.8255 21.8385 15.1816 21.2608L15.0225 21.1182C14.14 20.3264 12.8739 20.1284 11.792 20.6133L9.33398 21.7149Z" stroke="black" stroke-width="2"/><line x1="10.4248" y1="13.9942" x2="7.4248" y2="13.9942" stroke="black" stroke-width="2" stroke-linecap="round"/><line x1="11.4238" y1="9.99419" x2="6.42383" y2="9.99419" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div class="tb-icon" onclick="openBon()" style="width:44px;height:44px;border-radius:50%;background:#f0f0f0"><svg width="14" height="20" viewBox="0 0 18 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.33398 21.7149C9.0738 21.8315 8.77581 21.8315 8.51563 21.7149L6.05762 20.6133C4.97568 20.1284 3.70962 20.3264 2.82715 21.1182L2.66797 21.2608C2.02421 21.8383 1.00032 21.3814 1 20.5166L1 4.47465C1 3.61016 2.02286 3.15295 2.66699 3.72954L2.82813 3.87309C3.71054 4.66298 4.97492 4.86032 6.05567 4.37602L8.51563 3.27348C8.77581 3.15687 9.0738 3.15687 9.33399 3.27348L11.7939 4.37602C12.8746 4.86015 14.1391 4.66283 15.0215 3.87309L15.1826 3.72954C15.8268 3.153 16.8496 3.61019 16.8496 4.47465L16.8496 20.5166C16.8496 21.3816 15.8255 21.8385 15.1816 21.2608L15.0225 21.1182C14.14 20.3264 12.8739 20.1284 11.792 20.6133L9.33398 21.7149Z" stroke="black" stroke-width="2"/><line x1="10.4248" y1="13.9942" x2="7.4248" y2="13.9942" stroke="black" stroke-width="2" stroke-linecap="round"/><line x1="11.4238" y1="9.99419" x2="6.42383" y2="9.99419" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
               <div class="tb-icon" style="width:44px;height:44px;border-radius:50%;background:#f0f0f0"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2857 14.2857C17.2114 14.2857 15.2357 13.8343 13.4143 12.9443C13.2429 12.8586 13.0457 12.8486 12.8671 12.9114C12.6871 12.9743 12.54 13.1057 12.4571 13.2757L11.3343 15.6C8.42857 13.9786 6.02286 11.5743 4.40286 8.66857L6.72571 7.54286C6.89714 7.46 7.02714 7.31286 7.09 7.13286C7.15143 6.95429 7.14 6.75714 7.05571 6.58571C6.16571 4.76429 5.71429 2.78857 5.71429 0.714286C5.71429 0.32 5.39429 0 5 0H0.714286C0.32 0 0 0.32 0 0.714286C0 11.3486 8.65143 20 19.2857 20C19.68 20 20 19.68 20 19.2857V15C20 14.6057 19.68 14.2857 19.2857 14.2857Z" fill="#2D2D2D"/></svg></div>
             </div>
           </div>
@@ -1841,6 +1841,24 @@
     goPage('detail');
     var detailScroll = document.querySelector('#p-detail .scroll');
     if (detailScroll) detailScroll.scrollTop = 0;
+
+    // Store this order's data so the 80mm bon (bon.html) can render the real order
+    var wished=(id==='26')?'16:30':'ASAP';
+    localStorage.setItem('posCurrentOrder', JSON.stringify({
+      oid: oid,
+      name: name,
+      address: cleanAddr,
+      city: cityAddr,
+      type: type,
+      pay: pay,
+      price: price,
+      wished: wished,
+      note: hasNote ? noteText.textContent : ''
+    }));
+  }
+
+  function openBon(){
+    window.open('bon.html', '_blank');
   }
 
   var TAB_IDX = {new:0, kitchen:1, delivery:2};

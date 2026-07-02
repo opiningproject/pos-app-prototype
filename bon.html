@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bon preview (80mm)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e5e5e5;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+  }
+  .preview-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== Thermal receipt, true 80mm width ===== */
+  .receipt-thermal {
+    width: 80mm;
+    padding: 0 16px;
+    background: #fff;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #111;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .receipt-thermal .r-center { text-align: center; }
+  .receipt-thermal .r-bold { font-weight: 700; }
+  .receipt-thermal .r-lg { font-size: 15px; }
+  .receipt-thermal .r-band { background: #111; color: #fff; text-align: center; font-weight: 600; font-size: 14px; padding: 11px 0; letter-spacing: 0.03em; }
+  .receipt-thermal .r-section { padding: 4px 0 8px; }
+  .receipt-thermal #r-info-section .r-info-row { border-bottom: none; }
+  .receipt-thermal #r-btw-section .r-info-row { border-bottom: none; padding: 2px 0; }
+  .receipt-thermal .r-info-row { display:flex; align-items:baseline; gap:8px; padding:8px 0; border-bottom:1px solid #f5f5f5; }
+  .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:92px; flex-shrink:0; }
+  .receipt-thermal .r-info-val { font-size:13px; font-weight:500; color:#111; }
+  .receipt-thermal .r-item { display:flex; align-items:flex-start; gap:10px; padding:14px 0; border-bottom:1.5px solid #e2e2e2; }
+  .receipt-thermal .r-item-qty { font-size:13px; font-weight:500; color:#888; min-width:14px; }
+  .receipt-thermal .r-item-name { font-size:13px; font-weight:500; color:#111; }
+  .receipt-thermal .r-item-sub { font-size:13px; font-weight:500; color:#111; line-height:1.5; }
+  .receipt-thermal .r-item-price { font-size:13px; font-weight:500; color:#111; white-space:nowrap; margin-left:auto; }
+  .receipt-thermal .r-note { border:0.5px solid #999; border-radius:0; padding:14px 16px; margin:0 0 12px; font-size:13px; color:#555; line-height:1.5; }
+
+  @media print {
+    body { background: #fff; padding: 0; display: block; }
+    .preview-label { display: none; }
+    .receipt-thermal { width: 80mm; box-shadow: none; margin: 0; }
+    @page { margin: 0; size: 80mm auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="preview-label">Bon preview — 80mm</div>
+
+  <div class="receipt-thermal" id="receipt-print-area">
+
+    <!-- Restaurant header: logo, no name text -->
+    <div style="padding:24px 0 20px;text-align:center;border-bottom:1px solid #f0f0f0">
+      <svg width="76" height="76" viewBox="0 0 72 72" style="display:block;margin:0 auto 14px">
+        <circle cx="36" cy="36" r="36" fill="#111"/>
+        <path d="M20 20 Q36 10 52 20 L36 48 Z" fill="#fff"/>
+        <circle cx="31" cy="24" r="2" fill="#111"/>
+        <circle cx="41" cy="25" r="2" fill="#111"/>
+        <circle cx="36" cy="33" r="2" fill="#111"/>
+        <text x="36" y="59" text-anchor="middle" font-family="Poppins, sans-serif" font-size="8" font-weight="700" letter-spacing="0.5" fill="#fff">PIZZAWORLD</text>
+      </svg>
+      <div style="font-size:13px;color:#555;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.pizzaworld.nl</div>
+    </div>
+
+    <!-- Info -->
+    <div class="r-band">Info</div>
+    <div class="r-section" id="r-info-section">
+      <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val" id="pr-oid">250621 A 31</span></div>
+      <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val" id="pr-date">wo 21-06-2025  21:58</span></div>
+      <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val" id="pr-bron">Web order</span></div>
+      <div class="r-info-row" id="pr-time-row"><span class="r-info-label" id="pr-time-label">Bezorgtijd:</span><span class="r-info-val" id="pr-time">22:30 (ZSM)</span></div>
+      <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val" id="pr-pay">Online betaald</span></div>
+    </div>
+
+    <!-- Klant -->
+    <div class="r-band">Klant</div>
+    <div class="r-section" style="padding-top:14px;padding-bottom:14px">
+      <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-name">Serdar Orman</div>
+      <div style="font-size:13px;color:#555;line-height:1.7" id="pr-cust-addr">Tochtstraat 40<br>3036 SK Rotterdam</div>
+      <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-phone">0614522453</div>
+      <div class="r-note" id="pr-note" style="margin:12px 0 0">Please deliver at the green door.<br>When arrive call me</div>
+    </div>
+
+    <!-- Bestelling -->
+    <div class="r-band">Bestelling</div>
+    <div>
+      <div id="pr-items">
+        <div class="r-item">
+          <span class="r-item-qty">1</span>
+          <div style="flex:1">
+            <div class="r-item-name">Pizza Pollo</div>
+            <div class="r-item-sub">Bell pepper<br>Onion</div>
+          </div>
+          <span class="r-item-price">€ 38.75</span>
+        </div>
+        <div class="r-item">
+          <span class="r-item-qty">1</span>
+          <div style="flex:1"><div class="r-item-name">Cola Zero</div></div>
+          <span class="r-item-price">€ 2.75</span>
+        </div>
+      </div>
+
+      <!-- Subtotal -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 30px">
+        <span style="font-size:13px;font-weight:500;color:#111">Subtotal</span>
+        <span id="pr-total" style="font-size:13px;font-weight:500;color:#111">€ 41.50</span>
+      </div>
+
+      <!-- BTW -->
+      <div id="r-btw-section" style="padding-top:14px;padding-bottom:8px">
+        <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
+        <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
+        <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Bedankt voor uw bestelling. Bestel online via de website!</div>
+    </div>
+
+  </div>
+
+<script>
+(function(){
+  var raw = localStorage.getItem('posCurrentOrder');
+  if (!raw) return; // no order selected in the app yet — keep the static demo bon
+
+  var order;
+  try { order = JSON.parse(raw); } catch(e) { return; }
+
+  function parsePrice(str){
+    var n = parseFloat(String(str||'').replace(/[^0-9.,]/g,'').replace(',','.'));
+    return isNaN(n) ? 0 : n;
+  }
+  function formatPrice(n){ return '€ ' + n.toFixed(2); }
+
+  var isCollection = order.type === 'Collection';
+  var isPaid = order.pay === 'Paid';
+  var total = parsePrice(order.price);
+  var btw = total * 9 / 109; // 9% inclusive estimate
+
+  document.getElementById('pr-oid').textContent = order.oid || '—';
+
+  var now = new Date();
+  var days = ['zo','ma','di','wo','do','vr','za'];
+  var pad = function(n){ return String(n).padStart(2,'0'); };
+  document.getElementById('pr-date').textContent = days[now.getDay()] + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth()+1) + '-' + now.getFullYear() + '  ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+  document.getElementById('pr-bron').textContent = 'POS';
+
+  document.getElementById('pr-time-label').textContent = isCollection ? 'Afhaaltijd:' : 'Bezorgtijd:';
+  document.getElementById('pr-time').textContent = order.wished || 'ASAP';
+
+  document.getElementById('pr-pay').textContent = isPaid ? 'Online betaald' : 'Contant betaald';
+
+  document.getElementById('pr-cust-name').textContent = order.name || '—';
+  var addrEl = document.getElementById('pr-cust-addr');
+  if (isCollection) {
+    addrEl.textContent = 'Afhalen';
+  } else {
+    addrEl.innerHTML = (order.address || '—') + (order.city ? '<br>' + order.city : '');
+  }
+  document.getElementById('pr-cust-phone').style.display = 'none'; // not tracked per order in the app
+
+  var noteEl = document.getElementById('pr-note');
+  if (order.note) { noteEl.textContent = order.note; }
+  else { noteEl.style.display = 'none'; }
+
+  // No itemized cart data exists per order in the app yet — show a single line for the order total
+  document.getElementById('pr-items').innerHTML =
+    '<div class="r-item"><span class="r-item-qty">1</span>' +
+    '<div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || '') + '</div></div>' +
+    '<span class="r-item-price">' + formatPrice(total) + '</span></div>';
+
+  document.getElementById('pr-total').textContent = formatPrice(total);
+  document.getElementById('pr-btw').textContent = formatPrice(btw);
+})();
+</script>
+
+</body>
+</html>
