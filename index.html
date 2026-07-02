@@ -753,28 +753,27 @@
 
   /* Thermal receipt (80mm) */
   .receipt-thermal {
-    width: 302px;
-    margin: 0 auto;
+    width: 100%;
     background: #fff;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.15);
-    padding: 8mm 4mm 12mm;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
     line-height: 1.6;
-    color: #000;
+    color: #111;
   }
   .receipt-thermal .r-center { text-align: center; }
   .receipt-thermal .r-bold { font-weight: 700; }
-  .receipt-thermal .r-lg { font-size: 15px; letter-spacing: 0.5px; }
-  .receipt-thermal .r-xl { font-size: 20px; letter-spacing: 1px; margin: 4px 0; }
-  .receipt-thermal .r-divider { white-space: nowrap; overflow: hidden; letter-spacing: -0.5px; margin: 8px 0; font-size: 12px; }
-  .receipt-thermal .r-row { display: flex; justify-content: space-between; gap: 10px; }
-  .receipt-thermal .r-sub { padding-left: 14px; font-size: 11px; color: #333; }
-  .receipt-thermal .r-total { font-size: 16px; font-weight: 700; padding: 4px 0; }
-  .receipt-thermal .r-btw-row { display: flex; font-size: 11px; }
-  .receipt-thermal .r-band { background: #2d2d2d; color: #fff; text-align: center; font-weight: 700; padding: 6px 0; margin: 12px -4mm; letter-spacing: 0.5px; }
-  .receipt-thermal .r-band:first-of-type { margin-top: 16px; }
-  .receipt-thermal .r-note { border: 1px solid #999; border-radius: 4px; padding: 8px; margin-top: 10px; font-size: 11px; }
+  .receipt-thermal .r-lg { font-size: 15px; }
+  .receipt-thermal .r-band { background: #111; color: #fff; text-align: center; font-weight: 600; font-size: 14px; padding: 11px 20px; letter-spacing: 0.03em; }
+  .receipt-thermal .r-section { padding: 4px 20px 8px; }
+  .receipt-thermal .r-info-row { display:flex; align-items:baseline; gap:8px; padding:8px 0; border-bottom:1px solid #f5f5f5; }
+  .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:110px; flex-shrink:0; }
+  .receipt-thermal .r-info-val { font-size:13px; font-weight:500; color:#111; }
+  .receipt-thermal .r-item { display:flex; align-items:flex-start; gap:10px; padding:14px 0; border-bottom:1px solid #f0f0f0; }
+  .receipt-thermal .r-item-qty { font-size:13px; font-weight:600; color:#111; min-width:14px; }
+  .receipt-thermal .r-item-name { font-size:14px; font-weight:700; color:#111; }
+  .receipt-thermal .r-item-sub { font-size:13px; color:#999; line-height:1.5; }
+  .receipt-thermal .r-item-price { font-size:14px; font-weight:600; color:#111; white-space:nowrap; margin-left:auto; }
+  .receipt-thermal .r-note { border:1px solid #e8e8e8; border-radius:10px; padding:14px 16px; margin:0 20px 12px; font-size:13px; color:#555; line-height:1.5; }
 
   @media print {
     body * { visibility: hidden; }
@@ -961,92 +960,66 @@
         </div>
         <div class="content-surface" style="border-radius:0">
         <div class="scroll" style="background:#fff">
+          <!-- Top countdown -->
+          <div style="padding:8px 20px 0;text-align:center">
+            <div id="d-timer-num" style="font-size:32px;font-weight:500;color:#4caf50;line-height:1">7</div>
+            <div id="d-timer-label" style="font-size:14px;font-weight:500;color:#4caf50;margin-top:-4px">min</div>
+            <div id="d-wished-inline" style="font-size:15px;font-weight:500;color:#111;margin-top:8px">19:00</div>
+          </div>
 
-          <!-- Restaurant header -->
-          <div style="padding:24px 24px 20px;text-align:center;border-bottom:1px solid #f0f0f0">
-            <div style="width:60px;height:60px;border-radius:50%;background:#f0f0f0;margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#bbb" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div style="padding:20px 20px 8px">
+            <div id="d-actions-default" style="display:flex;flex-direction:column;gap:10px">
+              <button id="d-next-btn" onclick="goPage('orders')" style="width:100%;height:35px;font-size:14px;font-weight:500;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">To kitchen</button>
             </div>
-            <div style="font-size:14px;font-weight:600;color:#111">Uw restaurant naam</div>
-            <div style="font-size:13px;color:#888;margin-top:4px;line-height:1.6">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622</div>
+            <div id="d-actions-accept" style="display:none">
+              <button id="d-accept-btn" onclick="acceptFromDetail()" style="width:100%;height:35px;font-size:14px;font-weight:500;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Accept</button>
+            </div>
           </div>
 
-          <!-- INFO section -->
-          <div style="background:#111;padding:11px 20px;text-align:center"><span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:0.03em">Info</span></div>
-          <div style="padding:4px 20px 8px">
-            <div class="bon-info-row"><span class="bon-info-label">Bestelnr.</span><span class="bon-info-val" id="d-bon-ordernr">#37</span></div>
-            <div class="bon-info-row"><span class="bon-info-label">Besteld op:</span><span class="bon-info-val" id="d-bon-date">wo 21-06-2025  21:58</span></div>
-            <div class="bon-info-row"><span class="bon-info-label">Bron:</span><span class="bon-info-val" id="d-bon-source">Web order</span></div>
-            <div class="bon-info-row"><span class="bon-info-label">Bezorgtijd:</span><span class="bon-info-val" id="d-bon-time">22:30 (ZSM)</span></div>
-            <div class="bon-info-row"><span class="bon-info-label">Betaalwijze:</span><span class="bon-info-val" id="d-bon-payment">Online betaald</span></div>
+          <div style="padding:24px 20px 0">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span id="d-detail-name" style="font-size:16px;font-weight:600;color:#111">Thomas Jefferson</span>
+              <span data-i18n="d_new_customer" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:5px 12px;white-space:nowrap">New Customer</span>
+            </div>
+            <div id="d-detail-addr" style="font-size:14px;color:#888;margin-top:6px">—</div>
+            <div id="d-detail-city" style="font-size:14px;color:#888;display:none">—</div>
+            <a id="d-open-map" data-i18n="d_open_map" href="#" target="_blank" style="display:none;font-size:14px;font-weight:500;color:#1a73e8;margin-top:6px;text-decoration:none">Open Map</a>
           </div>
 
-          <!-- KLANT section -->
-          <div style="background:#111;padding:11px 20px;text-align:center"><span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:0.03em">Klant</span></div>
-          <div style="padding:14px 20px 8px">
-            <div id="d-detail-name" style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px">Thomas Jefferson</div>
-            <div id="d-detail-addr" style="font-size:13px;color:#555;line-height:1.6">—</div>
-            <div id="d-detail-city" style="font-size:13px;color:#555;display:none">—</div>
-            <div id="d-detail-phone" style="font-size:13px;color:#555;margin-top:2px"></div>
-            <a id="d-open-map" data-i18n="d_open_map" href="#" target="_blank" style="display:none;font-size:13px;font-weight:500;color:#1a73e8;margin-top:6px;text-decoration:none">Open Map</a>
-            <span data-i18n="d_new_customer" id="d-new-customer-badge" style="display:none;font-size:11px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:4px 10px;white-space:nowrap;margin-top:8px">New Customer</span>
+          <div id="d-note-section" style="display:none;margin:16px 20px 0;background:#FFF8D6;border-radius:12px;padding:24px;align-items:flex-start;gap:24px">
+            <svg width="16" height="18" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:1px"><path d="M2 1H12C14.2091 1 16 2.79086 16 5V18C16 18.5523 15.5523 19 15 19H2C1.44772 19 1 18.5523 1 18V2C1 1.44772 1.44772 1 2 1Z" stroke="#3A3A3A" stroke-width="2"/><path d="M11 1H12C14.2091 1 16 2.79086 16 5V6C16 6.55228 15.5523 7 15 7H11C10.4477 7 10 6.55228 10 6V2C10 1.44772 10.4477 1 11 1Z" stroke="#3A3A3A" stroke-width="2"/><line x1="5" y1="9" x2="8" y2="9" stroke="#3A3A3A" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="13" x2="11" y2="13" stroke="#3A3A3A" stroke-width="2" stroke-linecap="round"/></svg>
+            <div id="d-note-text" style="font-size:14px;font-weight:500;color:#4E4E4E;line-height:1.5">Extra napkins please</div>
           </div>
 
-          <!-- Note -->
-          <div id="d-note-section" style="display:none;margin:0 20px 12px;border:1px solid #e8e8e8;border-radius:10px;padding:14px 16px">
-            <div id="d-note-text" style="font-size:13px;color:#555;line-height:1.5">Extra napkins please</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px">
+            <span id="d-total" style="font-size:18px;font-weight:600;color:#111">€ 50.00</span>
+            <span id="d-pay-badge" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:5px 12px;white-space:nowrap">Paid</span>
           </div>
 
-          <!-- BESTELLING section -->
-          <div style="background:#111;padding:11px 20px;text-align:center"><span style="font-size:14px;font-weight:600;color:#fff;letter-spacing:0.03em">Bestelling</span></div>
-          <div style="padding:0 20px">
+          <div style="padding:12px 20px 0">
             <!-- Item 1 -->
-            <div style="padding:14px 0;border-bottom:1px solid #f0f0f0">
-              <div style="display:flex;align-items:flex-start;gap:10px">
-                <span style="font-size:13px;font-weight:600;color:#111;min-width:14px">1</span>
+            <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">1</span>
                 <div style="flex:1">
-                  <div style="font-size:14px;font-weight:700;color:#111">Pizza Pollo</div>
-                  <div style="font-size:13px;color:#999;margin-top:3px;line-height:1.5">Bell pepper<br>Onion</div>
+                  <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Pizza Pollo</div>
+                  <div style="font-size:14px;color:#999;margin-top:3px">Bell pepper</div>
+                  <div style="font-size:14px;color:#999">Onion</div>
                 </div>
                 <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 38.75</span>
               </div>
             </div>
             <!-- Item 2 -->
-            <div style="padding:14px 0;border-bottom:1px solid #f0f0f0">
-              <div style="display:flex;align-items:flex-start;gap:10px">
-                <span style="font-size:13px;font-weight:600;color:#111;min-width:14px">1</span>
-                <div style="flex:1"><div style="font-size:14px;font-weight:700;color:#111">Cola Zero</div></div>
+            <div style="padding:12px 0;border-top:1px solid #f0f0f0">
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <span style="font-size:14px;font-weight:600;color:#111;min-width:18px">1</span>
+                <div style="flex:1">
+                  <div style="font-size:14px;font-weight:500;color:#111;line-height:1.3">Cola Zero</div>
+                </div>
                 <span style="font-size:14px;font-weight:600;color:#111;white-space:nowrap">€ 2.75</span>
               </div>
             </div>
-            <!-- Subtotal -->
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 8px">
-              <span style="font-size:14px;font-weight:700;color:#111">Subtotal</span>
-              <span id="d-total" style="font-size:16px;font-weight:700;color:#111">€ 41.50</span>
-            </div>
-            <div style="padding-bottom:12px;text-align:right">
-              <span id="d-pay-badge" style="font-size:12px;font-weight:600;color:#111;background:#f0f0f0;border-radius:100px;padding:5px 14px">Paid</span>
-            </div>
-            <!-- BTW -->
-            <div style="border-top:1px solid #f0f0f0;padding-top:14px;padding-bottom:8px">
-              <div class="bon-info-row"><span class="bon-info-label">Btw 9%:</span><span class="bon-info-val">€ 2.75</span></div>
-              <div class="bon-info-row"><span class="bon-info-label">BTW-nummer:</span><span class="bon-info-val">NL865792768B01</span></div>
-              <div class="bon-info-row"><span class="bon-info-label">KVK-nummer:</span><span class="bon-info-val">91850347</span></div>
-            </div>
-            <!-- Footer message -->
-            <div style="border-top:1px solid #f0f0f0;padding:16px 0 8px;font-size:13px;color:#555;line-height:1.5">Btw bedankt voor uw bestelling. Bestel online via de website!</div>
           </div>
-
-          <!-- Action buttons -->
-          <div style="padding:16px 20px;border-top:1px solid #f0f0f0">
-            <div id="d-actions-default">
-              <button id="d-next-btn" onclick="goPage('orders')" style="width:100%;height:44px;font-size:14px;font-weight:600;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">To kitchen</button>
-            </div>
-            <div id="d-actions-accept" style="display:none">
-              <button id="d-accept-btn" onclick="acceptFromDetail()" style="width:100%;height:44px;font-size:14px;font-weight:600;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Accept</button>
-            </div>
-          </div>
-
           <div style="padding-bottom:calc(env(safe-area-inset-bottom) + 100px)"></div>
         </div>
         </div><!-- /content-surface -->
@@ -1074,63 +1047,72 @@
         <div class="scroll" style="padding:24px 0 140px;background:#ececec">
           <!-- Thermal receipt (80mm) -->
           <div class="receipt-thermal" id="receipt-print-area">
-            <div class="r-center r-bold r-lg">PIZZA TIME</div>
-            <div class="r-center">PIZZA &middot; BURGER &middot; PANINI &middot; SANDWICH</div>
-            <div class="r-center" style="margin-top:6px">Zwartjanstraat 30A</div>
-            <div class="r-center">3035AT Rotterdam</div>
-            <div class="r-center">010-2104622</div>
-            <div class="r-center">www.pizzatime010.nl</div>
 
+            <!-- Restaurant header -->
+            <div style="padding:24px 24px 20px;text-align:center;border-bottom:1px solid #f0f0f0">
+              <div style="width:64px;height:64px;border-radius:50%;background:#f0f0f0;margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#bbb" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div style="font-size:15px;font-weight:700;color:#111">Uw restaurant naam</div>
+              <div style="font-size:13px;color:#888;margin-top:6px;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
+            </div>
+
+            <!-- Info -->
             <div class="r-band">Info</div>
-            <div class="r-row"><span>Ordernr.</span><span id="pr-oid">250921A02</span></div>
-            <div class="r-row"><span>Besteld op</span><span>21-09-2025 12:34</span></div>
-            <div class="r-row"><span>Bron</span><span>Kassa</span></div>
-            <div class="r-row"><span>Afhaaltijd</span><span>ZSM</span></div>
-            <div class="r-row"><span>Betaalwijze</span><span>Contant</span></div>
+            <div class="r-section">
+              <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val" id="pr-oid">250621 A 31</span></div>
+              <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val">wo 21-06-2025  21:58</span></div>
+              <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val">Web order</span></div>
+              <div class="r-info-row"><span class="r-info-label">Bezorgtijd:</span><span class="r-info-val">22:30 (ZSM)</span></div>
+              <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val">Online betaald</span></div>
+            </div>
 
+            <!-- Klant -->
             <div class="r-band">Klant</div>
-            <div class="r-bold" id="pr-cust-name">Thomas Jefferson</div>
-            <div id="pr-cust-addr">Tochtstraat 40</div>
-            <div id="pr-cust-city">3036 SK Rotterdam</div>
-            <div id="pr-cust-phone">06-12345678</div>
-            <div class="r-note">Bellen, wanneer je bij de trap bent van de bieb</div>
+            <div class="r-section" style="padding-top:14px;padding-bottom:14px">
+              <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-name">Serdar Orman</div>
+              <div style="font-size:13px;color:#555;line-height:1.7" id="pr-cust-addr">Tochtstraat 40<br>3036 SK Rotterdam</div>
+              <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-phone">0614522453</div>
+              <div class="r-note" style="margin:12px 0 0">Please deliver at the green door.<br>When arrive call me</div>
+            </div>
 
+            <!-- Bestelling -->
             <div class="r-band">Bestelling</div>
+            <div style="padding:0 20px">
+              <div class="r-item">
+                <span class="r-item-qty">1</span>
+                <div style="flex:1">
+                  <div class="r-item-name">Pizza Pollo</div>
+                  <div class="r-item-sub">Bell pepper<br>Onion</div>
+                </div>
+                <span class="r-item-price">€ 38.75</span>
+              </div>
+              <div class="r-item">
+                <span class="r-item-qty">1</span>
+                <div style="flex:1"><div class="r-item-name">Cola Zero</div></div>
+                <span class="r-item-price">€ 2.75</span>
+              </div>
 
-            <div class="r-row"><span>1x Spicy chickenwrap menu</span><span>&euro;9,75</span></div>
-            <div class="r-sub">+ Mayonaise</div>
-            <div class="r-sub">+ Coca-Cola</div>
-            <div class="r-row" style="margin-top:6px"><span>1x Kip salade</span><span>&euro;6,50</span></div>
-            <div class="r-row" style="margin-top:6px"><span>1x Red Bull</span><span>&euro;3,00</span></div>
-            <div class="r-row" style="margin-top:6px"><span>1x Bestelset</span><span>&euro;1,00</span></div>
-            <div class="r-sub">(bestek + servet)</div>
+              <!-- Subtotal -->
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 8px">
+                <span style="font-size:14px;font-weight:700;color:#111">Subtotal</span>
+                <span id="pr-total" style="font-size:16px;font-weight:700;color:#111">€ 41.50</span>
+              </div>
+              <div style="padding-bottom:14px;text-align:right">
+                <span style="font-size:12px;font-weight:600;color:#111;background:#f0f0f0;border-radius:100px;padding:5px 14px">Betaald</span>
+              </div>
 
-            <div class="r-divider">--------------------------------</div>
+              <!-- BTW -->
+              <div style="border-top:1px solid #f0f0f0;padding-top:14px;padding-bottom:8px">
+                <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val">€ 2.75</span></div>
+                <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
+                <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+              </div>
 
-            <div class="r-row"><span>Subtotaal producten</span><span>&euro;20,25</span></div>
-            <div class="r-row"><span>Korting</span><span>-&euro;2,50</span></div>
-            <div class="r-row r-bold"><span>Nieuw subtotaal</span><span>&euro;17,75</span></div>
-            <div class="r-row" style="margin-top:6px"><span>Transactiekosten</span><span>&euro;0,35</span></div>
-            <div class="r-row"><span>Statiegeld</span><span>&euro;0,15</span></div>
+              <!-- Footer -->
+              <div style="border-top:1px solid #f0f0f0;padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Btw bedankt voor uw bestelling. Bestel online via de website!</div>
+            </div>
 
-            <div class="r-divider">================================</div>
-
-            <div class="r-row r-total"><span>TOTAAL TE BETALEN</span><span id="pr-total">&euro;18,25</span></div>
-
-            <div class="r-divider">================================</div>
-
-            <div class="r-bold" style="margin-bottom:4px">BTW-specificatie:</div>
-            <div class="r-btw-row r-bold"><span style="flex:1">BTW</span><span style="flex:1;text-align:right">GRONDSLAG</span><span style="flex:1;text-align:right">BTW</span></div>
-            <div class="r-btw-row"><span style="flex:1">9%</span><span style="flex:1;text-align:right">&euro;16,75</span><span style="flex:1;text-align:right">&euro;1,51</span></div>
-            <div class="r-btw-row"><span style="flex:1">21%</span><span style="flex:1;text-align:right">&euro;1,00</span><span style="flex:1;text-align:right">&euro;0,17</span></div>
-            <div class="r-row r-bold" style="margin-top:6px"><span>Totaal BTW</span><span>&euro;1,68</span></div>
-
-            <div class="r-divider">================================</div>
-
-            <div class="r-center" style="margin-top:4px">BTW-nummer: NL123456789B01</div>
-            <div class="r-center">KVK-nummer: 87339568</div>
-            <div class="r-center r-bold" style="margin-top:10px">Bedankt voor uw bestelling.</div>
-            <div class="r-center">Bestel online via onze website of app.</div>
           </div>
         </div>
             <!-- Print button -->
@@ -1831,13 +1813,14 @@
     document.getElementById('d-total').textContent=price;
     document.getElementById('d-detail-name').textContent=name;
     document.getElementById('d-detail-addr').textContent=cleanAddr;
-    document.getElementById('d-wished-inline').textContent=(id==='26')?'16:30':'ASAP';
+    var wishedEl=document.getElementById('d-wished-inline');
+    if(wishedEl) wishedEl.textContent=(id==='26')?'16:30':'ASAP';
     var minsNum=parseInt(mins);
     var color=minsNum<0?'#c62828':minsNum<=10?'#e65100':'#4caf50';
     var num=document.getElementById('d-timer-num');
-    num.style.color=color;
-    num.textContent=Math.abs(minsNum);
-    document.getElementById('d-timer-label').style.color=color;
+    if(num){ num.style.color=color; num.textContent=Math.abs(minsNum); }
+    var timerLabel=document.getElementById('d-timer-label');
+    if(timerLabel) timerLabel.style.color=color;
     var nextKeyMap={kitchen:'d_to_kitchen',delivery:'d_to_delivery',archive:'d_to_archive'};
     var nextKey=nextKeyMap[next]||'d_to_kitchen';
     var nextBtnEl=document.getElementById('d-next-btn');
