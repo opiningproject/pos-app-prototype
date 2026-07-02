@@ -754,6 +754,7 @@
   /* Thermal receipt (80mm) */
   .receipt-thermal {
     width: 100%;
+    padding: 0 16px;
     background: #fff;
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -763,17 +764,19 @@
   .receipt-thermal .r-center { text-align: center; }
   .receipt-thermal .r-bold { font-weight: 700; }
   .receipt-thermal .r-lg { font-size: 15px; }
-  .receipt-thermal .r-band { background: #111; color: #fff; text-align: center; font-weight: 600; font-size: 14px; padding: 11px 20px; letter-spacing: 0.03em; }
-  .receipt-thermal .r-section { padding: 4px 20px 8px; }
+  .receipt-thermal .r-band { background: none; color: #111; text-align: left; font-weight: 700; font-size: 13px; padding: 14px 0 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .receipt-thermal .r-section { padding: 4px 0 8px; }
+  .receipt-thermal #r-info-section .r-info-row { border-bottom: none; padding: 3px 0; }
+  .receipt-thermal #r-btw-section .r-info-row { border-bottom: none; padding: 2px 0; }
   .receipt-thermal .r-info-row { display:flex; align-items:baseline; gap:8px; padding:8px 0; border-bottom:1px solid #f5f5f5; }
-  .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:110px; flex-shrink:0; }
+  .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:92px; flex-shrink:0; }
   .receipt-thermal .r-info-val { font-size:13px; font-weight:500; color:#111; }
-  .receipt-thermal .r-item { display:flex; align-items:flex-start; gap:10px; padding:14px 0; border-bottom:1px solid #f0f0f0; }
-  .receipt-thermal .r-item-qty { font-size:13px; font-weight:600; color:#111; min-width:14px; }
-  .receipt-thermal .r-item-name { font-size:14px; font-weight:700; color:#111; }
-  .receipt-thermal .r-item-sub { font-size:13px; color:#999; line-height:1.5; }
-  .receipt-thermal .r-item-price { font-size:14px; font-weight:600; color:#111; white-space:nowrap; margin-left:auto; }
-  .receipt-thermal .r-note { border:1px solid #e8e8e8; border-radius:10px; padding:14px 16px; margin:0 20px 12px; font-size:13px; color:#555; line-height:1.5; }
+  .receipt-thermal .r-item { display:flex; align-items:flex-start; gap:10px; padding:14px 0; border-bottom:1.5px solid #e2e2e2; }
+  .receipt-thermal .r-item-qty { font-size:13px; font-weight:500; color:#888; min-width:14px; }
+  .receipt-thermal .r-item-name { font-size:13px; font-weight:500; color:#111; }
+  .receipt-thermal .r-item-sub { font-size:13px; font-weight:500; color:#111; line-height:1.5; }
+  .receipt-thermal .r-item-price { font-size:13px; font-weight:500; color:#111; white-space:nowrap; margin-left:auto; }
+  .receipt-thermal .r-note { border:0.5px solid #999; padding:14px 16px; margin:12px 0 0; font-size:13px; color:#555; line-height:1.5; }
 
   @media print {
     body * { visibility: hidden; }
@@ -1049,36 +1052,27 @@
           <div class="receipt-thermal" id="receipt-print-area">
 
             <!-- Restaurant header -->
-            <div style="padding:24px 24px 20px;text-align:center;border-bottom:1px solid #f0f0f0">
-              <div style="width:64px;height:64px;border-radius:50%;background:#f0f0f0;margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#bbb" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </div>
-              <div style="font-size:15px;font-weight:700;color:#111">Uw restaurant naam</div>
-              <div style="font-size:13px;color:#888;margin-top:6px;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
+            <div style="padding:24px 0 20px;border-bottom:1px solid #f0f0f0">
+              <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:10px">STARBUCKS</div>
+              <div style="font-size:13px;color:#555;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.pizzaworld.nl</div>
             </div>
 
-            <!-- Info -->
-            <div class="r-band">Info</div>
-            <div class="r-section">
-              <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val" id="pr-oid">250621 A 31</span></div>
-              <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val">wo 21-06-2025  21:58</span></div>
-              <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val">Web order</span></div>
-              <div class="r-info-row"><span class="r-info-label">Bezorgtijd:</span><span class="r-info-val">22:30 (ZSM)</span></div>
-              <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val">Online betaald</span></div>
-            </div>
+            <!-- Besteldatum -->
+            <div class="r-band">BESTELDATUM</div>
+            <div style="font-size:13px;color:#555;padding:6px 0 14px" id="pr-date">2025-12-21 om 15:43 uur</div>
 
             <!-- Klant -->
-            <div class="r-band">Klant</div>
+            <div class="r-band">KLANT GEGEVENS</div>
             <div class="r-section" style="padding-top:14px;padding-bottom:14px">
-              <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-name">Serdar Orman</div>
+              <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-phone">0614522453</div>
               <div style="font-size:13px;color:#555;line-height:1.7" id="pr-cust-addr">Tochtstraat 40<br>3036 SK Rotterdam</div>
-              <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-phone">0614522453</div>
-              <div class="r-note" style="margin:12px 0 0">Please deliver at the green door.<br>When arrive call me</div>
+              <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-name">Serdar Orman</div>
             </div>
 
             <!-- Bestelling -->
-            <div class="r-band">Bestelling</div>
-            <div style="padding:0 20px">
+            <div class="r-band" id="pr-pay-band">BESTELLING IS ONLINE BETAALD!</div>
+            <div class="r-band" id="pr-delivery-band">ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING 18:25</span></div>
+            <div id="pr-items">
               <div class="r-item">
                 <span class="r-item-qty">1</span>
                 <div style="flex:1">
@@ -1092,26 +1086,27 @@
                 <div style="flex:1"><div class="r-item-name">Cola Zero</div></div>
                 <span class="r-item-price">€ 2.75</span>
               </div>
-
-              <!-- Subtotal -->
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 8px">
-                <span style="font-size:14px;font-weight:700;color:#111">Subtotal</span>
-                <span id="pr-total" style="font-size:16px;font-weight:700;color:#111">€ 41.50</span>
-              </div>
-              <div style="padding-bottom:14px;text-align:right">
-                <span style="font-size:12px;font-weight:600;color:#111;background:#f0f0f0;border-radius:100px;padding:5px 14px">Betaald</span>
-              </div>
-
-              <!-- BTW -->
-              <div style="border-top:1px solid #f0f0f0;padding-top:14px;padding-bottom:8px">
-                <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val">€ 2.75</span></div>
-                <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
-                <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
-              </div>
-
-              <!-- Footer -->
-              <div style="border-top:1px solid #f0f0f0;padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Btw bedankt voor uw bestelling. Bestel online via de website!</div>
             </div>
+
+            <!-- Subtotal -->
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 30px">
+              <span style="font-size:13px;font-weight:500;color:#111">SUBTOTAL</span>
+              <span id="pr-total" style="font-size:13px;font-weight:500;color:#111">€ 41.50</span>
+            </div>
+
+            <!-- Opmerking -->
+            <div class="r-band" id="pr-note-band" style="display:none">KLANT OPMERKING:</div>
+            <div id="pr-note" style="font-size:13px;color:#555;line-height:1.7;padding:6px 0 14px;display:none">Please deliver at the green door.</div>
+
+            <!-- BTW -->
+            <div id="r-btw-section" style="padding-top:14px;padding-bottom:8px">
+              <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
+              <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
+              <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+            </div>
+
+            <!-- Footer -->
+            <div style="padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Bedankt voor uw bestelling. Bestel online via de website!</div>
 
           </div>
         </div>
@@ -1777,6 +1772,7 @@
   function goPage(p){
     document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
     document.getElementById('p-'+p).classList.add('active');
+    if(p==='print') populatePrintPage();
     // Always reset to first tab on every page
     if(p==='orders'){
       var newTab=document.querySelector('.tab[onclick*="\'new\'"]');
@@ -1858,7 +1854,47 @@
   }
 
   function openBon(){
-    window.open('bon.html', '_blank');
+    goPage('print');
+  }
+
+  function populatePrintPage(){
+    var raw = localStorage.getItem('posCurrentOrder');
+    if (!raw) return;
+    var order; try { order = JSON.parse(raw); } catch(e){ return; }
+    function parsePrice(s){ var n=parseFloat(String(s||'').replace(/[^0-9.,]/g,'').replace(',','.')); return isNaN(n)?0:n; }
+    function fmt(n){ return '€ '+n.toFixed(2); }
+    var isCollection = order.type==='Collection';
+    var isPaid = order.pay==='Paid';
+    var total = parsePrice(order.price);
+    var btw = total*9/109;
+    var now = new Date();
+    var pad=function(n){return String(n).padStart(2,'0');};
+    // Datum
+    document.getElementById('pr-date').textContent = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' om '+pad(now.getHours())+':'+pad(now.getMinutes())+' uur';
+    // Betaalstatus
+    document.getElementById('pr-pay-band').textContent = isPaid ? 'BESTELLING IS ONLINE BETAALD!' : 'BESTELLING WORDT CONTANT BETAALD';
+    // Bezorg/afhaal band
+    var deliveryBand = document.getElementById('pr-delivery-band');
+    if(isCollection){
+      deliveryBand.innerHTML = 'AFHALEN<br><span id="pr-time-line">SCHATTING '+(order.wished||'ZSM')+'</span>';
+    } else {
+      deliveryBand.innerHTML = 'ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING '+(order.wished||'ZSM')+'</span>';
+    }
+    // Klant
+    document.getElementById('pr-cust-name').textContent = order.name||'—';
+    document.getElementById('pr-cust-phone').textContent = order.phone||'';
+    var addrEl=document.getElementById('pr-cust-addr');
+    if(isCollection){ addrEl.textContent='Afhalen'; }
+    else { addrEl.innerHTML=(order.address||'—')+(order.city?'<br>'+order.city:''); }
+    // Opmerking
+    var noteEl=document.getElementById('pr-note');
+    var noteBand=document.getElementById('pr-note-band');
+    if(order.note){ noteEl.textContent=order.note; noteEl.style.display=''; noteBand.style.display=''; }
+    else { noteEl.style.display='none'; noteBand.style.display='none'; }
+    // Items
+    document.getElementById('pr-items').innerHTML='<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling '+(order.oid||'')+'</div></div><span class="r-item-price">'+fmt(total)+'</span></div>';
+    document.getElementById('pr-total').textContent=fmt(total);
+    document.getElementById('pr-btw').textContent=fmt(btw);
   }
 
   var TAB_IDX = {new:0, kitchen:1, delivery:2};
