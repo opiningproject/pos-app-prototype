@@ -38,9 +38,9 @@
   .receipt-thermal .r-center { text-align: center; }
   .receipt-thermal .r-bold { font-weight: 700; }
   .receipt-thermal .r-lg { font-size: 15px; }
-  .receipt-thermal .r-band { background: #111; color: #fff; text-align: center; font-weight: 600; font-size: 14px; padding: 11px 0; letter-spacing: 0.03em; }
+  .receipt-thermal .r-band { background: none; color: #111; text-align: left; font-weight: 700; font-size: 13px; padding: 14px 0 6px; letter-spacing: 0.05em; text-transform: uppercase; }
   .receipt-thermal .r-section { padding: 4px 0 8px; }
-  .receipt-thermal #r-info-section .r-info-row { border-bottom: none; }
+  .receipt-thermal #r-info-section .r-info-row { border-bottom: none; padding: 3px 0; }
   .receipt-thermal #r-btw-section .r-info-row { border-bottom: none; padding: 2px 0; }
   .receipt-thermal .r-info-row { display:flex; align-items:baseline; gap:8px; padding:8px 0; border-bottom:1px solid #f5f5f5; }
   .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:92px; flex-shrink:0; }
@@ -66,16 +66,9 @@
 
   <div class="receipt-thermal" id="receipt-print-area">
 
-    <!-- Restaurant header: logo, no name text -->
+    <!-- Restaurant header: name only -->
     <div style="padding:24px 0 20px;text-align:center;border-bottom:1px solid #f0f0f0">
-      <svg width="76" height="76" viewBox="0 0 72 72" style="display:block;margin:0 auto 14px">
-        <circle cx="36" cy="36" r="36" fill="#111"/>
-        <path d="M20 20 Q36 10 52 20 L36 48 Z" fill="#fff"/>
-        <circle cx="31" cy="24" r="2" fill="#111"/>
-        <circle cx="41" cy="25" r="2" fill="#111"/>
-        <circle cx="36" cy="33" r="2" fill="#111"/>
-        <text x="36" y="59" text-anchor="middle" font-family="Poppins, sans-serif" font-size="8" font-weight="700" letter-spacing="0.5" fill="#fff">PIZZAWORLD</text>
-      </svg>
+      <div style="font-size:20px;font-weight:700;color:#111;margin-bottom:10px">Starbucks</div>
       <div style="font-size:13px;color:#555;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.pizzaworld.nl</div>
     </div>
 
