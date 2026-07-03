@@ -1260,66 +1260,86 @@
             <div class="mdd-item" data-co-type="takeaway" onclick="selectCoDropdown(this,'takeaway')"><i class="ti ti-shopping-bag" style="font-size:18px;color:#111;width:20px;text-align:center"></i> <span data-i18n="co_new_takeaway">New takeaway</span></div>
           </div>
         </div>
-        <!-- Add product / Add custom item -->
-        <div class="tabs">
-          <div class="tab" onclick="goPage('menu')" style="border:1.5px solid #e0e0e0">+ Product</div>
-          <div class="tab" style="border:1.5px solid #e0e0e0">Aangepast</div>
-        </div>
-        <!-- Cart area + footer in one scroll -->
-        <div class="scroll" style="flex:1;background:#f7f7f7;padding:16px 24px 0">
-          <!-- Demo cart item -->
-          <div style="background:#fff;border-radius:14px;padding:14px;border:1.5px solid #e8e8e8">
-            <!-- Row 1: icon + name + × -->
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-              <div style="width:32px;height:32px;border-radius:8px;background:#fff;border:1.5px solid #e8e8e8;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M0.73 14.58L5.82 9.31C6.31 8.82 7.09 8.82 7.57 9.31L9.93 11.66L11.04 10.54C11.53 10.06 12.31 10.06 12.79 10.54L16.77 14.58" stroke="#979797" stroke-width="1.46" stroke-miterlimit="10"/><path d="M9.52 5.61C9.52 6.29 10.08 6.85 10.76 6.85C11.44 6.85 12 6.29 12 5.61C12 4.93 11.44 4.38 10.76 4.38C10.08 4.38 9.52 4.93 9.52 5.61Z" stroke="#979797" stroke-width="1.46" stroke-miterlimit="10"/><rect x="0.73" y="0.73" width="16.04" height="16.04" rx="3.65" stroke="#979797" stroke-width="1.46"/></svg>
-              </div>
-              <span style="font-size:14px;font-weight:600;color:#111;flex:1">Pizza Pollo</span>
-              <span style="font-size:20px;color:#bbb;cursor:pointer;line-height:1">×</span>
+        <!-- Content: Klant / Producten / Betaling / Notities-Tags-Markten -->
+        <div class="scroll" style="background:#f7f7f7">
+
+          <!-- Klant -->
+          <div style="background:#fff">
+            <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Klant</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;cursor:pointer">
+              <i class="ti ti-circle-plus" style="font-size:20px;color:#111"></i>
+              <span style="font-size:15px;font-weight:500;color:#111">Klant toevoegen</span>
             </div>
-            <!-- Row 2: quantity input full width -->
-            <div style="display:flex;align-items:center;border:1.5px solid #e0e0e0;border-radius:10px;padding:8px 12px;margin-bottom:10px">
+          </div>
+
+          <!-- Producten -->
+          <div style="background:#fff;margin-top:12px">
+            <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Producten</span></div>
+            <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:10px">
+              <button onclick="openProductPicker()" style="width:100%;height:35px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
+              <button onclick="openCustomItemForm()" style="width:100%;height:35px;background:#fff;color:#111;border:1.5px solid #e0e0e0;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Aangepast artikel toevoegen</button>
+            </div>
+            <!-- Cart items -->
+            <div id="co-cart-list" style="display:none;border-top:1px solid #f2f2f2"></div>
+          </div>
+
+          <!-- Betaling -->
+          <div style="background:#fff;margin-top:12px">
+            <div style="padding:20px 20px 6px;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:15px;font-weight:700;color:#111">Betaling</span>
+              <span style="font-size:13px;color:#999;cursor:pointer">Factuur verzenden</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px">
+              <span style="font-size:15px;color:#111">Subtotaal</span>
+              <span id="co-subtotal" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid #f2f2f2">
+              <div>
+                <div style="font-size:15px;color:#111">Korting</div>
+                <div style="font-size:13px;color:#999;margin-top:2px;cursor:pointer">Korting toevoegen</div>
+              </div>
+              <span id="co-discount" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid #f2f2f2">
+              <div>
+                <div style="font-size:15px;color:#111">Verzending</div>
+                <div style="font-size:13px;color:#999;margin-top:2px;cursor:pointer">Verzending of bezorging toevoegen</div>
+              </div>
+              <span id="co-shipping" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+            </div>
+            <div style="padding:16px 20px;border-top:1px solid #f2f2f2">
+              <div style="font-size:15px;font-weight:600;color:#111">Niet berekend</div>
+              <div style="font-size:13px;color:#999;margin-top:2px">Geschatte belasting</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid #f2f2f2">
+              <span style="font-size:15px;font-weight:700;color:#111">Totaal</span>
+              <span id="co-order-total" style="font-size:15px;font-weight:700;color:#111">€ 0,00</span>
+            </div>
+          </div>
+
+          <!-- Notities / Tags / Markten -->
+          <div style="background:#fff;margin-top:12px">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;cursor:pointer">
+              <i class="ti ti-notes" style="font-size:18px;color:#555"></i>
+              <span style="font-size:15px;color:#111;flex:1">Notities</span>
+              <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-top:1px solid #f2f2f2;cursor:pointer">
+              <i class="ti ti-hash" style="font-size:18px;color:#555"></i>
+              <span style="font-size:15px;color:#111;flex:1">Tags</span>
+              <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-top:1px solid #f2f2f2;cursor:pointer">
+              <i class="ti ti-world" style="font-size:18px;color:#555"></i>
               <div style="flex:1">
-                <div style="font-size:11px;color:#888;font-weight:500;margin-bottom:2px">Quantity</div>
-                <div style="font-size:14px;font-weight:600;color:#111">1</div>
+                <div style="font-size:15px;color:#111">Markten</div>
+                <div style="font-size:13px;color:#999;margin-top:2px">Nederland • (EUR €)</div>
               </div>
-              <div style="display:flex;gap:6px">
-                <button style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e0e0e0;background:#fff;font-size:18px;font-weight:300;color:#111;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
-                <button style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e0e0e0;background:#fff;font-size:18px;font-weight:300;color:#111;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
-              </div>
-            </div>
-            <!-- Row 3: unit price × qty + total -->
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="font-size:13px;color:#111;font-weight:500">€ 12,50 × 1</span>
-              <span style="font-size:13px;font-weight:700;color:#111">€ 12,50</span>
+              <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
             </div>
           </div>
-          <!-- Bottom bon actions -->
-          <div class="bon-footer" style="background:#f7f7f7;border-top:none;padding-top:16px">
-          <div class="bon-row bon-customer">
-            <span style="font-size:14px;font-weight:500;color:#111" data-i18n="create_add_customer">Add customer info</span>
-            <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
-          </div>
-          <div class="bon-row bon-total">
-            <span style="font-size:15px;font-weight:700;color:#111" data-i18n="create_total">Total</span>
-            <span style="font-size:15px;font-weight:700;color:#111">€ 0,00</span>
-          </div>
-          <div style="display:flex;gap:8px;padding:0 24px">
-            <button class="bon-action-btn" style="flex:1"><i class="ti ti-discount-2" style="font-size:18px"></i></button>
-          </div>
-          <div style="display:flex;gap:8px;padding:0 24px">
-            <button class="bon-action-btn" style="flex:1;gap:8px;font-size:13px;font-weight:600"><i class="ti ti-clock" style="font-size:16px"></i> ASAP</button>
-            <button class="bon-action-btn" style="flex:1"><i class="ti ti-message" style="font-size:18px"></i></button>
-          </div>
-          <div style="display:flex;gap:8px;padding:0 24px">
-            <button class="bon-action-btn bon-pay-active" style="flex:1"><i class="ti ti-cash" style="font-size:20px"></i></button>
-            <button class="bon-action-btn" style="flex:1"><i class="ti ti-credit-card" style="font-size:20px"></i></button>
-            <button class="bon-action-btn" style="flex:1"><i class="ti ti-user" style="font-size:20px"></i></button>
-          </div>
-          <div style="padding:0 24px calc(env(safe-area-inset-bottom) + 100px)">
-            <button class="bon-confirm-btn" data-i18n="create_confirm">Confirm order</button>
-          </div><!-- /confirm-wrapper -->
-          </div><!-- /bon-footer -->
+
+          <div style="height:calc(env(safe-area-inset-bottom) + 40px)"></div>
         </div><!-- /scroll -->
         <div class="navbar"><div class="navbar-pill">
           <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
@@ -1670,6 +1690,78 @@
 
       <div class="mm-navbar">
         <div class="mm-circle-close" onclick="closeMainMenu()"><div class="mm-circle-close-inner"><i class="ti ti-x" style="font-size:20px;color:#111"></i></div></div>
+      </div>
+    </div>
+
+    <!-- Product picker overlay -->
+    <div class="filter-overlay" id="pp-overlay">
+      <div class="filter-header">
+        <div class="filter-header-circle" onclick="closeProductPicker()"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="black" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="filter-header-title">Producten</span>
+        <div style="width:44px;flex-shrink:0"></div>
+      </div>
+      <div style="padding:0 20px 12px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:100px;padding:12px 16px">
+          <i class="ti ti-search" style="color:#999;font-size:16px"></i>
+          <input id="pp-search" oninput="renderProductPicker()" placeholder="Zoeken" style="border:none;background:transparent;outline:none;flex:1;font-size:15px;font-family:'Poppins',sans-serif;color:#111">
+        </div>
+      </div>
+      <div class="filter-list" id="pp-list"></div>
+      <div id="pp-confirm-bar" style="display:none;position:absolute;left:0;right:0;bottom:0;padding:12px 20px calc(env(safe-area-inset-bottom) + 16px);background:linear-gradient(to top, #fff 65%, rgba(255,255,255,0))">
+        <button id="pp-confirm-btn" onclick="confirmProductPicker()" style="width:100%;height:52px;background:#111;color:#fff;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Toevoegen</button>
+      </div>
+    </div>
+
+    <!-- Variant picker overlay -->
+    <div class="filter-overlay" id="vp-overlay">
+      <div class="filter-header">
+        <div class="filter-header-circle" onclick="closeVariantPicker()"><svg width="9" height="16" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.2002 1.19922L1.2002 9.19922L8.2002 17.1992" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="filter-header-title" id="vp-title">Product</span>
+        <div style="width:44px;flex-shrink:0"></div>
+      </div>
+      <div style="padding:0 20px 12px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:100px;padding:12px 16px">
+          <i class="ti ti-search" style="color:#999;font-size:16px"></i>
+          <input placeholder="Zoeken" style="border:none;background:transparent;outline:none;flex:1;font-size:15px;font-family:'Poppins',sans-serif;color:#111">
+        </div>
+      </div>
+      <div class="filter-list" id="vp-list"></div>
+    </div>
+
+    <!-- Custom item form overlay -->
+    <div class="filter-overlay" id="ci-overlay">
+      <div class="filter-header">
+        <div onclick="closeCustomItemForm()" style="background:#f0f0f0;color:#111;border-radius:100px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0">Annuleren</div>
+        <span class="filter-header-title">Aangepast artikel</span>
+        <div onclick="saveCustomItem()" style="background:#111;color:#fff;border-radius:100px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0">Opslaan</div>
+      </div>
+      <div class="filter-list">
+        <input id="ci-name" placeholder="Artikelnaam" style="width:100%;height:52px;border:1.5px solid #e0e0e0;border-radius:12px;padding:0 16px;font-size:15px;font-family:'Poppins',sans-serif;color:#111;margin-bottom:12px;outline:none;box-sizing:border-box">
+        <div style="border:1.5px solid #e0e0e0;border-radius:12px;padding:10px 16px;margin-bottom:12px">
+          <div style="font-size:12px;color:#999;margin-bottom:2px">Prijs</div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span style="font-size:16px;color:#111">€</span>
+            <input id="ci-price" type="number" step="0.01" value="0.00" style="border:none;outline:none;font-size:16px;color:#111;font-family:'Poppins',sans-serif;flex:1;min-width:0">
+          </div>
+        </div>
+        <div style="border:1.5px solid #e0e0e0;border-radius:12px;padding:10px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:12px;color:#999;margin-bottom:2px">Aantal</div>
+            <div id="ci-qty-val" style="font-size:16px;font-weight:600;color:#111">1</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div onclick="ciChangeQty(-1)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">-</div>
+            <div onclick="ciChangeQty(1)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
+          </div>
+        </div>
+        <div class="filter-row" onclick="ciToggle('taxable')">
+          <span class="filter-row-label" style="font-weight:500;font-size:15px">Artikel is belastbaar</span>
+          <div class="filter-checkbox" id="ci-taxable"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="filter-row" onclick="ciToggle('physical')">
+          <span class="filter-row-label" style="font-weight:500;font-size:15px">Artikel is een fysiek product</span>
+          <div class="filter-checkbox" id="ci-physical"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
       </div>
     </div>
 
@@ -2043,6 +2135,176 @@
     }
   }
   function saveOrder(){ /* placeholder: save logic */ }
+
+  // ===== Create order: cart state =====
+  var coCartItems = [];
+  function formatEuro(n){ return '€ ' + n.toFixed(2).replace('.', ','); }
+  function addToCoCart(name, price, qty){
+    coCartItems.push({name:name, price:price, qty:qty||1});
+    coCartCount = coCartItems.length;
+    renderCoCart();
+    updateCoSaveBtn();
+  }
+  function removeCoCartItem(idx){
+    coCartItems.splice(idx,1);
+    coCartCount = coCartItems.length;
+    renderCoCart();
+    updateCoSaveBtn();
+  }
+  function coCartSubtotal(){
+    return coCartItems.reduce(function(sum,i){ return sum + i.price*i.qty; }, 0);
+  }
+  function renderCoCart(){
+    var wrap = document.getElementById('co-cart-list');
+    if(!wrap) return;
+    if(coCartItems.length===0){
+      wrap.style.display = 'none';
+      wrap.innerHTML = '';
+    } else {
+      wrap.style.display = 'block';
+      wrap.innerHTML = coCartItems.map(function(item, idx){
+        return '<div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px'+(idx>0?';border-top:1px solid #f2f2f2':'')+'">' +
+          '<div><div style="font-size:15px;font-weight:600;color:#111">'+item.name+'</div><div style="font-size:13px;color:#999;margin-top:2px">'+item.qty+' × '+formatEuro(item.price)+'</div></div>' +
+          '<div style="display:flex;align-items:center;gap:12px">' +
+            '<span style="font-size:15px;font-weight:600;color:#111">'+formatEuro(item.price*item.qty)+'</span>' +
+            '<i class="ti ti-x" style="color:#bbb;font-size:16px;cursor:pointer;padding:10px;margin:-10px" onclick="removeCoCartItem('+idx+')"></i>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+    var sub = coCartSubtotal();
+    var subEl = document.getElementById('co-subtotal');
+    var totEl = document.getElementById('co-order-total');
+    if(subEl) subEl.textContent = formatEuro(sub);
+    if(totEl) totEl.textContent = formatEuro(sub);
+  }
+
+  // ===== Product picker =====
+  var PP_PRODUCTS = [
+    { id:'margharita', name:'Margharita', price:16.99, status:'Actief' },
+    { id:'salami', name:'Pizza salami', status:'Actief', variants:[
+        { id:'salami-klein', name:'Klein', price:19.99 },
+        { id:'salami-groot', name:'Groot', price:19.99 }
+      ] }
+  ];
+  var ppSelected = {}; // id -> {name, price, qty}
+
+  function openProductPicker(){
+    document.getElementById('pp-search').value = '';
+    renderProductPicker();
+    updatePpConfirmBar();
+    document.getElementById('pp-overlay').classList.add('show');
+  }
+  function closeProductPicker(){
+    document.getElementById('pp-overlay').classList.remove('show');
+  }
+  function renderProductPicker(){
+    var q = (document.getElementById('pp-search').value || '').toLowerCase();
+    var list = document.getElementById('pp-list');
+    list.innerHTML = '';
+    PP_PRODUCTS.filter(function(p){ return p.name.toLowerCase().indexOf(q) > -1; }).forEach(function(p){
+      var hasVariants = !!p.variants;
+      var checked = hasVariants ? p.variants.some(function(v){ return !!ppSelected[v.id]; }) : !!ppSelected[p.id];
+      var sub = hasVariants ? (p.variants.length + ' varianten • ' + p.status) : (formatEuro(p.price) + ' • ' + p.status);
+      var row = document.createElement('div');
+      row.className = 'filter-row';
+      row.style.cursor = 'pointer';
+      row.innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0">' +
+          '<span class="filter-checkbox'+(checked?' checked':'')+'"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
+          '<div style="width:44px;height:44px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-photo" style="font-size:20px;color:#bbb"></i></div>' +
+          '<div style="min-width:0"><div style="font-size:15px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name+'</div><div style="font-size:13px;color:#999;margin-top:2px">'+sub+'</div></div>' +
+        '</div>' +
+        (hasVariants ? '<i class="ti ti-chevron-right" style="color:#bbb;font-size:18px;flex-shrink:0"></i>' : '');
+      row.onclick = hasVariants ? function(){ openVariantPicker(p); } : function(){ togglePpProduct(p); };
+      list.appendChild(row);
+    });
+  }
+  function togglePpProduct(p){
+    if(ppSelected[p.id]){ delete ppSelected[p.id]; }
+    else { ppSelected[p.id] = {name:p.name, price:p.price, qty:1}; }
+    renderProductPicker();
+    updatePpConfirmBar();
+  }
+  function updatePpConfirmBar(){
+    var n = Object.keys(ppSelected).length;
+    var bar = document.getElementById('pp-confirm-bar');
+    var btn = document.getElementById('pp-confirm-btn');
+    if(n > 0){ bar.style.display = 'block'; btn.textContent = 'Toevoegen (' + n + ')'; }
+    else { bar.style.display = 'none'; }
+  }
+  function confirmProductPicker(){
+    Object.keys(ppSelected).forEach(function(key){
+      var item = ppSelected[key];
+      addToCoCart(item.name, item.price, item.qty);
+    });
+    ppSelected = {};
+    closeProductPicker();
+  }
+
+  // ===== Variant picker =====
+  var vpCurrentProduct = null;
+  function openVariantPicker(p){
+    vpCurrentProduct = p;
+    document.getElementById('vp-title').textContent = p.name;
+    renderVariantPicker();
+    document.getElementById('vp-overlay').classList.add('show');
+  }
+  function closeVariantPicker(){
+    document.getElementById('vp-overlay').classList.remove('show');
+    renderProductPicker();
+  }
+  function renderVariantPicker(){
+    var list = document.getElementById('vp-list');
+    list.innerHTML = '';
+    vpCurrentProduct.variants.forEach(function(v){
+      var checked = !!ppSelected[v.id];
+      var row = document.createElement('div');
+      row.className = 'filter-row';
+      row.style.cursor = 'pointer';
+      row.innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0">' +
+          '<span class="filter-checkbox'+(checked?' checked':'')+'"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.2 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
+          '<div style="width:44px;height:44px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-photo" style="font-size:20px;color:#bbb"></i></div>' +
+          '<div><div style="font-size:15px;font-weight:600;color:#111">'+v.name+'</div><div style="font-size:13px;color:#999;margin-top:2px">'+formatEuro(v.price)+'</div></div>' +
+        '</div>';
+      row.onclick = function(){
+        if(ppSelected[v.id]){ delete ppSelected[v.id]; }
+        else { ppSelected[v.id] = {name: vpCurrentProduct.name + ' - ' + v.name, price:v.price, qty:1}; }
+        renderVariantPicker();
+        updatePpConfirmBar();
+      };
+      list.appendChild(row);
+    });
+  }
+
+  // ===== Custom item form =====
+  var ciQty = 1;
+  function openCustomItemForm(){
+    document.getElementById('ci-name').value = '';
+    document.getElementById('ci-price').value = '0.00';
+    ciQty = 1;
+    document.getElementById('ci-qty-val').textContent = '1';
+    document.getElementById('ci-taxable').classList.remove('checked');
+    document.getElementById('ci-physical').classList.remove('checked');
+    document.getElementById('ci-overlay').classList.add('show');
+  }
+  function closeCustomItemForm(){
+    document.getElementById('ci-overlay').classList.remove('show');
+  }
+  function ciChangeQty(delta){
+    ciQty = Math.max(1, ciQty + delta);
+    document.getElementById('ci-qty-val').textContent = ciQty;
+  }
+  function ciToggle(which){
+    document.getElementById('ci-' + which).classList.toggle('checked');
+  }
+  function saveCustomItem(){
+    var name = document.getElementById('ci-name').value.trim() || 'Aangepast artikel';
+    var price = parseFloat(document.getElementById('ci-price').value) || 0;
+    addToCoCart(name, price, ciQty);
+    closeCustomItemForm();
+  }
 
   function switchDashTab(el){
     document.querySelectorAll('#dash-tabs .tab').forEach(function(t){t.classList.remove('active');});
