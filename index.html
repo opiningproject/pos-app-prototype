@@ -796,6 +796,12 @@
 </head>
 <body>
 
+<div id="debug-viewport" style="position:fixed;top:4px;left:4px;z-index:99999;background:#e60000;color:#fff;font:12px monospace;padding:6px 10px;border-radius:6px;pointer-events:none"></div>
+<script>
+document.getElementById('debug-viewport').textContent =
+  'CSS: ' + window.innerWidth + 'x' + window.innerHeight + ' | DPR: ' + window.devicePixelRatio + ' | screen: ' + screen.width + 'x' + screen.height;
+</script>
+
 <div class="phone">
   <div class="notch"></div>
   <div class="phone-inner">
