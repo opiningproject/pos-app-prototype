@@ -38,6 +38,50 @@
     #screen-content.has-toast .page-header { min-height: 88px !important; padding-top: 14px !important; }
     .filter-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 14px) !important; }
   }
+
+  /* ===== POS tablet breakpoint (e.g. SUNMI V3 Plus, ~720px wide portrait) ===== */
+  @media (min-width: 481px) and (max-width: 900px) {
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    body { display: block !important; }
+    .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
+    .notch { display: none !important; }
+    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1.15 !important; }
+    .android-navbar { display: none !important; }
+    .demo-hint { display: none !important; }
+    .statusbar { display: none !important; }
+    .page-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 14px) !important; }
+    .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
+    #screen-content.has-toast .page-header { min-height: 88px !important; padding-top: 14px !important; }
+    .filter-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 14px) !important; }
+
+    /* Touch targets: guarantee >=48px regardless of zoom */
+    .mbtn, .oc-action-btn, .ni { min-height: 48px !important; }
+    .ni { min-width: 48px !important; }
+
+    /* Orders: use the extra width as a 2-column card layout */
+    #t-new, #t-kitchen, #t-delivery { column-count: 2; column-gap: 16px; padding: 16px; }
+    #t-new .tab-empty, #t-kitchen .tab-empty, #t-delivery .tab-empty { column-span: all; }
+    #t-new .ocard, #t-kitchen .ocard, #t-delivery .ocard { break-inside: avoid; border: 1px solid #f0f0f0; border-radius: 16px; margin-bottom: 16px; }
+
+    /* Create order: content + sticky payment summary side by side */
+    #co-scroll {
+      display: grid !important;
+      grid-template-columns: 1fr 340px;
+      grid-template-areas:
+        "klant betaling"
+        "producten betaling"
+        "notities betaling"
+        ".       betaling";
+      align-content: start;
+      gap: 16px;
+      padding: 16px !important;
+    }
+    #co-scroll .co-sec-klant { grid-area: klant; margin-top: 0 !important; }
+    #co-scroll .co-sec-producten { grid-area: producten; margin-top: 0 !important; }
+    #co-scroll .co-sec-betaling { grid-area: betaling; margin-top: 0 !important; position: sticky; top: 0; align-self: start; }
+    #co-scroll .co-sec-notities { grid-area: notities; margin-top: 0 !important; }
+    #co-scroll .co-sec-spacer { display: none !important; }
+  }
   .phone {
     width: 390px;
     background: #1a1a1a;
@@ -1261,10 +1305,10 @@
           </div>
         </div>
         <!-- Content: Klant / Producten / Betaling / Notities-Tags-Markten -->
-        <div class="scroll" style="background:#f7f7f7">
+        <div class="scroll" id="co-scroll" style="background:#f7f7f7">
 
           <!-- Klant -->
-          <div style="background:#fff;margin-top:12px">
+          <div class="co-sec-klant" style="background:#fff;margin-top:12px">
             <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Klant</span></div>
             <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
               <i class="ti ti-circle-plus" style="font-size:20px;color:#111"></i>
@@ -1273,7 +1317,7 @@
           </div>
 
           <!-- Producten -->
-          <div style="background:#fff;margin-top:12px">
+          <div class="co-sec-producten" style="background:#fff;margin-top:12px">
             <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Producten</span></div>
             <div style="padding:0 24px 20px;display:flex;flex-direction:column;gap:10px">
               <button onclick="openProductPicker()" style="width:100%;height:35px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
@@ -1284,7 +1328,7 @@
           </div>
 
           <!-- Betaling -->
-          <div style="background:#fff;margin-top:12px">
+          <div class="co-sec-betaling" style="background:#fff;margin-top:12px">
             <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Betaling</span></div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px">
               <span style="font-size:15px;color:#111">Subtotaal</span>
@@ -1318,7 +1362,7 @@
           </div>
 
           <!-- Notities / Gewenste tijd -->
-          <div style="background:#fff;margin-top:12px">
+          <div class="co-sec-notities" style="background:#fff;margin-top:12px">
             <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
               <i class="ti ti-notes" style="font-size:18px;color:#555"></i>
               <span style="font-size:15px;color:#111;flex:1">Notities</span>
@@ -1332,7 +1376,7 @@
             </div>
           </div>
 
-          <div style="height:calc(env(safe-area-inset-bottom) + 40px)"></div>
+          <div class="co-sec-spacer" style="height:calc(env(safe-area-inset-bottom) + 40px)"></div>
         </div><!-- /scroll -->
         <div class="navbar"><div class="navbar-pill">
           <div class="ni" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
