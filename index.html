@@ -58,10 +58,8 @@
     .mbtn, .oc-action-btn, .ni { min-height: 48px !important; }
     .ni { min-width: 48px !important; }
 
-    /* Orders: use the extra width as a 2-column card layout */
-    #t-new, #t-kitchen, #t-delivery { column-count: 2; column-gap: 16px; padding: 16px; }
-    #t-new .tab-empty, #t-kitchen .tab-empty, #t-delivery .tab-empty { column-span: all; }
-    #t-new .ocard, #t-kitchen .ocard, #t-delivery .ocard { break-inside: avoid; border: 1px solid #f0f0f0; border-radius: 16px; margin-bottom: 16px; }
+    /* Orders: single column on tablet */
+    #t-new, #t-kitchen, #t-delivery { column-count: 1; }
 
     /* Create order: content + sticky payment summary side by side */
     #co-scroll {
@@ -83,7 +81,7 @@
     #co-scroll .co-sec-spacer { display: none !important; }
   }
   .phone {
-    width: 390px;
+    width: 720px;
     background: #1a1a1a;
     border-radius: 50px;
     padding: 14px;
@@ -144,12 +142,87 @@
   /* Black header zone */
   .page-header {
     background: #111;
-    padding: 14px 24px;
+    padding: 14px 24px 16px;
     flex-shrink: 0;
-    height: 88px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+  }
+  .page-header .tabs {
+    background: transparent;
+    border-bottom: none;
+    position: static;
+    padding: 0;
+    z-index: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    overflow: visible;
+  }
+  .page-header .tab {
+    color: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.1);
+    height: 90px;
+    padding: 0 18px;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    border-radius: 999px;
+  }
+  .page-header .tab i {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .page-header .tab .tab-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+  .page-header .tab .tab-count {
+    background: rgba(0,0,0,0.35);
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    min-width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .page-header .tab.active .tab-count {
+    background: rgba(0,0,0,0.15);
+    color: #111 !important;
+  }
+  .page-header .tab.active {
+    background: #fff;
+    color: #111;
+  }
+  .page-header .tab.active .tab-count { color: #111 !important; }
+  .page-header .tab .tab-count { color: rgba(255,255,255,0.65) !important; }
+  .page-header .tab-filter {
+    background: rgba(255,255,255,0.06) !important;
+    color: rgba(255,255,255,0.4) !important;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    gap: 7px;
+  }
+  .page-header .tab-filter .filter-badge {
+    background: #e53e3e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
   }
   .page-header h1 { font-size: 18px; font-weight: 600; color: #fff; }
@@ -870,29 +943,17 @@
 
       <!-- ===== ORDERS PAGE ===== -->
       <div class="page active" id="p-orders">
-        <div class="page-header page-header-light" style="position:relative">
-          <div class="page-header-row">
-            <h1 onclick="toggleOrdersDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none"><span id="orders-header-title" data-i18n="dd_orders_live">Live orders</span> <svg id="orders-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon" id="bell-icon" onclick="openFilterOverlay()"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.907227 0.90625H16.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
-<path d="M3.90723 6.34766H13.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
-<path d="M6.90723 11.7891H10.9072" stroke="#2D2D2D" stroke-width="1.81395" stroke-linecap="round"/>
-</svg><span class="filter-badge" id="orders-filter-badge">0</span></div>
-          </div>
-          <div id="orders-dropdown-backdrop" onclick="toggleOrdersDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:190"></div>
-          <div id="orders-dropdown" style="display:none;position:absolute;top:calc(100% - 6px);left:16px;background:#fff;border-radius:24px;z-index:200;padding:8px;overflow:hidden;width:max-content">
-            <div class="mdd-item mdd-item-active" data-mdd-page="orders" onclick="selectOrdersDropdown(this,'orders')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="dd_orders_live">Live orders</span></div>
-            <div class="mdd-item" data-mdd-page="archive" onclick="selectOrdersDropdown(this,'archive')"><i class="ti ti-archive"></i> <span data-i18n="dd_orders_archive">Archive</span></div>
+        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px;z-index:10;padding:16px 20px 20px">
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(this,'new')"><div class="tab-label"><i class="ti ti-inbox"></i><span data-i18n="tab_new">Nieuw</span></div><span class="tab-count">7</span></div>
+            <div class="tab" onclick="switchTab(this,'kitchen')"><div class="tab-label"><i class="ti ti-tools-kitchen-2"></i><span data-i18n="tab_kitchen">Keuken</span></div><span class="tab-count">4</span></div>
+            <div class="tab" onclick="switchTab(this,'delivery')"><div class="tab-label"><i class="ti ti-bike"></i><span data-i18n="tab_delivering">Bezorging</span></div><span class="tab-count">1</span></div>
+            <div class="tab tab-filter" onclick="openFilterOverlay()"><div class="tab-label"><i class="ti ti-adjustments-horizontal"></i><span>Filter</span></div></div>
           </div>
         </div>
 
         <div class="content-surface" style="border-radius:0">
         <div class="scroll">
-          <div class="tabs">
-            <div class="tab active" onclick="switchTab(this,'new')"><span data-i18n="tab_new">New</span> <span class="tab-count" style="font-weight:600;color:#111">10</span></div>
-            <div class="tab" onclick="switchTab(this,'kitchen')"><span data-i18n="tab_kitchen">Kitchen</span> <span class="tab-count" style="font-weight:600;color:#111">2</span></div>
-            <div class="tab" onclick="switchTab(this,'delivery')"><span data-i18n="tab_delivering">Delivering</span> <span class="tab-count" style="font-weight:600;color:#111">2</span></div>
-          </div>
           <!-- NEW -->
           <div id="t-new" style="padding-top:6px">
             <div class="tab-empty" id="empty-new">
