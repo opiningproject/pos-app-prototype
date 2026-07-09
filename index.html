@@ -2763,6 +2763,14 @@
   initLiveTimers();
   refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
+  // Initial sort all lists by target time on page load
+  ['t-new','t-kitchen','t-delivery'].forEach(function(listId){
+    var list = document.getElementById(listId);
+    if (!list) return;
+    var cards = Array.prototype.slice.call(list.querySelectorAll('.ocard'));
+    cards.sort(function(a,b){ return parseInt(a.dataset.targetTime,10) - parseInt(b.dataset.targetTime,10); });
+    cards.forEach(function(c){ list.appendChild(c); });
+  });
 
   function acceptOrderClick(btn, e){
     if (e) e.stopPropagation();
