@@ -101,7 +101,7 @@
     z-index: 20;
   }
   .phone-inner {
-    background: #111;
+    background: #fff;
     border-radius: 38px;
     overflow: hidden;
     height: 1440px;
@@ -636,10 +636,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 0 calc(env(safe-area-inset-bottom));
+    padding: 0 0 calc(env(safe-area-inset-bottom) + 20px);
+    flex-direction: column;
     border-top: 1px solid #e8e8e8;
     pointer-events: all;
   }
+  .navbar::after { content: ''; display: block; width: 120px; height: 4px; background: #ccc; border-radius: 999px; margin: 6px auto 0; }
   .navbar-pill {
     flex-shrink: 0;
     width: 100%;
