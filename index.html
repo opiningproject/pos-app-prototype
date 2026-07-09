@@ -389,6 +389,28 @@
   .ocard-actions .mbtn { width: 100%; justify-content: center; }
   .ocard:last-child { margin-bottom: 0; }
   #t-new, #t-kitchen, #t-delivery { padding: 24px; background: #f5f5f5; }
+  .ostatus-band {
+    background: #111;
+    color: #fff;
+    border-radius: 24px;
+    padding: 16px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .ostatus-count {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    min-width: 28px;
+    text-align: center;
+  }
   .ocard:hover { background: #fafafa; }
   .ocard:active { background: #f0f0f0; }
 
@@ -948,9 +970,9 @@
       <div class="page active" id="p-orders">
         <div class="page-header" style="position:relative;border-radius:0 0 28px 28px;z-index:10;padding:16px 20px 20px">
           <div class="tabs">
-            <div class="tab active" onclick="switchTab(this,'new')"><div class="tab-label"><i class="ti ti-inbox"></i><span data-i18n="tab_new">Nieuw</span></div><span class="tab-count">7</span></div>
-            <div class="tab" onclick="switchTab(this,'kitchen')"><div class="tab-label"><i class="ti ti-tools-kitchen-2"></i><span data-i18n="tab_kitchen">Keuken</span></div><span class="tab-count">4</span></div>
-            <div class="tab" onclick="switchTab(this,'delivery')"><div class="tab-label"><i class="ti ti-bike"></i><span data-i18n="tab_delivering">Bezorging</span></div><span class="tab-count">1</span></div>
+            <div class="tab active" onclick="scrollToOrderSection(this,'new')"><div class="tab-label"><i class="ti ti-inbox"></i><span data-i18n="tab_new">Nieuw</span></div><span class="tab-count">7</span></div>
+            <div class="tab" onclick="scrollToOrderSection(this,'kitchen')"><div class="tab-label"><i class="ti ti-tools-kitchen-2"></i><span data-i18n="tab_kitchen">Keuken</span></div><span class="tab-count">4</span></div>
+            <div class="tab" onclick="scrollToOrderSection(this,'delivery')"><div class="tab-label"><i class="ti ti-bike"></i><span data-i18n="tab_delivering">Bezorging</span></div><span class="tab-count">1</span></div>
             <div class="tab tab-filter" onclick="openFilterOverlay()"><div class="tab-label"><i class="ti ti-adjustments-horizontal"></i><span>Filter</span></div></div>
           </div>
         </div>
@@ -959,6 +981,7 @@
         <div class="scroll">
           <!-- NEW -->
           <div id="t-new">
+            <div class="ostatus-band"><span data-i18n="tab_new">Nieuw</span><span class="ostatus-count">7</span></div>
             <div class="tab-empty" id="empty-new">
               <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
               <div class="tab-empty-title" data-i18n="empty_new_title">No new orders</div>
@@ -1008,7 +1031,8 @@
           </div>
 
           <!-- KITCHEN -->
-          <div id="t-kitchen" style="display:none">
+          <div id="t-kitchen">
+            <div class="ostatus-band"><span data-i18n="tab_kitchen">Keuken</span><span class="ostatus-count">4</span></div>
             <div class="tab-empty" id="empty-kitchen">
               <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
               <div class="tab-empty-title" data-i18n="empty_kitchen_title">Kitchen is clear</div>
@@ -1027,7 +1051,8 @@
           </div>
 
           <!-- DELIVERY -->
-          <div id="t-delivery" style="display:none">
+          <div id="t-delivery">
+            <div class="ostatus-band"><span data-i18n="tab_delivering">Bezorging</span><span class="ostatus-count">1</span></div>
             <div class="tab-empty" id="empty-delivery">
               <svg width="25" height="25" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="#888" stroke-width="2.4"/><path d="M17.333 17.332L19.4072 19.4062" stroke="#888" stroke-width="2.4" stroke-linecap="round"/></svg>
               <div class="tab-empty-title" data-i18n="empty_delivery_title">Nothing out for delivery</div>
@@ -2438,6 +2463,16 @@
       if(e) e.style.display=t===tab?'block':'none';
     });
     checkEmptyStates();
+  }
+
+  function scrollToOrderSection(el, key){
+    document.querySelectorAll('#p-orders .tabs .tab').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
+    var target = document.getElementById('t-' + key);
+    var scroller = document.querySelector('#p-orders .scroll');
+    if(target && scroller){
+      scroller.scrollTo({ top: target.offsetTop - scroller.offsetTop, behavior: 'smooth' });
+    }
   }
 
   function toggleCat(header) {
