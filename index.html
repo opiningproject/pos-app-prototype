@@ -2757,10 +2757,6 @@
         if (isLate) tcol.classList.add('late');
         else if (remaining<=15) tcol.classList.add('urgent');
       });
-      var sorted = cards.slice().sort(function(a,b){
-        return parseInt(a.dataset.targetTime,10) - parseInt(b.dataset.targetTime,10);
-      });
-      sorted.forEach(function(c){ list.appendChild(c); });
     });
   }
 
