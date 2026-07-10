@@ -519,13 +519,15 @@
     background: #0172af;
     color: #fff;
     transition: max-height 0.3s ease;
+    position: relative;
+    z-index: 20;
   }
   .order-toast.show {
-    max-height: calc(88px + env(safe-area-inset-top));
+    max-height: calc(160px + env(safe-area-inset-top));
   }
   .order-toast-inner {
     box-sizing: border-box;
-    padding: calc(env(safe-area-inset-top) + 24px) 24px 24px;
+    padding: calc(env(safe-area-inset-top) + 32px) 24px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -646,7 +648,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 0 calc(env(safe-area-inset-bottom) + 20px);
+    padding: 0;
     flex-direction: column;
     border-top: 1px solid #e8e8e8;
     pointer-events: all;
@@ -710,6 +712,8 @@
   .ico-create-order { margin-bottom: 2px; }
   .ni-wrap { position: relative; display: inline-flex; }
   .reddot { background: rgba(0,0,0,0.35); color: #fff; font-size: 13px; font-weight: 600; font-family: 'Poppins',sans-serif; border-radius: 999px; position: absolute; top: -8px; right: -16px; display: flex; align-items: center; justify-content: center; padding: 4px 12px; min-width: 28px; text-align: center; }
+  @keyframes reddotBump { 0%{transform:scale(1)} 40%{transform:scale(1.45)} 70%{transform:scale(0.9)} 100%{transform:scale(1)} }
+  .reddot.bump { animation: reddotBump 0.4s cubic-bezier(0.36,0.07,0.19,0.97) both; }
 
   /* New order notification */
   .notif-overlay {
@@ -2043,7 +2047,10 @@
     var nextBtn = document.getElementById('d-next-btn');
     if (nextBtn && nextBtn.dataset.nextKey) nextBtn.textContent = t(nextBtn.dataset.nextKey);
     var acceptBtn = document.getElementById('d-accept-btn');
-    if (acceptBtn) acceptBtn.textContent = t('d_accept');
+    if (acceptBtn) {
+      var acceptLbl = acceptBtn.querySelector('.accept-label');
+      if (acceptLbl) acceptLbl.textContent = t('d_accept');
+    }
     var payBadge = document.getElementById('d-pay-badge');
     if (payBadge && payBadge.dataset.payKey) payBadge.textContent = t(payBadge.dataset.payKey);
   }
@@ -2081,21 +2088,24 @@
   }
 
   function goDetail(id,name,addr,oid,price,pay,type,mins,next,cardEl){
+    closeOrderToast();
     window._detailCard = cardEl || null;
-    var isUnaccepted = !!(cardEl && cardEl.querySelector('.accept-btn'));
+    var isUnaccepted = !!(cardEl && cardEl.dataset.newOrder === '1');
     document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
     document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
     if (isUnaccepted) {
-      var cardBtn = cardEl.querySelector('.accept-btn');
       var detailBtn = document.getElementById('d-accept-btn');
-      if (cardBtn && detailBtn) {
+      if (detailBtn) {
         if (detailBtn._mirrorInterval) clearInterval(detailBtn._mirrorInterval);
         var detailTimerEl = detailBtn.querySelector('.accept-timer');
-        var cardTimerEl = cardBtn.querySelector('.accept-timer');
-        if (detailTimerEl && cardTimerEl) detailTimerEl.textContent = cardTimerEl.textContent;
+        function updateDetailTimer(){
+          var secs = cardEl._acceptSecondsLeft !== undefined ? cardEl._acceptSecondsLeft : 60;
+          if (detailTimerEl) detailTimerEl.textContent = fmtCountdown(Math.max(0, secs));
+        }
+        updateDetailTimer();
         detailBtn._mirrorInterval = setInterval(function(){
-          if (cardTimerEl && detailTimerEl) detailTimerEl.textContent = cardTimerEl.textContent;
-          if (!document.body.contains(cardBtn)) clearInterval(detailBtn._mirrorInterval);
+          if (!document.body.contains(cardEl)){ clearInterval(detailBtn._mirrorInterval); return; }
+          updateDetailTimer();
         }, 250);
       }
     }
@@ -2901,9 +2911,31 @@
   function acceptFromDetail(){
     var card = window._detailCard;
     if (card) {
-      var btn = card.querySelector('.accept-btn');
-      if (btn) acceptOrderClick(btn, null);
+      if (card._acceptInterval) clearInterval(card._acceptInterval);
+      if (card._tickInterval) clearInterval(card._tickInterval);
+      delete card.dataset.newOrder;
+      card.style.background = '';
+      card.style.border = '';
+      var mins = parseInt(card.dataset.totalMins, 10) || 45;
+      var dname = card.dataset.dname || '';
+      var priceStr = card.dataset.priceStr || '';
+      card.innerHTML =
+        '<div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">'+
+          '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>'+
+          '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>'+
+          '<text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">'+mins+'</text>'+
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>'+
+        '</svg></div>'+
+        '<div class="mcol">'+
+          '<div class="dname">'+dname+'</div>'+
+          '<div class="oc-price">'+priceStr+'</div>'+
+          '<div class="otime otime-asap" data-i18n="otime_asap">'+t('otime_asap')+'</div>'+
+        '</div></div>';
+      reorderNewList(card);
     }
+    closeOrderToast();
+    var detailBtn = document.getElementById('d-accept-btn');
+    if (detailBtn && detailBtn._mirrorInterval) { clearInterval(detailBtn._mirrorInterval); detailBtn._mirrorInterval = null; }
     document.getElementById('d-actions-default').style.display = 'flex';
     document.getElementById('d-actions-accept').style.display = 'none';
     var nextBtnEl2 = document.getElementById('d-next-btn');
@@ -2984,6 +3016,9 @@
     card.setAttribute('data-oid', '#'+id);
     card.setAttribute('data-total-mins', String(mins));
     card.setAttribute('data-target-time', String(Date.now() + mins*60000));
+    card.setAttribute('data-new-order', '1');
+    card.setAttribute('data-dname', type==='Delivery' ? addr[0] : name);
+    card.setAttribute('data-price-str', '€'+price+'  ·  '+items+' items');
     card.setAttribute('onclick', "goDetail('"+id+"','"+name+"','"+fullAddr+"','#"+id+"','€"+price+"','"+pay+"','"+type+"','"+mins+"','kitchen',this)");
     card.innerHTML =
       '<div class="ocard-row" style="position:relative">'+
@@ -2997,8 +3032,23 @@
     var list = document.getElementById('t-new');
     list.insertBefore(card, list.firstChild);
     adjustTabCount('new', 1);
-    var btn = card.querySelector('.accept-btn');
-    startAcceptTimer(btn, 60, true);
+    document.querySelectorAll('.ni-wrap .reddot').forEach(function(dot){
+      dot.textContent = String(parseInt(dot.textContent||'0') + 1);
+      dot.classList.remove('bump');
+      void dot.offsetWidth;
+      dot.classList.add('bump');
+      dot.addEventListener('animationend', function(){ dot.classList.remove('bump'); }, {once:true});
+    });
+    playBeep();
+    card._tickInterval = setInterval(playBeep, 2500);
+    card._acceptSecondsLeft = 60;
+    card._acceptInterval = setInterval(function(){
+      card._acceptSecondsLeft--;
+      if (card._acceptSecondsLeft <= 0) {
+        clearInterval(card._acceptInterval);
+        clearInterval(card._tickInterval);
+      }
+    }, 1000);
     var scrollEl = list.closest('.scroll');
     if (scrollEl) scrollEl.scrollTo({top:0, behavior:'smooth'});
     showOrderToast(card);
