@@ -141,6 +141,10 @@
   .screen-content { position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column; }
   .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
   .page.active { display: flex; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+  #p-detail.active { animation: slideUp 0.28s cubic-bezier(0.32,0.72,0,1) both; }
+  #p-detail.closing { display: flex; animation: slideDown 0.22s cubic-bezier(0.4,0,1,1) both; }
 
   /* Black header zone */
   .page-header {
@@ -389,7 +393,7 @@
     padding: 24px 24px 24px;
   }
   .ocard-actions {
-    padding: 0 32px 24px;
+    padding: 0 24px 24px;
   }
   .ocard-actions .mbtn { width: 100%; justify-content: center; }
   .ocard:last-child { margin-bottom: 0; }
@@ -399,7 +403,7 @@
   .orders-tabs .tab { height: auto; padding: 9px 18px; font-size: 16px; font-weight: 600; border-radius: 999px; background: transparent; color: #999; display: flex; align-items: center; gap: 6px; }
   .orders-tabs .tab.active { background: #111; color: #fff; }
   .orders-tabs .tab .tab-count { background: transparent; color: inherit; font-size: 16px; font-weight: 600; padding: 0; min-width: unset; height: auto; line-height: 1; border-radius: 0; }
-  .otime-asap { background: #111; color: #fff; } .otime-scheduled { background: #fef3c7; color: #92400e; } .otime { display: inline-flex; align-items: center; font-size: 18px; font-weight: 500; border-radius: 999px; padding: 5px 12px; margin-top: 16px; font-family: 'Poppins', sans-serif; }
+  .otime-asap { background: #333; color: #fff; } .otime-scheduled { background: #fef3c7; color: #92400e; } .otime { display: inline-flex; align-items: center; font-size: 18px; font-weight: 500; border-radius: 999px; padding: 5px 12px; margin-top: 16px; font-family: 'Poppins', sans-serif; }
   .ocard:hover { background: #fafafa; }
   .ocard:active { background: #f0f0f0; }
 
@@ -999,31 +1003,31 @@
               <div class="ocard-row"><div class="tcol late"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-9</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Tochtstraat 40</div><div class="oc-price">€73.59  ·  5 items</div><div class="otime otime-asap">ASAP</div></div></div></div>
             <div class="ocard" data-oid="#26" onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A||3062 WB Rotterdam','#26','€73.59','Cash','Delivery','2','kitchen',this)">
-              <div class="ocard-row"><div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="6.43" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">2</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="6.43" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">2</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Lusthofstraat 27A</div><div class="oc-price">€73.59  ·  4 items</div><div class="otime otime-asap">ASAP</div></div></div></div>
             <div class="ocard" data-oid="#42" onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Cash','Collection','7','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">120</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">120</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Emma Jansen</div><div class="oc-price">€52.00  ·  4 items</div><div class="otime otime-scheduled">Today, 18:00</div></div></div></div>
             <div class="ocard" data-oid="#48" onclick="goDetail('48','Anne Visser','Witte de Withstraat 21||3012 BM Rotterdam','#48','€24.80','Cash','Delivery','9','kitchen',this)">
-              <div class="ocard-row"><div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="28.90" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">9</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="28.90" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">9</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Anne Visser</div><div class="oc-price">€24.80  ·  2 items</div><div class="otime otime-asap">ASAP</div></div></div></div>
             <div class="ocard" data-oid="#45" onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Cash','Collection','12','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">210</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">210</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Lotte de Vries</div><div class="oc-price">€44.00  ·  3 items</div><div class="otime otime-scheduled">Today, 19:30</div></div></div></div>
             <div class="ocard" data-oid="#38" onclick="goDetail('38','Daan Visser','1e Pijnackerstraat 120B||3035 GW Rotterdam','#38','€73.59','Paid','Delivery','17','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">1080</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1080</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">1e Pijnackerstraat 120B</div><div class="oc-price">€73.59  ·  6 items</div><div class="otime otime-scheduled">Tomorrow, 12:00</div></div></div></div>
             <div class="ocard" data-oid="#41" onclick="goDetail('41','Mila van Dijk','Schiedamseweg 112||3026 GP Rotterdam','#41','€29.50','Paid','Delivery','19','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">1170</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1170</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="oc-price">€29.50  ·  3 items</div><div class="otime otime-scheduled">Tomorrow, 13:30</div></div></div></div>
             <div class="ocard" data-oid="#40" onclick="goDetail('40','Lars Jansen','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">1560</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1560</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">T4</div><div class="oc-price">€73.59  ·  2 items</div><div class="otime otime-scheduled">Tomorrow, 19:30</div></div></div></div>
             <div class="ocard" data-oid="#43" onclick="goDetail('43','Noah Smit','Vossenburchkade 44||3072 AL Rotterdam','#43','€67.00','Paid','Delivery','33','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">1620</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1620</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Vossenburchkade 44</div><div class="oc-price">€67.00  ·  5 items</div><div class="otime otime-scheduled">Tomorrow, 20:00</div></div></div></div>
             <div class="ocard" data-oid="#44" onclick="goDetail('44','Julia Mulder','Proveniersstraat 8B||3014 GH Rotterdam','#44','€18.00','Paid','Delivery','41','kitchen',this)">
-              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="80.00" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">25</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
+              <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="80.00" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">25</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Proveniersstraat 8B</div><div class="oc-price">€18.00  ·  2 items</div><div class="otime otime-asap">ASAP</div></div></div></div>
           </div>
 
@@ -1041,7 +1045,7 @@
               <div class="mcol"><div class="dname">Bergselaan 88</div><div class="oc-price">€41.50  ·  4 items</div></div></div></div>
             <div class="ocard" data-oid="#34" onclick="goDetail('34','Sophie Bakker','Collection order','#34','€28.00','Paid','Collection','8','delivery')">
               <div class="ocard-row"><div class="tcol">
-                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="25.70" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">8</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
+                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#e65100" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="25.70" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">8</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
               </div>
               <div class="mcol"><div class="dname">Sophie Bakker</div><div class="oc-price">€28.00  ·  3 items</div></div></div></div>
           </div>
@@ -1055,12 +1059,12 @@
             </div>
             <div class="ocard" data-oid="#50" onclick="goDetail('50','Liam de Wit','Persoonshaven 12||3024 RD Rotterdam','#50','€36.90','Paid','Delivery','6','archive',this)">
               <div class="ocard-row"><div class="tcol">
-                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="66.70" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">6</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
+                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="66.70" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">6</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
               </div>
               <div class="mcol"><div class="dname">Liam de Wit</div><div class="oc-price">€36.90  ·  3 items</div></div></div></div>
             <div class="ocard" data-oid="#51" onclick="goDetail('51','Eva Verhoeven','Walenburgerweg 55||3039 AA Rotterdam','#51','€52.20','Cash','Delivery','11','archive',this)">
               <div class="ocard-row"><div class="tcol">
-                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="105.79" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">11</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
+                <svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="105.79" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">11</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>
               </div>
               <div class="mcol"><div class="dname">Eva Verhoeven</div><div class="oc-price">€52.20  ·  5 items</div></div></div></div>
           </div>
@@ -1077,18 +1081,18 @@
 
       <!-- ===== DETAIL PAGE ===== -->
       <div class="page" id="p-detail">
-        <div class="page-header" style="border-bottom:none;border-radius:0 0 28px 28px">
+        <div class="page-header" style="background:#fff;border-bottom:none;border-radius:28px 28px 0 0;padding:32px 24px">
           <div class="page-header-row">
-            <div class="tb-icon" onclick="goPage('orders')"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center;color:#fff;opacity:0;position:absolute;left:-9999px">#37</h1>
+            <div class="tb-icon" onclick="goPage('orders')" style="background:#f0f0f0;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center;color:#111;opacity:0;position:absolute;left:-9999px">#37</h1>
             <div style="flex:1"></div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="tb-icon" onclick="openBon()" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12)"><svg width="14" height="20" viewBox="0 0 18 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.33398 21.7149C9.0738 21.8315 8.77581 21.8315 8.51563 21.7149L6.05762 20.6133C4.97568 20.1284 3.70962 20.3264 2.82715 21.1182L2.66797 21.2608C2.02421 21.8383 1.00032 21.3814 1 20.5166L1 4.47465C1 3.61016 2.02286 3.15295 2.66699 3.72954L2.82813 3.87309C3.71054 4.66298 4.97492 4.86032 6.05567 4.37602L8.51563 3.27348C8.77581 3.15687 9.0738 3.15687 9.33399 3.27348L11.7939 4.37602C12.8746 4.86015 14.1391 4.66283 15.0215 3.87309L15.1826 3.72954C15.8268 3.153 16.8496 3.61019 16.8496 4.47465L16.8496 20.5166C16.8496 21.3816 15.8255 21.8385 15.1816 21.2608L15.0225 21.1182C14.14 20.3264 12.8739 20.1284 11.792 20.6133L9.33398 21.7149Z" stroke="white" stroke-width="2"/><line x1="10.4248" y1="13.9942" x2="7.4248" y2="13.9942" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="11.4238" y1="9.99419" x2="6.42383" y2="9.99419" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-              <div class="tb-icon" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12)"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2857 14.2857C17.2114 14.2857 15.2357 13.8343 13.4143 12.9443C13.2429 12.8586 13.0457 12.8486 12.8671 12.9114C12.6871 12.9743 12.54 13.1057 12.4571 13.2757L11.3343 15.6C8.42857 13.9786 6.02286 11.5743 4.40286 8.66857L6.72571 7.54286C6.89714 7.46 7.02714 7.31286 7.09 7.13286C7.15143 6.95429 7.14 6.75714 7.05571 6.58571C6.16571 4.76429 5.71429 2.78857 5.71429 0.714286C5.71429 0.32 5.39429 0 5 0H0.714286C0.32 0 0 0.32 0 0.714286C0 11.3486 8.65143 20 19.2857 20C19.68 20 20 19.68 20 19.2857V15C20 14.6057 19.68 14.2857 19.2857 14.2857Z" fill="white"/></svg></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="tb-icon" onclick="openBon()" style="width:56px;height:56px;border-radius:999px;background:#f0f0f0;display:flex;align-items:center;justify-content:center"><svg width="18" height="25" viewBox="0 0 18 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.33398 21.7149C9.0738 21.8315 8.77581 21.8315 8.51563 21.7149L6.05762 20.6133C4.97568 20.1284 3.70962 20.3264 2.82715 21.1182L2.66797 21.2608C2.02421 21.8383 1.00032 21.3814 1 20.5166L1 4.47465C1 3.61016 2.02286 3.15295 2.66699 3.72954L2.82813 3.87309C3.71054 4.66298 4.97492 4.86032 6.05567 4.37602L8.51563 3.27348C8.77581 3.15687 9.0738 3.15687 9.33399 3.27348L11.7939 4.37602C12.8746 4.86015 14.1391 4.66283 15.0215 3.87309L15.1826 3.72954C15.8268 3.153 16.8496 3.61019 16.8496 4.47465L16.8496 20.5166C16.8496 21.3816 15.8255 21.8385 15.1816 21.2608L15.0225 21.1182C14.14 20.3264 12.8739 20.1284 11.792 20.6133L9.33398 21.7149Z" stroke="#111" stroke-width="2"/><line x1="10.4248" y1="13.9942" x2="7.4248" y2="13.9942" stroke="#111" stroke-width="2" stroke-linecap="round"/><line x1="11.4238" y1="9.99419" x2="6.42383" y2="9.99419" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div class="tb-icon" style="width:56px;height:56px;border-radius:999px;background:#f0f0f0;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.2857 14.2857C17.2114 14.2857 15.2357 13.8343 13.4143 12.9443C13.2429 12.8586 13.0457 12.8486 12.8671 12.9114C12.6871 12.9743 12.54 13.1057 12.4571 13.2757L11.3343 15.6C8.42857 13.9786 6.02286 11.5743 4.40286 8.66857L6.72571 7.54286C6.89714 7.46 7.02714 7.31286 7.09 7.13286C7.15143 6.95429 7.14 6.75714 7.05571 6.58571C6.16571 4.76429 5.71429 2.78857 5.71429 0.714286C5.71429 0.32 5.39429 0 5 0H0.714286C0.32 0 0 0.32 0 0.714286C0 11.3486 8.65143 20 19.2857 20C19.68 20 20 19.68 20 19.2857V15C20 14.6057 19.68 14.2857 19.2857 14.2857Z" fill="#111"/></svg></div>
             </div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0">
+        <div class="content-surface" style="border-radius:0">
         <div class="scroll" style="background:#fff">
           <!-- Top countdown -->
           <div style="padding:8px 20px 0;text-align:center">
@@ -1609,7 +1613,7 @@
               </div>
               <div style="display:flex;align-items:center;gap:12px">
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">-</div>
-                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-delivery-mins" style="font-size:16px;font-weight:700;color:#111">35</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
+                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-delivery-mins" style="font-size:16px;font-weight:700;color:#111">45</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
               </div>
             </div>
@@ -1620,7 +1624,7 @@
               </div>
               <div style="display:flex;align-items:center;gap:12px">
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=Math.max(5,parseInt(v.textContent)-5)" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">-</div>
-                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-takeaway-mins" style="font-size:16px;font-weight:700;color:#111">20</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
+                <div style="text-align:center;min-width:36px"><div class="tval" id="settings-takeaway-mins" style="font-size:16px;font-weight:700;color:#111">45</div><div data-i18n="settings_min" style="font-size:11px;color:#aaa">min</div></div>
                 <div onclick="var v=this.parentElement.querySelector('.tval');v.textContent=parseInt(v.textContent)+5" style="width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:300;color:#111">+</div>
               </div>
             </div>
@@ -2031,6 +2035,20 @@
   setLang(localStorage.getItem('appLang') || 'nl');
 
   function goPage(p){
+    var currentDetail = document.getElementById('p-detail');
+    var isLeavingDetail = currentDetail && currentDetail.classList.contains('active') && p !== 'detail';
+    if(isLeavingDetail){
+      currentDetail.classList.remove('active');
+      currentDetail.classList.add('closing');
+      setTimeout(function(){
+        currentDetail.classList.remove('closing');
+        _goPageImmediate(p);
+      }, 220);
+      return;
+    }
+    _goPageImmediate(p);
+  }
+  function _goPageImmediate(p){
     document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
     var targetPage = document.getElementById('p-'+p);
     if(!targetPage) return;
@@ -2744,9 +2762,11 @@
           numEl.setAttribute('font-size', '14');
           numEl.setAttribute('y', '24');
           var color = isLate ? '#c62828' : remaining<=15 ? '#e65100' : '#4caf50';
-          var textColor = isLate ? '#c62828' : '#000';
-          var totalMins = parseInt(card.dataset.totalMins, 10) || 45;
-          var offset = remaining>=totalMins ? 144.51 : Math.max(0, Math.min(144.51, (remaining/totalMins)*144.51));
+          var textColor = isLate ? '#c62828' : '#333';
+          var deliveryEl = document.getElementById('settings-delivery-mins');
+          var takeawayEl = document.getElementById('settings-takeaway-mins');
+          var prepTime = parseInt((deliveryEl || takeawayEl || {textContent:'45'}).textContent, 10) || 45;
+          var offset = remaining>=prepTime ? 144.51 : Math.max(0, Math.min(144.51, (remaining/prepTime)*144.51));
           ring.setAttribute('stroke', color);
           ring.setAttribute('stroke-dashoffset', offset);
           numEl.setAttribute('fill', textColor);
@@ -2816,7 +2836,7 @@
     var oldTops = cards.map(function(c){ return c.getBoundingClientRect().top; });
 
     var sorted = cards.slice().sort(function(a,b){
-      return getCardMinutes(a) - getCardMinutes(b);
+      return parseInt(a.dataset.targetTime,10) - parseInt(b.dataset.targetTime,10);
     });
     sorted.forEach(function(c){ list.appendChild(c); });
 
@@ -2884,12 +2904,13 @@
     card.innerHTML =
       '<div class="ocard-row">'+
         '<div class="tcol">'+
-          '<svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#000" font-family="Poppins,sans-serif">'+mins+'</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>'+
+          '<svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">'+mins+'</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>'+
           ''+
         '</div>'+
         '<div class="mcol">'+
           '<div class="dname">'+title+'</div>'+
           '<div class="oc-price">€'+price+'  ·  '+items+' items</div>'+
+          '<div class="otime otime-asap">ASAP</div>'+
         '</div>'+
       '</div>'+
       '<div class="ocard-actions">'+
