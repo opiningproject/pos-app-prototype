@@ -872,7 +872,7 @@
   .filter-badge.show { display:flex; }
 
   /* Menu dropdown */
-  .mdd-item { display:flex;align-items:center;gap:12px;padding:14px 16px;margin:2px 6px;border-radius:14px;font-size:15px;font-weight:500;color:#111;cursor:pointer; }
+  .mdd-item { display:flex;align-items:center;gap:12px;padding:24px;margin:2px 0;border-radius:14px;font-size:15px;font-weight:500;color:#111;cursor:pointer; }
   .mdd-item:hover { background:#f5f5f5; }
   .mdd-item.mdd-item-active { background:#f5f5f5;font-weight:600; }
   .mdd-item i { font-size:18px;color:#111;width:20px;text-align:center; }
@@ -1099,7 +1099,7 @@
             <svg id="d-timer-svg" width="96" height="96" viewBox="0 0 48 48">
               <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>
               <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="72" stroke-linecap="round" transform="rotate(-90 24 24)"/>
-              <text id="d-timer-num" x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif" dominant-baseline="central">7</text>
+              <text id="d-timer-num" x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">7</text>
               <text id="d-timer-label" x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>
             </svg>
             <div id="d-wished-inline" style="font-size:18px;font-weight:500;color:#111">19:00</div>
@@ -1381,35 +1381,36 @@
 
       <!-- ===== CREATE ORDER PAGE ===== -->
       <div class="page" id="p-create-order">
-        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px">
+        <div class="page-header" style="position:relative;background:#fff;border-radius:28px 28px 0 0;border-bottom:none;padding:32px 24px">
           <div class="page-header-row">
-            <h1 onclick="toggleCoDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#fff"><span id="co-header-title" data-i18n="co_new_delivery">New delivery</span> <svg id="co-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#fff" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div id="co-save-btn" onclick="saveOrder()" class="tab active" style="opacity:0.25;pointer-events:none;background:#fff;color:#111">Save</div>
+            <div class="tb-icon" onclick="coCloseOrConfirm()" style="background:#f0f0f0;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h1 onclick="toggleCoDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#111;flex:1;justify-content:center"><span id="co-header-title" data-i18n="co_new_delivery">New delivery</span> <svg id="co-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
+            <div id="co-save-btn" onclick="saveOrder()" class="tab active" style="opacity:0.25;pointer-events:none;background:#111;color:#fff;height:56px;padding:0 20px;font-size:16px;border-radius:999px">Save</div>
           </div>
-          <div id="co-dropdown-backdrop" onclick="toggleCoDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:190"></div>
-          <div id="co-dropdown" style="display:none;position:absolute;top:calc(100% - 6px);left:16px;background:#fff;border-radius:24px;z-index:200;padding:8px;overflow:hidden;width:max-content">
-            <div class="mdd-item mdd-item-active" data-co-type="delivery" onclick="selectCoDropdown(this,'delivery')"><i class="ti ti-bike" style="font-size:18px;color:#111;width:20px;text-align:center"></i> <span data-i18n="co_new_delivery">New delivery</span></div>
-            <div class="mdd-item" data-co-type="takeaway" onclick="selectCoDropdown(this,'takeaway')"><i class="ti ti-shopping-bag" style="font-size:18px;color:#111;width:20px;text-align:center"></i> <span data-i18n="co_new_takeaway">New takeaway</span></div>
+          <div id="co-dropdown-backdrop" onclick="toggleCoDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:190"></div>
+          <div id="co-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:24px;right:24px;background:#fff;border-radius:20px;z-index:200;padding:8px;overflow:hidden">
+            <div class="mdd-item mdd-item-active" data-co-type="delivery" onclick="selectCoDropdown(this,'delivery')"><i class="ti ti-bike" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_delivery" style="font-size:18px">New delivery</span></div>
+            <div class="mdd-item" data-co-type="takeaway" onclick="selectCoDropdown(this,'takeaway')"><i class="ti ti-shopping-bag" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_takeaway" style="font-size:18px">New takeaway</span></div>
           </div>
         </div>
         <!-- Content: Klant / Producten / Betaling / Notities-Tags-Markten -->
-        <div class="scroll" id="co-scroll" style="background:#f7f7f7;border-radius:24px 24px 0 0">
+        <div class="scroll" id="co-scroll" style="background:#f7f7f7;border-radius:0">
 
           <!-- Klant -->
           <div class="co-sec-klant" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Klant</span></div>
+            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Klant</span></div>
             <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
               <i class="ti ti-circle-plus" style="font-size:20px;color:#111"></i>
-              <span style="font-size:15px;font-weight:500;color:#111">Klant toevoegen</span>
+              <span style="font-size:18px;font-weight:500;color:#111">Klant toevoegen</span>
             </div>
           </div>
 
           <!-- Producten -->
           <div class="co-sec-producten" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Producten</span></div>
+            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Producten</span></div>
             <div style="padding:0 24px 20px;display:flex;flex-direction:column;gap:10px">
-              <button onclick="openProductPicker()" style="width:100%;height:35px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
-              <button onclick="openCustomItemForm()" style="width:100%;height:35px;background:#fff;color:#111;border:1.5px solid #e0e0e0;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aangepast artikel toevoegen</button>
+              <button onclick="openProductPicker()" style="width:100%;height:56px;background:#111;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
+              <button onclick="openCustomItemForm()" style="width:100%;height:56px;background:#fff;color:#111;border:1.5px solid #e0e0e0;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aangepast artikel toevoegen</button>
             </div>
             <!-- Cart items -->
             <div id="co-cart-list" style="display:none"></div>
@@ -1417,55 +1418,63 @@
 
           <!-- Betaling -->
           <div class="co-sec-betaling" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:15px;font-weight:700;color:#111">Betaling</span></div>
+            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Betaling</span></div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px">
-              <span style="font-size:15px;color:#111">Subtotaal</span>
-              <span id="co-subtotal" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+              <span style="font-size:18px;color:#111">Subtotaal</span>
+              <span id="co-subtotal" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
               <div>
-                <div style="font-size:15px;color:#111">Korting</div>
-                <div style="font-size:13px;color:#999;margin-top:2px;cursor:pointer">Korting toevoegen</div>
+                <div style="font-size:18px;color:#111">Korting</div>
+                <div style="font-size:15px;color:#999;margin-top:2px;cursor:pointer">Korting toevoegen</div>
               </div>
-              <span id="co-discount" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+              <span id="co-discount" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
               <div>
-                <div style="font-size:15px;color:#111">Verzending</div>
-                <div style="font-size:13px;color:#999;margin-top:2px;cursor:pointer">Verzending of bezorging toevoegen</div>
+                <div style="font-size:18px;color:#111">Verzending</div>
+                <div style="font-size:15px;color:#999;margin-top:2px;cursor:pointer">Verzending of bezorging toevoegen</div>
               </div>
-              <span id="co-shipping" style="font-size:15px;font-weight:600;color:#111">€ 0,00</span>
+              <span id="co-shipping" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
             </div>
             <div style="padding:16px 24px;border-top:1px solid #f2f2f2">
-              <div style="font-size:15px;font-weight:600;color:#111">Niet berekend</div>
-              <div style="font-size:13px;color:#999;margin-top:2px">Geschatte belasting</div>
+              <div style="font-size:18px;font-weight:600;color:#111">Niet berekend</div>
+              <div style="font-size:15px;color:#999;margin-top:2px">Geschatte belasting</div>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
-              <span style="font-size:15px;font-weight:700;color:#111">Totaal</span>
-              <span id="co-order-total" style="font-size:15px;font-weight:700;color:#111">€ 0,00</span>
+              <span style="font-size:18px;font-weight:700;color:#111">Totaal</span>
+              <span id="co-order-total" style="font-size:18px;font-weight:700;color:#111">€ 0,00</span>
             </div>
             <div style="padding:4px 24px 20px">
-              <button style="width:100%;height:35px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Markeren als betaald</button>
+              <button style="width:100%;height:56px;background:#111;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Markeren als betaald</button>
             </div>
           </div>
 
           <!-- Notities / Gewenste tijd -->
           <div class="co-sec-notities" style="background:#fff;margin-top:12px">
             <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
-              <i class="ti ti-notes" style="font-size:18px;color:#555"></i>
-              <span style="font-size:15px;color:#111;flex:1">Notities</span>
-              <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
+              <i class="ti ti-notes" style="font-size:20px;color:#555"></i>
+              <span style="font-size:18px;color:#111;flex:1">Notities</span>
+              <i class="ti ti-chevron-right" style="color:#bbb;font-size:18px"></i>
             </div>
             <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-top:1px solid #f2f2f2;cursor:pointer">
-              <i class="ti ti-clock" style="font-size:18px;color:#555"></i>
-              <span style="font-size:15px;color:#111;flex:1">Gewenste tijd</span>
-              <span style="font-size:14px;color:#999;margin-right:4px">ASAP</span>
-              <i class="ti ti-chevron-right" style="color:#bbb;font-size:16px"></i>
+              <i class="ti ti-clock" style="font-size:20px;color:#555"></i>
+              <span style="font-size:18px;color:#111;flex:1">Gewenste tijd</span>
+              <span style="font-size:18px;color:#999;margin-right:4px">ZSM</span>
+              <i class="ti ti-chevron-right" style="color:#bbb;font-size:18px"></i>
             </div>
           </div>
 
           <div class="co-sec-spacer" style="height:calc(env(safe-area-inset-bottom) + 40px)"></div>
         </div><!-- /scroll -->
+
+        <!-- Discard confirmation modal -->
+        <div id="co-discard-backdrop" onclick="coDiscardCancel()" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:300;border-radius:28px 28px 0 0"></div>
+        <div id="co-discard-modal" style="display:none;position:absolute;bottom:0;left:0;right:0;z-index:301;background:#fff;border-radius:20px 20px 0 0;padding:24px 16px calc(env(safe-area-inset-bottom) + 24px)">
+          <p style="font-size:18px;font-weight:600;color:#111;margin:0 0 20px;text-align:center">Je hebt niet-opgeslagen wijzigingen</p>
+          <button onclick="coDiscardCancel()" style="width:100%;height:56px;background:#f0f0f0;color:#111;border:none;border-radius:100px;font-size:18px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:10px">Doorgaan met bewerken</button>
+          <button onclick="coDiscardConfirm()" style="width:100%;height:56px;background:#f0f0f0;color:#e53935;border:none;border-radius:100px;font-size:18px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Verwerpen</button>
+        </div>
         <div class="navbar"><div class="navbar-pill">
           <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
           <div class="ni active" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
@@ -2286,6 +2295,22 @@
     toggleCoDropdown();
   }
 
+  function coCloseOrConfirm(){
+    if(coCartCount > 0){
+      document.getElementById('co-discard-backdrop').style.display = 'block';
+      document.getElementById('co-discard-modal').style.display = 'block';
+    } else {
+      goPage('orders');
+    }
+  }
+  function coDiscardCancel(){
+    document.getElementById('co-discard-backdrop').style.display = 'none';
+    document.getElementById('co-discard-modal').style.display = 'none';
+  }
+  function coDiscardConfirm(){
+    coDiscardCancel();
+    goPage('orders');
+  }
   var coCartCount = 0;
   function updateCoSaveBtn(){
     var btn = document.getElementById('co-save-btn');
