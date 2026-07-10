@@ -516,7 +516,7 @@
     flex-shrink: 0;
     overflow: hidden;
     max-height: 0;
-    background: #111;
+    background: #0172af;
     color: #fff;
     transition: max-height 0.3s ease;
   }
@@ -525,15 +525,14 @@
   }
   .order-toast-inner {
     box-sizing: border-box;
-    height: calc(88px + env(safe-area-inset-top));
-    padding: calc(env(safe-area-inset-top) + 32px) 24px 14px;
+    padding: calc(env(safe-area-inset-top) + 24px) 24px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
   }
   .order-toast-title {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
   }
   .order-toast-btn {
@@ -541,8 +540,8 @@
     color: #111;
     border: none;
     border-radius: 8px;
-    padding: 7px 14px;
-    font-size: 13px;
+    padding: 9px 20px;
+    font-size: 18px;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
@@ -957,8 +956,8 @@
 
       <div class="order-toast" id="order-toast">
         <div class="order-toast-inner">
-          <span class="order-toast-title">New order</span>
-          <button class="order-toast-btn" onclick="reviewToastOrder()">Review</button>
+          <span class="order-toast-title">Nieuwe bestelling</span>
+          <button class="order-toast-btn" onclick="reviewToastOrder()">Bekijken</button>
         </div>
       </div>
 
@@ -1110,7 +1109,7 @@
               <button id="d-next-btn" onclick="detailNextAction()" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">To kitchen</button>
             </div>
             <div id="d-actions-accept" style="display:none">
-              <button id="d-accept-btn" onclick="acceptFromDetail()" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#111;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Accept</button>
+              <button id="d-accept-btn" onclick="acceptFromDetail()" class="accept-btn" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#555;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>
             </div>
           </div>
 
@@ -1294,15 +1293,15 @@
 
       <!-- ===== DASHBOARD PAGE ===== -->
       <div class="page" id="p-dashboard">
-        <div class="page-header" style="border-radius:0 0 28px 28px">
+        <div class="page-header" style="border-radius:0 0 28px 28px;padding:32px 24px">
           <div class="page-header-row">
             <h1 data-i18n="hdr_dashboard" style="font-size:22px;font-weight:700;color:#fff">Dashboard</h1>
-            <div class="tb-icon" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px"><i class="ti ti-refresh"></i></div>
+            <div class="tb-icon" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center"><i class="ti ti-refresh"></i></div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0">
+        <div class="content-surface" style="border-radius:24px 24px 0 0;background:#fff">
           <!-- Tabs -->
-          <div class="tabs" id="dash-tabs">
+          <div class="tabs orders-tabs" id="dash-tabs">
             <div class="tab active" onclick="switchDashTab(this)">Orders</div>
             <div class="tab" onclick="switchDashTab(this)">Customers</div>
             <div class="tab" onclick="switchDashTab(this)">Delivery and items</div>
@@ -1485,10 +1484,10 @@
 
       <!-- ===== MENU PAGE ===== -->
       <div class="page" id="p-menu">
-        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px">
+        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px;padding:32px 24px">
           <div class="page-header-row">
             <h1 onclick="toggleMenuDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#fff"><span data-i18n="hdr_products">Products</span> <svg id="menu-dd-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#fff" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon" id="menu-filter-btn" onclick="toggleMenuFilter()" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.907227 0.90625H16.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M3.90723 6.34766H13.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M6.90723 11.7891H10.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/></svg><span class="filter-badge" id="menu-filter-badge"></span></div>
+            <div class="tb-icon" id="menu-filter-btn" onclick="toggleMenuFilter()" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.907227 0.90625H16.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M3.90723 6.34766H13.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M6.90723 11.7891H10.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/></svg><span class="filter-badge" id="menu-filter-badge"></span></div>
           </div>
           <!-- Page dropdown -->
           <div id="menu-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
@@ -1509,9 +1508,9 @@
             </div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0">
+        <div class="content-surface" style="border-radius:24px 24px 0 0;background:#fff">
           <!-- Category spy-scroll tabs -->
-          <div class="tabs" id="menu-cat-tabs" style="height:81px;padding:32px 24px;flex-shrink:0">
+          <div class="tabs orders-tabs" id="menu-cat-tabs" style="flex-shrink:0">
             <div class="tab active" data-cat="Burgers" onclick="menuCatTabClick(this,'Burgers')">Burgers</div>
             <div class="tab" data-cat="Sides" onclick="menuCatTabClick(this,'Sides')">Sides</div>
             <div class="tab" data-cat="Dranken" onclick="menuCatTabClick(this,'Dranken')">Dranken</div>
@@ -2086,6 +2085,20 @@
     var isUnaccepted = !!(cardEl && cardEl.querySelector('.accept-btn'));
     document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
     document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
+    if (isUnaccepted) {
+      var cardBtn = cardEl.querySelector('.accept-btn');
+      var detailBtn = document.getElementById('d-accept-btn');
+      if (cardBtn && detailBtn) {
+        if (detailBtn._mirrorInterval) clearInterval(detailBtn._mirrorInterval);
+        var detailTimerEl = detailBtn.querySelector('.accept-timer');
+        var cardTimerEl = cardBtn.querySelector('.accept-timer');
+        if (detailTimerEl && cardTimerEl) detailTimerEl.textContent = cardTimerEl.textContent;
+        detailBtn._mirrorInterval = setInterval(function(){
+          if (cardTimerEl && detailTimerEl) detailTimerEl.textContent = cardTimerEl.textContent;
+          if (!document.body.contains(cardBtn)) clearInterval(detailBtn._mirrorInterval);
+        }, 250);
+      }
+    }
     var addrParts=(addr||'').split('||');
     var streetAddr=addrParts[0];
     var cityAddr=addrParts[1]||'';
@@ -2743,9 +2756,11 @@
   function startAcceptTimer(btn, seconds, withSound){
     var timerEl = btn.querySelector('.accept-timer');
     var remaining = seconds;
+    btn._acceptSecondsLeft = remaining;
     if (timerEl) timerEl.textContent = fmtCountdown(remaining);
     btn._countdownInterval = setInterval(function(){
       remaining--;
+      btn._acceptSecondsLeft = remaining;
       if (timerEl) timerEl.textContent = fmtCountdown(Math.max(0,remaining));
       if (remaining <= 0) {
         clearInterval(btn._countdownInterval);
@@ -2964,24 +2979,20 @@
     var title = type==='Delivery' ? name : name;
     var card = document.createElement('div');
     card.className = 'ocard';
+    card.style.background = '#0172af';
+    card.style.border = 'none';
     card.setAttribute('data-oid', '#'+id);
     card.setAttribute('data-total-mins', String(mins));
     card.setAttribute('data-target-time', String(Date.now() + mins*60000));
     card.setAttribute('onclick', "goDetail('"+id+"','"+name+"','"+fullAddr+"','#"+id+"','€"+price+"','"+pay+"','"+type+"','"+mins+"','kitchen',this)");
     card.innerHTML =
-      '<div class="ocard-row">'+
-        '<div class="tcol">'+
-          '<svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">'+mins+'</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg>'+
-          ''+
-        '</div>'+
+      '<div class="ocard-row" style="position:relative">'+
         '<div class="mcol">'+
-          '<div class="dname">'+title+'</div>'+
-          '<div class="oc-price">€'+price+'  ·  '+items+' items</div>'+
-          '<div class="otime otime-asap" data-i18n="otime_asap">'+t('otime_asap')+'</div>'+
+          '<div class="dname" style="color:#fff">'+title+'</div>'+
+          '<div class="oc-price" style="color:rgba(255,255,255,0.75)">€'+price+'  ·  '+items+' items</div>'+
+          '<div class="otime otime-asap" data-i18n="otime_asap" style="background:rgba(255,255,255,0.2);color:#fff">'+t('otime_asap')+'</div>'+
         '</div>'+
-      '</div>'+
-      '<div class="ocard-actions">'+
-        '<button class="mbtn accept-btn" onclick="acceptOrderClick(this,event)"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>'+
+        '<div style="position:absolute;top:24px;right:24px;font-size:18px;font-weight:700;color:#fff">New</div>'+
       '</div>';
     var list = document.getElementById('t-new');
     list.insertBefore(card, list.firstChild);
@@ -3006,6 +3017,7 @@
 
   function reviewToastOrder(){
     var card = toastOrderCard;
+    closeOrderToast();
     if (card) card.click();
   }
 
