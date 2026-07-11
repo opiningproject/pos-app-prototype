@@ -295,6 +295,7 @@
     z-index: 10;
   }
   .tabs::-webkit-scrollbar { display: none; }
+  .orders-tabs .tab { flex: 1; justify-content: center; }
   .tab {
     height: 32px;
     padding: 0 14px;
@@ -992,7 +993,7 @@
           <div class="tabs orders-tabs">
             <div class="tab active" onclick="switchTab(this,'new')"><span class="tab-label" data-i18n="tab_new">Nieuw</span><span class="tab-count">7</span></div>
             <div class="tab" onclick="switchTab(this,'kitchen')"><span class="tab-label" data-i18n="tab_kitchen">Keuken</span><span class="tab-count">4</span></div>
-            <div class="tab" onclick="switchTab(this,'delivery')"><span class="tab-label" data-i18n="tab_delivering">Klaar | Bezorgen</span><span class="tab-count">1</span></div>
+            <div class="tab" onclick="switchTab(this,'delivery')"><span class="tab-label" data-i18n="tab_delivering">Uitgaand</span><span class="tab-count">1</span></div>
             
           </div>
           <!-- NEW -->
@@ -1933,7 +1934,7 @@
       empty_delivery_title:'Nothing out for delivery', empty_delivery_sub:'Orders on their way to customers will appear here.',
       mm_home:'Home', mm_orders:'Orders', mm_archive:'Archive', mm_create_order:'New order', mm_products:'Products', mm_settings:'Settings',
       hdr_orders:'Live orders', dd_orders_live:'Live orders', dd_orders_archive:'Archive',
-      tab_new:'New', tab_kitchen:'Kitchen', tab_delivering:'Ready | Delivering',
+      tab_new:'New', tab_kitchen:'Kitchen', tab_delivering:'Outgoing',
       hdr_print:'Print', hdr_archive:'Archive',
       tab_today:'Today', tab_yesterday:'Yesterday', tab_7days:'Last 7 days', tab_month:'This month',
       hdr_dashboard:'Dashboard', tab_summary:'Summary', tab_details:'Details', tab_cancelled:'Cancelled',
@@ -1982,7 +1983,7 @@
       empty_delivery_title:'Niets onderweg', empty_delivery_sub:'Bestellingen onderweg naar klanten verschijnen hier.',
       mm_home:'Home', mm_orders:'Bestellingen', mm_archive:'Archief', mm_create_order:'Nieuwe bestelling', mm_products:'Producten', mm_settings:'Instellingen',
       hdr_orders:'Live bestellingen', dd_orders_live:'Lopende bestellingen', dd_orders_archive:'Archief',
-      tab_new:'Nieuw', tab_kitchen:'Keuken', tab_delivering:'Klaar | Bezorgen',
+      tab_new:'Nieuw', tab_kitchen:'Keuken', tab_delivering:'Uitgaand',
       hdr_print:'Print', hdr_archive:'Archief',
       tab_today:'Vandaag', tab_yesterday:'Gisteren', tab_7days:'Laatste 7 dagen', tab_month:'Deze maand',
       hdr_dashboard:'Dashboard', tab_summary:'Samenvatting', tab_details:'Details', tab_cancelled:'Geannuleerd',
