@@ -413,6 +413,11 @@
   .ocard:hover { background: #fafafa; }
   .ocard:active { background: #f0f0f0; }
 
+  /* Accept button frame on new-order cards (fixed height = timer circle) */
+  .oc-accept-frame { height: 96px; flex-shrink: 0; order: 2; display: flex; align-items: center; justify-content: center; }
+  .oc-accept-btn { height: 56px; padding: 0 28px; background: #0a3b52; color: #fff; border: none; border-radius: 100px; font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; }
+  .oc-accept-btn:hover { background: #082f42; }
+
   /* Time column */
   .tcol { width: 96px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; order: 2; }
   .tcol svg { width: 96px; height: 96px; }
@@ -3131,6 +3136,35 @@
     showAcceptedToast(card);
   }
 
+  // Accept a new-order card directly from its own Accept button
+  function acceptNewCard(btn, e){
+    if (e) e.stopPropagation();
+    var card = btn.closest('.ocard');
+    if (!card) return;
+    if (card._acceptInterval) clearInterval(card._acceptInterval);
+    if (card._tickInterval) clearInterval(card._tickInterval);
+    delete card.dataset.newOrder;
+    card.style.background = '';
+    card.style.border = '';
+    var mins = parseInt(card.dataset.totalMins, 10) || 45;
+    var dname = card.dataset.dname || '';
+    var priceStr = card.dataset.priceStr || '';
+    card.innerHTML =
+      '<div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">'+
+        '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>'+
+        '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>'+
+        '<text x="24" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">'+mins+'</text>'+
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>'+
+      '</svg></div>'+
+      '<div class="mcol">'+
+        '<div class="dname">'+dname+'</div>'+
+        '<div class="oc-price">'+priceStr+'</div>'+
+      '</div></div>';
+    if (card === toastOrderCard) closeOrderToast();
+    showAcceptedToast(card);
+    reorderNewList(card);
+  }
+
   function getOrderCode(card){
     return card.dataset.oid || '#00';
   }
@@ -3283,12 +3317,14 @@
     card.setAttribute('data-price-str', '€'+price+'  ·  '+t('otime_asap'));
     card.setAttribute('onclick', "goDetail('"+id+"','"+name+"','"+fullAddr+"','#"+id+"','€"+price+"','"+pay+"','"+type+"','"+mins+"','kitchen',this)");
     card.innerHTML =
-      '<div class="ocard-row" style="position:relative">'+
+      '<div class="ocard-row">'+
         '<div class="mcol">'+
           '<div class="dname" style="color:#fff">'+title+'</div>'+
           '<div class="oc-price" style="color:rgba(255,255,255,0.75)">€'+price+'  ·  '+t('otime_asap')+'</div>'+
         '</div>'+
-        '<div style="position:absolute;top:24px;right:24px;font-size:18px;font-weight:700;color:#fff">New</div>'+
+        '<div class="oc-accept-frame">'+
+          '<button type="button" class="oc-accept-btn" onclick="acceptNewCard(this,event)">'+t('accept_label')+'</button>'+
+        '</div>'+
       '</div>';
     var list = document.getElementById('t-new');
     list.insertBefore(card, list.firstChild);
