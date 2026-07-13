@@ -1001,6 +1001,7 @@
             <div class="tab" onclick="switchTab(this,'delivery')"><span class="tab-inner"><span class="tab-label" data-i18n="tab_delivering">Uitgaand</span><span class="tab-count">1</span></span></div>
             
           </div>
+          <div id="orders-panes">
           <!-- NEW -->
           <div id="t-new">
             <div class="tab-empty" id="empty-new">
@@ -1077,6 +1078,7 @@
               </div>
               <div class="mcol"><div class="dname">Eva Verhoeven</div><div class="oc-price">€52.20</div></div></div></div>
           </div>
+          </div><!-- /orders-panes -->
         </div>
         </div><!-- /content-surface -->
 
@@ -2561,12 +2563,54 @@
   function switchTab(el,tab){
     document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
     el.classList.add('active');
-    ['new','kitchen','delivery'].forEach(function(t){
-      var e=document.getElementById('t-'+t);
-      if(e) e.style.display=t===tab?'block':'none';
-    });
+    var isOrders = el.closest && el.closest('#orders-tab-bar');
+    var order = ['new','kitchen','delivery'];
+    var prev = order.find(function(t){ var e=document.getElementById('t-'+t); return e && e.style.display!=='none'; });
+    if (isOrders && prev && prev !== tab && !window._ordersPaneAnimating) {
+      animatePanelSwitch(prev, tab, order.indexOf(tab) > order.indexOf(prev) ? 1 : -1);
+    } else {
+      order.forEach(function(t){ var e=document.getElementById('t-'+t); if(e) e.style.display=t===tab?'block':'none'; });
+    }
     checkEmptyStates();
-    if(el.closest && el.closest('#orders-tab-bar')) moveOrdersUnderline(el, true);
+    if (isOrders) moveOrdersUnderline(el, true);
+  }
+
+  // Slide the old orders panel out and the new one in
+  function animatePanelSwitch(prevId, nextId, dir){
+    var oldEl = document.getElementById('t-'+prevId);
+    var newEl = document.getElementById('t-'+nextId);
+    var panes = document.getElementById('orders-panes');
+    if (!oldEl || !newEl || !panes){
+      ['new','kitchen','delivery'].forEach(function(t){ var e=document.getElementById('t-'+t); if(e) e.style.display=t===nextId?'block':'none'; });
+      return;
+    }
+    window._ordersPaneAnimating = true;
+    var w = panes.clientWidth;
+    newEl.style.display = 'block';
+    panes.style.position = 'relative';
+    panes.style.overflowX = 'hidden';
+    [oldEl, newEl].forEach(function(x){ x.style.position='absolute'; x.style.top='0'; x.style.left='0'; x.style.width='100%'; x.style.willChange='transform'; });
+    panes.style.minHeight = Math.max(oldEl.offsetHeight, newEl.offsetHeight) + 'px';
+    oldEl.style.transition = 'none'; newEl.style.transition = 'none';
+    oldEl.style.transform = 'translateX(0)';
+    newEl.style.transform = 'translateX(' + (dir>0 ? w : -w) + 'px)';
+    void panes.offsetWidth; // reflow
+    var dur = 220, ease = 'cubic-bezier(0.4, 0, 0.2, 1)';
+    oldEl.style.transition = 'transform ' + dur + 'ms ' + ease;
+    newEl.style.transition = 'transform ' + dur + 'ms ' + ease;
+    oldEl.style.transform = 'translateX(' + (dir>0 ? -w : w) + 'px)';
+    newEl.style.transform = 'translateX(0)';
+    var done = false;
+    function cleanup(){
+      if (done) return; done = true;
+      [oldEl, newEl].forEach(function(x){ x.style.position=''; x.style.top=''; x.style.left=''; x.style.width=''; x.style.transform=''; x.style.transition=''; x.style.willChange=''; });
+      oldEl.style.display = 'none';
+      newEl.style.display = 'block';
+      panes.style.position=''; panes.style.minHeight=''; panes.style.overflowX='';
+      window._ordersPaneAnimating = false;
+    }
+    newEl.addEventListener('transitionend', cleanup, { once: true });
+    setTimeout(cleanup, dur + 80);
   }
 
   function moveOrdersUnderline(activeTab, animate){
