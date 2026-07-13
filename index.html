@@ -404,6 +404,7 @@
   .orders-tabs .tab { flex: 1; justify-content: center; height: auto; padding: 0; font-size: 16px; font-weight: 600; border-radius: 0; background: transparent; color: #999; display: flex; align-items: center; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
   .orders-tabs .tab .tab-inner { display: inline-flex; align-items: center; gap: 6px; padding-bottom: 24px; position: relative; }
   .orders-tabs .tab.active { background: transparent; color: #111; }
+  #orders-tab-bar { position: sticky; top: 0; z-index: 5; background: #fff; }
   #orders-tab-bar .tab-underline { position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #0172af; border-radius: 10px 10px 0 0; pointer-events: none; transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1); }
   #orders-tab-bar .tab-underline.no-anim { transition: none; }
   .orders-tabs .tab .tab-count { background: transparent; color: #999 !important; font-size: 16px; font-weight: 600; padding: 0; min-width: unset; height: auto; line-height: 1; border-radius: 0; }
@@ -2634,47 +2635,128 @@
   window.addEventListener('resize', function(){ moveOrdersUnderline(null, false); });
   window.addEventListener('load', function(){ moveOrdersUnderline(null, false); });
 
-  // Swipe left/right on the orders content to switch between tabs
-  (function initOrdersSwipe(){
+  // Interactive finger-following pager for the orders panels (like Google Drive tabs)
+  (function initOrdersPager(){
     var order = ['new','kitchen','delivery'];
-    var startX = 0, startY = 0, tracking = false;
+    var panes = null, bar = null, underline = null;
+    var armed = false, decided = false, dragging = false;
+    var startX = 0, startY = 0, w = 0;
+    var curIdx = 0, prevIdx = null, nextIdx = null;
+    var panels = [], uCur, uPrev, uNext;
+
     function currentIndex(){
-      for (var i = 0; i < order.length; i++){
-        var el = document.getElementById('t-' + order[i]);
-        if (el && el.style.display !== 'none') return i;
-      }
+      for (var i=0;i<order.length;i++){ var e=document.getElementById('t-'+order[i]); if(e && e.style.display!=='none') return i; }
       return 0;
     }
-    function goTo(idx){
-      if (idx < 0 || idx >= order.length) return;
-      var tabEl = document.querySelector('#orders-tab-bar .tab[onclick*="\'' + order[idx] + '\'"]');
-      if (tabEl) switchTab(tabEl, order[idx]);
+    function tabEls(){ return document.querySelectorAll('#orders-tab-bar .tab'); }
+    function underlineTargetFor(idx){
+      var t = tabEls()[idx]; var inner = t.querySelector('.tab-inner') || t;
+      var br = bar.getBoundingClientRect(), r = inner.getBoundingClientRect();
+      return { left: r.left - br.left + bar.scrollLeft, width: r.width };
     }
-    function onStart(x, y){ startX = x; startY = y; tracking = true; }
+    function setup(){
+      panes = document.getElementById('orders-panes');
+      bar = document.getElementById('orders-tab-bar');
+      if (!panes || !bar) return false;
+      underline = bar.querySelector('.tab-underline');
+      w = panes.clientWidth;
+      curIdx = currentIndex();
+      prevIdx = curIdx > 0 ? curIdx-1 : null;
+      nextIdx = curIdx < order.length-1 ? curIdx+1 : null;
+      panes.style.position = 'relative'; panes.style.overflowX = 'hidden';
+      panels = [];
+      function prep(idx, base){
+        if (idx == null) return;
+        var el = document.getElementById('t-'+order[idx]);
+        el.style.display='block'; el.style.position='absolute'; el.style.top='0'; el.style.left='0';
+        el.style.width='100%'; el.style.willChange='transform'; el.style.transition='none';
+        el.style.transform = 'translateX('+base+'px)';
+        panels.push({ el: el, base: base, idx: idx });
+      }
+      prep(prevIdx, -w); prep(curIdx, 0); prep(nextIdx, w);
+      var h = 0; panels.forEach(function(p){ h = Math.max(h, p.el.offsetHeight); });
+      panes.style.minHeight = h + 'px';
+      uCur = underlineTargetFor(curIdx);
+      uPrev = prevIdx != null ? underlineTargetFor(prevIdx) : uCur;
+      uNext = nextIdx != null ? underlineTargetFor(nextIdx) : uCur;
+      if (underline) underline.classList.add('no-anim');
+      return true;
+    }
+    function applyDrag(dx){
+      if (dx < 0 && nextIdx == null) dx *= 0.25; // rubber-band at edges
+      if (dx > 0 && prevIdx == null) dx *= 0.25;
+      panels.forEach(function(p){ p.el.style.transform = 'translateX('+(p.base+dx)+'px)'; });
+      if (!underline) return;
+      var prog = 0, target = uCur;
+      if (dx < 0 && nextIdx != null){ prog = Math.min(-dx/w, 1); target = uNext; }
+      else if (dx > 0 && prevIdx != null){ prog = Math.min(dx/w, 1); target = uPrev; }
+      underline.style.left = (uCur.left + (target.left-uCur.left)*prog) + 'px';
+      underline.style.width = (uCur.width + (target.width-uCur.width)*prog) + 'px';
+    }
+    function settle(dx){
+      var threshold = Math.min(w*0.22, 90);
+      var goIdx = curIdx;
+      if (dx <= -threshold && nextIdx != null) goIdx = nextIdx;
+      else if (dx >= threshold && prevIdx != null) goIdx = prevIdx;
+      var shift = goIdx === curIdx ? 0 : (goIdx > curIdx ? -w : w);
+      var dur = 200, ease = 'cubic-bezier(0.4,0,0.2,1)';
+      panels.forEach(function(p){ p.el.style.transition = 'transform '+dur+'ms '+ease; p.el.style.transform = 'translateX('+(p.base+shift)+'px)'; });
+      if (underline){
+        underline.classList.remove('no-anim');
+        var ut = goIdx === nextIdx ? uNext : (goIdx === prevIdx ? uPrev : uCur);
+        underline.style.left = ut.left + 'px'; underline.style.width = ut.width + 'px';
+      }
+      setTimeout(function(){
+        panels.forEach(function(p){
+          var el = p.el;
+          el.style.position=''; el.style.top=''; el.style.left=''; el.style.width='';
+          el.style.transform=''; el.style.transition=''; el.style.willChange='';
+          el.style.display = (p.idx === goIdx) ? 'block' : 'none';
+        });
+        panes.style.position=''; panes.style.overflowX=''; panes.style.minHeight='';
+        tabEls().forEach(function(t){ t.classList.remove('active'); });
+        tabEls()[goIdx].classList.add('active');
+        order.forEach(function(t,i){ var e=document.getElementById('t-'+t); if(e) e.style.display = (i===goIdx)?'block':'none'; });
+        if (typeof checkEmptyStates === 'function') checkEmptyStates();
+        moveOrdersUnderline(tabEls()[goIdx], false);
+        window._ordersPaneAnimating = false;
+      }, dur + 60);
+    }
+    function onStart(x, y, e){
+      armed = false;
+      if (window._ordersPaneAnimating) return;
+      if (!e.target.closest || !e.target.closest('#p-orders')) return;
+      if (e.target.closest('#orders-tab-bar')) return; // taps on the tab bar work normally
+      armed = true; decided = false; dragging = false; startX = x; startY = y;
+    }
+    function onMove(x, y, e){
+      if (!armed) return;
+      if (dragging){ if (e.cancelable) e.preventDefault(); applyDrag(x-startX); return; }
+      if (decided) return;
+      var dx = x-startX, dy = y-startY;
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      decided = true;
+      if (Math.abs(dx) <= Math.abs(dy)) return; // vertical -> allow native scroll
+      if (!setup()) { armed = false; return; }
+      dragging = true; window._ordersPaneAnimating = true;
+      if (e.cancelable) e.preventDefault();
+      applyDrag(dx);
+    }
     function onEnd(x, y){
-      if (!tracking) return; tracking = false;
-      var dx = x - startX, dy = y - startY;
-      // only act on a clear horizontal swipe (ignore vertical list scrolling)
-      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
-      var cur = currentIndex();
-      goTo(dx < 0 ? cur + 1 : cur - 1); // swipe left -> next tab, right -> previous
+      if (!armed) return;
+      armed = false;
+      if (!dragging) return;
+      dragging = false;
+      settle(x-startX);
     }
-    document.addEventListener('touchstart', function(e){
-      if (!e.target.closest || !e.target.closest('#p-orders')) return;
-      if (e.target.closest('#orders-tab-bar')) return; // let taps on the tab bar work normally
-      var t = e.touches[0]; onStart(t.clientX, t.clientY);
-    }, { passive: true });
-    document.addEventListener('touchend', function(e){
-      if (!tracking) return;
-      var t = e.changedTouches[0]; onEnd(t.clientX, t.clientY);
-    }, { passive: true });
+    document.addEventListener('touchstart', function(e){ var t=e.touches[0]; onStart(t.clientX,t.clientY,e); }, { passive: true });
+    document.addEventListener('touchmove', function(e){ var t=e.touches[0]; onMove(t.clientX,t.clientY,e); }, { passive: false });
+    document.addEventListener('touchend', function(e){ var t=e.changedTouches[0]; onEnd(t.clientX,t.clientY); }, { passive: true });
     // mouse drag fallback (desktop preview)
-    document.addEventListener('mousedown', function(e){
-      if (!e.target.closest || !e.target.closest('#p-orders')) return;
-      if (e.target.closest('#orders-tab-bar')) return;
-      onStart(e.clientX, e.clientY);
-    });
-    document.addEventListener('mouseup', function(e){ onEnd(e.clientX, e.clientY); });
+    var mouseDown = false;
+    document.addEventListener('mousedown', function(e){ mouseDown = true; onStart(e.clientX,e.clientY,e); });
+    document.addEventListener('mousemove', function(e){ if (mouseDown) onMove(e.clientX,e.clientY,e); });
+    document.addEventListener('mouseup', function(e){ if (mouseDown){ mouseDown = false; onEnd(e.clientX,e.clientY); } });
   })();
 
   function toggleCat(header) {
