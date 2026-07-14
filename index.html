@@ -1187,7 +1187,6 @@
                 <div id="d-detail-city" style="font-size:16px;color:#888;margin-top:2px;display:none">—</div>
                 <div id="d-wished-inline" style="font-size:16px;font-weight:500;color:#888;margin-top:6px">ZSM</div>
               </div>
-              <span id="d-pay-badge" style="font-size:15px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:7px 16px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
             </div>
           </div>
 
@@ -1199,12 +1198,10 @@
 
           <!-- Customer details card -->
           <div style="margin:24px 24px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 24px">
-            <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:24px 0" onclick="toggleCustomerDropdown()">
-              <span style="font-size:20px;font-weight:600;color:#111">Customer details</span>
-              <svg id="d-customer-arrow" width="14" height="8" viewBox="0 0 12 7" fill="none" style="flex-shrink:0;transition:transform 0.2s ease;transform:rotate(180deg)"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div style="padding:24px 0">
+              <span id="d-detail-name" style="font-size:20px;font-weight:600;color:#111">Thomas Jefferson</span>
             </div>
             <div id="d-customer-details" style="display:flex;flex-direction:column;gap:10px;padding-bottom:24px">
-              <span id="d-detail-name" style="font-size:17px;font-weight:600;color:#111">Thomas Jefferson</span>
               <span style="font-size:17px;color:#111">+31 6 14 52 24 53</span>
               <span style="font-size:17px;color:#111">klant@email.nl</span>
             </div>
@@ -1213,9 +1210,9 @@
           <!-- Order summary card -->
           <div style="margin:24px 24px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 24px">
           <div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0;cursor:pointer" onclick="toggleOrderSummary()">
-            <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">Order summary</span>
-            <svg id="d-summary-arrow" width="14" height="8" viewBox="0 0 12 7" fill="none" style="flex-shrink:0;transition:transform 0.2s ease;transform:rotate(180deg)"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0">
+            <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">€ 31,00</span>
+            <span id="d-pay-badge" style="font-size:15px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:7px 16px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
           </div>
           <div id="d-order-summary-body">
             <div style="padding:18px 0;border-top:1px solid #f0f0f0">
@@ -1264,10 +1261,6 @@
               <div style="display:flex;justify-content:space-between;margin-bottom:16px">
                 <span style="font-size:18px;color:#111">Servicekosten</span>
                 <span style="font-size:18px;color:#111">€ 0,50</span>
-              </div>
-              <div style="display:flex;justify-content:space-between">
-                <span style="font-size:20px;font-weight:600;color:#111">Totaal</span>
-                <span id="d-total" style="font-size:20px;font-weight:600;color:#111">€ 31,00</span>
               </div>
             </div>
           </div>
@@ -2361,6 +2354,7 @@
     if(isDelivery&&openMap) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
     var ptEl=document.getElementById('d-page-title'); if(ptEl) ptEl.textContent=oid;
     document.getElementById('d-total').textContent=price;
+    var itemsCountEl=document.getElementById('d-items-count'); if(itemsCountEl) itemsCountEl.textContent=price;
     document.getElementById('d-detail-name').textContent=name;
     document.getElementById('d-detail-addr').textContent=cleanAddr;
     var wishedEl=document.getElementById('d-wished-inline');
