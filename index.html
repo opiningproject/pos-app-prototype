@@ -156,6 +156,8 @@
     flex-direction: column;
     justify-content: center;
     gap: 12px;
+    position: relative;
+    z-index: 210 !important;
   }
   .page-header .tabs {
     background: transparent;
@@ -655,9 +657,9 @@
   .side-nav-backdrop { display:none;position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:200; }
   .side-nav-backdrop.show { display:block; }
   .side-nav {
-    position:absolute;left:0;right:0;bottom:0;width:100%;background:#fff;z-index:201;
+    position:absolute;top:0;left:0;right:0;bottom:0;width:100%;background:#fff;z-index:201;
     display:flex;flex-direction:column;
-    transform:translateY(-100%) translateY(0px);opacity:0;pointer-events:none;
+    transform:translateY(-100%);opacity:0;pointer-events:none;
     transition:opacity 0.25s ease, transform 0.28s cubic-bezier(0.32,0.72,0,1);
   }
   .side-nav.open { transform:translateY(0);opacity:1;pointer-events:auto; }
@@ -3654,7 +3656,7 @@
     var nav = document.getElementById('side-nav');
     var backdrop = document.getElementById('side-nav-backdrop');
     var burger = document.getElementById('burger-btn');
-    var header = document.querySelector('#p-orders .page-header');
+    var header = document.querySelector('.page.active .page-header');
     var sc = document.getElementById('screen-content');
     if(header && sc){
       var top = header.getBoundingClientRect().bottom - sc.getBoundingClientRect().top;
