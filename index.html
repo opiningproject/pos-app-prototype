@@ -1063,12 +1063,7 @@
           </div>
         </div>
 
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
-          <span style="font-size:17px;font-weight:600;color:#111">Alle bestellingen <span style="color:#111;margin-left:4px">(12)</span></span>
-          <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
-            <svg width="26" height="26" viewBox="0 0 20 20" fill="none"><path d="M2.5 5.5h15M5.5 10h9M8.5 14.5h3" stroke="#111" stroke-width="1.71694" stroke-linecap="round"/></svg>
-          </div>
-        </div>
+
         <div class="content-surface" style="border-radius:0">
         <div class="scroll">
           <div class="tabs orders-tabs" id="orders-tab-bar">
@@ -1169,21 +1164,20 @@
 
       <!-- ===== DETAIL PAGE ===== -->
       <div class="page" id="p-detail">
-        <div class="page-header" style="background:#fff;border-bottom:none;border-radius:28px 28px 0 0;padding:32px 24px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff">
           <div class="page-header-row">
-            <div class="tb-icon" onclick="goPage('orders')" style="background:#f0f0f0;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <h1 id="d-page-title" style="font-size:18px;font-weight:600;flex:1;text-align:center;color:#111;opacity:0;position:absolute;left:-9999px">#37</h1>
-            <div style="background:#f0f0f0;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer">
-              <svg width="5" height="21" viewBox="0 0 5 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="2.5" cy="2.5" r="2.5" fill="#111"/>
-                <circle cx="2.5" cy="10.5" r="2.5" fill="#111"/>
-                <circle cx="2.5" cy="18.5" r="2.5" fill="#111"/>
-              </svg>
+            <div onclick="goPage('orders')" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer">
+              <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
+            <div onclick="silentPrint()" style="background:#f0f0f0;border-radius:999px;padding:10px 20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;gap:6px">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M5 7V3h10v4M5 14H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="12" width="10" height="6" rx="1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span style="font-size:16px;font-weight:600;color:#111">Print</span>
             </div>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
-        <div class="scroll" style="background:#fff">
+        <div class="scroll" style="background:#fff;padding-bottom:88px">
 
           <!-- Top: address left + circle right -->
           <div style="padding:24px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px">
@@ -1200,21 +1194,10 @@
             </svg>
           </div>
 
-          <!-- Buttons -->
-          <div style="padding:40px 24px 8px">
-            <div id="d-actions-default" style="display:flex;flex-direction:column;gap:10px">
-              <button id="d-next-btn" onclick="detailNextAction()" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">To kitchen</button>
-              <button onclick="silentPrint()" data-i18n="d_print_label" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#0172af;background:#fff;border:2px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Print label</button>
-            </div>
-            <div id="d-actions-accept" style="display:none">
-              <button id="d-accept-btn" onclick="acceptFromDetail()" class="accept-btn" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#555;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>
-            </div>
-          </div>
 
           <!-- Customer name + badge -->
           <div style="padding:24px 24px 8px">
             <div style="display:flex;align-items:center;gap:10px;cursor:pointer" onclick="toggleCustomerDropdown()">
-              <span data-i18n="d_new_customer" style="font-size:13px;font-weight:600;color:#555;background:#f0f0f0;border-radius:999px;padding:4px 10px;white-space:nowrap;flex-shrink:0">Nieuwe klant</span>
               <span id="d-detail-name" style="font-size:18px;font-weight:600;color:#111">Thomas Jefferson</span>
               <svg id="d-customer-arrow" width="12" height="7" viewBox="0 0 12 7" fill="none" style="flex-shrink:0;transition:transform 0.2s ease"><path d="M1 1L6 6L11 1" stroke="#888" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -1228,7 +1211,6 @@
                 <span style="font-size:18px;color:#555">klant@email.nl</span>
               </div>
             </div>
-            <a id="d-open-map" data-i18n="d_open_map" href="#" target="_blank" style="display:none;font-size:18px;font-weight:500;color:#1a73e8;margin-top:6px;text-decoration:none">Open Map</a>
           </div>
 
           <div id="d-note-section" style="display:none;margin:24px 24px 0;background:#FFF8D6;border-radius:12px;padding:24px;align-items:flex-start;gap:16px">
@@ -1247,30 +1229,28 @@
             <div style="padding:14px 0;border-top:1px solid #f0f0f0;margin-top:14px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <div>
-                  <div style="font-size:17px;font-weight:600;color:#111">2 x Margarita</div>
-                  <div style="font-size:15px;color:#999;margin-top:3px">+ Olijven</div>
+                  <div style="font-size:17px;font-weight:600;color:#111">2 Margarita</div>
+                  <div style="font-size:15px;color:#999;margin-top:3px">Olijven</div>
                 </div>
                 <div style="text-align:right;flex-shrink:0">
                   <div style="font-size:17px;color:#111">€ 10,00</div>
-                  <div style="font-size:15px;color:#999;margin-top:3px">€ 2,00</div>
                 </div>
               </div>
             </div>
             <div style="padding:14px 0;border-top:1px solid #f0f0f0">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <div>
-                  <div style="font-size:17px;font-weight:600;color:#111">2 x Pepperoni</div>
-                  <div style="font-size:15px;color:#999;margin-top:3px">+ Cipolle</div>
+                  <div style="font-size:17px;font-weight:600;color:#111">2 Pepperoni</div>
+                  <div style="font-size:15px;color:#999;margin-top:3px">Cipolle</div>
                 </div>
                 <div style="text-align:right;flex-shrink:0">
                   <div style="font-size:17px;color:#111">€ 10,00</div>
-                  <div style="font-size:15px;color:#999;margin-top:3px">€ 2,00</div>
                 </div>
               </div>
             </div>
             <div style="padding:14px 0;border-top:1px solid #f0f0f0">
               <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-                <div style="font-size:17px;font-weight:600;color:#111">2 x Coca-Cola 0,5L</div>
+                <div style="font-size:17px;font-weight:600;color:#111">2 Coca-Cola 0,5L</div>
                 <div style="font-size:17px;color:#111;flex-shrink:0">€ 4,60</div>
               </div>
             </div>
@@ -1296,9 +1276,19 @@
             </div>
           </div>
 
-          <div style="padding-bottom:calc(env(safe-area-inset-bottom) + 100px)"></div>
         </div>
         </div><!-- /content-surface -->
+
+        <!-- Sticky action footer -->
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);border-top:1.5px solid #f3f3f3;z-index:10">
+          <div id="d-actions-default" style="display:flex;flex-direction:column;gap:10px">
+            <button id="d-next-btn" onclick="detailNextAction()" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
+          </div>
+          <div id="d-actions-accept" style="display:none">
+            <button id="d-accept-btn" onclick="acceptFromDetail()" class="accept-btn" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#555;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>
+          </div>
+        </div>
+
         <div class="navbar"><div class="navbar-pill">
           <div class="ni" onclick="goPage('dashboard')"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.7886 2.79298C10.5668 2.60839 10.2963 2.5 10.0044 2.5C9.71251 2.5 9.44201 2.60839 9.2202 2.79298L2 8.95303L3.8993 7.33456C3.53632 7.63665 3.32031 8.12867 3.32031 8.65351V15.8871C3.32031 16.7779 3.93105 17.5 4.68441 17.5H8V14.2742C8 13.3834 9.25103 12.6613 10.0044 12.6613C10.7578 12.6613 12 13.3834 12 14.2742V17.5H15.3244C16.0778 17.5 16.6885 16.7779 16.6885 15.8871V8.65351C16.6885 8.12867 16.4725 7.63665 16.1095 7.33456L18 8.95303L10.7886 2.79298Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
           <div class="ni active" onclick="goPage('orders')"><div class="ni-wrap"><span class="ico-inactive"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="reddot"></div></div></div>
@@ -2366,12 +2356,12 @@
     var cleanAddr=(type==='Collection')?'Collection':((streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant')?streetAddr:'—');
     var openMap=document.getElementById('d-open-map');
     var isDelivery=(type==='Delivery'&&streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant');
-    openMap.style.display=isDelivery?'block':'none';
+    if(openMap) openMap.style.display=isDelivery?'block':'none';
     var cityEl=document.getElementById('d-detail-city');
     cityEl.style.display=(isDelivery&&cityAddr)?'block':'none';
     if(cityAddr) cityEl.textContent=cityAddr;
-    if(isDelivery) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
-    document.getElementById('d-page-title').textContent=oid;
+    if(isDelivery&&openMap) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
+    var ptEl=document.getElementById('d-page-title'); if(ptEl) ptEl.textContent=oid;
     document.getElementById('d-total').textContent=price;
     document.getElementById('d-detail-name').textContent=name;
     document.getElementById('d-detail-addr').textContent=cleanAddr;
@@ -2426,6 +2416,9 @@
       payBadge.style.color='#c62828';
       payBadge.style.background='#fdecea';
     }
+    var statusLabelMap = {new:'Nieuwe bestelling', kitchen:'In de keuken', delivery:'Onderweg', archive:'Afgerond'};
+    var statusEl = document.getElementById('d-header-status');
+    if(statusEl) statusEl.textContent = isUnaccepted ? 'Nieuwe bestelling' : (statusLabelMap[window._detailFromTab] || 'Bestelling');
     goPage('detail');
     var detailScroll = document.querySelector('#p-detail .scroll');
     if (detailScroll) detailScroll.scrollTop = 0;
