@@ -1220,13 +1220,13 @@
 
           <!-- Items header -->
           <div style="display:flex;align-items:center;justify-content:space-between;padding:40px 24px 0">
-            <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">6 items</span>
+            <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">Order summary</span>
             <span id="d-pay-badge" style="font-size:15px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:7px 16px;white-space:nowrap;display:inline-flex;align-items:center">Betaald</span>
           </div>
 
           <!-- Items list -->
           <div style="padding:0 24px">
-            <div style="padding:14px 0;border-top:1px solid #f0f0f0;margin-top:14px">
+            <div style="padding:18px 0;border-top:1px solid #f0f0f0;margin-top:14px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
                   <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
@@ -1238,7 +1238,7 @@
                 <div style="font-size:17px;color:#111;flex-shrink:0">€ 10,00</div>
               </div>
             </div>
-            <div style="padding:14px 0;border-top:1px solid #f0f0f0">
+            <div style="padding:18px 0;border-top:1px solid #f0f0f0">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
                   <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
@@ -1250,7 +1250,7 @@
                 <div style="font-size:17px;color:#111;flex-shrink:0">€ 10,00</div>
               </div>
             </div>
-            <div style="padding:14px 0;border-top:1px solid #f0f0f0">
+            <div style="padding:18px 0;border-top:1px solid #f0f0f0">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
                 <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
                   <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
@@ -1264,20 +1264,20 @@
           <!-- Totals -->
           <div style="padding:16px 24px 0;border-top:1px solid #f0f0f0">
             <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-              <span style="font-size:16px;color:#888">Subtotaal</span>
-              <span style="font-size:16px;color:#888">€ 26,50</span>
+              <span style="font-size:17px;color:#888">Subtotaal</span>
+              <span style="font-size:17px;color:#888">€ 26,50</span>
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-              <span style="font-size:16px;color:#888">Bezorging</span>
-              <span style="font-size:16px;color:#888">€ 4,00</span>
+              <span style="font-size:17px;color:#888">Bezorging</span>
+              <span style="font-size:17px;color:#888">€ 4,00</span>
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:16px">
-              <span style="font-size:16px;color:#888">Servicekosten</span>
-              <span style="font-size:16px;color:#888">€ 0,50</span>
+              <span style="font-size:17px;color:#888">Servicekosten</span>
+              <span style="font-size:17px;color:#888">€ 0,50</span>
             </div>
             <div style="display:flex;justify-content:space-between">
-              <span style="font-size:17px;font-weight:700;color:#111">Totaal</span>
-              <span id="d-total" style="font-size:17px;font-weight:700;color:#111">€ 31,00</span>
+              <span style="font-size:17px;font-weight:600;color:#111">Totaal</span>
+              <span id="d-total" style="font-size:17px;font-weight:600;color:#111">€ 31,00</span>
             </div>
           </div>
 
@@ -2417,7 +2417,7 @@
       payBadge.style.color='#2e7d32';
       payBadge.style.background='#e6f4ea';
     } else {
-      payBadge.innerHTML='<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#c62828;margin-right:8px;flex-shrink:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/><circle cx="12" cy="15" r="1.5" fill="#fff" stroke="none"/></svg></span>'+t(payKey);
+      payBadge.innerHTML=t(payKey);
       payBadge.style.color='#c62828';
       payBadge.style.background='#fdecea';
     }
