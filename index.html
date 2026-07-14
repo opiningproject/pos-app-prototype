@@ -1166,7 +1166,7 @@
             <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
+            <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
             <div onclick="silentPrint()" style="background:#f0f0f0;border-radius:999px;padding:10px 20px;cursor:pointer;flex-shrink:0">
               <span style="font-size:16px;font-weight:600;color:#111">Print</span>
             </div>
@@ -1179,7 +1179,7 @@
           <div style="margin:24px 24px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:24px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
               <div>
-                <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Delivery</div>
+                <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Bezorging</div>
                 <div style="margin-top:6px;display:flex;align-items:baseline;gap:6px">
                   <span style="font-size:16px;font-weight:500;color:#888">Gewenst:</span>
                   <span id="d-wished-inline" style="font-size:16px;font-weight:500;color:#888">ZSM</span>
@@ -1374,7 +1374,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Archief</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Archief</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
@@ -1410,172 +1410,220 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Today's sales</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Verkoop vandaag</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#f7f7f7;display:flex;flex-direction:column;overflow:hidden">
           <!-- Tabs -->
           <div class="tabs orders-tabs" id="dash-tabs" style="background:#fff;flex-shrink:0">
             <div class="tab-underline" aria-hidden="true"></div>
-            <div class="tab active" onclick="switchDashTab(this,'dash-summary')"><span class="tab-inner"><span class="tab-label">Summary</span></span></div>
+            <div class="tab active" onclick="switchDashTab(this,'dash-summary')"><span class="tab-inner"><span class="tab-label">Samenvatting</span></span></div>
             <div class="tab" onclick="switchDashTab(this,'dash-details')"><span class="tab-inner"><span class="tab-label">Details</span></span></div>
-            <div class="tab" onclick="switchDashTab(this,'dash-cancelled')"><span class="tab-inner"><span class="tab-label">Cancelled</span></span></div>
+            <div class="tab" onclick="switchDashTab(this,'dash-cancelled')"><span class="tab-inner"><span class="tab-label">Geannuleerd</span></span></div>
           </div>
 
           <!-- SUMMARY PANE -->
-          <div id="dash-summary" class="scroll" style="padding:20px 16px 120px;display:flex;flex-direction:column;gap:12px">
-            <!-- Top 2 stat cards side by side -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-              <div style="background:#fff;border-radius:16px;padding:20px 16px">
-                <div style="font-size:13px;color:#888;font-weight:500;margin-bottom:8px">Omzet</div>
-                <div style="font-size:28px;font-weight:700;color:#111;line-height:1.1">€688</div>
-                <div style="font-size:12px;color:#aaa;margin-top:4px">incl. kosten</div>
-                <div style="font-size:20px;font-weight:600;color:#555;margin-top:6px">€564</div>
-                <div style="font-size:12px;color:#aaa">excl. kosten</div>
+          <div id="dash-summary" class="scroll" style="padding:24px;background:#fafafa;display:flex;flex-direction:column;gap:16px;padding-bottom:120px">
+
+            <!-- Card 1: Omzet -->
+            <div style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
+              <!-- Illustratie -->
+              <div style="margin-bottom:20px">
+                <svg width="140" height="140" viewBox="0 0 3710 3710" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+<g id="Illustration">
+	<g>
+		<linearGradient id="il_SVGID_1_" gradientUnits="userSpaceOnUse" x1="3382.5837" y1="3571.5112" x2="1367.5331" y2="1396.5355">
+			<stop  offset="0" style="stop-color:#DAE3FE"/>
+			<stop  offset="1" style="stop-color:#E9EFFD"/>
+		</linearGradient>
+		<path style="fill:url(#il_SVGID_1_);" d="M3101.773,2332.074c-276.883,647.181-1007.764,925.16-1580.42,877.764c-156.359-12.941-470.955-38.979-716.595-271.272c-471.734-446.105-399.083-1378.588,52.502-1927.582c58.155-70.699,460.694-544.376,1087.976-538.036c459.262,4.642,781.613,264.073,820.81,296.393c49.516,40.829,158.728,137.852,257.155,291.772C3254.468,1422.772,3274.797,1927.65,3101.773,2332.074z"/>
+		<g>
+			<path style="fill:#BDD0FB;" d="M644.343,458.039c186.44,120.515,1242.767,866.146,721.13,1983.068c0,0-821.784-311.858-750.107-1968.162C615.992,458.456,632.163,450.166,644.343,458.039z"/>
+			<path style="opacity:0.38;fill:#FFFFFF;" d="M723.774,665.733c45.276,59.689,87.799,121.112,129.259,183.342c41.381,62.26,81.242,125.533,119.486,189.783c38.244,64.25,74.871,129.475,109.76,195.638c8.593,16.609,17.524,33.045,25.839,49.799l25.124,50.173c16.13,33.754,32.532,67.389,47.634,101.636c15.705,33.972,29.918,68.615,44.467,103.106l20.657,52.23c7.053,17.346,13.015,35.118,19.576,52.658c25.404,70.458,48.437,141.907,66.478,214.761l6.996,27.254l6.023,27.501l6.021,27.504l3.01,13.754l2.455,13.87l9.728,55.51l7.261,55.928c8.319,74.738,11.175,150.267,6.218,225.655c-0.417,6.346-5.9,11.152-12.245,10.734c-6.345-0.417-11.151-5.899-10.734-12.245l0.005-0.083l0.013-0.168c5.382-73.671,3.151-147.859-4.496-221.534l-6.746-55.182l-9.201-54.873l-2.32-13.717l-2.878-13.619l-5.754-27.24l-5.753-27.244l-6.729-27.031c-17.319-72.25-39.642-143.301-64.351-213.456c-6.389-17.469-12.172-35.161-19.057-52.453l-20.147-52.064c-14.213-34.4-28.09-68.958-43.468-102.879c-14.774-34.186-30.856-67.79-46.665-101.518l-24.651-50.151c-8.157-16.748-16.934-33.187-25.372-49.797c-34.271-66.175-70.297-131.461-107.955-195.806c-37.658-64.345-76.947-127.747-117.762-190.154c-40.862-62.334-82.932-124.059-127.465-183.681l-0.056-0.075c-1.612-2.158-1.17-5.214,0.989-6.826C719.117,663.169,722.155,663.601,723.774,665.733z"/>
+		</g>
+		<g>
+			<path style="fill:#91B3FA;" d="M514.497,1106.936c165.71,122.341,1101.459,869.521,565.553,1777.476c0,0-741.308-350.664-592.98-1767.569C488.367,1104.447,503.671,1098.943,514.497,1106.936z"/>
+			<path style="opacity:0.22;fill:#FFFFFF;" d="M578.813,1292.096c36.687,53.946,71.151,109.032,104.834,164.72c33.62,55.695,65.977,112.153,97.22,169.231c31.185,57.111,61.13,114.911,89.767,173.375c28.661,58.448,56.028,117.567,81.47,177.545c25.491,59.947,49.754,120.48,71.281,182.059c21.594,61.532,41.77,123.667,58.177,186.935c33.627,126.166,55.591,256.395,55.85,388.258c0.017,8.212-6.628,14.883-14.841,14.899c-8.213,0.016-14.882-6.627-14.899-14.841c0-0.027,0-0.054,0-0.081l0.002-0.298c1.162-128.206-18.879-256.554-50.751-381.548c-15.514-62.669-34.818-124.424-55.554-185.663c-20.67-61.286-44.102-121.662-68.779-181.514c-24.627-59.884-51.203-118.991-79.09-177.478c-27.86-58.502-57.05-116.393-87.493-173.631c-30.501-57.207-62.128-113.829-95.027-169.708c-32.926-55.822-66.786-111.273-102.563-165.143l-0.061-0.091c-1.924-2.897-1.136-6.806,1.762-8.73C572.998,1288.48,576.874,1289.248,578.813,1292.096z"/>
+		</g>
+		<g>
+			<g>
+				<linearGradient id="il_SVGID_2_" gradientUnits="userSpaceOnUse" x1="1906.6417" y1="473.7234" x2="1661.8105" y2="3371.748">
+					<stop  offset="0" style="stop-color:#09005D"/>
+					<stop  offset="1" style="stop-color:#1A0F91"/>
+				</linearGradient>
+				<path style="fill:url(#il_SVGID_2_);" d="M943.896,655.604c-9.119,430.39-38.699,1914.953-24.577,2441.038c1.496,55.734,39.686,100.468,87.327,102.291c235.625,9.022,1099.418,31.885,1484.824,12.97c80.273-3.939,144.109-80.009,145.775-173.978c8.01-451.747,25.68-1722.334-16.318-2304.394c-5.032-69.74-51.823-125.277-111.351-132.241c-256.608-30.033-1124.116-103.439-1457.083-78.164C992.442,527.687,945.39,585.23,943.896,655.604z"/>
+				<linearGradient id="il_SVGID_3_" gradientUnits="userSpaceOnUse" x1="2161.0903" y1="924.8516" x2="2890.7002" y2="-654.3068">
+					<stop  offset="0" style="stop-color:#4F52FF"/>
+					<stop  offset="1" style="stop-color:#4042E2"/>
+				</linearGradient>
+				<path style="fill:url(#il_SVGID_3_);" d="M1049.032,787.652c-12.681,347.386-52.687,1503.057-39.99,1930.401c1.855,62.461,43.938,112.968,97.274,116.617c219.589,15.035,968.786,48.182,1290.871,18.011c57.998-5.434,103.51-60.305,106.638-128.274c16.323-354.403,63.188-1430.496,51.015-1853.05c-1.94-67.409-46.576-122.462-103.998-128.49c-237.567-24.956-1033.668-84.325-1307.369-66.857C1092.094,679.288,1051.23,727.511,1049.032,787.652z"/>
+				<path style="opacity:0.5;fill:#FFFFFF;" d="M1526.222,598.331L1526.222,598.331c0,13.207,8.799,24.098,20.072,24.788c55.655,3.41,212.429,13.058,282.496,17.814c13.814,0.937,24.658-13.591,22.037-29.483l-0.448-2.715c-1.788-10.846-9.477-19.009-18.881-20.017c-47.359-5.077-190.266-19.156-284.955-15.201C1535.168,573.991,1526.222,585.019,1526.222,598.331z"/>
+			</g>
+			<g>
+				<g>
+					<linearGradient id="il_SVGID_4_" gradientUnits="userSpaceOnUse" x1="1082.9618" y1="-1007.1795" x2="1012.9982" y2="482.0302">
+						<stop  offset="0" style="stop-color:#FF928E"/>
+						<stop  offset="1" style="stop-color:#FE7062"/>
+					</linearGradient>
+					<path style="fill:url(#il_SVGID_4_);" d="M1054.834,459.878c-7.586,0-14.645,2.817-18.707,9.224c-85.366,134.713-170.743,274.225-256.109,403.066c83.899,0,167.796,0,251.691,0c65.659-128.841,131.321-272.406,196.98-412.29C1170.734,459.878,1112.783,459.878,1054.834,459.878z"/>
+					<path style="fill:#7D97F4;" d="M1283.401,875.274c-83.897,0-167.794,0-251.691,0c65.659-138.147,131.321-276.295,196.98-414.442c62.01,0,124.02,0,186.032,0C1370.95,598.979,1327.176,737.127,1283.401,875.274z"/>
+					<g>
+						<linearGradient id="il_SVGID_5_" gradientUnits="userSpaceOnUse" x1="1519.8185" y1="-986.6574" x2="1449.855" y2="502.5511">
+							<stop  offset="0" style="stop-color:#FF928E"/>
+							<stop  offset="1" style="stop-color:#FE7062"/>
+						</linearGradient>
+						<path style="fill:url(#il_SVGID_5_);" d="M1535.094,875.274c-83.897,0-167.794,0-251.693,0c43.775-138.147,87.549-276.295,131.321-414.442c62.012,0,124.022,0,186.037,0C1578.869,598.979,1556.981,737.127,1535.094,875.274z"/>
+					</g>
+					<path style="fill:#7D97F4;" d="M1786.788,875.274c-83.897,0-167.794,0-251.693,0c21.887-138.147,43.775-276.295,65.664-414.442c62.01,0,124.02,0,186.03,0C1786.788,598.979,1786.788,737.127,1786.788,875.274z"/>
+					<g>
+						<linearGradient id="il_SVGID_6_" gradientUnits="userSpaceOnUse" x1="1989.3372" y1="-964.6007" x2="1919.3735" y2="524.6082">
+							<stop  offset="0" style="stop-color:#FF928E"/>
+							<stop  offset="1" style="stop-color:#FE7062"/>
+						</linearGradient>
+						<path style="fill:url(#il_SVGID_6_);" d="M2038.481,875.274c-83.897,0-167.794,0-251.693,0c0-138.147,0-276.295,0-414.442c62.012,0,124.018,0,186.034,0C1994.707,598.979,2016.594,737.127,2038.481,875.274z"/>
+					</g>
+					<path style="fill:#7D97F4;" d="M2290.175,875.274c-83.901,0-167.794,0-251.693,0c-21.885-138.147-43.772-276.295-65.659-414.442c62.01,0,124.02,0,186.032,0C2202.626,598.979,2246.4,737.127,2290.175,875.274z"/>
+					<g>
+						<linearGradient id="il_SVGID_7_" gradientUnits="userSpaceOnUse" x1="2426.0986" y1="-944.0804" x2="2356.135" y2="545.1255">
+							<stop  offset="0" style="stop-color:#FF928E"/>
+							<stop  offset="1" style="stop-color:#FE7062"/>
+						</linearGradient>
+						<path style="fill:url(#il_SVGID_7_);" d="M2541.866,875.274c-83.897,0-167.794,0-251.691,0c-43.774-138.147-87.549-276.295-131.321-414.442c62.014,0,124.02,0,186.036,0C2410.545,598.979,2476.202,737.127,2541.866,875.274z"/>
+					</g>
+					<path style="fill:#7D97F4;" d="M2537.448,469.103c-4.061-6.408-11.121-9.225-18.706-9.225c-57.951,0-115.902,0-173.852,0c65.655,139.884,131.312,283.45,196.976,412.29c83.892,0,167.789,0,251.691,0C2708.191,743.327,2622.814,603.816,2537.448,469.103z"/>
+				</g>
+				<g>
+					<linearGradient id="il_SVGID_8_" gradientUnits="userSpaceOnUse" x1="862.4979" y1="1119.8276" x2="1125.9858" y2="-156.0058">
+						<stop  offset="0" style="stop-color:#FF928E"/>
+						<stop  offset="1" style="stop-color:#FE7062"/>
+					</linearGradient>
+					<path style="fill:url(#il_SVGID_8_);" d="M776.394,872.168v71.792c0,59.794,60.749,104.904,130.068,104.904h2.699c69.319,0,124.914-45.11,124.914-104.904v-71.792H776.394z"/>
+					<path style="fill:#91B3FA;" d="M1034.075,872.168v71.792c0,59.794,53.578,104.904,121.727,104.904h2.653c68.149,0,122.257-45.11,122.257-104.904v-71.792H1034.075z"/>
+				</g>
+				<g>
+					<linearGradient id="il_SVGID_9_" gradientUnits="userSpaceOnUse" x1="1344.4592" y1="1219.3633" x2="1607.9471" y2="-56.4697">
+						<stop  offset="0" style="stop-color:#FF928E"/>
+						<stop  offset="1" style="stop-color:#FE7062"/>
+					</linearGradient>
+					<path style="fill:url(#il_SVGID_9_);" d="M1280.713,872.168v71.792c0,59.794,59.348,104.904,128.667,104.904h2.699c69.319,0,122.634-45.11,122.634-104.904v-71.792H1280.713z"/>
+					<path style="fill:#91B3FA;" d="M1534.713,872.168v71.792c0,59.794,55.859,104.904,124.008,104.904h2.653c68.149,0,123.658-45.11,123.658-104.904v-71.792H1534.713z"/>
+				</g>
+				<g>
+					<linearGradient id="il_SVGID_10_" gradientUnits="userSpaceOnUse" x1="1826.4235" y1="1318.8997" x2="2089.9114" y2="43.0667">
+						<stop  offset="0" style="stop-color:#FF928E"/>
+						<stop  offset="1" style="stop-color:#FE7062"/>
+					</linearGradient>
+					<path style="fill:url(#il_SVGID_10_);" d="M1785.032,872.168v71.792c0,59.794,57.947,104.904,127.266,104.904h2.699c69.319,0,120.354-45.11,120.354-104.904v-71.792H1785.032z"/>
+					<path style="fill:#91B3FA;" d="M2035.351,872.168v71.792c0,59.794,58.139,104.904,126.288,104.904h2.654c68.149,0,125.059-45.11,125.059-104.904v-71.792H2035.351z"/>
+				</g>
+				<g>
+					<linearGradient id="il_SVGID_11_" gradientUnits="userSpaceOnUse" x1="2311.7922" y1="1419.1384" x2="2575.28" y2="143.3056">
+						<stop  offset="0" style="stop-color:#FF928E"/>
+						<stop  offset="1" style="stop-color:#FE7062"/>
+					</linearGradient>
+					<path style="fill:url(#il_SVGID_11_);" d="M2289.352,872.168v71.792c0,59.794,56.546,104.904,125.865,104.904h2.699c69.319,0,125.436-45.11,125.436-104.904v-71.792H2289.352z"/>
+					<path style="fill:#91B3FA;" d="M2543.352,872.168v71.792c0,59.794,53.057,104.904,121.206,104.904h2.654c68.149,0,122.778-45.11,122.778-104.904v-71.792H2543.352z"/>
+				</g>
+			</g>
+			<g>
+				<path style="fill:#91B3FA;" d="M2211.07,2451.584c0,31.373-31.179,56.805-69.64,56.805h-715.809c-38.461,0-69.64-25.433-69.64-56.805v-150.737c0-31.373,31.179-56.805,69.64-56.805h715.809c38.461,0,69.64,25.433,69.64,56.805V2451.584z"/>
+			</g>
+			<g>
+				<linearGradient id="il_SVGID_12_" gradientUnits="userSpaceOnUse" x1="1232.905" y1="1558.358" x2="2187.6157" y2="1558.358">
+					<stop  offset="0" style="stop-color:#DAE3FE"/>
+					<stop  offset="1" style="stop-color:#E9EFFD"/>
+				</linearGradient>
+				<path style="fill:url(#il_SVGID_12_);" d="M2182.267,1336.755c-5.042-6.199-12.95-8.771-21.339-8.595l-763.731,16.021l-19.292-61.283c-2.682-8.538-10.71-14.005-19.79-13.766l-104.859,2.755c-11.244,0.295-20.35,8.114-20.35,19.336c0,11.222,9.106,18.586,20.35,18.321l89.609-2.117l162.144,518.122c2.73,8.72,10.917,14.719,20.198,14.843l536.06,7.197c12.581,0.169,22.794-7.726,22.794-19.622c0-11.893-10.213-20.038-22.794-20.174l-520.418-5.61l-41.768-134.526l571.896,0.867c11.71,0.018,22.031-7.646,25.313-18.272l90.261-291.845C2188.901,1350.795,2187.315,1342.957,2182.267,1336.755z"/>
+				<linearGradient id="il_SVGID_13_" gradientUnits="userSpaceOnUse" x1="1523.8362" y1="1950.5486" x2="1684.2974" y2="1950.5486">
+					<stop  offset="0" style="stop-color:#DAE3FE"/>
+					<stop  offset="1" style="stop-color:#E9EFFD"/>
+				</linearGradient>
+				<path style="fill:url(#il_SVGID_13_);" d="M1603.625,1872.351c-44.106-0.686-79.789,33.643-79.789,76.521s35.683,78.698,79.789,79.856c44.372,1.166,80.672-33.149,80.672-76.501C1684.297,1908.874,1647.998,1873.04,1603.625,1872.351z M1603.625,1987.027c-20.615-0.483-37.345-17.201-37.345-37.268c0-20.068,16.73-36.087,37.345-35.708c20.673,0.38,37.536,17.101,37.536,37.273C1641.162,1971.495,1624.298,1987.511,1603.625,1987.027z"/>
+				<linearGradient id="il_SVGID_14_" gradientUnits="userSpaceOnUse" x1="1877.2302" y1="1958.0208" x2="2045.6558" y2="1958.0208">
+					<stop  offset="0" style="stop-color:#DAE3FE"/>
+					<stop  offset="1" style="stop-color:#E9EFFD"/>
+				</linearGradient>
+				<path style="fill:url(#il_SVGID_14_);" d="M1960.969,1877.906c-46.291-0.72-83.739,34.431-83.739,78.355c0,43.923,37.448,80.639,83.739,81.855c46.578,1.224,84.687-33.913,84.687-78.334C2045.656,1915.36,2007.547,1878.63,1960.969,1877.906z M1960.969,1995.393c-21.636-0.506-39.195-17.643-39.195-38.201c0-20.559,17.559-36.961,39.195-36.563c21.699,0.399,39.402,17.539,39.402,38.206C2000.371,1979.501,1982.669,1995.901,1960.969,1995.393z"/>
+			</g>
+		</g>
+		<g>
+			<linearGradient id="il_SVGID_15_" gradientUnits="userSpaceOnUse" x1="3257.7302" y1="1439.4493" x2="2423.2986" y2="3123.2996">
+				<stop  offset="0" style="stop-color:#FF928E"/>
+				<stop  offset="1" style="stop-color:#FE7062"/>
+			</linearGradient>
+			<path style="fill:url(#il_SVGID_15_);" d="M2294.306,3044.086l483.892-927.036h-99.14c-18.282,0-28.336-21.255-16.74-35.388l515.732-628.573c22.352-27.243,66.506-9.964,64.431,25.214l-36.253,614.667c-2.076,35.188-33.276,61.413-68.296,57.405l-69.121-7.911l-480.119,1039.764c-12.498,27.068-39.592,44.399-69.406,44.399h-166.403L2294.306,3044.086z"/>
+			<linearGradient id="il_SVGID_16_" gradientUnits="userSpaceOnUse" x1="2602.5745" y1="3320.7837" x2="1982.9948" y2="2461.3677">
+				<stop  offset="0" style="stop-color:#FF928E"/>
+				<stop  offset="1" style="stop-color:#FE7062"/>
+			</linearGradient>
+			<path style="fill:url(#il_SVGID_16_);" d="M1894.232,2393.914l341.618,758.862c20.234,44.948,64.946,73.853,114.238,73.853h176.111c23.366,0,44.895-12.676,56.229-33.109l6.263-11.291l0,0c-18.922,0-36.247-10.608-44.848-27.462l-455.166-891.83L1894.232,2393.914z"/>
+			<linearGradient id="il_SVGID_17_" gradientUnits="userSpaceOnUse" x1="2153.3184" y1="1870.2467" x2="1338.5719" y2="3290.8323">
+				<stop  offset="0" style="stop-color:#FF928E"/>
+				<stop  offset="1" style="stop-color:#FE7062"/>
+			</linearGradient>
+			<path style="fill:url(#il_SVGID_17_);" d="M2134.653,2353.018L2134.653,2353.018c-34.256-27.051-84.308-19.098-108.493,17.238l-502.274,754.629c-40.228,60.44-108.02,96.754-180.623,96.754h-70.676l-57.518-165.693c0,0,466.942-715.97,587.293-824.275c0,0,119.853-108.02,238.026-26.349c31.221,21.577,54.924,52.372,69.403,87.453L2134.653,2353.018z"/>
+			<linearGradient id="il_SVGID_18_" gradientUnits="userSpaceOnUse" x1="1325.7762" y1="3102.4771" x2="455.3163" y2="2204.1628">
+				<stop  offset="0" style="stop-color:#FF928E"/>
+				<stop  offset="1" style="stop-color:#FE7062"/>
+			</linearGradient>
+			<path style="fill:url(#il_SVGID_18_);" d="M668.776,2610.322c0,0,84.077-105.092,247.001-121.44c0,0,77.381,26.364,231.542,302.601c154.162,276.237,256.489,402.207,376.566,333.403l-9.941,16.506c-32.762,54.397-91.623,87.658-155.124,87.658h-66.411c-73.118,0-136.614-112.623-179.313-171.979C993.113,2890.278,742.482,2636.215,668.776,2610.322z"/>
+			<path style="opacity:0.72;fill:#FFFFFF;" d="M3184.292,1672.863c-0.188,0-0.377-0.01-0.569-0.033c-2.742-0.309-4.714-2.785-4.401-5.527l3.4-30.012c0.312-2.742,2.768-4.727,5.527-4.401c2.742,0.309,4.714,2.785,4.401,5.527l-3.4,30.012C3188.96,1670.98,3186.8,1672.863,3184.292,1672.863z"/>
+			<path style="opacity:0.72;fill:#FFFFFF;" d="M2753.77,2051.722c-1.064,0-2.137-0.338-3.045-1.036c-2.186-1.683-2.596-4.821-0.911-7.009l425.867-553.356c5.007-6.505,13.478-8.803,21.093-5.729c7.609,3.079,12.098,10.626,11.175,18.782l-7.515,66.329c-0.309,2.742-2.811,4.717-5.527,4.401c-2.742-0.311-4.714-2.785-4.402-5.527l7.515-66.328c0.508-4.493-2.248-7.281-4.993-8.392c-2.752-1.114-6.672-1.025-9.428,2.56l-425.867,553.356C2756.75,2051.052,2755.266,2051.722,2753.77,2051.722z"/>
+			<path style="opacity:0.72;fill:#FFFFFF;" d="M1787.646,2631.825c-0.963,0-1.936-0.276-2.791-0.854c-2.287-1.544-2.892-4.65-1.347-6.938l220.248-326.471c7.941-11.775,21.126-18.171,35.303-17.087c14.161,1.073,26.246,9.379,32.32,22.217c1.181,2.493,0.117,5.473-2.378,6.654c-2.492,1.183-5.472,0.115-6.653-2.38c-4.522-9.55-13.51-15.729-24.044-16.528c-10.573-0.815-20.355,3.953-26.266,12.712l-220.248,326.471C1790.828,2631.054,1789.25,2631.825,1787.646,2631.825z"/>
+			<path style="opacity:0.72;fill:#FFFFFF;" d="M1730.41,2716.663c-0.963,0-1.936-0.277-2.791-0.854c-2.287-1.544-2.892-4.649-1.347-6.937l14.122-20.934c1.542-2.29,4.655-2.887,6.936-1.348c2.287,1.544,2.892,4.649,1.347,6.937l-14.122,20.934C1733.592,2715.892,1732.014,2716.663,1730.41,2716.663z"/>
+		</g>
+	</g>
+</g>
+                </svg>
               </div>
-              <div style="background:#fff;border-radius:16px;padding:20px 16px">
-                <div style="font-size:13px;color:#888;font-weight:500;margin-bottom:8px">Bestellingen</div>
-                <div style="font-size:28px;font-weight:700;color:#111;line-height:1.1">47</div>
-                <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px">
-                  <div style="font-size:12px;color:#888">43 delivery</div>
-                  <div style="font-size:12px;color:#888">4 afhaal</div>
-                </div>
+              <div style="font-size:15px;font-weight:500;color:#888;margin-bottom:10px">Omzet</div>
+              <div style="font-size:40px;font-weight:700;color:#111;line-height:1">€688.00</div>
+              <div style="font-size:13px;color:#aaa;margin-top:6px;margin-bottom:16px">incl. kosten</div>
+              <div style="font-size:26px;font-weight:600;color:#555;line-height:1">€564.00</div>
+              <div style="font-size:13px;color:#aaa;margin-top:6px">excl. kosten</div>
+            </div>
+
+            <!-- Card 2: Bestellingen -->
+            <div style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
+              <!-- Illustratie -->
+              <div style="margin-bottom:20px">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                  <rect width="56" height="56" rx="16" fill="#f0f7ff"/>
+                  <rect x="16" y="22" width="24" height="17" rx="2" stroke="#0172af" stroke-width="1.8" fill="none"/>
+                  <path d="M16 27h24" stroke="#0172af" stroke-width="1.8"/>
+                  <circle cx="28" cy="19" r="2.5" stroke="#0172af" stroke-width="1.8" fill="none"/>
+                  <path d="M24 33h8" stroke="#0172af" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div style="font-size:15px;font-weight:500;color:#888;margin-bottom:10px">Bestellingen</div>
+              <div style="font-size:40px;font-weight:700;color:#111;line-height:1">47</div>
+              <div style="font-size:13px;color:#aaa;margin-top:6px;margin-bottom:20px">afgerond vandaag</div>
+              <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+                <div style="font-size:14px;color:#888">43 bezorging · €560.00</div>
+                <div style="font-size:14px;color:#888">4 afhaal · €128.00</div>
               </div>
             </div>
-            <!-- Avg order value -->
-            <div style="background:#fff;border-radius:16px;padding:20px">
-              <div style="font-size:13px;color:#888;font-weight:500;margin-bottom:6px">Gem. bestelwaarde</div>
-              <div style="font-size:28px;font-weight:700;color:#111">€14.64</div>
-            </div>
-            <!-- Breakdown -->
-            <div style="background:#fff;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:0">
-              <div style="font-size:15px;font-weight:600;color:#111;margin-bottom:14px">Uitsplitsing</div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0">
-                <span style="font-size:14px;color:#555">Delivery</span>
-                <div style="text-align:right"><div style="font-size:15px;font-weight:600;color:#111">€560.00</div><div style="font-size:12px;color:#aaa">43 bestellingen</div></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0">
-                <span style="font-size:14px;color:#555">Afhaal</span>
-                <div style="text-align:right"><div style="font-size:15px;font-weight:600;color:#111">€128.00</div><div style="font-size:12px;color:#aaa">4 bestellingen</div></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0">
-                <span style="font-size:14px;color:#555">Geannuleerd</span>
-                <div style="text-align:right"><div style="font-size:15px;font-weight:600;color:#e53935">3</div><div style="font-size:12px;color:#aaa">bestellingen</div></div>
-              </div>
-            </div>
-            <!-- Payment methods -->
-            <div style="background:#fff;border-radius:16px;padding:20px">
-              <div style="font-size:15px;font-weight:600;color:#111;margin-bottom:14px">Betaalmethoden</div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0">
-                <span style="font-size:14px;color:#555">Kaart</span>
-                <span style="font-size:15px;font-weight:600;color:#111">€520.00</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
-                <span style="font-size:14px;color:#555">Contant</span>
-                <span style="font-size:15px;font-weight:600;color:#111">€168.00</span>
-              </div>
-            </div>
+
           </div>
 
           <!-- DETAILS PANE -->
-          <div id="dash-details" class="scroll" style="display:none;padding:20px 16px 120px;display:none;flex-direction:column;gap:0">
-            <div style="font-size:15px;font-weight:600;color:#111;margin-bottom:14px">23 bestellingen vandaag</div>
-            <div style="background:#fff;border-radius:16px;overflow:hidden">
-              <!-- header row -->
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:12px 16px;border-bottom:1.5px solid #f0f0f0">
-                <span style="font-size:12px;font-weight:600;color:#aaa">Bestelling</span>
-                <span style="font-size:12px;font-weight:600;color:#aaa">Type</span>
-                <span style="font-size:12px;font-weight:600;color:#aaa">Betaling</span>
-                <span style="font-size:12px;font-weight:600;color:#aaa;text-align:right">Bedrag</span>
-              </div>
-              <!-- rows -->
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A01</span>
-                <span style="font-size:13px;color:#555">Delivery</span>
-                <span style="font-size:13px;color:#555">Kaart</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€23.50</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A02</span>
-                <span style="font-size:13px;color:#555">Delivery</span>
-                <span style="font-size:13px;color:#555">Kaart</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€18.00</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A03</span>
-                <span style="font-size:13px;color:#555">Afhaal</span>
-                <span style="font-size:13px;color:#555">Contant</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€31.00</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A04</span>
-                <span style="font-size:13px;color:#555">Delivery</span>
-                <span style="font-size:13px;color:#555">Kaart</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€44.00</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A05</span>
-                <span style="font-size:13px;color:#555">Afhaal</span>
-                <span style="font-size:13px;color:#555">Kaart</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€12.50</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;border-bottom:1px solid #f5f5f5;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A06</span>
-                <span style="font-size:13px;color:#555">Delivery</span>
-                <span style="font-size:13px;color:#555">Contant</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€29.00</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 60px 70px;gap:8px;padding:14px 16px;align-items:center">
-                <span style="font-size:13px;font-weight:600;color:#111">#250714A07</span>
-                <span style="font-size:13px;color:#555">Delivery</span>
-                <span style="font-size:13px;color:#555">Kaart</span>
-                <span style="font-size:13px;font-weight:600;color:#111;text-align:right">€56.00</span>
-              </div>
-            </div>
+          <div id="dash-details" class="scroll" style="display:none;flex-direction:column;gap:0;padding:24px;background:#fafafa;padding-bottom:120px">
+            <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">7 afgeronde bestellingen</div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price">Bezorging  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price">Afhaal  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€31.00</div></div><div class="mcol"><div class="dname">#250715A03</div><div class="oc-price">Bezorging  ·  Contant</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€44.00</div></div><div class="mcol"><div class="dname">#250715A04</div><div class="oc-price">Bezorging  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€12.50</div></div><div class="mcol"><div class="dname">#250715A05</div><div class="oc-price">Afhaal  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€29.00</div></div><div class="mcol"><div class="dname">#250715A06</div><div class="oc-price">Bezorging  ·  Contant</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€56.00</div></div><div class="mcol"><div class="dname">#250715A07</div><div class="oc-price">Bezorging  ·  Card</div></div></div></div>
           </div>
 
           <!-- CANCELLED PANE -->
-          <div id="dash-cancelled" class="scroll" style="display:none;padding:20px 16px 120px;flex-direction:column;gap:14px">
-            <!-- Geannuleerd door klant -->
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:10px">Geannuleerd door klant</div>
-              <div style="background:#fff;border-radius:16px;overflow:hidden">
-                <div style="display:grid;grid-template-columns:1fr auto;gap:12px;padding:16px;align-items:center;border-bottom:1px solid #f5f5f5">
-                  <div>
-                    <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:2px">#250714A08</div>
-                    <div style="font-size:13px;color:#888">Tochtstraat 40 · €23.50 · Kaart</div>
-                  </div>
-                  <span style="font-size:12px;font-weight:600;color:#888;background:#f0f0f0;border-radius:100px;padding:5px 12px;white-space:nowrap">Geen terugbetaling</span>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr auto;gap:12px;padding:16px;align-items:center">
-                  <div>
-                    <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:2px">#250714A09</div>
-                    <div style="font-size:13px;color:#888">Zwaanshals 299 · €18.00 · Kaart</div>
-                  </div>
-                  <span style="font-size:12px;font-weight:600;color:#888;background:#f0f0f0;border-radius:100px;padding:5px 12px;white-space:nowrap">Geen terugbetaling</span>
-                </div>
-              </div>
-            </div>
-            <!-- Geannuleerd door jou -->
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:10px">Geannuleerd door jou</div>
-              <div style="background:#fff;border-radius:16px;overflow:hidden">
-                <div style="display:grid;grid-template-columns:1fr auto;gap:12px;padding:16px;align-items:center">
-                  <div>
-                    <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:2px">#250714A10</div>
-                    <div style="font-size:13px;color:#888">Lusthofstraat 27A · €23.50 · Kaart</div>
-                  </div>
-                  <span style="font-size:12px;font-weight:600;color:#0172af;background:#e8f3fa;border-radius:100px;padding:5px 12px;white-space:nowrap;cursor:pointer">Terugbetalen</span>
-                </div>
-              </div>
-            </div>
-            <!-- Overige annuleringen -->
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:10px">Overige annuleringen</div>
-              <div style="background:#fff;border-radius:16px;padding:16px">
-                <div style="font-size:13px;color:#888;text-align:center">Geen overige annuleringen</div>
-              </div>
-            </div>
+          <div id="dash-cancelled" class="scroll" style="display:none;flex-direction:column;gap:0;padding:24px;background:#fafafa;padding-bottom:120px">
+            <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">3 geannuleerde bestellingen</div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price">Bezorging  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price">Afhaal  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A10</div><div class="oc-price">Bezorging  ·  Contant</div></div></div></div>
           </div>
         </div><!-- /content-surface -->
         <div class="navbar"><div class="navbar-pill">
@@ -1595,7 +1643,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Bestelling aanmaken</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Bestelling aanmaken</span>
           </div>
         </div>
         <!-- Content: Klant / Producten / Betaling / Notities-Tags-Markten -->
@@ -1697,7 +1745,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Menu</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Menu</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:24px 24px 0 0;background:#fff">
@@ -1780,7 +1828,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;color:#111;white-space:nowrap">Instellingen</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Instellingen</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
@@ -4007,6 +4055,14 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 
