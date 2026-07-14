@@ -2353,7 +2353,7 @@
     if(cityAddr) cityEl.textContent=cityAddr;
     if(isDelivery&&openMap) openMap.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
     var ptEl=document.getElementById('d-page-title'); if(ptEl) ptEl.textContent=oid;
-    document.getElementById('d-total').textContent=price;
+    var dTotal=document.getElementById('d-total'); if(dTotal) dTotal.textContent=price;
     var itemsCountEl=document.getElementById('d-items-count'); if(itemsCountEl) itemsCountEl.textContent=price;
     document.getElementById('d-detail-name').textContent=name;
     document.getElementById('d-detail-addr').textContent=cleanAddr;
