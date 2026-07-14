@@ -1044,7 +1044,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div class="burger-btn" id="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
                 <div class="burger-icon">
                   <span></span>
                   <span></span>
@@ -1376,22 +1376,36 @@
 
       <!-- ===== ARCHIVE PAGE ===== -->
       <div class="page" id="p-archive">
-        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <h1 onclick="toggleArchiveDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#fff"><span id="archive-header-title" data-i18n="dd_orders_archive">Archive</span> <svg id="archive-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#fff" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon" onclick="openFilterOverlay()" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.907227 0.90625H16.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/>
-<path d="M3.90723 6.34766H13.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/>
-<path d="M6.90723 11.7891H10.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/>
-</svg><span class="filter-badge" id="archive-filter-badge">0</span></div>
-          </div>
-          <div id="archive-dropdown-backdrop" onclick="toggleArchiveDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:190"></div>
-          <div id="archive-dropdown" style="display:none;position:absolute;top:calc(100% - 6px);left:16px;background:#fff;border-radius:24px;z-index:200;padding:8px;overflow:hidden;width:max-content">
-            <div class="mdd-item" onclick="resetOrdersHeader()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="dd_orders_live">Live orders</span></div>
-            <div class="mdd-item mdd-item-active"><i class="ti ti-archive"></i> <span data-i18n="dd_orders_archive">Archive</span></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+                <div class="burger-icon"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 392 392" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:10px 16px;cursor:pointer;flex-shrink:0">
+              <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;display:inline-block"></span>
+              <span style="font-size:16px;font-weight:600;color:#111">Open</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0">
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <div onclick="toggleArchiveDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+            <span id="archive-header-title" style="font-size:22px;font-weight:700;color:#111" data-i18n="dd_orders_archive">Archief</span>
+            <svg id="archive-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div onclick="openFilterOverlay()" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <svg width="22" height="16" viewBox="0 0 18 13" fill="none"><path d="M0.907227 0.90625H16.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/><path d="M3.90723 6.34766H13.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/><path d="M6.90723 11.7891H10.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/></svg>
+          </div>
+          <div id="archive-dropdown-backdrop" onclick="toggleArchiveDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:190"></div>
+          <div id="archive-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:16px;background:#fff;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:200;padding:8px;overflow:hidden;width:max-content">
+            <div class="mdd-item" onclick="resetOrdersHeader()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="flex-shrink:0"><path d="M14.0934 9.59766C13.34 9.59766 12.7293 10.3183 12.7293 11.2073C12.7293 12.0962 12.1186 12.8169 11.3652 12.8169H8.63709C7.88375 12.8169 7.27302 12.0962 7.27302 11.2073C7.27302 10.3183 6.66229 9.59766 5.90894 9.59766H3.3172C2.56386 9.59766 1.95312 10.3183 1.95312 11.2073V14.4265C1.95312 15.3154 2.56386 16.0361 3.3172 16.0361H16.6851C17.4385 16.0361 18.0492 15.3154 18.0492 14.4265V11.2073C18.0492 10.3183 17.4385 9.59766 16.6851 9.59766H14.0934Z" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.14062 10.4106L4.86877 4.77701C5.10374 4.29183 5.54648 3.96484 6.05395 3.96484H7.28162" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.8721 10.4106L15.1439 4.77701C14.909 4.29183 14.4662 3.96484 13.9588 3.96484H6.76953" stroke="#111" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="dd_orders_live">Live orders</span></div>
+            <div class="mdd-item mdd-item-active"><i class="ti ti-archive"></i> <span data-i18n="dd_orders_archive">Archief</span></div>
+          </div>
+        </div>
+        <div class="content-surface" style="border-radius:0">
         <div class="tabs">
           <div class="tab active" onclick="switchTab(this,'arch-today')" data-i18n="tab_today">Today</div>
           <div class="tab" onclick="switchTab(this,'arch-yesterday')" data-i18n="tab_yesterday">Yesterday</div>
@@ -1417,13 +1431,28 @@
 
       <!-- ===== DASHBOARD PAGE ===== -->
       <div class="page" id="p-dashboard">
-        <div class="page-header" style="border-radius:0 0 28px 28px;padding:32px 24px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <h1 data-i18n="hdr_dashboard" style="font-size:22px;font-weight:700;color:#fff">Dashboard</h1>
-            <div class="tb-icon" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center"><i class="ti ti-refresh"></i></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+                <div class="burger-icon"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 392 392" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:10px 16px;cursor:pointer;flex-shrink:0">
+              <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;display:inline-block"></span>
+              <span style="font-size:16px;font-weight:600;color:#111">Open</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0;background:#fff">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <span style="font-size:22px;font-weight:700;color:#111" data-i18n="hdr_dashboard">Dashboard</span>
+          <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <i class="ti ti-refresh" style="font-size:22px;color:#111"></i>
+          </div>
+        </div>
+        <div class="content-surface" style="border-radius:0;background:#fff">
           <!-- Tabs -->
           <div class="tabs orders-tabs" id="dash-tabs">
             <div class="tab active" onclick="switchDashTab(this)">Orders</div>
@@ -1504,16 +1533,31 @@
 
       <!-- ===== CREATE ORDER PAGE ===== -->
       <div class="page" id="p-create-order">
-        <div class="page-header" style="position:relative;background:#fff;border-radius:28px 28px 0 0;border-bottom:none;padding:32px 24px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <div class="tb-icon" onclick="coCloseOrConfirm()" style="background:#f0f0f0;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L15 15M15 1L1 15" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <h1 onclick="toggleCoDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#111;flex:1;justify-content:center"><span id="co-header-title" data-i18n="co_new_delivery">New delivery</span> <svg id="co-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div id="co-save-btn" onclick="saveOrder()" class="tab active" style="opacity:0.25;pointer-events:none;background:#111;color:#fff;height:56px;padding:0 20px;font-size:16px;border-radius:999px">Save</div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+                <div class="burger-icon"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 392 392" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:10px 16px;cursor:pointer;flex-shrink:0">
+              <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;display:inline-block"></span>
+              <span style="font-size:16px;font-weight:600;color:#111">Open</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
+        </div>
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <div onclick="toggleCoDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+            <span id="co-header-title" style="font-size:22px;font-weight:700;color:#111" data-i18n="co_new_delivery">Nieuwe bezorging</span>
+            <svg id="co-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div id="co-save-btn" onclick="saveOrder()" class="tab active" style="opacity:0.25;pointer-events:none;background:#111;color:#fff;height:44px;padding:0 20px;font-size:15px;border-radius:999px">Opslaan</div>
           <div id="co-dropdown-backdrop" onclick="toggleCoDropdown()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:190"></div>
-          <div id="co-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:24px;right:24px;background:#fff;border-radius:20px;z-index:200;padding:8px;overflow:hidden">
-            <div class="mdd-item mdd-item-active" data-co-type="delivery" onclick="selectCoDropdown(this,'delivery')"><i class="ti ti-bike" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_delivery" style="font-size:18px">New delivery</span></div>
-            <div class="mdd-item" data-co-type="takeaway" onclick="selectCoDropdown(this,'takeaway')"><i class="ti ti-shopping-bag" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_takeaway" style="font-size:18px">New takeaway</span></div>
+          <div id="co-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:24px;right:24px;background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:200;padding:8px;overflow:hidden">
+            <div class="mdd-item mdd-item-active" data-co-type="delivery" onclick="selectCoDropdown(this,'delivery')"><i class="ti ti-bike" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_delivery" style="font-size:18px">Nieuwe bezorging</span></div>
+            <div class="mdd-item" data-co-type="takeaway" onclick="selectCoDropdown(this,'takeaway')"><i class="ti ti-shopping-bag" style="font-size:20px;color:#111;width:24px;text-align:center"></i> <span data-i18n="co_new_takeaway" style="font-size:18px">Nieuwe afhaling</span></div>
           </div>
         </div>
         <!-- Content: Klant / Producten / Betaling / Notities-Tags-Markten -->
@@ -1608,19 +1652,36 @@
 
       <!-- ===== MENU PAGE ===== -->
       <div class="page" id="p-menu">
-        <div class="page-header" style="position:relative;border-radius:0 0 28px 28px;padding:32px 24px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <h1 onclick="toggleMenuDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;font-size:22px;font-weight:700;color:#fff"><span data-i18n="hdr_products">Products</span> <svg id="menu-dd-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;flex-shrink:0"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#fff" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg></h1>
-            <div class="tb-icon" id="menu-filter-btn" onclick="toggleMenuFilter()" style="background:rgba(255,255,255,0.12);border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center"><svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.907227 0.90625H16.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M3.90723 6.34766H13.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/><path d="M6.90723 11.7891H10.9072" stroke="white" stroke-width="1.81395" stroke-linecap="round"/></svg><span class="filter-badge" id="menu-filter-badge"></span></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+                <div class="burger-icon"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 392 392" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:10px 16px;cursor:pointer;flex-shrink:0">
+              <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;display:inline-block"></span>
+              <span style="font-size:16px;font-weight:600;color:#111">Open</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
-          <!-- Page dropdown -->
-          <div id="menu-dropdown" style="display:none;position:absolute;top:100%;left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
+        </div>
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <div onclick="toggleMenuDropdown()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none">
+            <span style="font-size:22px;font-weight:700;color:#111" data-i18n="hdr_products">Menu</span>
+            <svg id="menu-dd-arrow" width="11" height="6" viewBox="0 0 14 8" fill="none" style="transition:transform 0.2s ease;flex-shrink:0;margin-top:3px"><path d="M0.699219 0.699219L6.69922 6.69922L12.6992 0.699219" stroke="#111" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div id="menu-filter-btn" onclick="toggleMenuFilter()" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+            <svg width="22" height="16" viewBox="0 0 18 13" fill="none"><path d="M0.907227 0.90625H16.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/><path d="M3.90723 6.34766H13.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/><path d="M6.90723 11.7891H10.9072" stroke="#111" stroke-width="1.81395" stroke-linecap="round"/></svg>
+            <span class="filter-badge" id="menu-filter-badge"></span>
+          </div>
+          <div id="menu-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:200;min-width:220px;padding:8px 0;overflow:hidden">
             <div class="mdd-item mdd-item-active"><i class="ti ti-tag"></i> <span data-i18n="dd_products">Products</span></div>
             <div class="mdd-item"><i class="ti ti-list"></i> <span data-i18n="dd_choices">Choices menu</span></div>
             <div class="mdd-item"><i class="ti ti-folder"></i> <span data-i18n="dd_categories">Categories</span></div>
           </div>
-          <!-- Filter dropdown -->
-          <div id="menu-filter-panel" style="display:none;position:absolute;top:100%;right:12px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:201;min-width:200px;overflow:hidden">
+          <div id="menu-filter-panel" style="display:none;position:absolute;top:calc(100% + 4px);right:12px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:201;min-width:200px;overflow:hidden">
             <div style="padding:14px 16px 10px;font-size:13px;font-weight:700;color:#888;letter-spacing:0.04em;text-transform:uppercase">Status</div>
             <div class="filter-option-row" onclick="toggleMenuFilterOpt('active')" style="border-top:none;padding:10px 16px">
               <div class="filter-checkbox" id="mf-active"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1705,12 +1766,25 @@
 
       <!-- ===== SETTINGS PAGE ===== -->
       <div class="page" id="p-settings">
-        <div class="page-header" style="border-radius:0 0 28px 28px">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <h1 data-i18n="hdr_settings" style="font-size:22px;font-weight:700;color:#fff">Settings</h1>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="burger-btn" style="width:56px;height:56px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;" onclick="toggleSideNav()">
+                <div class="burger-icon"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 392 392" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:10px 16px;cursor:pointer;flex-shrink:0">
+              <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;display:inline-block"></span>
+              <span style="font-size:16px;font-weight:600;color:#111">Open</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
           </div>
         </div>
-        <div class="content-surface" style="border-radius:24px 24px 0 0">
+        <div style="padding:24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <span style="font-size:22px;font-weight:700;color:#111" data-i18n="hdr_settings">Instellingen</span>
+        </div>
+        <div class="content-surface" style="border-radius:0">
         <div class="scroll" style="background:#f7f7f7">
 
           <!-- Testing (temporary) -->
@@ -1849,6 +1923,15 @@
             </div>
           </div>
 
+          <!-- Account / logout -->
+          <div style="padding:20px 20px 6px"><span style="font-size:15px;font-weight:700;color:#111">Account</span></div>
+          <div style="margin:0 16px">
+            <button onclick="doLogout()" style="width:100%;height:52px;background:#fff;color:#e53935;border:2px solid #e53935;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="16 17 21 12 16 7" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="21" y1="12" x2="9" y2="12" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Uitloggen
+            </button>
+          </div>
+
           <div style="height:120px"></div>
 
         </div>
@@ -1861,6 +1944,25 @@
         </div></div>
       </div>
 
+    </div>
+
+    <!-- Login page (outside screen-content, covers full screen) -->
+    <div id="p-login" style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px">
+      <svg width="52" height="52" viewBox="0 0 392 392" fill="none" style="margin-bottom:16px"><path d="M195.713 114.687C150.969 114.687 114.695 150.96 114.695 195.704C114.695 240.449 150.968 276.721 195.712 276.722C220.359 276.722 242.434 265.714 257.293 248.348L334.84 333.359C330.926 337.315 326.845 341.104 322.608 344.716L249.346 264.401L304.485 358.438C299.294 361.915 293.927 365.15 288.4 368.127L238.284 282.659L269.932 376.861C263.209 379.618 256.299 382.011 249.226 384.017L222.542 304.585L232.128 388.042C224.344 389.506 216.398 390.511 208.32 391.024L199.911 317.816L193.283 391.409C184.463 391.302 175.784 390.611 167.282 389.374L173.03 325.539L153.707 386.905C144.442 384.878 135.421 382.196 126.698 378.907L142.975 327.21L115.969 374.495C106.704 370.355 97.8185 365.517 89.3812 360.047L110.704 322.713L82.0868 355.081C73.2884 348.796 65.0319 341.802 57.4015 334.18L80.5207 308.031L52.1515 328.729C44.3497 320.313 37.2784 311.209 31.0394 301.52L48.1777 289.016L28.7707 297.91C10.5222 268.165 9.12139e-05 233.168 0 195.712C9.12139e-05 87.624 87.6235 0 195.713 0V114.687ZM359.641 302.665C356.973 306.746 354.157 310.721 351.201 314.583L257.788 247.766C260.914 244.041 263.712 240.032 266.136 235.782L359.641 302.665ZM377.67 267.924C376.125 271.813 374.459 275.641 372.677 279.403L267.586 233.127C269.506 229.445 271.152 225.598 272.497 221.612L377.67 267.924ZM388.545 229.349C387.949 232.789 387.262 236.199 386.489 239.575L273.854 217.17C274.765 213.844 275.47 210.434 275.954 206.952L388.545 229.349ZM391.37 191.083C391.406 192.622 391.424 194.166 391.424 195.712C391.424 196.78 391.416 197.844 391.399 198.907H276.667C276.708 197.844 276.729 196.777 276.729 195.704C276.729 194.154 276.684 192.613 276.598 191.083H391.37ZM386.748 152.992C387.237 155.193 387.69 157.408 388.106 159.636L275.576 182.019C275.195 179.776 274.721 177.563 274.16 175.386L386.748 152.992ZM374.753 116.552C375.667 118.616 376.547 120.697 377.391 122.799L271.384 166.707C270.571 164.588 269.673 162.512 268.691 160.483L374.753 116.552ZM355.853 83.1755C357.153 85.0226 358.422 86.8943 359.66 88.787L264.273 152.524C263.063 150.608 261.777 148.746 260.416 146.944L355.853 83.1755ZM330.827 54.1243C332.462 55.685 334.07 57.2731 335.651 58.8891L254.539 140C252.984 138.359 251.362 136.782 249.676 135.275L330.827 54.1243ZM301.757 31.1926C303.657 32.4198 305.535 33.679 307.389 34.9694L243.639 130.379C241.819 129.042 239.943 127.779 238.012 126.595L301.757 31.1926ZM267.663 13.65C269.768 14.4825 271.855 15.3501 273.923 16.2528L230.004 122.282C227.963 121.328 225.876 120.456 223.747 119.67L267.663 13.65ZM230.79 3.13548C233.02 3.53901 235.237 3.97976 237.441 4.45826L215.054 117.01C212.871 116.476 210.653 116.031 208.405 115.677L230.79 3.13548Z" fill="#0172AF"/></svg>
+      <div style="font-size:26px;font-weight:700;color:#111;margin-bottom:6px">Welkom terug</div>
+      <div style="font-size:15px;color:#888;margin-bottom:40px">Log in om door te gaan</div>
+      <div style="width:100%;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:13px;font-weight:600;color:#555">Gebruikersnaam</label>
+          <input id="login-user" type="text" placeholder="Gebruikersnaam" style="height:52px;border:1.5px solid #e0e0e0;border-radius:14px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;background:#fafafa" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label style="font-size:13px;font-weight:600;color:#555">Wachtwoord</label>
+          <input id="login-pass" type="password" placeholder="Wachtwoord" style="height:52px;border:1.5px solid #e0e0e0;border-radius:14px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;background:#fafafa" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <div id="login-error" style="display:none;font-size:13px;color:#e53935;text-align:center">Onjuiste gebruikersnaam of wachtwoord</div>
+        <button onclick="doLogin()" style="height:56px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:8px">Inloggen</button>
+      </div>
     </div>
 
     <!-- New order notification overlay -->
@@ -3506,6 +3608,26 @@
     toastOrderCard = null;
   }
 
+  function doLogin(){
+    var u = document.getElementById('login-user').value.trim();
+    var p = document.getElementById('login-pass').value;
+    var err = document.getElementById('login-error');
+    if(u === '1234' && p === '1234'){
+      err.style.display = 'none';
+      document.getElementById('p-login').style.display = 'none';
+      goPage('orders');
+    } else {
+      err.style.display = 'block';
+    }
+  }
+  function doLogout(){
+    closeSideNav();
+    document.getElementById('login-user').value = '';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-error').style.display = 'none';
+    document.getElementById('p-login').style.display = 'flex';
+  }
+
   function toggleSideNav(){
     var nav = document.getElementById('side-nav');
     var backdrop = document.getElementById('side-nav-backdrop');
@@ -3519,13 +3641,12 @@
     }
     nav.classList.toggle('open');
     backdrop.classList.toggle('show');
-    if(burger) burger.classList.toggle('is-open');
+    document.querySelectorAll('.burger-btn').forEach(function(b){ b.classList.toggle('is-open', nav.classList.contains('open')); });
   }
   function closeSideNav(){
     document.getElementById('side-nav').classList.remove('open');
     document.getElementById('side-nav-backdrop').classList.remove('show');
-    var burger = document.getElementById('burger-btn');
-    if(burger) burger.classList.remove('is-open');
+    document.querySelectorAll('.burger-btn').forEach(function(b){ b.classList.remove('is-open'); });
   }
 
   function toggleCustomerDropdown(){
