@@ -83,6 +83,16 @@
     #co-scroll .co-sec-notities { grid-area: notities; margin-top: 0 !important; }
     #co-scroll .co-sec-spacer { display: none !important; }
   }
+  /* Create-order: give each section the same card look as the orders cards */
+  #co-scroll { padding: 12px 24px calc(env(safe-area-inset-bottom) + 24px); }
+  #co-scroll > .co-sec-klant,
+  #co-scroll > .co-sec-producten,
+  #co-scroll > .co-sec-betaling,
+  #co-scroll > .co-sec-notities {
+    border-radius: 16px;
+    border: 1.5px solid #f3f3f3;
+    overflow: hidden;
+  }
   .phone {
     width: 720px;
     background: #1a1a1a;
@@ -821,34 +831,23 @@
   .mm-chevron { font-size: 18px; flex-shrink: 0; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; align-self: stretch; width: 52px; line-height: 1; cursor: pointer; }
   .mm-chevron i { line-height: 1; }
   .mm-chevron.open { transform: rotate(180deg); }
-  /* Pause orders bottom sheet */
-  .pause-overlay { display: none; position: absolute; inset: 0; z-index: 900; }
-  .pause-overlay.show { display: block; }
-  .pause-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.45); opacity: 0; transition: opacity 0.25s ease; }
-  .pause-overlay.show .pause-backdrop { opacity: 1; }
-  .pause-sheet {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    background: #fff; border-radius: 28px 28px 0 0;
-    padding: 28px 24px calc(env(safe-area-inset-bottom) + 28px);
-    transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-    box-sizing: border-box;
+  /* Pause orders page (cards) */
+  #pause-scroll { padding: 8px 24px calc(env(safe-area-inset-bottom) + 24px); }
+  .pause-question { font-size: 19px; font-weight: 600; color: #111; text-align: center; line-height: 1.4; padding: 16px 8px 20px; }
+  .pause-card {
+    background: #fff; border: 1.5px solid #f3f3f3; border-radius: 16px;
+    height: 72px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 600; color: #111; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; transition: border-color 0.15s, background 0.15s;
   }
-  .pause-overlay.show .pause-sheet { transform: translateY(0); }
-  .pause-title { font-size: 19px; font-weight: 600; color: #111; text-align: center; line-height: 1.4; margin-bottom: 22px; }
-  .pause-opt {
-    display: block; width: 100%; height: 64px; margin-bottom: 14px;
-    background: #e9ebee; color: #111; border: 2px solid transparent; border-radius: 14px;
-    font-size: 17px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer;
+  .pause-card.selected { border-color: #0172af; background: #eaf4fb; color: #0a4f73; }
+  .pause-page-continue {
+    display: block; width: 100%; height: 64px; margin-top: 36px;
+    background: #0172af; color: #fff; border: none; border-radius: 100px;
+    font-size: 18px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
-  .pause-opt.selected { background: #dbe4ff; border-color: #4263eb; color: #1c2f80; }
-  .pause-continue {
-    display: block; width: 100%; height: 64px; margin-top: 6px;
-    background: #e7ecff; color: #3b5bdb; border: none; border-radius: 14px;
-    font-size: 17px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .pause-continue:disabled { opacity: 0.5; cursor: default; }
+  .pause-page-continue:disabled { opacity: 0.4; cursor: default; }
 
   .mm-item-row { display: flex; align-items: center; }
   .mm-item-row .mm-item { flex: 1; }
@@ -1555,9 +1554,8 @@
           <!-- Klant -->
           <div class="co-sec-klant" style="background:#fff;margin-top:12px">
             <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Klant</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
-              <i class="ti ti-circle-plus" style="font-size:20px;color:#111"></i>
-              <span style="font-size:18px;font-weight:500;color:#111">Klant toevoegen</span>
+            <div style="padding:0 24px 20px">
+              <button style="width:100%;height:56px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Klant toevoegen</button>
             </div>
           </div>
 
@@ -1565,7 +1563,7 @@
           <div class="co-sec-producten" style="background:#fff;margin-top:12px">
             <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Producten</span></div>
             <div style="padding:0 24px 20px;display:flex;flex-direction:column;gap:10px">
-              <button onclick="openProductPicker()" style="width:100%;height:56px;background:#111;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
+              <button onclick="openProductPicker()" style="width:100%;height:56px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
               <button onclick="openCustomItemForm()" style="width:100%;height:56px;background:#fff;color:#111;border:1.5px solid #e0e0e0;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aangepast artikel toevoegen</button>
             </div>
             <!-- Cart items -->
@@ -1637,6 +1635,26 @@
           <div class="ni" onclick="goPage('menu')"><span class="ico-inactive"><svg width="26" height="26" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="#999"/><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ico-active"><svg width="26" height="26" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86575 17.0072L2.99287 14.1343C1.66904 12.8105 1.66904 10.6642 2.99287 9.34036L9.18426 3.14895C10.0494 2.28383 11.2687 1.87193 12.4812 2.03515L15.5779 2.452C16.6034 2.59007 17.41 3.39667 17.5481 4.42213L17.9649 7.51883C18.1281 8.73137 17.7162 9.95063 16.8511 10.8158L10.6597 17.0072C9.33589 18.3309 7.18955 18.3309 5.86575 17.0072Z" fill="white" stroke="white" stroke-width="1.71694" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="13.2932" cy="6.70289" rx="0.941175" ry="0.941175" transform="rotate(90 13.2932 6.70289)" fill="#fff" stroke="#fff" stroke-width="1.07309"/></svg></span></div>
           <div class="ni ni-settings" onclick="goPage('settings')"><span class="ico-inactive"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.5" fill="white" stroke="none"/></svg></span><span class="ico-active"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" fill="white" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.5" fill="white" stroke="none"/></svg></span></div>
         </div></div>
+      </div>
+
+      <!-- ===== PAUSE ORDERS PAGE ===== -->
+      <div class="page" id="p-pause">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
+          <div class="page-header-row">
+            <div onclick="pauseBack()" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Bestellingen stopzetten</span>
+          </div>
+        </div>
+        <div class="scroll" id="pause-scroll" style="background:#f7f7f7;border-radius:0">
+          <div class="pause-question">Hoelang wil je geen bestellingen aannemen?</div>
+          <div class="pause-card" onclick="selectPausePageOpt(this)">Rest van de dag</div>
+          <div class="pause-card" onclick="selectPausePageOpt(this)">1 uur</div>
+          <div class="pause-card" onclick="selectPausePageOpt(this)">20 minuten</div>
+          <button type="button" class="pause-page-continue" id="pause-page-continue" onclick="confirmPausePage()" disabled>Doorgaan</button>
+          <div style="text-align:center;font-size:15px;color:#999;margin-top:16px;line-height:1.5">Je kunt op elk moment je winkel weer openen.</div>
+        </div>
       </div>
 
       <!-- ===== MENU PAGE (categorielijst) ===== -->
@@ -1949,7 +1967,7 @@
           <span class="mm-ico-inactive"><i class="ti ti-settings" style="font-size:23px;color:#999"></i></span>
           <span class="mm-ico-active"><i class="ti ti-settings" style="font-size:23px;color:#000;text-shadow:0 0 0.6px #000,0 0 0.6px #000"></i></span>
           <span data-i18n="mm_settings">Settings</span></div>
-        <div class="mm-item" onclick="openPauseOrders();closeMainMenu()">
+        <div class="mm-item" onclick="openPausePage();closeMainMenu()">
           <span class="mm-ico-inactive"><i class="ti ti-player-pause" style="font-size:22px;color:#999"></i></span>
           <span class="mm-ico-active"><i class="ti ti-player-pause" style="font-size:22px;color:#111"></i></span>
           <span data-i18n="mm_pause_orders">Bestellingen stopzetten</span></div>
@@ -1957,18 +1975,6 @@
 
       <div class="mm-navbar">
         <div class="mm-circle-close" onclick="closeMainMenu()"><div class="mm-circle-close-inner"><i class="ti ti-x" style="font-size:20px;color:#111"></i></div></div>
-      </div>
-    </div>
-
-    <!-- Pause orders (stop taking orders) bottom sheet -->
-    <div class="pause-overlay" id="pause-overlay">
-      <div class="pause-backdrop" onclick="closePauseOrders()"></div>
-      <div class="pause-sheet">
-        <div class="pause-title">Hoelang wil je geen bestellingen aannemen?</div>
-        <button type="button" class="pause-opt" onclick="selectPauseOpt(this)" data-val="rest">Rest van de dag</button>
-        <button type="button" class="pause-opt" onclick="selectPauseOpt(this)" data-val="1u">1 uur</button>
-        <button type="button" class="pause-opt" onclick="selectPauseOpt(this)" data-val="20m">20 minuten</button>
-        <button type="button" class="pause-continue" id="pause-continue" onclick="confirmPauseOrders()">Doorgaan</button>
       </div>
     </div>
 
@@ -3453,16 +3459,26 @@
   }
 
   var restaurantOpen = true;
-  function toggleNavRestaurant(el) {
-    restaurantOpen = !restaurantOpen;
+  function setNavRestaurantState() {
     var title = document.getElementById('nav-restaurant-title');
     var sub = document.getElementById('nav-restaurant-sub');
+    if (!title || !sub) return;
     if (restaurantOpen) {
       title.textContent = 'Geen bestellingen meer aannemen';
       sub.textContent = 'Restaurant is momenteel open voor bestellingen';
     } else {
       title.textContent = 'Bestellingen aannemen';
       sub.textContent = 'Restaurant is momenteel gesloten voor bestellingen';
+    }
+  }
+  function toggleNavRestaurant(el) {
+    if (restaurantOpen) {
+      // pick how long to pause before actually closing
+      openPausePage();
+    } else {
+      // resume taking orders immediately
+      restaurantOpen = true;
+      setNavRestaurantState();
     }
   }
 
@@ -4266,26 +4282,31 @@
     document.getElementById('main-menu-overlay').classList.remove('show');
   }
 
-  // Pause orders (stop taking orders) bottom sheet
-  function openPauseOrders(){
-    var ov = document.getElementById('pause-overlay');
-    ov.querySelectorAll('.pause-opt').forEach(function(o){ o.classList.remove('selected'); });
-    document.getElementById('pause-continue').disabled = true;
-    ov.classList.add('show');
+  // Pause orders (stop taking orders) page
+  function openPausePage(){
+    var cur = document.querySelector('.page.active');
+    window._pauseReturn = cur ? cur.id.replace('p-', '') : 'orders';
+    document.querySelectorAll('#p-pause .pause-card').forEach(function(c){ c.classList.remove('selected'); });
+    var btn = document.getElementById('pause-page-continue');
+    if (btn) btn.disabled = true;
+    goPage('pause');
   }
-  function closePauseOrders(){
-    document.getElementById('pause-overlay').classList.remove('show');
+  function pauseBack(){
+    goPage(window._pauseReturn || 'orders');
+    goPage('nav');
   }
-  function selectPauseOpt(el){
-    el.parentElement.querySelectorAll('.pause-opt').forEach(function(o){ o.classList.remove('selected'); });
+  function selectPausePageOpt(el){
+    el.parentElement.querySelectorAll('.pause-card').forEach(function(c){ c.classList.remove('selected'); });
     el.classList.add('selected');
-    document.getElementById('pause-continue').disabled = false;
+    document.getElementById('pause-page-continue').disabled = false;
   }
-  function confirmPauseOrders(){
-    var sel = document.querySelector('#pause-overlay .pause-opt.selected');
+  function confirmPausePage(){
+    var sel = document.querySelector('#p-pause .pause-card.selected');
     if (!sel) return;
     var label = sel.textContent;
-    closePauseOrders();
+    restaurantOpen = false;
+    setNavRestaurantState();
+    goPage(window._pauseReturn || 'orders');
     var toast = document.getElementById('accepted-toast');
     document.getElementById('accepted-toast-text').textContent = 'Bestellingen gepauzeerd · ' + label;
     clearTimeout(toast._hideTimeout);
