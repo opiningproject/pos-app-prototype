@@ -848,6 +848,10 @@
     -webkit-tap-highlight-color: transparent;
   }
   .pause-page-continue:disabled { opacity: 0.4; cursor: default; }
+  /* Dashboard period selector dropdown */
+  .dash-period-opt { padding: 16px 24px; font-size: 17px; color: #111; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .dash-period-opt + .dash-period-opt { border-top: 1px solid #f2f2f2; }
+  .dash-period-opt:hover { background: #f7f7f7; }
 
   .mm-item-row { display: flex; align-items: center; }
   .mm-item-row .mm-item { flex: 1; }
@@ -1045,7 +1049,7 @@
           <div class="side-nav-item" onclick="goPage('dashboard')" style="align-items:flex-start">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:3px"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div>
-              <div style="font-size:22px;font-weight:500;color:#fff">Verkopen van vandaag bekijken</div>
+              <div style="font-size:22px;font-weight:500;color:#fff">Verkopen bekijken</div>
               <div style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);margin-top:5px" id="nav-orders-sub">47 afgeronde bestellingen</div>
             </div>
           </div>
@@ -1459,7 +1463,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Verkoop vandaag</span>
+            <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Verkoopanalyse</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#f7f7f7;display:flex;flex-direction:column;overflow:hidden">
@@ -1474,6 +1478,21 @@
           <div id="dash-panes" style="flex:1;min-height:0;overflow-x:hidden;position:relative">
           <!-- SUMMARY PANE -->
           <div id="dash-summary" class="scroll dash-pane dp-active-flex" style="padding:24px;background:#fafafa;flex-direction:column;gap:16px;padding-bottom:120px">
+
+            <!-- Period selector -->
+            <div style="position:relative;flex-shrink:0">
+              <div onclick="toggleDashPeriod()" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+                <span id="dash-period-label" style="font-size:18px;font-weight:600;color:#111">Vandaag</span>
+                <i class="ti ti-chevron-down" id="dash-period-chevron" style="font-size:20px;color:#111;transition:transform 0.2s"></i>
+              </div>
+              <div id="dash-period-menu" style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:20;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;box-shadow:0 12px 30px rgba(0,0,0,0.12);overflow:hidden">
+                <div class="dash-period-opt" onclick="selectDashPeriod('Vandaag')">Vandaag</div>
+                <div class="dash-period-opt" onclick="selectDashPeriod('Gisteren')">Gisteren</div>
+                <div class="dash-period-opt" onclick="selectDashPeriod('Afgelopen week')">Afgelopen week</div>
+                <div class="dash-period-opt" onclick="selectDashPeriod('Afgelopen maand')">Afgelopen maand</div>
+                <div class="dash-period-opt" onclick="selectDashPeriod('Custom tijd')">Custom tijd</div>
+              </div>
+            </div>
 
             <!-- Card 1: Omzet -->
             <div style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
@@ -2729,6 +2748,20 @@
     var price = parseFloat(document.getElementById('ci-price').value) || 0;
     addToCoCart(name, null, price, ciQty);
     closeCustomItemForm();
+  }
+
+  function toggleDashPeriod(){
+    var menu = document.getElementById('dash-period-menu');
+    var chev = document.getElementById('dash-period-chevron');
+    var open = menu.style.display === 'block';
+    menu.style.display = open ? 'none' : 'block';
+    if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+  }
+  function selectDashPeriod(label){
+    document.getElementById('dash-period-label').textContent = label;
+    document.getElementById('dash-period-menu').style.display = 'none';
+    var chev = document.getElementById('dash-period-chevron');
+    if (chev) chev.style.transform = '';
   }
 
   function switchDashTab(el, pane){
