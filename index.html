@@ -72,19 +72,21 @@
         "klant betaling"
         "producten betaling"
         "notities betaling"
-        ".       betaling";
+        "maakbon betaling";
       align-content: start;
-      gap: 16px;
+      gap: 24px;
       padding: 16px !important;
     }
+    #co-scroll .co-sec-maakbon { grid-area: maakbon; margin-top: 0 !important; align-self: start; }
     #co-scroll .co-sec-klant { grid-area: klant; margin-top: 0 !important; }
     #co-scroll .co-sec-producten { grid-area: producten; margin-top: 0 !important; }
     #co-scroll .co-sec-betaling { grid-area: betaling; margin-top: 0 !important; position: sticky; top: 0; align-self: start; }
     #co-scroll .co-sec-notities { grid-area: notities; margin-top: 0 !important; }
     #co-scroll .co-sec-spacer { display: none !important; }
+    #co-scroll > .co-title { display: none !important; }
   }
   /* Create-order: give each section the same card look as the orders cards */
-  #co-scroll { padding: 12px 24px calc(env(safe-area-inset-bottom) + 24px); }
+  #co-scroll { padding: 0 24px calc(env(safe-area-inset-bottom) + 24px); }
   #co-scroll > .co-sec-klant,
   #co-scroll > .co-sec-producten,
   #co-scroll > .co-sec-betaling,
@@ -93,6 +95,7 @@
     border: 1.5px solid #f3f3f3;
     overflow: hidden;
   }
+  #co-scroll > .co-title { font-size: 18px; font-weight: 600; color: #111; padding: 0 4px; margin: 24px 0 12px; }
   .phone {
     width: 720px;
     background: #1a1a1a;
@@ -1541,7 +1544,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('nav')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1552,17 +1555,17 @@
         <div class="scroll" id="co-scroll" style="background:#f7f7f7;border-radius:0">
 
           <!-- Klant -->
-          <div class="co-sec-klant" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Klant</span></div>
-            <div style="padding:0 24px 20px">
+          <div class="co-title">Klant</div>
+          <div class="co-sec-klant" style="background:#fff;margin-top:0">
+            <div style="padding:24px">
               <button style="width:100%;height:56px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Klant toevoegen</button>
             </div>
           </div>
 
           <!-- Producten -->
-          <div class="co-sec-producten" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Producten</span></div>
-            <div style="padding:0 24px 20px;display:flex;flex-direction:column;gap:10px">
+          <div class="co-title">Producten</div>
+          <div class="co-sec-producten" style="background:#fff;margin-top:0">
+            <div style="padding:24px;display:flex;flex-direction:column;gap:10px">
               <button onclick="openProductPicker()" style="width:100%;height:56px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Producten toevoegen</button>
               <button onclick="openCustomItemForm()" style="width:100%;height:56px;background:#fff;color:#111;border:1.5px solid #e0e0e0;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aangepast artikel toevoegen</button>
             </div>
@@ -1571,53 +1574,46 @@
           </div>
 
           <!-- Betaling -->
-          <div class="co-sec-betaling" style="background:#fff;margin-top:12px">
-            <div style="padding:20px 24px 6px"><span style="font-size:18px;font-weight:700;color:#111">Betaling</span></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px">
-              <span style="font-size:18px;color:#111">Subtotaal</span>
-              <span id="co-subtotal" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
+          <div class="co-title">Betaling</div>
+          <div class="co-sec-betaling" style="background:#fff;margin-top:0">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:24px">
+              <span style="font-size:18px;font-weight:500;color:#111">Subtotaal</span>
+              <span id="co-subtotal" style="font-size:18px;font-weight:500;color:#111">€ 0,00</span>
             </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:24px;border-top:1px solid #f2f2f2">
               <div>
-                <div style="font-size:18px;color:#111">Korting</div>
+                <div style="font-size:18px;font-weight:500;color:#111">Korting</div>
                 <div style="font-size:15px;color:#999;margin-top:2px;cursor:pointer">Korting toevoegen</div>
               </div>
-              <span id="co-discount" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
+              <span id="co-discount" style="font-size:18px;font-weight:500;color:#111">€ 0,00</span>
             </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:24px;border-top:1px solid #f2f2f2">
               <div>
-                <div style="font-size:18px;color:#111">Verzending</div>
+                <div style="font-size:18px;font-weight:500;color:#111">Verzending</div>
                 <div style="font-size:15px;color:#999;margin-top:2px;cursor:pointer">Verzending of bezorging toevoegen</div>
               </div>
-              <span id="co-shipping" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
+              <span id="co-shipping" style="font-size:18px;font-weight:500;color:#111">€ 0,00</span>
             </div>
-            <div style="padding:16px 24px;border-top:1px solid #f2f2f2">
-              <div style="font-size:18px;font-weight:600;color:#111">Niet berekend</div>
-              <div style="font-size:15px;color:#999;margin-top:2px">Geschatte belasting</div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid #f2f2f2">
-              <span style="font-size:18px;font-weight:700;color:#111">Totaal</span>
-              <span id="co-order-total" style="font-size:18px;font-weight:700;color:#111">€ 0,00</span>
-            </div>
-            <div style="padding:4px 24px 20px">
-              <button style="width:100%;height:56px;background:#111;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Markeren als betaald</button>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:24px;border-top:1px solid #f2f2f2">
+              <span style="font-size:18px;font-weight:600;color:#111">Totaal</span>
+              <span id="co-order-total" style="font-size:18px;font-weight:600;color:#111">€ 0,00</span>
             </div>
           </div>
 
           <!-- Notities / Gewenste tijd -->
-          <div class="co-sec-notities" style="background:#fff;margin-top:12px">
-            <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;cursor:pointer">
-              <svg width="20" height="20" viewBox="0 0 36 36" fill="#555" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><g fill-rule="evenodd"><path d="m32.92 3.08a3.66 3.66 0 0 0 -2.61-1.08h-24.62a3.7 3.7 0 0 0 -3.69 3.69v24.62a3.7 3.7 0 0 0 3.69 3.69h19.69v-4.92a3.7 3.7 0 0 1 3.69-3.69h4.93v-19.7a3.66 3.66 0 0 0 -1.08-2.61zm-14.92 16.15h-8.62v-2.46h8.62zm8.62-4.92h-17.24v-2.46h17.23z"/><path d="m29.08 27.85a1.23 1.23 0 0 0 -1.23 1.23v4.92a1.11 1.11 0 0 0 .65-.31l5.11-4.76a1.35 1.35 0 0 0 .39-1.08z"/></g></svg>
+          <div class="co-sec-notities" style="background:#fff;margin-top:24px">
+            <div style="display:flex;align-items:center;gap:10px;padding:24px;cursor:pointer">
               <span style="font-size:18px;color:#111;flex:1">Notities</span>
               <i class="ti ti-chevron-right" style="color:#bbb;font-size:18px"></i>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-top:1px solid #f2f2f2;cursor:pointer">
-              <i class="ti ti-clock" style="font-size:20px;color:#555"></i>
+            <div style="display:flex;align-items:center;gap:10px;padding:24px;border-top:1px solid #f2f2f2;cursor:pointer">
               <span style="font-size:18px;color:#111;flex:1">Gewenste tijd</span>
               <span style="font-size:18px;color:#999;margin-right:4px">ZSM</span>
               <i class="ti ti-chevron-right" style="color:#bbb;font-size:18px"></i>
             </div>
           </div>
+
+          <button class="co-sec-maakbon" onclick="saveOrder()" style="display:block;width:100%;height:56px;margin-top:24px;background:#0172af;color:#fff;border:none;border-radius:100px;font-size:18px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Maak bon</button>
 
           <div class="co-sec-spacer" style="height:calc(env(safe-area-inset-bottom) + 40px)"></div>
         </div><!-- /scroll -->
@@ -2573,26 +2569,16 @@
       wrap.innerHTML = '';
     } else {
       wrap.style.display = 'block';
-      wrap.innerHTML = '<div style="padding:16px 24px 24px;display:flex;flex-direction:column;gap:12px">' + coCartItems.map(function(item, idx){
-        return '<div style="border:1.5px solid #e8e8e8;border-radius:14px;padding:14px">' +
-          '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">' +
-            '<div style="width:44px;height:44px;border-radius:10px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-photo" style="font-size:18px;color:#bbb"></i></div>' +
-            '<div style="flex:1;min-width:0">' +
-              '<div style="font-size:15px;font-weight:700;color:#111">'+item.name+'</div>' +
-              (item.variant ? '<span style="display:inline-block;margin-top:6px;background:#f0f0f0;border-radius:100px;padding:4px 10px;font-size:12px;font-weight:600;color:#555">'+item.variant+'</span>' : '') +
-            '</div>' +
-            '<i class="ti ti-x" style="color:#bbb;font-size:18px;cursor:pointer;padding:10px;margin:-10px" onclick="removeCoCartItem('+idx+')"></i>' +
+      wrap.innerHTML = '<div style="padding:0 24px 8px">' + coCartItems.map(function(item, idx){
+        return '<div style="padding:24px 0;border-top:1px solid #f0f0f0;display:flex;align-items:center;gap:14px">' +
+          '<div style="width:34px;height:34px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;font-weight:700;color:#111">'+item.qty+'</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:17px;font-weight:700;color:#111">'+item.name+'</div>' +
+            (item.variant ? '<div style="font-size:15px;color:#888;margin-top:2px">'+item.variant+'</div>' : '') +
           '</div>' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;border:1.5px solid #e0e0e0;border-radius:10px;padding:8px 12px;margin-bottom:10px">' +
-            '<div><div style="font-size:11px;color:#888;font-weight:500;margin-bottom:2px">Aantal</div><div style="font-size:14px;font-weight:600;color:#111">'+item.qty+'</div></div>' +
-            '<div style="display:flex;gap:6px">' +
-              '<button onclick="changeCoCartQty('+idx+',-1)" style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e0e0e0;background:#fff;font-size:18px;font-weight:300;color:#111;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">−</button>' +
-              '<button onclick="changeCoCartQty('+idx+',1)" style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e0e0e0;background:#fff;font-size:18px;font-weight:300;color:#111;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">+</button>' +
-            '</div>' +
-          '</div>' +
-          '<div style="display:flex;align-items:center;justify-content:space-between">' +
-            '<span style="font-size:13px;color:#111;font-weight:500">'+formatEuro(item.price)+' × '+item.qty+'</span>' +
-            '<span style="font-size:13px;font-weight:700;color:#111">'+formatEuro(item.price*item.qty)+'</span>' +
+          '<span style="font-size:17px;color:#111;flex-shrink:0">'+formatEuro(item.price*item.qty)+'</span>' +
+          '<div onclick="removeCoCartItem('+idx+')" style="width:30px;height:30px;border-radius:50%;border:2px solid #555;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin-left:10px">' +
+            '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1L11 11M11 1L1 11" stroke="#555" stroke-width="2" stroke-linecap="round"/></svg>' +
           '</div>' +
         '</div>';
       }).join('') + '</div>';
