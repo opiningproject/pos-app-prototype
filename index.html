@@ -3804,9 +3804,8 @@
         '</div></div>';
       reorderNewList(card);
     }
-    // TEMP (testing): printer settings aren't wired up yet, so skip silentPrint()
-    // to avoid opening Android's print dialog. Re-enable once printing works.
-    // silentPrint();
+    // Print the receipt on accept (SUNMI printer plugin handles the output)
+    silentPrint();
     closeOrderToast();
     var detailBtn = document.getElementById('d-accept-btn');
     if (detailBtn && detailBtn._mirrorInterval) { clearInterval(detailBtn._mirrorInterval); detailBtn._mirrorInterval = null; }
