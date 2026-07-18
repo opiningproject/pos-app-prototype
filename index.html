@@ -1009,7 +1009,7 @@
     body * { visibility: hidden; }
     #receipt-print-area, #receipt-print-area * { visibility: visible; }
     #receipt-print-area {
-      position: absolute;
+      position: fixed;
       left: 0;
       top: 0;
       width: 80mm;
@@ -2383,7 +2383,7 @@
 
   function silentPrint(){
     populatePrintPage();
-    window.print();
+    try { window.print(); } catch(e){ console.warn('window.print failed', e); }
   }
 
   function populatePrintPage(){
@@ -3804,8 +3804,6 @@
         '</div></div>';
       reorderNewList(card);
     }
-    // Print the receipt on accept (SUNMI printer plugin handles the output)
-    silentPrint();
     closeOrderToast();
     var detailBtn = document.getElementById('d-accept-btn');
     if (detailBtn && detailBtn._mirrorInterval) { clearInterval(detailBtn._mirrorInterval); detailBtn._mirrorInterval = null; }
@@ -3815,6 +3813,8 @@
     nextBtnEl2.dataset.nextKey = 'd_to_kitchen';
     nextBtnEl2.textContent = t('d_to_kitchen');
     goPage(window._detailReturnPage || 'orders');
+    // Print AFTER the UI has updated, so a print failure never blocks accept
+    setTimeout(function(){ try { silentPrint(); } catch(e){ console.warn('print failed', e); } }, 150);
   }
 
   function reorderNewList(changedCard){
