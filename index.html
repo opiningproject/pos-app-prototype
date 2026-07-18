@@ -14,7 +14,6 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>POS App</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1337,7 +1336,7 @@
         <!-- Sticky action footer -->
         <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 40px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
-            <button onclick="silentPrint()" style="height:56px;padding:0 48px;font-size:18px;font-weight:500;color:#0172af;background:#fff;border:2px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
+            <button onclick="onPrintClick(this)" style="height:56px;padding:0 48px;font-size:18px;font-weight:500;color:#0172af;background:#fff;border:2px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
             <button id="d-next-btn" onclick="detailNextAction()" style="flex:1;height:56px;font-size:18px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
           </div>
           <div id="d-actions-accept" style="display:none">
@@ -2382,30 +2381,55 @@
     }));
   }
 
+  // Print button handler: immediate feedback + debounce so a tap can't fire twice
+  var _printing = false;
+  function onPrintClick(btn){
+    if (_printing) return;
+    _printing = true;
+    var orig = btn ? btn.innerHTML : '';
+    if (btn){ btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none'; btn.innerHTML = 'Printen…'; }
+    try { silentPrint(); } catch(e){ console.warn(e); }
+    setTimeout(function(){
+      _printing = false;
+      if (btn){ btn.style.opacity = ''; btn.style.pointerEvents = ''; btn.innerHTML = orig; }
+    }, 3000);
+  }
+
   function silentPrint(){
     populatePrintPage();
-    // Inside the native SUNMI wrapper app, print via the built-in printer bridge.
-    if (window.AndroidPrinter && typeof window.AndroidPrinter.printBitmap === 'function') {
+    if (window.AndroidPrinter && typeof window.AndroidPrinter.printReceipt === 'function') {
       printReceiptNative();
     } else {
       try { window.print(); } catch(e){ console.warn('window.print failed', e); }
     }
   }
-  // Render the 80mm receipt to an image and hand it to the native SUNMI printer.
+
+  // Build a fast, full-width (80mm) text receipt and send it to the SUNMI printer.
   function printReceiptNative(){
-    var el = document.getElementById('receipt-print-area');
-    if (!el || typeof html2canvas === 'undefined') return;
-    var wrap = el.parentElement;
-    var prevVis = wrap.style.visibility, prevW = el.style.width;
-    wrap.style.visibility = 'visible';   // html2canvas can't capture visibility:hidden
-    el.style.width = '576px';            // 80mm @ ~203dpi = 576 dots
-    html2canvas(el, { backgroundColor: '#ffffff', scale: 1, width: 576, windowWidth: 576 })
-      .then(function(canvas){
-        wrap.style.visibility = prevVis; el.style.width = prevW;
-        try { window.AndroidPrinter.printBitmap(canvas.toDataURL('image/png')); }
-        catch(e){ console.warn('native print failed', e); }
-      })
-      .catch(function(e){ wrap.style.visibility = prevVis; el.style.width = prevW; console.warn('html2canvas failed', e); });
+    var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch(e){}
+    var isColl = o.type === 'Collection';
+    var cmds = [];
+    cmds.push({t:'align', v:'center'});
+    cmds.push({t:'size', v:34}); cmds.push({t:'text', v:'BESTELLING ' + (o.oid || '') + '\n'});
+    cmds.push({t:'size', v:26});
+    cmds.push({t:'text', v:(isColl ? 'AFHALEN' : 'BEZORGEN') + '\n'});
+    cmds.push({t:'text', v:(o.pay === 'Paid' ? 'ONLINE BETAALD' : 'CONTANT BETALEN') + '\n'});
+    cmds.push({t:'feed', n:1});
+    cmds.push({t:'align', v:'left'});
+    cmds.push({t:'size', v:24});
+    if (o.name) cmds.push({t:'text', v:'Klant: ' + o.name + '\n'});
+    if (!isColl && o.address) cmds.push({t:'text', v:o.address + '\n' + (o.city || '') + '\n'});
+    cmds.push({t:'text', v:'Gewenste tijd: ' + (o.wished || 'ZSM') + '\n'});
+    if (o.note) cmds.push({t:'text', v:'Opmerking: ' + o.note + '\n'});
+    cmds.push({t:'feed', n:1});
+    cmds.push({t:'align', v:'center'});
+    cmds.push({t:'size', v:34}); cmds.push({t:'text', v:'TOTAAL ' + (o.price || '') + '\n'});
+    cmds.push({t:'size', v:22});
+    cmds.push({t:'text', v:new Date().toLocaleString('nl-NL') + '\n'});
+    cmds.push({t:'text', v:'Bedankt voor je bestelling!\n'});
+    cmds.push({t:'feed', n:3});
+    cmds.push({t:'cut'});
+    try { window.AndroidPrinter.printReceipt(JSON.stringify(cmds)); } catch(e){ console.warn('native print failed', e); }
   }
 
   function populatePrintPage(){

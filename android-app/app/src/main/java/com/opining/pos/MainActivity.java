@@ -73,6 +73,44 @@ public class MainActivity extends Activity {
             return printerService != null;
         }
 
+        /**
+         * Print a receipt from a JSON array of simple commands:
+         * {t:"align", v:"left|center|right"}, {t:"size", v:24},
+         * {t:"text", v:"..."}, {t:"feed", n:3}, {t:"cut"}
+         */
+        @JavascriptInterface
+        public void printReceipt(String cmdsJson) {
+            if (printerService == null || cmdsJson == null) {
+                return;
+            }
+            try {
+                org.json.JSONArray arr = new org.json.JSONArray(cmdsJson);
+                try { printerService.printerInit(null); } catch (Exception ignored) {}
+                for (int i = 0; i < arr.length(); i++) {
+                    org.json.JSONObject c = arr.getJSONObject(i);
+                    String t = c.optString("t");
+                    try {
+                        if ("align".equals(t)) {
+                            String v = c.optString("v");
+                            int a = "center".equals(v) ? 1 : ("right".equals(v) ? 2 : 0);
+                            printerService.setAlignment(a, null);
+                        } else if ("size".equals(t)) {
+                            printerService.setFontSize((float) c.optDouble("v", 24), null);
+                        } else if ("text".equals(t)) {
+                            printerService.printText(c.optString("v"), null);
+                        } else if ("feed".equals(t)) {
+                            printerService.lineWrap(c.optInt("n", 1), null);
+                        } else if ("cut".equals(t)) {
+                            printerService.cutPaper(null);
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         @JavascriptInterface
         public void printBitmap(String dataUrl) {
             if (printerService == null || dataUrl == null) {
