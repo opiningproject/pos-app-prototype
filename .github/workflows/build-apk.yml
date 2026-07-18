@@ -25,6 +25,12 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Reuse a stable debug signing key across builds
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: android-debug-keystore-v1
+
       - name: Accept licenses & install SDK packages
         run: |
           yes | sdkmanager --licenses || true
