@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.opining.pos'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.opining.pos"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // SUNMI built-in printer SDK (binds to the on-device printer service)
+    implementation 'com.sunmi:printerlibrary:1.0.24'
+}

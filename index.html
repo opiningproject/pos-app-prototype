@@ -14,6 +14,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>POS App</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2383,7 +2384,28 @@
 
   function silentPrint(){
     populatePrintPage();
-    try { window.print(); } catch(e){ console.warn('window.print failed', e); }
+    // Inside the native SUNMI wrapper app, print via the built-in printer bridge.
+    if (window.AndroidPrinter && typeof window.AndroidPrinter.printBitmap === 'function') {
+      printReceiptNative();
+    } else {
+      try { window.print(); } catch(e){ console.warn('window.print failed', e); }
+    }
+  }
+  // Render the 80mm receipt to an image and hand it to the native SUNMI printer.
+  function printReceiptNative(){
+    var el = document.getElementById('receipt-print-area');
+    if (!el || typeof html2canvas === 'undefined') return;
+    var wrap = el.parentElement;
+    var prevVis = wrap.style.visibility, prevW = el.style.width;
+    wrap.style.visibility = 'visible';   // html2canvas can't capture visibility:hidden
+    el.style.width = '576px';            // 80mm @ ~203dpi = 576 dots
+    html2canvas(el, { backgroundColor: '#ffffff', scale: 1, width: 576, windowWidth: 576 })
+      .then(function(canvas){
+        wrap.style.visibility = prevVis; el.style.width = prevW;
+        try { window.AndroidPrinter.printBitmap(canvas.toDataURL('image/png')); }
+        catch(e){ console.warn('native print failed', e); }
+      })
+      .catch(function(e){ wrap.style.visibility = prevVis; el.style.width = prevW; console.warn('html2canvas failed', e); });
   }
 
   function populatePrintPage(){
