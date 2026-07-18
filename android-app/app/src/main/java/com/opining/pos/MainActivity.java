@@ -96,8 +96,21 @@ public class MainActivity extends Activity {
                             printerService.setAlignment(a, null);
                         } else if ("size".equals(t)) {
                             printerService.setFontSize((float) c.optDouble("v", 24), null);
+                        } else if ("bold".equals(t)) {
+                            byte on = (byte) (c.optBoolean("v", false) ? 1 : 0);
+                            printerService.sendRAWData(new byte[]{0x1B, 0x45, on}, null);
                         } else if ("text".equals(t)) {
                             printerService.printText(c.optString("v"), null);
+                        } else if ("cols".equals(t)) {
+                            String left = c.optString("left");
+                            String right = c.optString("right");
+                            int wl = c.optInt("wl", 32);
+                            int wr = c.optInt("wr", 16);
+                            printerService.printColumnsString(
+                                    new String[]{left, right},
+                                    new int[]{wl, wr},
+                                    new int[]{0, 2},
+                                    null);
                         } else if ("feed".equals(t)) {
                             printerService.lineWrap(c.optInt("n", 1), null);
                         } else if ("cut".equals(t)) {
