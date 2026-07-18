@@ -2425,37 +2425,36 @@
     c.push({t:'align', v:'left'});
     c.push({t:'feed', n:3});   // ruimte boven de bon
     // Restaurant header
-    c.push({t:'bold', v:true}, {t:'size', v:34}, {t:'text', v:RECEIPT_SHOP.name + '\n'});
-    c.push({t:'bold', v:false}, {t:'size', v:26}, {t:'text', v:RECEIPT_SHOP.address.join('\n') + '\n'});
+    c.push({t:'size', v:34}, {t:'text', v:RECEIPT_SHOP.name + '\n'});
+    c.push({t:'size', v:26}, {t:'text', v:RECEIPT_SHOP.address.join('\n') + '\n'});
     c.push(DIV);
     // Besteldatum
-    c.push({t:'bold', v:true}, {t:'size', v:28}, {t:'text', v:'BESTELDATUM\n'});
-    c.push({t:'bold', v:false}, {t:'size', v:26}, {t:'text', v:dateStr + '\n'});
+    c.push({t:'size', v:28}, {t:'text', v:'BESTELDATUM\n'});
+    c.push({t:'size', v:26}, {t:'text', v:dateStr + '\n'});
     c.push({t:'feed', n:1});
     // Klant gegevens
-    c.push({t:'bold', v:true}, {t:'size', v:28}, {t:'text', v:'KLANT GEGEVENS\n'});
-    c.push({t:'bold', v:false}, {t:'size', v:26});
+    c.push({t:'size', v:28}, {t:'text', v:'KLANT GEGEVENS\n'});
+    c.push({t:'size', v:26});
     if (o.name) c.push({t:'text', v:o.name + '\n'});
     if (isColl) c.push({t:'text', v:'Afhalen\n'});
     else if (o.address) c.push({t:'text', v:o.address + '\n' + (o.city || '') + '\n'});
     c.push({t:'feed', n:1});
     // Betaal- en bezorgband
-    c.push({t:'bold', v:true}, {t:'size', v:28});
+    c.push({t:'size', v:28});
     c.push({t:'text', v:(isPaid ? 'BESTELLING IS ONLINE BETAALD!' : 'CONTANT BETALEN') + '\n'});
     c.push({t:'text', v:(isColl ? 'AFHALEN' : 'ZO SNEL MOGELIJK BEZORGEN') + '\n'});
     c.push({t:'text', v:'SCHATTING ' + (o.wished || 'ZSM') + '\n'});
-    c.push({t:'bold', v:false});
     c.push(DIV);
     // Bestelling (1 regel voor het ordertotaal, zoals in bon.html)
     c.push({t:'size', v:26});
     c.push({t:'cols', left:'1  Bestelling ' + (o.oid || ''), right:eur(total), wl:28, wr:12});
     c.push(DIV);
-    c.push({t:'bold', v:true}, {t:'size', v:28}, {t:'cols', left:'SUBTOTAAL', right:eur(total), wl:28, wr:12}, {t:'bold', v:false});
+    c.push({t:'size', v:28}, {t:'cols', left:'SUBTOTAAL', right:eur(total), wl:28, wr:12});
     c.push({t:'feed', n:1});
     // Klant opmerking
     if (o.note) {
-      c.push({t:'bold', v:true}, {t:'size', v:28}, {t:'text', v:'KLANT OPMERKING:\n'});
-      c.push({t:'bold', v:false}, {t:'size', v:26}, {t:'text', v:o.note + '\n'});
+      c.push({t:'size', v:28}, {t:'text', v:'KLANT OPMERKING:\n'});
+      c.push({t:'size', v:26}, {t:'text', v:o.note + '\n'});
       c.push({t:'feed', n:1});
     }
     // BTW
