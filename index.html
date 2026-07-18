@@ -172,8 +172,8 @@
     position: relative;
     z-index: 210 !important;
   }
-  /* Orders header: tight 16px padding (overrides the safe-area media-query rules) */
-  #p-orders > .page-header { padding: 16px !important; min-height: 0 !important; }
+  /* All page headers: tight 16px padding (overrides the safe-area media-query rules) */
+  .page > .page-header { padding: 16px !important; min-height: 0 !important; }
   .page-header .tabs {
     background: transparent;
     border-bottom: none;
@@ -1214,7 +1214,7 @@
       <div class="page" id="p-detail">
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+            <div onclick="goPage('orders')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
@@ -1424,7 +1424,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('nav')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('nav')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1460,7 +1460,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('orders')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1478,7 +1478,7 @@
 
           <div id="dash-panes" style="flex:1;min-height:0;overflow-x:hidden;position:relative">
           <!-- SUMMARY PANE -->
-          <div id="dash-summary" class="scroll dash-pane dp-active-flex" style="padding:24px;background:#fafafa;flex-direction:column;gap:16px;padding-bottom:120px">
+          <div id="dash-summary" class="scroll dash-pane dp-active-flex" style="padding:16px;background:#fafafa;flex-direction:column;gap:16px;padding-bottom:120px">
 
             <!-- Card 1: Omzet -->
             <div style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
@@ -1513,7 +1513,7 @@
           </div>
 
           <!-- DETAILS PANE -->
-          <div id="dash-details" class="scroll dash-pane" style="padding:24px;background:#fafafa;padding-bottom:120px">
+          <div id="dash-details" class="scroll dash-pane" style="padding:16px;background:#fafafa;padding-bottom:120px">
             <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">7 afgeronde bestellingen</div>
             <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price">Bezorging  ·  Card</div></div></div></div>
             <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price">Afhaal  ·  Card</div></div></div></div>
@@ -1525,7 +1525,7 @@
           </div>
 
           <!-- CANCELLED PANE -->
-          <div id="dash-cancelled" class="scroll dash-pane" style="padding:24px;background:#fafafa;padding-bottom:120px">
+          <div id="dash-cancelled" class="scroll dash-pane" style="padding:16px;background:#fafafa;padding-bottom:120px">
             <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">3 geannuleerde bestellingen</div>
             <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price">Bezorging  ·  Card</div><div class="oc-price" style="color:#16a34a;margin-top:2px">Terugbetaald</div></div></div></div>
             <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price">Afhaal  ·  Card</div><div class="oc-price" style="color:#d97706;margin-top:2px">Terugbetaling bezig</div></div></div></div>
@@ -1546,7 +1546,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('orders')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1640,7 +1640,7 @@
       <div class="page" id="p-pause">
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
-            <div onclick="pauseBack()" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+            <div onclick="pauseBack()" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Bestellingen stopzetten</span>
@@ -1661,7 +1661,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('orders')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('orders')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1674,10 +1674,10 @@
             <div class="tab active" onclick="switchMenuTab(this,'menu-pane-items')"><span class="tab-inner"><span class="tab-label">Items</span></span></div>
             <div class="tab" onclick="switchMenuTab(this,'menu-pane-choices')"><span class="tab-inner"><span class="tab-label">Choice Menus</span></span></div>
           </div>
-          <div id="menu-pane-items" class="scroll" style="background:#fafafa;padding:24px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
+          <div id="menu-pane-items" class="scroll" style="background:#fafafa;padding:16px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
             <div id="menu-items-list" style="display:flex;flex-direction:column;gap:12px"></div>
           </div>
-          <div id="menu-pane-choices" class="scroll" style="display:none;background:#fafafa;padding:24px;flex-direction:column;gap:12px;padding-bottom:120px">
+          <div id="menu-pane-choices" class="scroll" style="display:none;background:#fafafa;padding:16px;flex-direction:column;gap:12px;padding-bottom:120px">
 
             <!-- Sauzen -->
             <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
@@ -1751,7 +1751,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('menu')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('menu')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1771,7 +1771,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('nav')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('nav')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1779,7 +1779,7 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#fafafa">
-          <div class="scroll" style="background:#fafafa;padding:24px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
+          <div class="scroll" style="background:#fafafa;padding:16px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
             <div class="menu-cat-row" onclick="goSettingDetail('Taal')">
               <span>Taal</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1828,7 +1828,7 @@
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
-              <div onclick="goPage('settings')" style="width:64px;height:64px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+              <div onclick="goPage('settings')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
@@ -1836,7 +1836,7 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#fafafa">
-          <div class="scroll" id="settings-detail-scroll" style="background:#fafafa;padding:24px;padding-bottom:120px">
+          <div class="scroll" id="settings-detail-scroll" style="background:#fafafa;padding:16px;padding-bottom:120px">
           </div>
         </div>
       </div>
