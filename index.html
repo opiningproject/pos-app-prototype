@@ -174,6 +174,9 @@
   }
   /* All page headers: tight 16px padding (overrides the safe-area media-query rules) */
   .page > .page-header { padding: 16px !important; min-height: 0 !important; }
+  /* Detail page: uniform 14px body text */
+  #p-detail .scroll { font-size: 14px; }
+  #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
   .page-header .tabs {
     background: transparent;
     border-bottom: none;
@@ -1217,7 +1220,7 @@
             <div onclick="goPage('orders')" style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
+            <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
             <div style="display:flex;align-items:center;gap:5px;padding:10px;cursor:pointer;flex-shrink:0">
               <span style="width:5px;height:5px;border-radius:50%;background:#0172af;display:block"></span>
               <span style="width:5px;height:5px;border-radius:50%;background:#0172af;display:block"></span>
@@ -1336,11 +1339,11 @@
         <!-- Sticky action footer -->
         <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 40px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
-            <button onclick="onPrintClick(this)" style="height:56px;padding:0 48px;font-size:18px;font-weight:500;color:#0172af;background:#fff;border:2px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
-            <button id="d-next-btn" onclick="detailNextAction()" style="flex:1;height:56px;font-size:18px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
+            <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:2px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
+            <button id="d-next-btn" onclick="detailNextAction()" style="flex:1;height:42px;font-size:14px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
           </div>
           <div id="d-actions-accept" style="display:none">
-            <button id="d-accept-btn" onclick="acceptFromDetail()" class="accept-btn" style="width:100%;height:56px;font-size:18px;font-weight:500;color:#fff;background:#555;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>
+            <button id="d-accept-btn" onclick="acceptFromDetail()" class="accept-btn" style="width:100%;height:42px;font-size:14px;font-weight:500;color:#fff;background:#555;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span class="accept-label" data-i18n="accept_label">Accept</span><span class="accept-timer">1:00</span></button>
           </div>
         </div>
 
@@ -2386,13 +2389,15 @@
   function onPrintClick(btn){
     if (_printing) return;
     _printing = true;
-    var orig = btn ? btn.innerHTML : '';
-    if (btn){ btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none'; btn.innerHTML = 'Printen…'; }
+    // quick press effect only (no text change) — it prints instantly
+    if (btn){
+      btn.style.transition = 'transform 0.08s ease, opacity 0.08s ease';
+      btn.style.transform = 'scale(0.96)';
+      btn.style.opacity = '0.7';
+      setTimeout(function(){ if (btn){ btn.style.transform = ''; btn.style.opacity = ''; } }, 130);
+    }
     try { silentPrint(); } catch(e){ console.warn(e); }
-    setTimeout(function(){
-      _printing = false;
-      if (btn){ btn.style.opacity = ''; btn.style.pointerEvents = ''; btn.innerHTML = orig; }
-    }, 3000);
+    setTimeout(function(){ _printing = false; }, 1500);   // guard against double-tap
   }
 
   function silentPrint(){
