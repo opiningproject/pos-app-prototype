@@ -38,7 +38,7 @@
     .statusbar { display: none !important; }
     .page-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
     .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
-    #screen-content.has-toast .page-header { min-height: 88px !important; padding-top: 32px !important; }
+    #screen-content.has-toast .page-header { min-height: 0 !important; padding: 16px !important; }
     .filter-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
   }
 
@@ -54,7 +54,7 @@
     .statusbar { display: none !important; }
     .page-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
     .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
-    #screen-content.has-toast .page-header { min-height: 88px !important; padding-top: 32px !important; }
+    #screen-content.has-toast .page-header { min-height: 0 !important; padding: 16px !important; }
     .filter-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
 
     /* Touch targets: guarantee >=48px regardless of zoom */
@@ -1099,7 +1099,6 @@
 
       <div class="accepted-toast" id="accepted-toast">
         <div class="accepted-toast-inner">
-          <span class="accepted-toast-check"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L6.2 11.5L13 4" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span id="accepted-toast-text"></span>
         </div>
       </div>
@@ -3851,7 +3850,7 @@
   function showAcceptedToast(card){
     var el = document.getElementById('accepted-toast');
     var text = document.getElementById('accepted-toast-text');
-    text.textContent = getOrderCode(card) + ' accepted';
+    text.textContent = 'accepted';
     clearTimeout(el._hideTimeout);
     el.classList.add('show');
     el._hideTimeout = setTimeout(function(){ el.classList.remove('show'); }, 3000);
