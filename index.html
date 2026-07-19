@@ -449,7 +449,7 @@
   .ocard:active { background: #f0f0f0; }
 
   /* Accept button frame on new-order cards (fixed height = timer circle) */
-  .oc-accept-frame { height: 96px; flex-shrink: 0; order: 2; display: flex; align-items: center; justify-content: center; }
+  .oc-accept-frame { height: 64px; flex-shrink: 0; order: 2; display: flex; align-items: center; justify-content: center; }
   .oc-accept-btn { height: auto; padding: 6px 16px; background: #0a3b52; color: #fff; border: none; border-radius: 100px; font-size: 14px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; }
   .oc-accept-btn:hover { background: #082f42; }
 
@@ -573,7 +573,7 @@
   }
   .order-toast-inner {
     box-sizing: border-box;
-    padding: calc(env(safe-area-inset-top) + 32px) 24px 32px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -619,8 +619,8 @@
     display: flex;
     align-items: center;
     gap: 9px;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 400;
     white-space: nowrap;
   }
   .accepted-toast-check {
@@ -1351,7 +1351,7 @@
         <!-- Sticky action footer -->
         <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 40px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
-            <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1px solid #111;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
+            <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
             <button id="d-next-btn" onclick="detailNextAction()" style="flex:1;height:42px;font-size:14px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
           </div>
           <div id="d-actions-accept" style="display:none">
