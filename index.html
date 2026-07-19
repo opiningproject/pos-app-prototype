@@ -177,6 +177,11 @@
   /* Detail page: uniform 14px body text */
   #p-detail .scroll { font-size: 14px; }
   #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
+  /* Nav overlay: smaller type + icons */
+  #p-nav .side-nav-item > div > div:first-child { font-size: 16px !important; }
+  #p-nav .side-nav-item > div > div:nth-child(2) { font-size: 14px !important; }
+  #p-nav .side-nav-item > span { font-size: 16px !important; }
+  #p-nav .side-nav-item > svg { width: 22px !important; height: 22px !important; }
   .page-header .tabs {
     background: transparent;
     border-bottom: none;
@@ -1044,7 +1049,7 @@
       <div id="p-nav" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:300;display:none;flex-direction:column;background:rgba(0,0,0,0.80);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);">
 
         <!-- Close button — same position as burger button -->
-        <div onclick="goPage('orders')" style="width:56px;height:56px;margin:32px 0 0 24px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+        <div onclick="goPage('orders')" style="width:48px;height:48px;margin:12px 0 0 12px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
 
@@ -1339,7 +1344,7 @@
         <!-- Sticky action footer -->
         <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 40px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
-            <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1.5px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
+            <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1px solid #111;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
             <button id="d-next-btn" onclick="detailNextAction()" style="flex:1;height:42px;font-size:14px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
           </div>
           <div id="d-actions-accept" style="display:none">
