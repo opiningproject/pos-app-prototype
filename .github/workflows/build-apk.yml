@@ -1,5 +1,6 @@
 name: Build Android APK
 
+# rebuild trigger: new launcher icon (2026-07-20)
 on:
   push:
     paths:
