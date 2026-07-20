@@ -177,6 +177,7 @@
   /* Detail page: uniform 14px body text */
   #p-detail .scroll { font-size: 14px; }
   #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
+  #p-detail .scroll #d-customer-type-badge, #p-detail .scroll #d-pay-badge { font-size: 12px !important; }
   /* Nav overlay: smaller type + icons */
   #p-nav .side-nav-item > div > div:first-child { font-size: 16px !important; }
   #p-nav .side-nav-item > div > div:nth-child(2) { font-size: 14px !important; }
@@ -1226,7 +1227,7 @@
 
       <!-- ===== DETAIL PAGE ===== -->
       <div class="page" id="p-detail">
-        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
+        <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff">
           <div class="page-header-row">
             <div onclick="goPage('orders')" style="width:40px;height:40px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="8" height="15" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1271,7 +1272,7 @@
           <div style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 16px">
             <div style="padding:16px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;gap:12px">
               <span id="d-detail-name" style="font-size:20px;font-weight:600;color:#111">Thomas Jefferson</span>
-              <span id="d-customer-type-badge" style="font-size:15px;font-weight:600;border-radius:100px;padding:7px 16px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">Nieuwe klant</span>
+              <span id="d-customer-type-badge" style="font-size:12px;font-weight:600;border-radius:100px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">Nieuwe klant</span>
             </div>
             <div id="d-customer-details" style="display:flex;flex-direction:column;gap:10px;padding-top:18px;padding-bottom:16px">
               <span style="font-size:17px;color:#111">+31 6 14 52 24 53</span>
@@ -1288,7 +1289,7 @@
           <div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0">
             <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">€ 31,00</span>
-            <span id="d-pay-badge" style="font-size:15px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:7px 16px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
+            <span id="d-pay-badge" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:100px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
           </div>
           <div id="d-order-summary-body">
             <div style="padding:18px 0;border-top:1px solid #f0f0f0">
