@@ -178,6 +178,9 @@
   #p-detail .scroll { font-size: 14px; }
   #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
   #p-detail .scroll #d-customer-type-badge, #p-detail .scroll #d-pay-badge { font-size: 12px !important; }
+  /* New-order popup: fixed 73px header with vertically-centred title */
+  #p-detail > .page-header.d-new-header { height: 73px !important; min-height: 73px !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+  #p-detail > .page-header.d-new-header #d-header-status { top: 50% !important; transform: translate(-50%, -50%) !important; }
   #p-detail .scroll #d-sched-time { font-size: 34px !important; }
   #p-detail .scroll #d-new-schedule .sched-pm { font-size: 26px !important; }
   #p-detail .scroll #d-sched-mins { font-size: 15px !important; }
@@ -2380,6 +2383,8 @@
     if (schedBlock) schedBlock.style.display = isUnaccepted ? 'block' : 'none';
     if (timerCard) timerCard.style.display = isUnaccepted ? 'none' : 'block';
     if (actionFooter) actionFooter.style.display = isUnaccepted ? 'none' : 'block';
+    var detailHeaderEl = document.querySelector('#p-detail > .page-header');
+    if (detailHeaderEl) detailHeaderEl.classList.toggle('d-new-header', isUnaccepted);
     if (isUnaccepted) { schedPrepMins = parseInt(mins, 10) || 45; schedRender(); }
     if (isUnaccepted) {
       var detailBtn = document.getElementById('d-accept-btn');
