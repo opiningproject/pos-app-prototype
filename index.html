@@ -185,11 +185,16 @@
   #p-detail .d-order-card, #p-detail #d-top-timer-card { border-color: transparent !important; padding-left: 0 !important; padding-right: 0 !important; }
   /* New-order popup: show the scroll-for-more fade */
   #p-detail.new-order-mode #d-scroll-fade { display: flex !important; }
+  /* Order-detail options dropdown (three dots) */
+  #d-order-menu { position: absolute; top: calc(100% - 6px); right: 16px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); z-index: 260; min-width: 210px; overflow: hidden; }
+  #d-order-menu .d-menu-item { display: flex; align-items: center; gap: 10px; padding: 15px 16px; cursor: pointer; font-size: 14px; font-weight: 500; color: #c62828; }
+  #d-order-menu .d-menu-item:active { background: #f7f7f7; }
   #p-detail.new-order-mode.scrolled-bottom #d-scroll-fade { display: none !important; }
   /* New-order popup: hide phone + email, keep only the address (heavier) */
   #p-detail.new-order-mode #d-customer-details > span { display: none !important; }
   #p-detail.new-order-mode #d-customer-addr-block { margin-top: 0 !important; }
-  #p-detail.new-order-mode #d-customer-addr-block span { font-weight: 500 !important; }
+  #p-detail.new-order-mode #d-customer-addr-block span { font-weight: 500 !important; font-size: 18px !important; }
+  #p-detail.new-order-mode #d-detail-name, #p-detail.new-order-mode #d-items-count { font-size: 16px !important; font-weight: 500 !important; }
   #p-detail .scroll #d-sched-time { font-size: 34px !important; }
   #p-detail .scroll #d-new-schedule .sched-pm { font-size: 26px !important; }
   #p-detail .scroll #d-sched-mins { font-size: 15px !important; }
@@ -472,12 +477,22 @@
   .oc-accept-btn:hover { background: #082f42; }
 
   /* Time column */
-  .tcol { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; order: 2; }
+  .tcol { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; order: 1; }
+  .oc-action { width: 56px; height: 56px; flex-shrink: 0; order: 3; border: 1.5px solid #e8e8e8; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fff; }
+  .oc-action:active { background: #f0f0f0; }
+  .oc-action svg { width: 24px; height: 24px; }
+  .oc-action-archive svg { width: 20px; height: 20px; }
+  .oc-tnum { font-size: 22px; font-weight: 600; line-height: 1.1; color: #333; }
+  .oc-tlabel { font-size: 12px; color: #aaa; font-weight: 500; }
+  .ocard.has-progress .ocard-row { padding-bottom: 16px; }
+  .oc-progress { height: 4px; background: #f0f0f0; margin: 0; overflow: hidden; }
+  .oc-progress-fill { height: 100%; background: #4caf50; }
   .tcol svg { width: 64px; height: 64px; }
   .oc-price { font-size: 14px; color: #888; font-weight: 500; margin-top: 4px; }
-  .oc-pay-badge { display:inline-block; font-size:12px; font-weight:600; padding:5px 12px; border-radius:100px; margin-top:10px; }
-  .oc-pay-paid { background:#e6f4ea; color:#2e7d32; }
+  .oc-pay-badge { display:inline-block; font-size:12px; font-weight:600; padding:3px 6px; border-radius:4px; margin-top:10px; }
+  .oc-pay-paid { background:#f0f0f0; color:#555; }
   .oc-pay-cash { background:#f0f0f0; color:#555; }
+  .oc-pay-unpaid { background:#fdecea; color:#c62828; }
   .oc-action-btn { background:#111 !important; color:#fff !important; border:none !important; border-radius:100px !important; height:56px; font-size:16px; font-weight:600; }
   .oc-action-btn:hover { background:#000 !important; }
   .sched-badge {
@@ -492,7 +507,7 @@
   }
 
   /* Middle column */
-  .mcol { flex: 1; min-width: 0; order: 1; }
+  .mcol { flex: 1; min-width: 0; order: 2; }
   .dname { font-size: 14px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .daddr { font-size: 16px; color: #888; margin-top: 4px; line-height: 1.4; min-height: calc(16px * 1.4 * 2); }
   .oid { font-size: 14px; color: #888; margin-top: 2px; }
@@ -1254,10 +1269,17 @@
               <svg width="8" height="15" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
-            <div id="d-header-menu" style="display:flex;align-items:center;gap:4px;padding:6px;cursor:pointer;flex-shrink:0">
+            <div id="d-header-menu" onclick="toggleOrderMenu()" style="display:flex;align-items:center;gap:4px;padding:6px;cursor:pointer;flex-shrink:0">
               <span style="width:4px;height:4px;border-radius:50%;background:#0172af;display:block"></span>
               <span style="width:4px;height:4px;border-radius:50%;background:#0172af;display:block"></span>
               <span style="width:4px;height:4px;border-radius:50%;background:#0172af;display:block"></span>
+            </div>
+          </div>
+          <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()" style="display:none;position:fixed;inset:0;z-index:250"></div>
+          <div id="d-order-menu" style="display:none">
+            <div class="d-menu-item" onclick="cancelOrder()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#c62828" stroke-width="2"/><path d="M9 9l6 6M15 9l-6 6" stroke="#c62828" stroke-width="2" stroke-linecap="round"/></svg>
+              <span data-i18n="d_cancel_order">Bestelling annuleren</span>
             </div>
           </div>
         </div>
@@ -1273,7 +1295,7 @@
             </div>
             <div id="d-sched-mins" style="text-align:center;color:#888;margin-top:10px">45 min</div>
             <div style="text-align:center;margin-top:12px">
-              <span id="d-sched-badge" data-i18n="d_scheduled" style="font-weight:600;color:#7b4bc4;background:#f1eafc;border-radius:100px;padding:4px 12px;display:inline-block">Gepland</span>
+              <span id="d-sched-badge" data-i18n="d_scheduled" style="font-weight:600;color:#7b4bc4;background:#f1eafc;border-radius:4px;padding:4px 12px;display:inline-block">Gepland</span>
             </div>
             <button id="d-confirm-btn" onclick="confirmSchedule()" style="width:100%;height:48px;margin-top:20px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span data-i18n="d_confirm">Bevestigen</span></button>
           </div>
@@ -1299,7 +1321,7 @@
 
 
           <div id="d-note-section" style="display:none;margin:16px 16px 0;background:#eaf4fb;border-radius:4px;padding:16px;align-items:center;gap:12px">
-            <svg width="17" height="17" viewBox="0 0 683 683" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M656 471.777V106.667C656 62.484 620.183 26.6667 576 26.6667H106.667C62.4843 26.6667 26.667 62.484 26.667 106.667V471.777C26.667 515.96 62.4843 551.777 106.667 551.777C120.414 551.777 131.556 562.92 131.556 576.667V618.916C131.556 639.397 148.159 656 168.639 656C178.475 656 187.908 652.093 194.862 645.139L280.932 559.068C285.6 554.4 291.931 551.777 298.531 551.777H576C620.183 551.777 656 515.96 656 471.777Z" stroke="#0172af" stroke-width="53.3333" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M15.2 16H8C6.20398 16 4.4602 15.3956 3.04937 14.2842C1.63855 13.1728 0.642761 11.6189 0.222309 9.87282C-0.198143 8.1267 -0.0187979 6.28989 0.731475 4.65808C1.48175 3.02628 2.7593 1.6944 4.35846 0.876865C5.95763 0.0593277 7.78538 -0.196309 9.54749 0.151107C11.3096 0.498522 12.9035 1.42878 14.0727 2.79212C15.2419 4.15547 15.9183 5.87258 15.9931 7.66705C16.0678 9.46152 15.5366 11.2289 14.4848 12.6848L15.8656 14.756C15.946 14.8765 15.9921 15.0165 15.9992 15.1612C16.0062 15.3059 15.9738 15.4497 15.9055 15.5774C15.8372 15.7051 15.7355 15.8119 15.6112 15.8863C15.487 15.9607 15.3448 16 15.2 16ZM8 1.60001C6.30262 1.60001 4.67475 2.27429 3.47452 3.47452C2.27429 4.67476 1.60001 6.30262 1.60001 8.00001C1.60001 9.69739 2.27429 11.3253 3.47452 12.5255C4.67475 13.7257 6.30262 14.4 8 14.4H13.7048L12.9344 13.244C12.8467 13.1125 12.8 12.958 12.8 12.8V12.5248C12.801 12.342 12.8639 12.1649 12.9784 12.0224C13.7378 11.0826 14.2156 9.94709 14.3567 8.74711C14.4977 7.54713 14.2962 6.33174 13.7754 5.2415C13.2546 4.15125 12.4359 3.23069 11.4139 2.58628C10.3918 1.94187 9.20824 1.59993 8 1.60001Z" fill="#0172AF"/><path d="M10.3998 7.20156H5.5998C5.38763 7.20156 5.18415 7.11728 5.03412 6.96725C4.88409 6.81722 4.7998 6.61374 4.7998 6.40156C4.7998 6.18939 4.88409 5.98591 5.03412 5.83588C5.18415 5.68585 5.38763 5.60156 5.5998 5.60156H10.3998C10.612 5.60156 10.8155 5.68585 10.9655 5.83588C11.1155 5.98591 11.1998 6.18939 11.1998 6.40156C11.1998 6.61374 11.1155 6.81722 10.9655 6.96725C10.8155 7.11728 10.612 7.20156 10.3998 7.20156Z" fill="#0172AF"/><path d="M10.3998 10.4008H5.5998C5.38763 10.4008 5.18415 10.3165 5.03412 10.1665C4.88409 10.0164 4.7998 9.81295 4.7998 9.60078C4.7998 9.38861 4.88409 9.18512 5.03412 9.0351C5.18415 8.88507 5.38763 8.80078 5.5998 8.80078H10.3998C10.612 8.80078 10.8155 8.88507 10.9655 9.0351C11.1155 9.18512 11.1998 9.38861 11.1998 9.60078C11.1998 9.81295 11.1155 10.0164 10.9655 10.1665C10.8155 10.3165 10.612 10.4008 10.3998 10.4008Z" fill="#0172AF"/></svg>
             <div id="d-note-text" style="font-size:18px;font-weight:500;color:#0a4f73;line-height:1.5">Extra napkins please</div>
           </div>
 
@@ -1734,14 +1756,14 @@
 
             <!-- Sauzen -->
             <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
                 <div>
                   <div style="font-size:18px;font-weight:600;color:#111">Sauzen</div>
                   <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:22px">
-                  <svg onclick="toggleChoiceGroup(this)" width="14" height="9" viewBox="0 0 14 9" fill="none" style="cursor:pointer;transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="toggleGroupMain(this)"></div>
+                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
                 </div>
               </div>
               <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
@@ -1753,14 +1775,14 @@
 
             <!-- Extras -->
             <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
                 <div>
                   <div style="font-size:18px;font-weight:600;color:#111">Extras</div>
                   <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:22px">
-                  <svg onclick="toggleChoiceGroup(this)" width="14" height="9" viewBox="0 0 14 9" fill="none" style="cursor:pointer;transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="toggleGroupMain(this)"></div>
+                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
                 </div>
               </div>
               <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
@@ -1772,14 +1794,14 @@
 
             <!-- Dressings -->
             <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
                 <div>
                   <div style="font-size:18px;font-weight:600;color:#111">Dressings</div>
                   <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:22px">
-                  <svg onclick="toggleChoiceGroup(this)" width="14" height="9" viewBox="0 0 14 9" fill="none" style="cursor:pointer;transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="toggleGroupMain(this)"></div>
+                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
                 </div>
               </div>
               <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
@@ -2171,6 +2193,7 @@
       d_wished_label:'Requested:', d_delivery:'Delivery', d_pickup:'Pickup',
       d_subtotal:'Subtotal', d_shipping:'Delivery', d_service:'Service fee',
       d_returning_customer:'Returning customer', d_confirm:'Confirm', d_scheduled:'Scheduled',
+      d_cancel_order:'Cancel order', toast_order_cancelled:'Order cancelled', toast_order_completed:'Order completed',
       co_page_title:'Create order', co_sec_customer:'Customer', co_sec_products:'Products', co_sec_payment:'Payment',
       co_add_customer_opt:'Add customer (optional)', co_products_add:'Add products', co_notes:'Notes',
       co_wished_time:'Requested time', co_subtotal:'Subtotal', co_discount:'Discount', co_add_discount:'Add discount',
@@ -2190,7 +2213,7 @@
       dash_online_paid:'Paid online', dash_cash:'Cash',
       login_error:'Incorrect username or password', sim_new_order:'Simulate new order', dash_cancelled_orders:'cancelled orders',
       refund_done:'Refunded', refund_pending:'Refund in progress', refund_none:'No refund required',
-      otime_asap:'ASAP', otime_today:'Today', otime_tomorrow:'Tomorrow',
+      otime_asap:'ASAP', otime_asap_full:'As soon as possible', otime_minutes:'minutes', otime_today:'Today', otime_tomorrow:'Tomorrow',
       oc_move_kitchen:'Move to kitchen', oc_move_delivery:'Move to delivery', oc_move_archive:'Complete order',
       oc_pay_paid:'Paid', oc_pay_cash:'Cash', oc_auto_archived:'Auto-archived',
       filter_by:'Filter by', filter_reset:'Reset', filter_search:'Search options...', filter_is:'Is', filter_isnot:'Is not',
@@ -2251,6 +2274,7 @@
       d_wished_label:'Gewenst:', d_delivery:'Bezorging', d_pickup:'Afhaal',
       d_subtotal:'Subtotaal', d_shipping:'Bezorging', d_service:'Servicekosten',
       d_returning_customer:'Vaste klant', d_confirm:'Bevestigen', d_scheduled:'Gepland',
+      d_cancel_order:'Bestelling annuleren', toast_order_cancelled:'Bestelling geannuleerd', toast_order_completed:'Bestelling afgerond',
       co_page_title:'Bestelling aanmaken', co_sec_customer:'Klant', co_sec_products:'Producten', co_sec_payment:'Betaling',
       co_add_customer_opt:'Voeg klant toe (optioneel)', co_products_add:'Producten toevoegen', co_notes:'Notities',
       co_wished_time:'Gewenste tijd', co_subtotal:'Subtotaal', co_discount:'Korting', co_add_discount:'Korting toevoegen',
@@ -2270,7 +2294,7 @@
       dash_online_paid:'Online betaald', dash_cash:'Contant',
       login_error:'Onjuiste gebruikersnaam of wachtwoord', sim_new_order:'Simuleer nieuwe bestelling', dash_cancelled_orders:'geannuleerde bestellingen',
       refund_done:'Terugbetaald', refund_pending:'Terugbetaling bezig', refund_none:'Geen terugbetaling vereist',
-      otime_asap:'ZSM', otime_today:'Vandaag', otime_tomorrow:'Morgen',
+      otime_asap:'ZSM', otime_asap_full:'Zo snel mogelijk', otime_minutes:'minuten', otime_today:'Vandaag', otime_tomorrow:'Morgen',
       oc_move_kitchen:'Verplaats naar keuken', oc_move_delivery:'Verplaats naar bezorging', oc_move_archive:'Bestelling afronden',
       oc_pay_paid:'Betaald', oc_pay_cash:'Contant', oc_auto_archived:'Automatisch gearchiveerd',
       filter_by:'Filteren op', filter_reset:'Opnieuw instellen', filter_search:'Zoek opties...', filter_is:'Is', filter_isnot:'Is niet',
@@ -2304,6 +2328,7 @@
   }
   function refreshDynamicLabels(){
     if (typeof setNavRestaurantState === 'function') setNavRestaurantState();
+    if (typeof renderAllOrderCards === 'function') renderAllOrderCards();
     var nextBtn = document.getElementById('d-next-btn');
     if (nextBtn && nextBtn.dataset.nextKey) nextBtn.textContent = t(nextBtn.dataset.nextKey);
     var acceptBtn = document.getElementById('d-accept-btn');
@@ -2381,6 +2406,46 @@
     var sc = document.querySelector('#p-detail .scroll');
     if (sc) sc.scrollBy({ top: 260, behavior: 'smooth' });
   }
+  function closeOrderMenu(){
+    var m = document.getElementById('d-order-menu');
+    var b = document.getElementById('d-order-menu-backdrop');
+    if (m) m.style.display = 'none';
+    if (b) b.style.display = 'none';
+  }
+  function toggleOrderMenu(){
+    var m = document.getElementById('d-order-menu');
+    var b = document.getElementById('d-order-menu-backdrop');
+    var open = m.style.display === 'block';
+    m.style.display = open ? 'none' : 'block';
+    if (b) b.style.display = open ? 'none' : 'block';
+  }
+  function cancelOrder(){
+    closeOrderMenu();
+    var card = window._detailCard;
+    if (!card && window._detailOid) {
+      card = document.querySelector('#orders-panes .ocard[data-oid="' + window._detailOid + '"]');
+    }
+    if (card) {
+      var list = card.closest('[id^="t-"]');
+      if (list) {
+        var tabName = list.id.replace('t-', '');
+        if (['new','kitchen','delivery'].indexOf(tabName) !== -1) adjustTabCount(tabName, -1);
+      }
+      if (card._acceptInterval) clearInterval(card._acceptInterval);
+      if (card._tickInterval) clearInterval(card._tickInterval);
+      card.remove();
+      checkEmptyStates();
+    }
+    goPage(window._detailReturnPage || 'orders');
+    var toast = document.getElementById('accepted-toast');
+    var txt = document.getElementById('accepted-toast-text');
+    if (toast && txt) {
+      txt.textContent = t('toast_order_cancelled');
+      clearTimeout(toast._hideTimeout);
+      toast.classList.add('show');
+      toast._hideTimeout = setTimeout(function(){ toast.classList.remove('show'); }, 3000);
+    }
+  }
   function updateDetailFade(){
     var sc = document.querySelector('#p-detail .scroll');
     if (!sc) return;
@@ -2394,6 +2459,7 @@
     }
     closeOrderToast();
     window._detailCard = cardEl || null;
+    window._detailOid = oid;
     var isUnaccepted = !!(cardEl && cardEl.dataset.newOrder === '1');
     document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
     document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
@@ -2412,7 +2478,26 @@
     var detailHeaderEl = document.querySelector('#p-detail > .page-header');
     if (detailHeaderEl) detailHeaderEl.classList.toggle('d-new-header', isUnaccepted);
     document.getElementById('p-detail').classList.toggle('new-order-mode', isUnaccepted);
-    if (isUnaccepted) { schedPrepMins = parseInt(mins, 10) || 45; schedRender(); }
+    closeOrderMenu();
+    if (isUnaccepted) {
+      schedPrepMins = parseInt(mins, 10) || 45;
+      schedRender();
+      var schedBadgeEl = document.getElementById('d-sched-badge');
+      if (schedBadgeEl) {
+        var isAsapOrder = (id !== '26'); // demo: only #26 has a fixed requested time
+        if (isAsapOrder) {
+          schedBadgeEl.setAttribute('data-i18n', 'otime_asap_full');
+          schedBadgeEl.textContent = t('otime_asap_full');
+          schedBadgeEl.style.color = '#555';
+          schedBadgeEl.style.background = '#f0f0f0';
+        } else {
+          schedBadgeEl.setAttribute('data-i18n', 'd_scheduled');
+          schedBadgeEl.textContent = t('d_scheduled');
+          schedBadgeEl.style.color = '#7b4bc4';
+          schedBadgeEl.style.background = '#f1eafc';
+        }
+      }
+    }
     if (isUnaccepted) {
       var detailBtn = document.getElementById('d-accept-btn');
       if (detailBtn) {
@@ -2442,8 +2527,17 @@
     if(custAddrBlock){
       if(isDelivery){
         custAddrBlock.style.display='flex';
-        if(custAddr) custAddr.textContent=streetAddr;
-        if(custCity){ custCity.textContent=cityAddr; custCity.style.display=cityAddr?'block':'none'; }
+        if (isUnaccepted) {
+          // New-order popup: single line "street, city, postcode"
+          var pm = (cityAddr||'').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
+          var pc = pm ? pm[1] : '';
+          var cityName = pm ? pm[2] : cityAddr;
+          if(custAddr) custAddr.textContent = streetAddr + (cityName?', '+cityName:'') + (pc?', '+pc:'');
+          if(custCity) custCity.style.display='none';
+        } else {
+          if(custAddr) custAddr.textContent=streetAddr;
+          if(custCity){ custCity.textContent=cityAddr; custCity.style.display=cityAddr?'block':'none'; }
+        }
         if(openMap2) openMap2.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
       } else {
         custAddrBlock.style.display='none';
@@ -2742,6 +2836,137 @@
       emptyEl.style.display=hasCards?'none':'flex';
     });
   }
+
+  // Order-card text column: address (or Afhaal) on top, paid/not-paid badge below
+  function renderOrderCardText(card){
+    var oc = card.getAttribute('onclick') || '';
+    var m = oc.match(/goDetail\(([^)]*)\)/);
+    if (!m) return;
+    var a = m[1].split(',').map(function(s){ return s.trim().replace(/^'|'$/g, ''); });
+    var addr = a[2] || '', pay = a[5] || '', type = a[6] || '';
+    var mcol = card.querySelector('.mcol');
+    if (!mcol) return;
+    var topText;
+    if (type === 'Collection') {
+      topText = t('d_pickup');
+    } else {
+      var parts = addr.split('||');
+      var street = parts[0] || '';
+      var cityRaw = parts[1] || '';
+      var pm = cityRaw.match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
+      var cityName = pm ? pm[2] : cityRaw;
+      topText = street + (cityName ? ', ' + cityName : '');
+    }
+    var isPaid = (pay === 'Paid');
+    var payKey = isPaid ? 'd_paid' : 'd_cash';
+    var payClass = isPaid ? 'oc-pay-paid' : 'oc-pay-unpaid';
+    mcol.innerHTML = '<div class="dname" style="white-space:normal">' + topText + '</div>' +
+      '<div class="oc-pay-badge ' + payClass + '" data-i18n="' + payKey + '">' + t(payKey) + '</div>';
+  }
+  // Next-action icons for the card action button
+  var ICON_KITCHEN = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 15.5c1.8-.5 3-2.1 3-4a4 4 0 0 0-4.3-4A4 4 0 0 0 8.3 7.5 4 4 0 0 0 4 11.5c0 1.9 1.2 3.5 3 4" stroke="#0172AF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 15.5h10v3.2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z" stroke="#0172AF" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+  var ICON_DELIVERY = '<svg width="30" height="30" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M43.4874 26.1014C43.0708 26.0471 42.6461 26.0187 42.215 26.0187C41.5376 26.0187 40.8761 26.088 40.2372 26.2197L36.251 15.6815H41.0228V16.6616C41.0228 16.6844 41.0042 16.7029 40.9815 16.7029C40.1305 16.7029 39.4406 17.3928 39.4406 18.2438C39.4406 19.0948 40.1305 19.7848 40.9815 19.7848C42.7037 19.7848 44.1047 18.3836 44.1047 16.6616V14.1406C44.1047 13.2896 43.4148 12.5996 42.5637 12.5996H34.0206C33.5144 12.5996 33.0406 12.8482 32.7528 13.2647C32.4651 13.6812 32.4002 14.2124 32.5793 14.6858L34.1315 18.7891H19.9276L21.361 15.6815H23.3156C24.1666 15.6815 24.8565 14.9916 24.8565 14.1406C24.8565 13.2896 24.1666 12.5996 23.3156 12.5996H17.9529L17.9671 15.6815L16.5338 18.7891H15.4608V7.9511C15.4608 7.10009 14.7709 6.41016 13.9199 6.41016H1.54095C0.689934 6.41016 0 7.10009 0 7.9511V20.3301C0 21.1811 0.689934 21.871 1.54095 21.871H15.1122L8.98342 35.1584C8.76337 35.6356 8.80148 36.192 9.08481 36.6344C9.36804 37.077 9.85734 37.3447 10.3827 37.3447C10.3827 37.3447 25.7908 37.345 25.801 37.345C26.0413 37.345 26.285 37.2886 26.5123 37.17C26.5238 37.164 26.5315 37.1599 26.5391 37.1558C26.7694 37.0294 26.9537 36.8546 27.0875 36.6506L35.9833 23.6845L37.3558 27.3128C34.888 28.7306 33.0936 31.1931 32.5801 34.0926C32.4816 34.6483 32.4301 35.2201 32.4301 35.8037C32.4301 41.1992 36.8196 45.5888 42.2151 45.5888C47.6106 45.5888 52.0001 41.1992 52.0001 35.8037C52 30.8394 48.284 26.727 43.4874 26.1014ZM6.93426 15.6815C6.08325 15.6815 5.39332 14.9916 5.39332 14.1406C5.39332 13.2896 6.08325 12.5996 6.93426 12.5996H8.52658C9.37759 12.5996 10.0675 13.2896 10.0675 14.1406C10.0675 14.9916 9.37759 15.6815 8.52658 15.6815H6.93426ZM12.7905 34.2628L17.6223 23.7873L23.2275 34.2628H12.7905ZM25.9628 32.8422L20.0922 21.871H33.4898L25.9628 32.8422ZM42.215 42.5069C38.5189 42.5069 35.5119 39.4999 35.5119 35.8037C35.5119 34.7641 35.7498 33.779 36.1741 32.9C36.6919 31.8271 37.4873 30.9124 38.4665 30.2494L40.7737 36.3489C41.007 36.9655 41.5931 37.3451 42.2153 37.3451C42.3964 37.3451 42.5807 37.3129 42.7602 37.245C43.5562 36.9438 43.9574 36.0545 43.6564 35.2585L41.3489 29.1584C41.6327 29.1217 41.9214 29.1006 42.215 29.1006C43.1389 29.1006 44.0198 29.2885 44.8215 29.6281C47.2267 30.6471 48.9181 33.0316 48.9181 35.8037C48.9181 39.4999 45.911 42.5069 42.215 42.5069ZM10.3827 42.5069C6.68658 42.5069 3.67958 39.4999 3.67958 35.8037C3.67958 32.8655 5.5808 30.3644 8.21705 29.4617L9.79683 26.0368C4.67308 26.3409 0.597682 30.605 0.597682 35.8037C0.597682 41.1992 4.98723 45.5888 10.3827 45.5888C14.1072 45.5888 17.3519 43.497 19.0047 40.4268C17.7328 40.4268 16.4276 40.4268 15.2296 40.4267C14.0081 41.7068 12.2876 42.5069 10.3827 42.5069Z" fill="#0172AF"/></svg>';
+  var ICON_CHECK = '<svg width="24" height="18" viewBox="0 0 39 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M37.2042 0.884764C36.0257 -0.295293 34.112 -0.294549 32.932 0.884764L13.704 20.1135L5.15801 11.5675C3.97795 10.3875 2.0651 10.3875 0.885043 11.5675C-0.295014 12.7476 -0.295014 14.6605 0.885043 15.8405L11.5671 26.5225C12.1567 27.1122 12.9299 27.4078 13.7032 27.4078C14.4765 27.4078 15.2504 27.1129 15.84 26.5225L37.2042 5.15765C38.3842 3.97841 38.3842 2.06475 37.2042 0.884764Z" fill="#0172AF"/></svg>';
+  var CARD_ICONS = { kitchen: ICON_KITCHEN, delivery: ICON_DELIVERY, archive: ICON_CHECK };
+
+  function cardNext(card){
+    if (card.dataset.next) return card.dataset.next;
+    var m = (card.getAttribute('onclick') || '').match(/goDetail\(([^)]*)\)/);
+    var next = 'kitchen';
+    if (m) { var a = m[1].split(',').map(function(s){ return s.trim().replace(/^'|'$/g, ''); }); next = a[8] || 'kitchen'; }
+    card.dataset.next = next;
+    return next;
+  }
+  function renderOrderCard(card){
+    renderOrderCardText(card);
+    var row = card.querySelector('.ocard-row');
+    if (!row) return;
+    // Timer ring -> plain number + horizontal progress bar at the card bottom
+    var tcol = card.querySelector('.tcol');
+    if (tcol) {
+      var svg = tcol.querySelector('svg');
+      if (svg) {
+        var numEl = svg.querySelector('text');
+        var num = numEl ? numEl.textContent : '';
+        var numColor = numEl ? (numEl.getAttribute('fill') || '#333') : '#333';
+        var circles = svg.querySelectorAll('circle');
+        var prog = circles[circles.length - 1];
+        var frac = 1, color = '#4caf50';
+        if (prog) {
+          var da = parseFloat(prog.getAttribute('stroke-dasharray')) || 1;
+          var doff = parseFloat(prog.getAttribute('stroke-dashoffset')) || 0;
+          frac = Math.max(0, Math.min(1, (da - doff) / da));
+          color = prog.getAttribute('stroke') || '#4caf50';
+        }
+        tcol.innerHTML = '<div class="oc-tnum" style="color:' + numColor + '">' + num + '</div><div class="oc-tlabel">' + t('otime_minutes') + '</div>';
+        card.classList.add('has-progress');
+        var bar = card.querySelector('.oc-progress');
+        if (!bar) { bar = document.createElement('div'); bar.className = 'oc-progress'; card.appendChild(bar); }
+        bar.innerHTML = '<div class="oc-progress-fill" style="width:' + (frac * 100) + '%;background:' + color + '"></div>';
+      }
+      var lbl = tcol.querySelector('.oc-tlabel');
+      if (lbl) lbl.textContent = t('otime_minutes');
+    }
+    var next = cardNext(card);
+    var action = card.querySelector('.oc-action');
+    if (!action) {
+      var frame = card.querySelector('.oc-accept-frame');
+      action = document.createElement('div');
+      action.className = 'oc-action';
+      action.setAttribute('onclick', 'advanceOrderCard(this,event)');
+      if (frame) { frame.replaceWith(action); } else { row.appendChild(action); }
+    }
+    if (typeof CARD_ICONS !== 'undefined') action.innerHTML = CARD_ICONS[next] || ICON_KITCHEN;
+    action.className = 'oc-action oc-action-' + next;
+  }
+  function setCardNext(card, newNext){
+    card.dataset.next = newNext;
+    var oc = card.getAttribute('onclick');
+    var m = oc && oc.match(/^(.*goDetail\()([^)]*)(\).*)$/);
+    if (m) {
+      var args = m[2].split(',');
+      if (args[8] !== undefined) { args[8] = "'" + newNext + "'"; card.setAttribute('onclick', m[1] + args.join(',') + m[3]); }
+    }
+  }
+  function advanceOrderCard(btn, e){
+    if (e) e.stopPropagation();
+    var card = btn.closest('.ocard');
+    if (!card) return;
+    var next = cardNext(card);
+    var fromList = card.closest('[id^="t-"]');
+    var fromTab = fromList ? fromList.id.replace('t-', '') : null;
+    if (card._acceptInterval) clearInterval(card._acceptInterval);
+    if (card._tickInterval) clearInterval(card._tickInterval);
+    delete card.dataset.newOrder;
+    if (next === 'archive') {
+      if (fromTab) adjustTabCount(fromTab, -1);
+      card.remove();
+      checkEmptyStates();
+      showCardToast('toast_order_completed');
+      return;
+    }
+    var targetTab = next; // 'kitchen' or 'delivery'
+    if (fromTab) adjustTabCount(fromTab, -1);
+    adjustTabCount(targetTab, +1);
+    var targetList = document.getElementById('t-' + targetTab);
+    if (targetList) targetList.insertBefore(card, targetList.firstChild);
+    setCardNext(card, (next === 'kitchen') ? 'delivery' : 'archive');
+    renderOrderCard(card);
+    checkEmptyStates();
+  }
+  function showCardToast(key){
+    var toast = document.getElementById('accepted-toast');
+    var txt = document.getElementById('accepted-toast-text');
+    if (!toast || !txt) return;
+    txt.textContent = t(key);
+    clearTimeout(toast._hideTimeout);
+    toast.classList.add('show');
+    toast._hideTimeout = setTimeout(function(){ toast.classList.remove('show'); }, 3000);
+  }
+  function renderAllOrderCards(){
+    document.querySelectorAll('#orders-panes .ocard[onclick]').forEach(renderOrderCard);
+  }
+  renderAllOrderCards(); // initial render now that the icon constants are defined
 
   function toggleCoDropdown() {
     var dd = document.getElementById('co-dropdown');
@@ -3691,12 +3916,13 @@
     updateChoiceStatus(group);
   }
 
-  function toggleChoiceGroup(chevron) {
-    var card = chevron.closest('.choice-group');
+  function toggleChoiceGroup(el) {
+    var card = el.closest('.choice-group');
     var sub = card.querySelector('.choice-sub');
+    var chevron = card.querySelector('svg');
     var open = sub.style.display !== 'none';
     sub.style.display = open ? 'none' : 'block';
-    chevron.style.transform = open ? '' : 'rotate(180deg)';
+    if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
   }
 
   function setNavRestaurantState() {
@@ -4014,6 +4240,7 @@
         '<div class="oc-price">'+priceStr+'</div>'+
       '</div></div>';
     if (card === toastOrderCard) closeOrderToast();
+    renderOrderCard(card);
     showAcceptedToast(card);
     reorderNewList(card);
   }
@@ -4078,6 +4305,7 @@
           '<div class="dname">'+dname+'</div>'+
           '<div class="oc-price">'+priceStr+'</div>'+
         '</div></div>';
+      renderOrderCard(card);
       reorderNewList(card);
     }
     closeOrderToast();
@@ -4178,6 +4406,7 @@
       '</div>';
     var list = document.getElementById('t-new');
     list.insertBefore(card, list.firstChild);
+    renderOrderCard(card);
     adjustTabCount('new', 1);
     document.querySelectorAll('.ni-wrap .reddot').forEach(function(dot){
       dot.textContent = String(parseInt(dot.textContent||'0') + 1);
