@@ -186,9 +186,10 @@
   /* New-order popup: show the scroll-for-more fade */
   #p-detail.new-order-mode #d-scroll-fade { display: flex !important; }
   /* Order-detail options dropdown (three dots) */
-  #d-order-menu { position: absolute; top: calc(100% - 6px); right: 16px; background: #fff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); z-index: 260; min-width: 210px; overflow: hidden; }
+  #d-order-menu { position: absolute; top: calc(100% - 6px); right: 16px; background: #fff; border-radius: 12px; z-index: 260; min-width: 210px; overflow: hidden; padding: 12px; }
   #d-order-menu .d-menu-item { display: flex; align-items: center; gap: 10px; padding: 15px 16px; cursor: pointer; font-size: 14px; font-weight: 500; color: #c62828; }
   #d-order-menu .d-menu-item:active { background: #f7f7f7; }
+  #d-order-menu .d-menu-item.neutral { color: #111; }
   #p-detail.new-order-mode.scrolled-bottom #d-scroll-fade { display: none !important; }
   /* New-order popup: hide phone + email, keep only the address (heavier) */
   #p-detail.new-order-mode #d-customer-details > span { display: none !important; }
@@ -1164,7 +1165,7 @@
             <svg width="24" height="24" viewBox="0 0 2145 2144" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)">
               <path d="M1072.5 628.215C827.307 628.215 628.527 826.906 628.527 1072C628.527 1317.1 827.303 1515.78 1072.5 1515.79C1207.56 1515.79 1328.54 1455.48 1409.96 1360.36L1834.92 1826.02C1813.47 1847.69 1791.11 1868.44 1767.89 1888.23L1366.41 1448.29L1668.58 1963.4C1640.13 1982.44 1610.71 2000.16 1580.43 2016.47L1305.8 1548.3L1479.22 2064.31C1442.38 2079.41 1404.52 2092.52 1365.76 2103.51L1219.53 1668.41L1272.06 2125.55C1229.4 2133.57 1185.86 2139.08 1141.59 2141.89L1095.51 1740.88L1059.19 2144C1010.85 2143.41 963.292 2139.63 916.701 2132.85L948.201 1783.19L842.313 2119.33C791.538 2108.23 742.108 2093.53 694.302 2075.52L783.501 1792.34L635.51 2051.35C584.735 2028.67 536.044 2002.17 489.808 1972.21L606.658 1767.71L449.835 1945C401.62 1910.58 356.374 1872.27 314.56 1830.52L441.253 1687.29L285.789 1800.66C243.036 1754.56 204.285 1704.69 170.096 1651.62L264.013 1583.13L157.663 1631.85C57.6613 1468.91 0.000499851 1277.21 0 1072.04C0.000499851 479.973 480.176 0 1072.5 0V628.215ZM1970.83 1657.89C1956.21 1680.25 1940.78 1702.02 1924.58 1723.18L1412.67 1357.17C1429.81 1336.77 1445.14 1314.81 1458.42 1291.53L1970.83 1657.89ZM2069.63 1467.59C2061.16 1488.9 2052.03 1509.87 2042.27 1530.47L1466.37 1276.98C1476.89 1256.82 1485.91 1235.74 1493.28 1213.91L2069.63 1467.59ZM2129.22 1256.29C2125.96 1275.14 2122.19 1293.81 2117.95 1312.31L1500.72 1189.58C1505.71 1171.36 1509.57 1152.68 1512.22 1133.61L2129.22 1256.29ZM2144.71 1046.69C2144.9 1055.12 2145 1063.57 2145 1072.04C2145 1077.89 2144.96 1083.72 2144.86 1089.54H1516.13C1516.36 1083.72 1516.47 1077.87 1516.47 1072C1516.47 1063.5 1516.23 1055.07 1515.75 1046.69H2144.71ZM2119.37 838.033C2122.06 850.089 2124.54 862.225 2126.82 874.427L1510.15 997.033C1508.06 984.747 1505.47 972.625 1502.39 960.704L2119.37 838.033ZM2053.64 638.428C2058.65 649.735 2063.47 661.136 2068.1 672.648L1487.18 913.163C1482.73 901.557 1477.8 890.185 1472.43 879.068L2053.64 638.428ZM1950.07 455.606C1957.2 465.723 1964.15 475.976 1970.93 486.343L1448.21 835.47C1441.58 824.978 1434.54 814.78 1427.08 804.907L1950.07 455.606ZM1812.93 296.474C1821.89 305.023 1830.7 313.722 1839.36 322.573L1394.87 766.87C1386.35 757.881 1377.46 749.242 1368.22 740.988L1812.93 296.474ZM1653.63 170.862C1664.04 177.584 1674.33 184.482 1684.49 191.55L1335.14 714.168C1325.16 706.848 1314.88 699.928 1304.31 693.443L1653.63 170.862ZM1466.79 74.7697C1478.32 79.3299 1489.76 84.0825 1501.1 89.0269L1260.42 669.815C1249.24 664.589 1237.8 659.812 1226.13 655.511L1466.79 74.7697ZM1264.73 17.175C1276.95 19.3854 1289.09 21.7997 1301.17 24.4208L1178.49 640.941C1166.53 638.013 1154.38 635.575 1142.06 633.636L1264.73 17.175Z" fill="#0172AF"/>
             </svg>
-            <div onclick="toggleNavRestaurant()" style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:6px 16px;cursor:pointer;flex-shrink:0">
+            <div style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:999px;padding:6px 16px;flex-shrink:0">
               <span id="header-status-dot" style="width:8px;height:8px;border-radius:50%;background:#4caf50;flex-shrink:0"></span>
               <span id="header-status-text" style="font-size:14px;font-weight:600;color:#111">Open</span>
             </div>
@@ -1210,7 +1211,7 @@
             <div class="ocard" data-oid="#41" onclick="goDetail('41','Mila van Dijk','Schiedamseweg 112||3026 GP Rotterdam','#41','€29.50','Paid','Delivery','19','kitchen',this)">
               <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1170</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">Schiedamseweg 112</div><div class="oc-price">€29.50  ·  Tomorrow, 13:30</div></div></div></div>
-            <div class="ocard" data-oid="#40" onclick="goDetail('40','Lars Jansen','Restaurant','#40','€73.59','Paid','Delivery','28','kitchen',this)">
+            <div class="ocard" data-oid="#40" onclick="goDetail('40','Lars Jansen','Goudsesingel 210||3011 KD Rotterdam','#40','€73.59','Paid','Delivery','28','kitchen',this)">
               <div class="ocard-row"><div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/><circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/><text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">1560</text><text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text></svg></div>
               <div class="mcol"><div class="dname">T4</div><div class="oc-price">€73.59  ·  Tomorrow, 19:30</div></div></div></div>
             <div class="ocard" data-oid="#43" onclick="goDetail('43','Noah Smit','Vossenburchkade 44||3072 AL Rotterdam','#43','€67.00','Paid','Delivery','33','kitchen',this)">
@@ -1284,12 +1285,39 @@
               <span style="width:4px;height:4px;border-radius:50%;background:#0172af;display:block"></span>
             </div>
           </div>
-          <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()" style="display:none;position:fixed;inset:0;z-index:250"></div>
+          <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:250"></div>
           <div id="d-order-menu" style="display:none">
+            <div class="d-menu-item neutral" onclick="openChangeTime()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="d_change_time">Tijd wijzigen</span>
+            </div>
+            <div class="d-menu-item neutral" onclick="openAddNote()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V15a1.5 1.5 0 0 1-1.5 1.5h-6.2L8 20.5V16.5H5.5A1.5 1.5 0 0 1 4 15z" stroke="#111" stroke-width="2" stroke-linejoin="round"/><path d="M8 9h8M8 12h5" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>
+              <span data-i18n="d_add_note">Notitie toevoegen</span>
+            </div>
             <div class="d-menu-item" onclick="cancelOrder()">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#c62828" stroke-width="2"/><path d="M9 9l6 6M15 9l-6 6" stroke="#c62828" stroke-width="2" stroke-linecap="round"/></svg>
               <span data-i18n="d_cancel_order">Bestelling annuleren</span>
             </div>
+          </div>
+          <div id="d-time-backdrop" onclick="closeChangeTime()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
+          <div id="d-time-modal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;padding:24px 20px;z-index:310;width:300px;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+            <div onclick="closeChangeTime()" style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div data-i18n="d_change_time" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:20px">Tijd wijzigen</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:16px">
+              <div onclick="changeTimeStep(-15)" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0172af;cursor:pointer;user-select:none">−</div>
+              <span id="d-time-value" style="flex:1;min-width:0;font-size:22px;font-weight:600;color:#111;text-align:center;white-space:nowrap">18:00</span>
+              <div onclick="changeTimeStep(15)" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0172af;cursor:pointer;user-select:none">+</div>
+            </div>
+            <button onclick="confirmChangeTime()" data-i18n="d_confirm" style="width:100%;height:46px;margin-top:22px;font-size:15px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Bevestigen</button>
+          </div>
+          <div id="d-note-backdrop" onclick="closeAddNote()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
+          <div id="d-note-modal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;padding:24px 20px;z-index:310;width:300px;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+            <div onclick="closeAddNote()" style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div data-i18n="d_admin_note" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:16px">Interne notitie</div>
+            <textarea id="d-note-input" data-i18n-ph="d_note_placeholder" placeholder="Notitie voor personeel..." style="width:100%;height:90px;border:1.5px solid #eee;border-radius:12px;padding:12px;font-size:14px;color:#111;font-family:'Poppins',sans-serif;resize:none;box-sizing:border-box"></textarea>
+            <button onclick="saveAdminNote()" data-i18n="d_save" style="width:100%;height:46px;margin-top:16px;font-size:15px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Opslaan</button>
+            <button onclick="deleteAdminNote()" data-i18n="d_delete" style="width:100%;height:44px;margin-top:8px;font-size:15px;font-weight:600;color:#c62828;background:#fff;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Verwijderen</button>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
@@ -1332,6 +1360,12 @@
           <div id="d-note-section" style="display:none;margin:16px 16px 0;background:#eaf4fb;border-radius:4px;padding:16px;align-items:center;gap:12px">
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M15.2 16H8C6.20398 16 4.4602 15.3956 3.04937 14.2842C1.63855 13.1728 0.642761 11.6189 0.222309 9.87282C-0.198143 8.1267 -0.0187979 6.28989 0.731475 4.65808C1.48175 3.02628 2.7593 1.6944 4.35846 0.876865C5.95763 0.0593277 7.78538 -0.196309 9.54749 0.151107C11.3096 0.498522 12.9035 1.42878 14.0727 2.79212C15.2419 4.15547 15.9183 5.87258 15.9931 7.66705C16.0678 9.46152 15.5366 11.2289 14.4848 12.6848L15.8656 14.756C15.946 14.8765 15.9921 15.0165 15.9992 15.1612C16.0062 15.3059 15.9738 15.4497 15.9055 15.5774C15.8372 15.7051 15.7355 15.8119 15.6112 15.8863C15.487 15.9607 15.3448 16 15.2 16ZM8 1.60001C6.30262 1.60001 4.67475 2.27429 3.47452 3.47452C2.27429 4.67476 1.60001 6.30262 1.60001 8.00001C1.60001 9.69739 2.27429 11.3253 3.47452 12.5255C4.67475 13.7257 6.30262 14.4 8 14.4H13.7048L12.9344 13.244C12.8467 13.1125 12.8 12.958 12.8 12.8V12.5248C12.801 12.342 12.8639 12.1649 12.9784 12.0224C13.7378 11.0826 14.2156 9.94709 14.3567 8.74711C14.4977 7.54713 14.2962 6.33174 13.7754 5.2415C13.2546 4.15125 12.4359 3.23069 11.4139 2.58628C10.3918 1.94187 9.20824 1.59993 8 1.60001Z" fill="#0172AF"/><path d="M10.3998 7.20156H5.5998C5.38763 7.20156 5.18415 7.11728 5.03412 6.96725C4.88409 6.81722 4.7998 6.61374 4.7998 6.40156C4.7998 6.18939 4.88409 5.98591 5.03412 5.83588C5.18415 5.68585 5.38763 5.60156 5.5998 5.60156H10.3998C10.612 5.60156 10.8155 5.68585 10.9655 5.83588C11.1155 5.98591 11.1998 6.18939 11.1998 6.40156C11.1998 6.61374 11.1155 6.81722 10.9655 6.96725C10.8155 7.11728 10.612 7.20156 10.3998 7.20156Z" fill="#0172AF"/><path d="M10.3998 10.4008H5.5998C5.38763 10.4008 5.18415 10.3165 5.03412 10.1665C4.88409 10.0164 4.7998 9.81295 4.7998 9.60078C4.7998 9.38861 4.88409 9.18512 5.03412 9.0351C5.18415 8.88507 5.38763 8.80078 5.5998 8.80078H10.3998C10.612 8.80078 10.8155 8.88507 10.9655 9.0351C11.1155 9.18512 11.1998 9.38861 11.1998 9.60078C11.1998 9.81295 11.1155 10.0164 10.9655 10.1665C10.8155 10.3165 10.612 10.4008 10.3998 10.4008Z" fill="#0172AF"/></svg>
             <div id="d-note-text" style="font-size:18px;font-weight:500;color:#0a4f73;line-height:1.5">Extra napkins please</div>
+          </div>
+
+          <div id="d-admin-note" style="display:none;margin:16px 16px 0;background:#fff8e6;border-radius:4px;padding:16px;align-items:center;gap:12px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#8a6d00" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#8a6d00" stroke-width="2" stroke-linejoin="round"/></svg>
+            <div id="d-admin-note-text" style="flex:1;min-width:0;font-size:18px;font-weight:500;color:#5c4a00;line-height:1.5"></div>
+            <svg onclick="openAddNote()" width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;cursor:pointer"><path d="M14.06 6.19l3.75 3.75M3 21l4.5-1 11.4-11.4a1.8 1.8 0 0 0 0-2.55l-1.2-1.2a1.8 1.8 0 0 0-2.55 0L3.75 16.25 3 21z" stroke="#8a6d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
 
           <!-- Customer details card -->
@@ -2203,6 +2237,8 @@
       d_subtotal:'Subtotal', d_shipping:'Delivery', d_service:'Service fee',
       d_returning_customer:'Returning customer', d_confirm:'Confirm', d_scheduled:'Scheduled',
       d_cancel_order:'Cancel order', toast_order_cancelled:'Order cancelled', toast_order_completed:'Order completed',
+      d_change_time:'Change time', toast_time_changed:'Time updated',
+      d_add_note:'Add note', d_admin_note:'Internal note', d_note_placeholder:'Note for staff...', d_save:'Save', d_delete:'Delete', toast_note_saved:'Note saved', toast_note_deleted:'Note deleted',
       co_page_title:'Create order', co_sec_customer:'Customer', co_sec_products:'Products', co_sec_payment:'Payment',
       co_add_customer_opt:'Add customer (optional)', co_products_add:'Add products', co_notes:'Notes',
       co_wished_time:'Requested time', co_subtotal:'Subtotal', co_discount:'Discount', co_add_discount:'Add discount',
@@ -2285,6 +2321,8 @@
       d_subtotal:'Subtotaal', d_shipping:'Bezorging', d_service:'Servicekosten',
       d_returning_customer:'Vaste klant', d_confirm:'Bevestigen', d_scheduled:'Gepland',
       d_cancel_order:'Bestelling annuleren', toast_order_cancelled:'Bestelling geannuleerd', toast_order_completed:'Bestelling afgerond',
+      d_change_time:'Tijd wijzigen', toast_time_changed:'Tijd gewijzigd',
+      d_add_note:'Notitie toevoegen', d_admin_note:'Interne notitie', d_note_placeholder:'Notitie voor personeel...', d_save:'Opslaan', d_delete:'Verwijderen', toast_note_saved:'Notitie opgeslagen', toast_note_deleted:'Notitie verwijderd',
       co_page_title:'Bestelling aanmaken', co_sec_customer:'Klant', co_sec_products:'Producten', co_sec_payment:'Betaling',
       co_add_customer_opt:'Voeg klant toe (optioneel)', co_products_add:'Producten toevoegen', co_notes:'Notities',
       co_wished_time:'Gewenste tijd', co_subtotal:'Subtotaal', co_discount:'Korting', co_add_discount:'Korting toevoegen',
@@ -2597,6 +2635,7 @@
     var hasNote=(type==='Collection'||id==='37');
     noteSection.style.display=hasNote?'flex':'none';
     if(hasNote) noteText.textContent='Extra napkins please';
+    showAdminNote((cardEl && cardEl.dataset.adminNote) || '');
     var payBadge=document.getElementById('d-pay-badge');
     var isPaid=(pay==='Paid');
     var payKey=isPaid?'d_paid':'d_cash';
@@ -2943,6 +2982,82 @@
       if (next === 'archive') showCardToast('toast_order_completed');
       _advancingCard = false;
     }, 200);
+  }
+  var _changeTimeDate = null;
+  function _changeTimeCard(){
+    return window._detailCard || (window._detailOid ? document.querySelector('#orders-panes .ocard[data-oid="' + window._detailOid + '"]') : null);
+  }
+  function renderChangeTime(){
+    var el = document.getElementById('d-time-value');
+    if (!el || !_changeTimeDate) return;
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    var timeStr = pad(_changeTimeDate.getHours()) + ':' + pad(_changeTimeDate.getMinutes());
+    var now = new Date();
+    el.textContent = (_changeTimeDate.toDateString() === now.toDateString()) ? timeStr : (t('otime_tomorrow') + ', ' + timeStr);
+  }
+  function openChangeTime(){
+    closeOrderMenu();
+    var card = _changeTimeCard();
+    var base = (card && card.dataset.targetTime) ? new Date(parseInt(card.dataset.targetTime, 10)) : new Date(Date.now() + 45 * 60000);
+    base.setMinutes(Math.round(base.getMinutes() / 15) * 15, 0, 0);
+    _changeTimeDate = base;
+    renderChangeTime();
+    document.getElementById('d-time-backdrop').style.display = 'block';
+    document.getElementById('d-time-modal').style.display = 'block';
+  }
+  function closeChangeTime(){
+    document.getElementById('d-time-backdrop').style.display = 'none';
+    document.getElementById('d-time-modal').style.display = 'none';
+  }
+  function changeTimeStep(delta){
+    if (!_changeTimeDate) return;
+    _changeTimeDate = new Date(_changeTimeDate.getTime() + delta * 60000);
+    renderChangeTime();
+  }
+  function confirmChangeTime(){
+    var card = _changeTimeCard();
+    if (card && _changeTimeDate) {
+      card.dataset.targetTime = String(_changeTimeDate.getTime());
+      if (typeof refreshLiveTimers === 'function') refreshLiveTimers();
+      if (typeof reorderNewList === 'function') reorderNewList(card);
+    }
+    closeChangeTime();
+    showCardToast('toast_time_changed');
+  }
+  function openAddNote(){
+    closeOrderMenu();
+    var card = _changeTimeCard();
+    var input = document.getElementById('d-note-input');
+    if (input) input.value = (card && card.dataset.adminNote) ? card.dataset.adminNote : '';
+    document.getElementById('d-note-backdrop').style.display = 'block';
+    document.getElementById('d-note-modal').style.display = 'block';
+    if (input) input.focus();
+  }
+  function closeAddNote(){
+    document.getElementById('d-note-backdrop').style.display = 'none';
+    document.getElementById('d-note-modal').style.display = 'none';
+  }
+  function showAdminNote(text){
+    var sec = document.getElementById('d-admin-note');
+    var txt = document.getElementById('d-admin-note-text');
+    if (!sec || !txt) return;
+    if (text) { txt.textContent = text; sec.style.display = 'flex'; }
+    else { sec.style.display = 'none'; }
+  }
+  function saveAdminNote(){
+    var val = document.getElementById('d-note-input').value.trim();
+    var card = _changeTimeCard();
+    if (card) card.dataset.adminNote = val;
+    showAdminNote(val);
+    closeAddNote();
+    showCardToast('toast_note_saved');
+  }
+  function deleteAdminNote(){
+    var card = _changeTimeCard();
+    if (card) delete card.dataset.adminNote;
+    showAdminNote('');
+    closeAddNote();
+    showCardToast('toast_note_deleted');
   }
   function showCardToast(key){
     var toast = document.getElementById('accepted-toast');
@@ -4127,8 +4242,13 @@
         if (whenEl) {
           if (isScheduled) {
             whenEl.className = 'oc-when oc-when-scheduled';
-            whenEl.setAttribute('data-i18n', 'd_scheduled');
-            whenEl.textContent = t('d_scheduled');
+            whenEl.removeAttribute('data-i18n');
+            var st = new Date(card.dataset.targetTime ? parseInt(card.dataset.targetTime, 10) : Date.now());
+            st.setMinutes(Math.round(st.getMinutes() / 15) * 15, 0, 0); // 15-minute slots
+            var pad2 = function(n){ return String(n).padStart(2, '0'); };
+            var timeStr = pad2(st.getHours()) + ':' + pad2(st.getMinutes());
+            var nowD = new Date();
+            whenEl.textContent = (st.toDateString() === nowD.toDateString()) ? timeStr : (t('otime_tomorrow') + ', ' + timeStr);
           } else {
             whenEl.className = 'oc-when oc-when-asap';
             whenEl.setAttribute('data-i18n', 'otime_asap');
