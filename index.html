@@ -2409,13 +2409,28 @@
     }
     _goPageImmediate(p);
   }
+  function setDeviceStatusBar(hex, lightIcons){
+    try { if (window.AndroidStatusBar && AndroidStatusBar.setColor) AndroidStatusBar.setColor(hex, !!lightIcons); } catch(e){}
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', hex);
+    var sb = document.querySelector('.statusbar');
+    if (sb) {
+      sb.style.background = hex;
+      var tc = lightIcons ? '#fff' : '#111';
+      var timeEl = sb.querySelector('.time'); if (timeEl) timeEl.style.color = tc;
+      var iconsEl = sb.querySelector('.icons'); if (iconsEl) iconsEl.style.color = tc;
+    }
+  }
+  var NAV_STATUSBAR = '#333333';
   function _goPageImmediate(p){
     var navOverlay = document.getElementById('p-nav');
     if(p === 'nav'){
       if(navOverlay) navOverlay.style.display = 'flex';
+      setDeviceStatusBar(NAV_STATUSBAR, true);
       return;
     }
     if(navOverlay) navOverlay.style.display = 'none';
+    setDeviceStatusBar('#ffffff', false);
     document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
     var targetPage = document.getElementById('p-'+p);
     if(!targetPage) return;
@@ -3072,6 +3087,7 @@
     document.querySelectorAll('#orders-panes .ocard[onclick]').forEach(renderOrderCard);
   }
   renderAllOrderCards(); // initial render now that the icon constants are defined
+  setDeviceStatusBar('#ffffff', false); // default white status bar on load
   updateHeaderOrderTotal();
 
   function toggleCoDropdown() {

@@ -61,8 +61,33 @@ public class MainActivity extends Activity {
         s.setMediaPlaybackRequiresUserGesture(false);
 
         webView.addJavascriptInterface(new PrinterBridge(), "AndroidPrinter");
+        webView.addJavascriptInterface(new StatusBarBridge(), "AndroidStatusBar");
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(APP_URL);
+    }
+
+    /** Exposed to the web app as window.AndroidStatusBar: recolour the system status bar */
+    private class StatusBarBridge {
+        @JavascriptInterface
+        public void setColor(final String hex, final boolean lightIcons) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        getWindow().setStatusBarColor(Color.parseColor(hex));
+                        View dv = getWindow().getDecorView();
+                        int flags = dv.getSystemUiVisibility();
+                        if (lightIcons) {
+                            flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // light icons for a dark bar
+                        } else {
+                            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  // dark icons for a light bar
+                        }
+                        dv.setSystemUiVisibility(flags);
+                    } catch (Exception ignored) {
+                    }
+                }
+            });
+        }
     }
 
     /** Exposed to the web app as window.AndroidPrinter */
