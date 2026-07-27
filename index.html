@@ -432,7 +432,7 @@
   .tab-empty-sub { font-size:14px; color:#999; font-weight:400; line-height:1.5; }
   .ocard {
     background: #fff;
-    border-radius: 0;
+    border-radius: 12px;
     margin: 0 0 16px;
     border: 1px solid #f0f0f0;
     padding: 0;
@@ -453,8 +453,8 @@
   }
   .ocard-actions .mbtn { width: 100%; justify-content: center; }
   .ocard:last-child { margin-bottom: 0; }
-  #t-new, #t-kitchen, #t-delivery { padding: 16px; background: #fafafa; }
-  .ocard { border: none; }
+  #t-new, #t-kitchen, #t-delivery { padding: 16px; background: #fff; }
+  .ocard { border: 1.5px solid #f3f3f3; }
   .orders-tabs { padding: 32px 24px 0; border-bottom: 1.5px solid #f3f3f3; gap: 8px; position: relative; }
   .orders-tabs .tab { flex: 1; justify-content: center; height: auto; padding: 0; font-size: 12px; font-weight: 600; border-radius: 0; background: transparent; color: #999; display: flex; align-items: center; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
   .orders-tabs .tab .tab-inner { display: inline-flex; align-items: center; gap: 10px; padding-bottom: 32px; position: relative; }
@@ -477,7 +477,7 @@
   .oc-accept-btn:hover { background: #082f42; }
 
   /* Time column */
-  .tcol { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; order: 2; }
+  .tcol { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; order: 2; }
   .oc-time { white-space: nowrap; }
   @keyframes oc-advance-out { to { opacity: 0; transform: translateX(44px) scale(0.97); } }
   .ocard.oc-advancing { animation: oc-advance-out 0.2s ease forwards; pointer-events: none; }
@@ -493,7 +493,8 @@
   .oc-progress-fill { height: 100%; background: #4caf50; }
   .tcol svg { width: 64px; height: 64px; }
   .oc-price { font-size: 14px; color: #888; font-weight: 500; margin-top: 4px; }
-  .oc-pay-badge { display:inline-block; font-size:12px; font-weight:600; padding:3px 6px; border-radius:4px; margin-top:10px; }
+  .oc-ordernum { font-size:14px; font-weight:500; color:#888; margin-top:4px; }
+  .oc-pay-badge { display:inline-block; font-size:10px; font-weight:500; padding:3px 6px; border-radius:4px; margin-top:4px; }
   .oc-pay-paid { background:#f0f0f0; color:#555; }
   .oc-pay-cash { background:#f0f0f0; color:#555; }
   .oc-pay-unpaid { background:#fdecea; color:#c62828; }
@@ -1160,9 +1161,8 @@
             <svg width="24" height="24" viewBox="0 0 2145 2144" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:50%;transform:translateX(-50%)">
               <path d="M1072.5 628.215C827.307 628.215 628.527 826.906 628.527 1072C628.527 1317.1 827.303 1515.78 1072.5 1515.79C1207.56 1515.79 1328.54 1455.48 1409.96 1360.36L1834.92 1826.02C1813.47 1847.69 1791.11 1868.44 1767.89 1888.23L1366.41 1448.29L1668.58 1963.4C1640.13 1982.44 1610.71 2000.16 1580.43 2016.47L1305.8 1548.3L1479.22 2064.31C1442.38 2079.41 1404.52 2092.52 1365.76 2103.51L1219.53 1668.41L1272.06 2125.55C1229.4 2133.57 1185.86 2139.08 1141.59 2141.89L1095.51 1740.88L1059.19 2144C1010.85 2143.41 963.292 2139.63 916.701 2132.85L948.201 1783.19L842.313 2119.33C791.538 2108.23 742.108 2093.53 694.302 2075.52L783.501 1792.34L635.51 2051.35C584.735 2028.67 536.044 2002.17 489.808 1972.21L606.658 1767.71L449.835 1945C401.62 1910.58 356.374 1872.27 314.56 1830.52L441.253 1687.29L285.789 1800.66C243.036 1754.56 204.285 1704.69 170.096 1651.62L264.013 1583.13L157.663 1631.85C57.6613 1468.91 0.000499851 1277.21 0 1072.04C0.000499851 479.973 480.176 0 1072.5 0V628.215ZM1970.83 1657.89C1956.21 1680.25 1940.78 1702.02 1924.58 1723.18L1412.67 1357.17C1429.81 1336.77 1445.14 1314.81 1458.42 1291.53L1970.83 1657.89ZM2069.63 1467.59C2061.16 1488.9 2052.03 1509.87 2042.27 1530.47L1466.37 1276.98C1476.89 1256.82 1485.91 1235.74 1493.28 1213.91L2069.63 1467.59ZM2129.22 1256.29C2125.96 1275.14 2122.19 1293.81 2117.95 1312.31L1500.72 1189.58C1505.71 1171.36 1509.57 1152.68 1512.22 1133.61L2129.22 1256.29ZM2144.71 1046.69C2144.9 1055.12 2145 1063.57 2145 1072.04C2145 1077.89 2144.96 1083.72 2144.86 1089.54H1516.13C1516.36 1083.72 1516.47 1077.87 1516.47 1072C1516.47 1063.5 1516.23 1055.07 1515.75 1046.69H2144.71ZM2119.37 838.033C2122.06 850.089 2124.54 862.225 2126.82 874.427L1510.15 997.033C1508.06 984.747 1505.47 972.625 1502.39 960.704L2119.37 838.033ZM2053.64 638.428C2058.65 649.735 2063.47 661.136 2068.1 672.648L1487.18 913.163C1482.73 901.557 1477.8 890.185 1472.43 879.068L2053.64 638.428ZM1950.07 455.606C1957.2 465.723 1964.15 475.976 1970.93 486.343L1448.21 835.47C1441.58 824.978 1434.54 814.78 1427.08 804.907L1950.07 455.606ZM1812.93 296.474C1821.89 305.023 1830.7 313.722 1839.36 322.573L1394.87 766.87C1386.35 757.881 1377.46 749.242 1368.22 740.988L1812.93 296.474ZM1653.63 170.862C1664.04 177.584 1674.33 184.482 1684.49 191.55L1335.14 714.168C1325.16 706.848 1314.88 699.928 1304.31 693.443L1653.63 170.862ZM1466.79 74.7697C1478.32 79.3299 1489.76 84.0825 1501.1 89.0269L1260.42 669.815C1249.24 664.589 1237.8 659.812 1226.13 655.511L1466.79 74.7697ZM1264.73 17.175C1276.95 19.3854 1289.09 21.7997 1301.17 24.4208L1178.49 640.941C1166.53 638.013 1154.38 635.575 1142.06 633.636L1264.73 17.175Z" fill="#0172AF"/>
             </svg>
-            <div onclick="triggerNewOrder()" style="display:flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:4px;padding:6px 16px;cursor:pointer;flex-shrink:0">
-              <span style="font-size:14px;font-weight:500;color:#555">Orders</span>
-              <span id="header-order-total" style="font-size:14px;font-weight:700;color:#111">0</span>
+            <div onclick="triggerNewOrder()" style="display:flex;align-items:center;background:#0172af;border-radius:999px;padding:6px 16px;cursor:pointer;flex-shrink:0">
+              <span data-i18n="app_simulate" style="font-size:14px;font-weight:600;color:#fff">Simuleer</span>
             </div>
           </div>
         </div>
@@ -2867,11 +2867,9 @@
       var cityName = pm ? pm[2] : cityRaw;
       topText = street + (cityName ? ', ' + cityName : '');
     }
-    var isPaid = (pay === 'Paid');
-    var payKey = isPaid ? 'd_paid' : 'd_cash';
-    var payClass = isPaid ? 'oc-pay-paid' : 'oc-pay-unpaid';
+    var oid = (a[3] || '').replace(/^#/, '# ');
     mcol.innerHTML = '<div class="dname" style="white-space:normal">' + topText + '</div>' +
-      '<div class="oc-pay-badge ' + payClass + '" data-i18n="' + payKey + '">' + t(payKey) + '</div>';
+      '<div class="oc-ordernum">' + oid + '</div>';
   }
   // Next-action icons for the card action button
   var ICON_KITCHEN = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 15.5c1.8-.5 3-2.1 3-4a4 4 0 0 0-4.3-4A4 4 0 0 0 8.3 7.5 4 4 0 0 0 4 11.5c0 1.9 1.2 3.5 3 4" stroke="#0172AF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 15.5h10v3.2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z" stroke="#0172AF" stroke-width="1.7" stroke-linejoin="round"/></svg>';
@@ -2891,58 +2889,7 @@
     renderOrderCardText(card);
     var row = card.querySelector('.ocard-row');
     if (!row) return;
-    // Timer ring -> plain number + horizontal progress bar at the card bottom
-    var tcol = card.querySelector('.tcol');
-    if (tcol) {
-      var svg = tcol.querySelector('svg');
-      if (svg) {
-        var numEl = svg.querySelector('text');
-        var num = numEl ? numEl.textContent : '';
-        var numColor = numEl ? (numEl.getAttribute('fill') || '#333') : '#333';
-        var circles = svg.querySelectorAll('circle');
-        var prog = circles[circles.length - 1];
-        var frac = 1, color = '#4caf50';
-        if (prog) {
-          var da = parseFloat(prog.getAttribute('stroke-dasharray')) || 1;
-          var doff = parseFloat(prog.getAttribute('stroke-dashoffset')) || 0;
-          frac = Math.max(0, Math.min(1, (da - doff) / da));
-          color = prog.getAttribute('stroke') || '#4caf50';
-        }
-        var displayedMins = parseInt(num, 10);
-        if (!isNaN(displayedMins) && !card.dataset.targetTime) {
-          var signedMins = tcol.classList.contains('late') ? -Math.abs(displayedMins) : displayedMins;
-          card.dataset.targetTime = String(Date.now() + signedMins * 60000);
-        }
-        var minsNum = parseInt(num, 10);
-        var isSched = !isNaN(minsNum) && minsNum > 90;
-        var tvalue;
-        if (isSched) {
-          tvalue = Math.min(48, Math.round(minsNum / 60));
-        } else if (tcol.classList.contains('late') && !isNaN(minsNum) && minsNum > 0) {
-          tvalue = '-' + minsNum; // late orders show negative minutes
-        } else {
-          tvalue = num;
-        }
-        var tlabel = isSched ? t('otime_hours') : t('otime_minutes');
-        // Colour from remaining time: red (late) / grey (scheduled) / orange (<=15) / green
-        var isLateCard = tcol.classList.contains('late') || (!isSched && !isNaN(minsNum) && minsNum <= 0);
-        if (isLateCard) color = '#c62828';
-        else if (isSched) color = '#bdbdbd';
-        else if (!isNaN(minsNum) && minsNum <= 15) color = '#f59800';
-        else color = '#4caf50';
-        var textUrgent = (color === '#c62828' || color === '#f59800'); // red (late) or orange (<=15)
-        numColor = textUrgent ? color : '#333';
-        var labelColor = textUrgent ? color : '#888';
-        tcol.innerHTML = '<div class="oc-time"><span class="oc-tnum" style="color:' + numColor + '">' + tvalue + '</span> <span class="oc-tlabel" style="color:' + labelColor + '">' + tlabel + '</span></div>';
-        card.dataset.sched = isSched ? '1' : '0';
-        card.classList.add('has-progress');
-        var bar = card.querySelector('.oc-progress');
-        if (!bar) { bar = document.createElement('div'); bar.className = 'oc-progress'; card.appendChild(bar); }
-        bar.innerHTML = '<div class="oc-progress-fill" style="width:' + (frac * 100) + '%;background:' + color + '"></div>';
-      }
-      var lbl = tcol.querySelector('.oc-tlabel');
-      if (lbl) lbl.textContent = card.dataset.sched === '1' ? t('otime_hours') : t('otime_minutes');
-    }
+    // Timer keeps the original circular ring (updated by refreshLiveTimers)
     // Round stage action buttons removed — advancing happens via the detail page
     var existingAction = card.querySelector('.oc-action');
     if (existingAction) existingAction.remove();
