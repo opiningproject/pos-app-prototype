@@ -498,6 +498,22 @@
   .oc-when { display:inline-block; font-size:12px; font-weight:600; padding:2px 4px; border-radius:4px; margin-top:4px; }
   .oc-when-asap { background:#fff; border:1.5px solid #f0f0f0; color:#888; }
   .oc-when-scheduled { background:#FAEDFF; border:1.5px solid #FAEDFF; color:#220038; }
+  /* Redesigned settings sub-pages */
+  .s-desc { font-size:14px; color:#888; line-height:1.5; margin-bottom:20px; }
+  .s-opt { display:flex; align-items:center; gap:14px; padding:14px 2px; cursor:pointer; }
+  .s-label { font-size:16px; color:#111; }
+  .s-radio { width:22px; height:22px; border-radius:50%; border:2px solid #ccc; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .s-radio > i { width:11px; height:11px; border-radius:50%; background:#0172af; display:none; }
+  .s-radio.checked { border-color:#0172af; }
+  .s-radio.checked > i { display:block; }
+  .s-card { background:#fff; border:1.5px solid #f3f3f3; border-radius:16px; padding:20px; }
+  .s-card-title { font-size:16px; font-weight:600; color:#111; }
+  .s-card-sub { font-size:13px; color:#888; margin-top:2px; }
+  .s-iconbtn { width:44px; height:44px; border-radius:50%; background:#f3f3f3; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+  .s-step { width:44px; height:44px; border-radius:50%; background:#f3f3f3; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:600; color:#111; cursor:pointer; user-select:none; flex-shrink:0; }
+  .s-count { font-size:18px; font-weight:600; color:#111; }
+  .s-slider { width:100%; accent-color:#0172af; height:4px; }
+  .s-row { display:flex; align-items:center; justify-content:space-between; background:#fff; border:1.5px solid #f3f3f3; border-radius:16px; padding:20px; }
   .oc-pay-badge { display:inline-block; font-size:10px; font-weight:500; padding:3px 6px; border-radius:4px; margin-top:4px; }
   .oc-pay-paid { background:#f0f0f0; color:#555; }
   .oc-pay-cash { background:#f0f0f0; color:#555; }
@@ -1342,10 +1358,7 @@
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
               <div>
                 <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Bezorging</div>
-                <div style="margin-top:6px;display:flex;align-items:baseline;gap:6px">
-                  <span data-i18n="d_wished_label" style="font-size:16px;font-weight:500;color:#888">Gewenst:</span>
-                  <span id="d-wished-inline" style="font-size:16px;font-weight:500;color:#888">ZSM</span>
-                </div>
+                <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">ZSM</div>
               </div>
               <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
                 <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5"/>
@@ -1582,7 +1595,7 @@
                 <svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
-            <span data-i18n="dash_page_title" style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap">Verkoop vandaag</span>
+            <span data-i18n="dash_page_title" style="position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:600;color:#111;white-space:nowrap">Verkoop vandaag</span>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#f7f7f7;display:flex;flex-direction:column;overflow:hidden">
@@ -1598,6 +1611,11 @@
           <!-- SUMMARY PANE -->
           <div id="dash-summary" class="scroll dash-pane dp-active-flex" style="padding:16px;background:#fafafa;flex-direction:column;gap:16px;padding-bottom:120px">
 
+            <div style="display:flex;align-items:center;gap:12px;background:#eaf4fb;border-radius:8px;padding:16px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/></svg>
+              <div data-i18n="dash_info_summary" style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige verkoopcijfers te vinden op het opining dashboard.</div>
+            </div>
+
             <!-- Card 1: Omzet -->
             <div style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;padding:40px 24px;display:flex;flex-direction:column;align-items:center;text-align:center">
               <!-- Illustratie -->
@@ -1607,9 +1625,9 @@
               <div data-i18n="dash_revenue" style="font-size:16px;font-weight:600;color:#111;margin-bottom:10px">Omzet</div>
               <div style="font-size:28px;font-weight:600;color:#111;line-height:1;margin-bottom:20px">€688.00</div>
               <div style="display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;margin:0 auto">
-                <div style="font-size:14px;color:#888;padding:14px 0 12px;white-space:nowrap"><span data-i18n="dash_online_paid">Online betaald</span> · €532.00</div>
+                <div style="font-size:14px;color:#888;padding:14px 0 12px;white-space:nowrap">38 <span data-i18n="dash_online_paid">Online betaald</span> · €532.00</div>
                 <div style="height:1.5px;background:#eaeaea;margin:0 -14px"></div>
-                <div style="font-size:14px;color:#888;padding:12px 0 0;white-space:nowrap"><span data-i18n="dash_cash">Contant</span> · €156.00</div>
+                <div style="font-size:14px;color:#888;padding:12px 0 0;white-space:nowrap">9 <span data-i18n="dash_cash">Contant</span> · €156.00</div>
               </div>
             </div>
 
@@ -1632,22 +1650,30 @@
 
           <!-- DETAILS PANE -->
           <div id="dash-details" class="scroll dash-pane" style="padding:16px;background:#fafafa;padding-bottom:120px">
-            <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">7 <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€31.00</div></div><div class="mcol"><div class="dname">#250715A03</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€44.00</div></div><div class="mcol"><div class="dname">#250715A04</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€12.50</div></div><div class="mcol"><div class="dname">#250715A05</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€29.00</div></div><div class="mcol"><div class="dname">#250715A06</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€56.00</div></div><div class="mcol"><div class="dname">#250715A07</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div style="display:flex;align-items:center;gap:12px;background:#eaf4fb;border-radius:8px;padding:16px;margin-bottom:24px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/></svg>
+              <div data-i18n="dash_info_details" style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige bestelgeschiedenis te vinden op het opining dashboard.</div>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">7 <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€31.00</div></div><div class="mcol"><div class="dname">#250715A03</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€44.00</div></div><div class="mcol"><div class="dname">#250715A04</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€12.50</div></div><div class="mcol"><div class="dname">#250715A05</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€29.00</div></div><div class="mcol"><div class="dname">#250715A06</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€56.00</div></div><div class="mcol"><div class="dname">#250715A07</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
           </div>
 
           <!-- CANCELLED PANE -->
           <div id="dash-cancelled" class="scroll dash-pane" style="padding:16px;background:#fafafa;padding-bottom:120px">
-            <div style="font-size:18px;font-weight:600;color:#111;margin-bottom:24px">3 <span data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div><div class="oc-price" data-i18n="refund_done" style="color:#16a34a;margin-top:2px">Terugbetaald</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div><div class="oc-price" data-i18n="refund_pending" style="color:#d97706;margin-top:2px">Terugbetaling bezig</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:18px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A10</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div><div class="oc-price" data-i18n="refund_none" style="margin-top:2px">Geen terugbetaling vereist</div></div></div></div>
+            <div style="display:flex;align-items:center;gap:12px;background:#eaf4fb;border-radius:8px;padding:16px;margin-bottom:24px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#0172af" stroke-width="2" stroke-linejoin="round"/></svg>
+              <div data-i18n="dash_info_cancelled" style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige annuleringsgeschiedenis te vinden op het opining dashboard.</div>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">3 <span data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div><div class="oc-price" data-i18n="refund_done" style="color:#16a34a;padding-top:8px">Terugbetaald</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div><div class="oc-price" data-i18n="refund_pending" style="color:#d97706;padding-top:8px">Terugbetaling bezig</div></div></div></div>
+            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A10</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div><div class="oc-price" data-i18n="refund_none" style="padding-top:8px">Geen terugbetaling vereist</div></div></div></div>
           </div>
           </div><!-- /dash-panes -->
         </div><!-- /content-surface -->
@@ -1902,10 +1928,6 @@
               <span data-i18n="settings_language">Taal</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="menu-cat-row" onclick="goSettingDetail('Restaurant')">
-              <span data-i18n="settings_restaurant">Restaurant</span>
-              <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
             <div class="menu-cat-row" onclick="goSettingDetail('Standaard tijden')">
               <span data-i18n="set_default_times">Standaard tijden</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1914,24 +1936,16 @@
               <span data-i18n="settings_auto_archive">Automatisch archiveren</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="menu-cat-row" onclick="goSettingDetail('Pincode')">
-              <span data-i18n="set_pincode">Pincode</span>
-              <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
             <div class="menu-cat-row" onclick="goSettingDetail('Meldingen')">
               <span data-i18n="settings_notifications">Meldingen</span>
-              <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div class="menu-cat-row" onclick="goSettingDetail('Bezorging weergave')">
-              <span data-i18n="set_delivery_display">Bezorging weergave</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="menu-cat-row" onclick="goSettingDetail('Bon aanpassen')">
               <span data-i18n="set_receipt">Bon aanpassen</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="menu-cat-row" onclick="goSettingDetail('Account')">
-              <span>Account</span>
+            <div class="menu-cat-row" onclick="doLogout()">
+              <span data-i18n="sc_logout">Uitloggen</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div style="margin-top:4px">
@@ -2224,6 +2238,10 @@
       dash_revenue:'Revenue', dash_incl:'Incl. costs', dash_excl:'Excl. costs', dash_orders:'Orders', dash_page_title:'Sales today',
       dash_delivery_word:'delivery', dash_takeaway_word:'takeaway',
       dash_avg:'Avg. order value', dash_orders_per_hour:'Orders per hour',
+      dash_info_summary:'Full sales figures on the opining dashboard.', dash_info_details:'Full order history on the opining dashboard.', dash_info_cancelled:'Full cancellation history on the opining dashboard.',
+      set_lang_desc:'Set the language of this Orderpad',
+      snd_desc:'Adjust the sounds you hear on your device to your environment', snd_quiet:'Quiet / Relaxed', snd_default:'Default (Recommended)', snd_noisy:'Noisy / Busy', snd_new_order:'New order', snd_original:'Original sound', snd_volume:'Volume',
+      rcp_desc:'Choose the information you want on your receipt', rcp_print:'Print receipt', rcp_count:'Number of receipts to print', rcp_content:'Receipt content', rcp_customize:'Customize your receipt', rcp_menu_id:'Menu/Item list ID',
       hdr_create_order:'New order', create_order_desc:'Manually create a new order here',
       create_delivery_btn:'Create new delivery order', create_takeaway_btn:'Create new takeaway order',
       hdr_products:'Products', dd_products:'Products', dd_choices:'Choices menu', dd_categories:'Categories',
@@ -2308,6 +2326,10 @@
       dash_revenue:'Omzet', dash_incl:'Incl. kosten', dash_excl:'Excl. kosten', dash_orders:'Bestellingen', dash_page_title:'Verkoop vandaag',
       dash_delivery_word:'bezorging', dash_takeaway_word:'afhalen',
       dash_avg:'Gem. bestelwaarde', dash_orders_per_hour:'Bestellingen per uur',
+      dash_info_summary:'Volledige verkoopcijfers te vinden op het opining dashboard.', dash_info_details:'Volledige bestelgeschiedenis te vinden op het opining dashboard.', dash_info_cancelled:'Volledige annuleringsgeschiedenis te vinden op het opining dashboard.',
+      set_lang_desc:'Stel de taal van deze Orderpad in',
+      snd_desc:'Pas de geluiden die je op je apparaat hoort aan aan je omgeving', snd_quiet:'Stil / Relaxed', snd_default:'Default (Aanbevolen)', snd_noisy:'Rumoerig / Druk', snd_new_order:'Nieuwe bestelling', snd_original:'Origineel geluid', snd_volume:'Volume',
+      rcp_desc:'Kies de informatie die je op je bon wilt zien', rcp_print:'Kassabon afdrukken', rcp_count:'Aantal af te drukken bonnen', rcp_content:'Inhoud kassabon', rcp_customize:'Pas je kassabon aan', rcp_menu_id:'Menu/Item lijst ID',
       hdr_create_order:'Nieuwe bestelling', create_order_desc:'Maak hier handmatig een nieuwe bestelling aan',
       create_delivery_btn:'Nieuwe bezorgbestelling aanmaken', create_takeaway_btn:'Nieuwe afhaalbestelling aanmaken',
       hdr_products:'Producten', dd_products:'Producten', dd_choices:'Keuzemenu', dd_categories:'Categorieën',
@@ -2583,7 +2605,31 @@
     var cityAddr=addrParts[1]||'';
     var isDelivery=(type==='Delivery'&&streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant');
     var orderTypeLbl=document.getElementById('d-order-type-label');
-    if(orderTypeLbl) orderTypeLbl.textContent='#250621A' + String(id).padStart(2,'0');
+    if(orderTypeLbl){
+      if(type==='Collection'){ orderTypeLbl.textContent=t('d_pickup'); }
+      else {
+        var pmT=(cityAddr||'').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
+        var cityNameT=pmT?pmT[2]:cityAddr;
+        orderTypeLbl.textContent=streetAddr+(cityNameT?', '+cityNameT:'');
+      }
+    }
+    var whenBadge=document.getElementById('d-when-badge');
+    if(whenBadge){
+      var ttD=(cardEl && cardEl.dataset.targetTime)?parseInt(cardEl.dataset.targetTime,10):(Date.now()+(parseInt(mins,10)||45)*60000);
+      if(((ttD-Date.now())/60000)>90){
+        whenBadge.className='oc-when oc-when-scheduled';
+        whenBadge.removeAttribute('data-i18n');
+        var stB=new Date(ttD);
+        stB.setMinutes(Math.round(stB.getMinutes()/15)*15,0,0);
+        var padB=function(n){return String(n).padStart(2,'0');};
+        var tStr=padB(stB.getHours())+':'+padB(stB.getMinutes());
+        whenBadge.textContent=(stB.toDateString()===new Date().toDateString())?tStr:(t('otime_tomorrow')+', '+tStr);
+      } else {
+        whenBadge.className='oc-when oc-when-asap';
+        whenBadge.setAttribute('data-i18n','otime_asap');
+        whenBadge.textContent=t('otime_asap');
+      }
+    }
     var custAddrBlock=document.getElementById('d-customer-addr-block');
     var custAddr=document.getElementById('d-customer-addr');
     var custCity=document.getElementById('d-customer-city');
@@ -3915,15 +3961,10 @@
   }
 
   var settingContent = {
-    'Taal': '<div style="display:flex;flex-direction:column;gap:12px">'
-      + '<div data-lang="nl" style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;cursor:pointer" onclick="selectLang(this)">'
-      + '<span style="font-size:18px;font-weight:600;color:#111">Nederlands</span>'
-      + '<span class="lang-check" style="display:none;align-items:center;justify-content:center;width:28px;height:28px"><svg width="18" height="14" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="#0172af" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
-      + '</div>'
-      + '<div data-lang="en" style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;cursor:pointer" onclick="selectLang(this)">'
-      + '<span style="font-size:18px;font-weight:600;color:#111">English</span>'
-      + '<span class="lang-check" style="display:none;align-items:center;justify-content:center;width:28px;height:28px"><svg width="18" height="14" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="#0172af" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
-      + '</div>'
+    'Taal': '<div style="padding:8px 4px 0">'
+      + '<div class="s-desc" data-i18n="set_lang_desc">Stel de taal van deze Orderpad in</div>'
+      + '<div data-lang="nl" class="s-opt" onclick="selectLang(this)"><span class="s-radio"><i></i></span><span class="s-label">Nederlands</span></div>'
+      + '<div data-lang="en" class="s-opt" onclick="selectLang(this)"><span class="s-radio"><i></i></span><span class="s-label">English</span></div>'
       + '</div>',
 
     'Restaurant': '<div style="display:flex;flex-direction:column;gap:12px">'
@@ -3967,14 +4008,22 @@
       + '</div>'
       + '</div>',
 
-    'Meldingen': '<div style="display:flex;flex-direction:column;gap:12px">'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_sound_new" style="font-size:18px;font-weight:600;color:#111">Geluid nieuwe bestelling</span>'
-      + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
-      + '</div>'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_keep_awake" style="font-size:18px;font-weight:600;color:#111">Scherm wakker houden</span>'
-      + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
+    'Meldingen': '<div style="padding:8px 4px 0">'
+      + '<div class="s-desc" data-i18n="snd_desc">Pas de geluiden die je op je apparaat hoort aan aan je omgeving</div>'
+      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio checked"><i></i></span><span class="s-label" data-i18n="snd_quiet">Stil / Relaxed</span></div>'
+      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_default">Default (Recommended)</span></div>'
+      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_noisy">Noisy / Busy</span></div>'
+      + '<div class="s-card" style="margin-top:16px">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between">'
+        + '<div><div class="s-card-title" data-i18n="snd_new_order">Nieuwe bestelling</div><div class="s-card-sub" data-i18n="snd_original">Origineel geluid</div></div>'
+        + '<div style="display:flex;gap:12px">'
+        + '<div class="s-iconbtn" onclick="playBeep()"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0172af"><path d="M8 5v14l11-7z"/></svg></div>'
+        + '<div class="s-iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14.06 6.19l3.75 3.75M3 21l4.5-1 11.4-11.4a1.8 1.8 0 0 0 0-2.55l-1.2-1.2a1.8 1.8 0 0 0-2.55 0L3.75 16.25 3 21z" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'
+        + '</div></div>'
+        + '<div style="margin-top:20px">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-weight:600;color:#111" data-i18n="snd_volume">Volume</span><span id="s-vol-val" style="color:#111">25%</span></div>'
+        + '<input type="range" min="0" max="100" value="25" class="s-slider" oninput="setVolume(this)">'
+        + '</div>'
       + '</div>'
       + '</div>',
 
@@ -3985,26 +4034,24 @@
       + '</div>'
       + '</div>',
 
-    'Bon aanpassen': '<div style="display:flex;flex-direction:column;gap:12px">'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_show_logo" style="font-size:18px;font-weight:600;color:#111">Logo tonen</span>'
-      + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
+    'Bon aanpassen': '<div style="padding:8px 4px 0">'
+      + '<div class="s-desc" data-i18n="rcp_desc">Kies de informatie die je op je bon wilt zien</div>'
+      + '<div class="s-card" style="margin-bottom:12px">'
+        + '<div class="s-card-title" data-i18n="rcp_print">Kassabon afdrukken</div>'
+        + '<div class="s-card-sub" style="margin-bottom:16px" data-i18n="rcp_count">Aantal af te drukken bonnen</div>'
+        + '<div style="display:flex;align-items:center;justify-content:space-between">'
+        + '<div class="s-step" onclick="stepCount(this,-1)">−</div>'
+        + '<span class="s-count">1</span>'
+        + '<div class="s-step" onclick="stepCount(this,1)">+</div>'
+        + '</div>'
       + '</div>'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_show_address" style="font-size:18px;font-weight:600;color:#111">Adres tonen</span>'
-      + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
+      + '<div class="s-card" style="margin-bottom:12px;cursor:pointer">'
+        + '<div class="s-card-title" data-i18n="rcp_content">Inhoud kassabon</div>'
+        + '<div class="s-card-sub" data-i18n="rcp_customize">Pas je kassabon aan</div>'
       + '</div>'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_show_phone" style="font-size:18px;font-weight:600;color:#111">Telefoonnummer tonen</span>'
-      + '<div class="mtoggle blue" onclick="this.classList.toggle(\'on\')"></div>'
-      + '</div>'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_show_website" style="font-size:18px;font-weight:600;color:#111">Website tonen</span>'
-      + '<div class="mtoggle blue" onclick="this.classList.toggle(\'on\')"></div>'
-      + '</div>'
-      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #f3f3f3">'
-      + '<span data-i18n="sc_show_footer" style="font-size:18px;font-weight:600;color:#111">Voettekst tonen</span>'
-      + '<div class="mtoggle blue" onclick="this.classList.toggle(\'on\')"></div>'
+      + '<div class="s-row">'
+        + '<span class="s-label" data-i18n="rcp_menu_id">Menu/Item lijst ID</span>'
+        + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
       + '</div>'
       + '</div>',
 
@@ -4085,12 +4132,21 @@
   function selectLang(row) {
     var lang = row.getAttribute('data-lang');
     if (lang) setLang(lang);
-    var all = row.parentElement.querySelectorAll('.lang-check');
-    all.forEach(function(c){ c.style.display = 'none'; });
-    var chk = row.querySelector('.lang-check');
-    if (chk) chk.style.display = 'flex';
+    row.parentElement.querySelectorAll('.s-radio').forEach(function(r){ r.classList.remove('checked'); });
+    var rad = row.querySelector('.s-radio'); if (rad) rad.classList.add('checked');
     var titleEl = document.getElementById('settings-detail-title');
     if (titleEl) titleEl.textContent = (lang === 'en' ? 'Language' : 'Taal');
+  }
+  function selectRadio(el){
+    el.parentElement.querySelectorAll('.s-radio').forEach(function(r){ r.classList.remove('checked'); });
+    var rad = el.querySelector('.s-radio'); if (rad) rad.classList.add('checked');
+  }
+  function stepCount(btn, delta){
+    var span = btn.parentElement.querySelector('.s-count');
+    if (span) span.textContent = Math.max(1, (parseInt(span.textContent, 10) || 1) + delta);
+  }
+  function setVolume(input){
+    var lbl = document.getElementById('s-vol-val'); if (lbl) lbl.textContent = input.value + '%';
   }
 
   function stepTime(btn, delta) {
@@ -4132,7 +4188,7 @@
     if (name === 'Taal') {
       document.getElementById('settings-detail-title').textContent = (currentLang === 'en' ? 'Language' : 'Taal');
       var row = scroll.querySelector('[data-lang="' + currentLang + '"]');
-      if (row) { var c = row.querySelector('.lang-check'); if (c) c.style.display = 'flex'; }
+      if (row) { var c = row.querySelector('.s-radio'); if (c) c.classList.add('checked'); }
     } else {
       var tk = settingTitleKey[name];
       document.getElementById('settings-detail-title').textContent = tk ? t(tk) : name;
