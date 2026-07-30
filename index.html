@@ -1986,10 +1986,7 @@
           <div data-i18n="login_title" style="font-size:22px;font-weight:500;color:#111;margin-bottom:24px">Aanmelden bij je account</div>
           <label data-i18n="login_email" style="font-size:14px;font-weight:500;color:#111;display:block;margin-bottom:8px">E-mail</label>
           <input id="login-user" type="text" placeholder="Email" style="width:100%;height:44px;border:1.5px solid #e0e0e0;border-radius:6px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;box-sizing:border-box;margin-bottom:20px" onkeydown="if(event.key==='Enter')doLogin()">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <label data-i18n="login_password" style="font-size:14px;font-weight:500;color:#111">Wachtwoord</label>
-            <span data-i18n="login_forgot" style="font-size:14px;color:#0172af;cursor:pointer">Je wachtwoord vergeten?</span>
-          </div>
+          <label data-i18n="login_password" style="font-size:14px;font-weight:500;color:#111;display:block;margin-bottom:8px">Wachtwoord</label>
           <input id="login-pass" type="password" placeholder="Password" style="width:100%;height:44px;border:1.5px solid #e0e0e0;border-radius:6px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;box-sizing:border-box;margin-bottom:16px" onkeydown="if(event.key==='Enter')doLogin()">
           <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:20px">
             <input type="checkbox" style="width:18px;height:18px;accent-color:#0172af;flex-shrink:0">
@@ -1998,6 +1995,7 @@
           <div id="login-error" data-i18n="login_error" style="display:none;font-size:13px;color:#e53935;text-align:center;margin-bottom:12px">Onjuiste gebruikersnaam of wachtwoord</div>
           <button data-i18n="login_signin" onclick="doLogin()" style="width:100%;height:44px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aanmelden</button>
         </div>
+        <div data-i18n="login_forgot" style="text-align:center;font-size:14px;color:#0172af;cursor:pointer;margin-top:20px">Je wachtwoord vergeten?</div>
       </div>
     </div>
 
