@@ -1983,15 +1983,12 @@
       <div style="padding:24px">
         <img src="logo.png" alt="Opining" style="width:120px;height:auto;display:block;margin:0 auto 32px">
         <div class="s-card" style="padding:24px;border-radius:12px">
-          <div data-i18n="login_title" style="font-size:22px;font-weight:500;color:#111;margin-bottom:24px">Aanmelden bij je account</div>
+          <div data-i18n="login_title" style="font-size:22px;font-weight:500;color:#111;margin-bottom:24px">Aanmelden</div>
           <label data-i18n="login_email" style="font-size:14px;font-weight:500;color:#111;display:block;margin-bottom:8px">E-mail</label>
           <input id="login-user" type="text" placeholder="Email" style="width:100%;height:44px;border:1.5px solid #e0e0e0;border-radius:6px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;box-sizing:border-box;margin-bottom:20px" onkeydown="if(event.key==='Enter')doLogin()">
           <label data-i18n="login_password" style="font-size:14px;font-weight:500;color:#111;display:block;margin-bottom:8px">Wachtwoord</label>
-          <input id="login-pass" type="password" placeholder="Password" style="width:100%;height:44px;border:1.5px solid #e0e0e0;border-radius:6px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;box-sizing:border-box;margin-bottom:16px" onkeydown="if(event.key==='Enter')doLogin()">
-          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:20px">
-            <input type="checkbox" style="width:18px;height:18px;accent-color:#0172af;flex-shrink:0">
-            <span data-i18n="login_remember" style="font-size:14px;color:#555">Onthoud mij op dit apparaat</span>
-          </label>
+          <input id="login-pass" type="password" placeholder="Password" style="width:100%;height:44px;border:1.5px solid #e0e0e0;border-radius:6px;padding:0 16px;font-size:16px;font-family:'Poppins',sans-serif;outline:none;color:#111;box-sizing:border-box;margin-bottom:20px" onkeydown="if(event.key==='Enter')doLogin()">
+          <div style="height:21px"></div>
           <div id="login-error" data-i18n="login_error" style="display:none;font-size:13px;color:#e53935;text-align:center;margin-bottom:12px">Onjuiste gebruikersnaam of wachtwoord</div>
           <button data-i18n="login_signin" onclick="doLogin()" style="width:100%;height:44px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aanmelden</button>
         </div>
@@ -2277,7 +2274,7 @@
       pause_continue:'Continue', pause_reopen:'You can reopen your store at any time.',
       pause_paused:'Orders paused',
       login_welcome:'Welcome back', login_subtitle:'Log in to continue', login_username:'Username', login_password:'Password', login_signin:'Sign in',
-      login_title:'Sign in to your account', login_email:'E-mail', login_forgot:'Forgot your password?', login_remember:'Remember me on this device',
+      login_title:'Sign in', login_email:'E-mail', login_forgot:'Forgot your password?', login_remember:'Remember me on this device',
       co_discard_title:'You have unsaved changes', co_discard_keep:'Keep editing', co_discard_discard:'Discard',
       dash_online_paid:'Paid online', dash_cash:'Cash',
       login_error:'Incorrect username or password', sim_new_order:'Simulate new order', dash_cancelled_orders:'cancelled orders',
@@ -2366,7 +2363,7 @@
       pause_continue:'Doorgaan', pause_reopen:'Je kunt op elk moment je winkel weer openen.',
       pause_paused:'Bestellingen gepauzeerd',
       login_welcome:'Welkom terug', login_subtitle:'Log in om door te gaan', login_username:'Gebruikersnaam', login_password:'Wachtwoord', login_signin:'Aanmelden',
-      login_title:'Aanmelden bij je account', login_email:'E-mail', login_forgot:'Je wachtwoord vergeten?', login_remember:'Onthoud mij op dit apparaat',
+      login_title:'Aanmelden', login_email:'E-mail', login_forgot:'Je wachtwoord vergeten?', login_remember:'Onthoud mij op dit apparaat',
       co_discard_title:'Je hebt niet-opgeslagen wijzigingen', co_discard_keep:'Doorgaan met bewerken', co_discard_discard:'Verwerpen',
       dash_online_paid:'Online betaald', dash_cash:'Contant',
       login_error:'Onjuiste gebruikersnaam of wachtwoord', sim_new_order:'Simuleer nieuwe bestelling', dash_cancelled_orders:'geannuleerde bestellingen',
