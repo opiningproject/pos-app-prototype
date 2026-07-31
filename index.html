@@ -178,6 +178,7 @@
   #p-detail .scroll { font-size: 14px; }
   #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
   #p-detail .scroll #d-customer-type-badge, #p-detail .scroll #d-pay-badge { font-size: 12px !important; }
+  #p-detail .scroll #d-items-count, #p-detail .scroll #d-detail-name { font-size: 16px !important; }
   /* New-order popup: fixed 73px header with vertically-centred title */
   #p-detail > .page-header.d-new-header { height: 73px !important; min-height: 73px !important; padding-top: 0 !important; padding-bottom: 0 !important; }
   #p-detail > .page-header.d-new-header #d-header-status { top: 50% !important; transform: translate(-50%, -50%) !important; }
@@ -192,9 +193,9 @@
   #d-order-menu .d-menu-item.neutral { color: #111; }
   #p-detail.new-order-mode.scrolled-bottom #d-scroll-fade { display: none !important; }
   /* New-order popup: hide phone + email, keep only the address (heavier) */
-  #p-detail.new-order-mode #d-customer-details > span { display: none !important; }
+  #p-detail.new-order-mode #d-customer-details > span, #p-detail.new-order-mode #d-customer-phone { display: none !important; }
   #p-detail.new-order-mode #d-customer-addr-block { margin-top: 0 !important; }
-  #p-detail.new-order-mode #d-customer-addr-block span { font-weight: 500 !important; font-size: 18px !important; }
+  #p-detail.new-order-mode #d-customer-addr-block span { font-weight: 600 !important; font-size: 18px !important; }
   #p-detail.new-order-mode #d-detail-name, #p-detail.new-order-mode #d-items-count { font-size: 16px !important; font-weight: 500 !important; }
   #p-detail .scroll #d-sched-time { font-size: 34px !important; }
   #p-detail .scroll #d-new-schedule .sched-pm { font-size: 26px !important; }
@@ -1115,7 +1116,7 @@
     <div class="screen-content" id="screen-content">
 
       <!-- ===== NAV OVERLAY ===== -->
-      <div id="p-nav" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:300;display:none;flex-direction:column;background:rgba(0,0,0,0.80);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);">
+      <div id="p-nav" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:300;display:none;flex-direction:column;background:rgba(0,0,0,0.90);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);">
 
         <!-- Close button — same position as burger button -->
         <div onclick="goPage('orders')" style="width:48px;height:48px;margin:12px 0 0 12px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
@@ -1317,23 +1318,29 @@
             </div>
           </div>
           <div id="d-time-backdrop" onclick="closeChangeTime()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
-          <div id="d-time-modal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;padding:24px 20px;z-index:310;width:300px;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+          <div id="d-time-modal" style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
             <div onclick="closeChangeTime()" style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div data-i18n="d_change_time" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:20px">Tijd wijzigen</div>
+            <div data-i18n="d_change_time" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:24px">Tijd wijzigen</div>
             <div style="display:flex;align-items:center;justify-content:center;gap:16px">
               <div onclick="changeTimeStep(-15)" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0172af;cursor:pointer;user-select:none">−</div>
               <span id="d-time-value" style="flex:1;min-width:0;font-size:22px;font-weight:600;color:#111;text-align:center;white-space:nowrap">18:00</span>
               <div onclick="changeTimeStep(15)" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;font-size:22px;color:#0172af;cursor:pointer;user-select:none">+</div>
             </div>
-            <button onclick="confirmChangeTime()" data-i18n="d_confirm" style="width:100%;height:46px;margin-top:22px;font-size:15px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Bevestigen</button>
+            <button onclick="confirmChangeTime()" data-i18n="d_confirm" style="width:100%;height:42px;margin-top:24px;font-size:15px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Bevestigen</button>
           </div>
           <div id="d-note-backdrop" onclick="closeAddNote()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
-          <div id="d-note-modal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;padding:24px 20px;z-index:310;width:300px;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+          <div id="d-note-modal" style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
             <div onclick="closeAddNote()" style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div data-i18n="d_admin_note" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:16px">Interne notitie</div>
+            <div data-i18n="d_admin_note" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:24px">Interne notitie</div>
             <textarea id="d-note-input" data-i18n-ph="d_note_placeholder" placeholder="Notitie voor personeel..." style="width:100%;height:90px;border:1.5px solid #eee;border-radius:12px;padding:12px;font-size:14px;color:#111;font-family:'Poppins',sans-serif;resize:none;box-sizing:border-box"></textarea>
-            <button onclick="saveAdminNote()" data-i18n="d_save" style="width:100%;height:46px;margin-top:16px;font-size:15px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Opslaan</button>
-            <button onclick="deleteAdminNote()" data-i18n="d_delete" style="width:100%;height:44px;margin-top:8px;font-size:15px;font-weight:600;color:#c62828;background:#fff;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Verwijderen</button>
+            <button onclick="saveAdminNote()" data-i18n="d_save" style="width:100%;height:42px;margin-top:24px;font-size:15px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Opslaan</button>
+            <button onclick="deleteAdminNote()" data-i18n="d_delete" style="width:100%;height:42px;margin-top:12px;font-size:15px;font-weight:500;color:#111;background:#fff;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Verwijderen</button>
+          </div>
+          <div id="d-cancel-backdrop" onclick="closeCancelConfirm()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
+          <div id="d-cancel-modal" style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+            <div data-i18n="d_cancel_confirm_title" style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:24px;line-height:1.4">Weet je zeker dat je de bestelling wilt annuleren?</div>
+            <button onclick="confirmCancelOrder()" data-i18n="d_cancel_confirm_yes" style="width:100%;height:42px;font-size:15px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Ja, annuleren en terugbetalen</button>
+            <button onclick="closeCancelConfirm()" data-i18n="d_cancel_confirm_no" style="width:100%;height:42px;margin-top:12px;font-size:15px;font-weight:500;color:#111;background:#fff;border:1.5px solid #e0e0e0;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Nee, bestelling behouden</button>
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
@@ -1342,20 +1349,20 @@
           <!-- New-order schedule block (shown only for unaccepted orders) -->
           <div id="d-new-schedule" style="display:none;margin:20px 16px 4px">
             <div style="display:flex;align-items:center;justify-content:center;gap:28px">
-              <div class="sched-pm" onclick="schedStep(-5)" style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;color:#0172af;cursor:pointer;user-select:none">−</div>
-              <span id="d-sched-time" style="font-weight:600;color:#111;min-width:104px;text-align:center">19:00</span>
-              <div class="sched-pm" onclick="schedStep(5)" style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;color:#0172af;cursor:pointer;user-select:none">+</div>
+              <div class="sched-pm" onclick="schedStep(-5)" style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="4" y1="11" x2="18" y2="11" stroke="#0172af" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <span id="d-sched-time" style="font-weight:500;color:#111;min-width:104px;text-align:center">19:00</span>
+              <div class="sched-pm" onclick="schedStep(5)" style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="4" y1="11" x2="18" y2="11" stroke="#0172af" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="4" x2="11" y2="18" stroke="#0172af" stroke-width="1.5" stroke-linecap="round"/></svg></div>
             </div>
             <div id="d-sched-mins" style="text-align:center;color:#888;margin-top:10px">45 min</div>
-            <div style="text-align:center;margin-top:12px">
-              <span id="d-sched-badge" data-i18n="d_scheduled" style="font-weight:600;color:#7b4bc4;background:#f1eafc;border-radius:4px;padding:4px 12px;display:inline-block">Gepland</span>
+            <div style="text-align:center;margin-top:24px">
+              <span id="d-sched-badge" data-i18n="d_scheduled" style="font-weight:600;color:#7b4bc4;background:#f1eafc;border-radius:999px;padding:4px 12px;display:inline-block">Gepland</span>
             </div>
-            <button id="d-confirm-btn" onclick="confirmSchedule()" style="width:100%;height:48px;margin-top:20px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span data-i18n="d_confirm">Bevestigen</span></button>
+            <button id="d-confirm-btn" onclick="confirmSchedule()" style="width:100%;height:48px;margin-top:24px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span data-i18n="d_confirm">Bevestigen</span></button>
           </div>
 
           <!-- Top: address left + circle right -->
           <div id="d-top-timer-card" style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:16px">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:24px">
               <div>
                 <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Bezorging</div>
                 <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">ZSM</div>
@@ -1385,10 +1392,13 @@
           <div class="d-order-card" style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 16px">
             <div style="padding:16px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;gap:12px">
               <span id="d-detail-name" style="font-size:20px;font-weight:600;color:#111">Thomas Jefferson</span>
-              <span id="d-customer-type-badge" style="font-size:12px;font-weight:600;border-radius:4px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">Nieuwe klant</span>
+              <span id="d-customer-type-badge" style="font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">Nieuwe klant</span>
             </div>
             <div id="d-customer-details" style="display:flex;flex-direction:column;gap:10px;padding-top:18px;padding-bottom:16px">
-              <span style="font-size:17px;font-weight:500;color:#111">+31 6 14 52 24 53</span>
+              <div id="d-customer-phone" style="display:flex;align-items:center;gap:12px">
+                <svg width="15" height="15" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M27 20C24.096 20 21.33 19.368 18.78 18.122C18.54 18.002 18.264 17.988 18.014 18.076C17.762 18.164 17.556 18.348 17.44 18.586L15.868 21.84C11.8 19.57 8.432 16.204 6.164 12.136L9.416 10.56C9.656 10.444 9.838 10.238 9.926 9.986C10.012 9.736 9.996 9.46 9.878 9.22C8.632 6.67 8 3.904 8 1C8 0.448 7.552 0 7 0H1C0.448 0 0 0.448 0 1C0 15.888 12.112 28 27 28C27.552 28 28 27.552 28 27V21C28 20.448 27.552 20 27 20Z" fill="#2D2D2D"/></svg>
+                <span style="font-size:17px;font-weight:500;color:#111">+31 6 14 52 24 53</span>
+              </div>
               <div id="d-customer-addr-block" style="display:none;margin-top:14px;display:flex;flex-direction:column;gap:4px">
                 <span id="d-customer-addr" style="font-size:17px;font-weight:500;color:#111">—</span>
                 <span id="d-customer-city" style="font-size:17px;font-weight:500;color:#111;display:none">—</span>
@@ -1401,7 +1411,7 @@
           <div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0">
             <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">€ 31,00</span>
-            <span id="d-pay-badge" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:4px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
+            <span id="d-pay-badge" style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
           </div>
           <div id="d-order-summary-body">
             <div style="padding:18px 0;border-top:1px solid #f0f0f0">
@@ -1813,73 +1823,8 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0;background:#fafafa;display:flex;flex-direction:column;overflow:hidden">
-          <div class="tabs orders-tabs" id="menu-tabs" style="background:#fff;flex-shrink:0">
-            <div class="tab-underline" aria-hidden="true"></div>
-            <div class="tab active" onclick="switchMenuTab(this,'menu-pane-items')"><span class="tab-inner"><span class="tab-label">Items</span></span></div>
-            <div class="tab" onclick="switchMenuTab(this,'menu-pane-choices')"><span class="tab-inner"><span class="tab-label">Choice Menus</span></span></div>
-          </div>
           <div id="menu-pane-items" class="scroll" style="background:#fafafa;padding:16px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
             <div id="menu-items-list" style="display:flex;flex-direction:column;gap:12px"></div>
-          </div>
-          <div id="menu-pane-choices" class="scroll" style="display:none;background:#fafafa;padding:16px;flex-direction:column;gap:12px;padding-bottom:120px">
-
-            <!-- Sauzen -->
-            <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
-                <div>
-                  <div style="font-size:18px;font-weight:600;color:#111">Sauzen</div>
-                  <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:22px">
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
-                </div>
-              </div>
-              <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Ketchup</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Mayonaise</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px"><span style="font-size:16px;font-weight:500;color:#111">Barbecue</span><div class="mtoggle blue sub-toggle" onclick="toggleSubItem(this)"></div></div>
-              </div>
-            </div>
-
-            <!-- Extras -->
-            <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
-                <div>
-                  <div style="font-size:18px;font-weight:600;color:#111">Extras</div>
-                  <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:22px">
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
-                </div>
-              </div>
-              <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Extra kaas</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Spek</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px"><span style="font-size:16px;font-weight:500;color:#111">Avocado</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-              </div>
-            </div>
-
-            <!-- Dressings -->
-            <div class="choice-group" style="background:#fff;border-radius:16px;border:1.5px solid #f3f3f3;overflow:hidden">
-              <div onclick="toggleChoiceGroup(this)" style="display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer">
-                <div>
-                  <div style="font-size:18px;font-weight:600;color:#111">Dressings</div>
-                  <div class="choice-status" style="display:none;font-size:16px;font-weight:500;color:#888;margin-top:4px"></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:22px">
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style="transition:transform 0.2s"><path d="M1 1L7 7L13 1" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <div class="mtoggle blue on group-toggle" onclick="event.stopPropagation();toggleGroupMain(this)"></div>
-                </div>
-              </div>
-              <div class="choice-sub" style="display:none;border-top:1.5px solid #f3f3f3">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Caesar</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #f7f7f7"><span style="font-size:16px;font-weight:500;color:#111">Ranch</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px"><span style="font-size:16px;font-weight:500;color:#111">Honing mosterd</span><div class="mtoggle blue on sub-toggle" onclick="toggleSubItem(this)"></div></div>
-              </div>
-            </div>
-
           </div>
         </div>
         <div class="navbar"><div class="navbar-pill">
@@ -1978,8 +1923,6 @@
 
     <!-- Login page (outside screen-content, covers full screen) -->
     <div id="p-login" style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;justify-content:center;overflow-y:auto">
-      <div style="position:absolute;top:0;bottom:0;left:24px;width:1.5px;background:#f3f3f3;pointer-events:none"></div>
-      <div style="position:absolute;top:0;bottom:0;right:24px;width:1.5px;background:#f3f3f3;pointer-events:none"></div>
       <div style="padding:24px;margin-bottom:56px">
         <img src="logo.png" alt="Opining" style="width:120px;height:auto;display:block;margin:0 auto 32px">
         <div class="s-card" style="padding:24px;border-radius:12px">
@@ -2242,7 +2185,7 @@
       dash_info_summary:'Full sales figures on the opining dashboard.', dash_info_details:'Full order history on the opining dashboard.', dash_info_cancelled:'Full cancellation history on the opining dashboard.',
       set_lang_desc:'Set the language of this Orderpad',
       snd_desc:'Adjust the sounds you hear on your device to your environment', snd_quiet:'Quiet / Relaxed', snd_default:'Default (Recommended)', snd_noisy:'Noisy / Busy', snd_new_order:'New order', snd_original:'Original sound', snd_volume:'Volume',
-      rcp_desc:'Choose the information you want on your receipt', rcp_print:'Print receipt', rcp_count:'Number of receipts to print', rcp_content:'Receipt content', rcp_customize:'Customize your receipt', rcp_menu_id:'Menu/Item list ID',
+      rcp_desc:'Choose the information you want on your receipt', rcp_print:'Print receipt', rcp_count:'Number of receipts to print', rcp_content:'Receipt content', rcp_customize:'Customize your receipt', rcp_menu_id:'Menu/Item list ID', rcp_autoprint:'Auto print new order',
       hdr_create_order:'New order', create_order_desc:'Manually create a new order here',
       create_delivery_btn:'Create new delivery order', create_takeaway_btn:'Create new takeaway order',
       hdr_products:'Products', dd_products:'Products', dd_choices:'Choices menu', dd_categories:'Categories',
@@ -2256,6 +2199,7 @@
       d_subtotal:'Subtotal', d_shipping:'Delivery', d_service:'Service fee',
       d_returning_customer:'Returning customer', d_confirm:'Confirm', d_scheduled:'Scheduled',
       d_cancel_order:'Cancel order', toast_order_cancelled:'Order cancelled', toast_order_completed:'Order completed',
+      d_cancel_confirm_title:'Are you sure you want to cancel the order?', d_cancel_confirm_yes:'Yes, cancel and refund', d_cancel_confirm_no:'No, keep order',
       d_change_time:'Change time', toast_time_changed:'Time updated',
       d_add_note:'Add note', d_admin_note:'Internal note', d_note_placeholder:'Note for staff...', d_save:'Save', d_delete:'Delete', toast_note_saved:'Note saved', toast_note_deleted:'Note deleted',
       co_page_title:'Create order', co_sec_customer:'Customer', co_sec_products:'Products', co_sec_payment:'Payment',
@@ -2268,7 +2212,7 @@
       nav_open_status:'Restaurant is currently open for orders', nav_closed_status:'Restaurant is currently closed for orders',
       nav_closed_until:'Restaurant closed until',
       hdr_status_open:'Open', hdr_status_closed:'Closed', hdr_status_paused:'Paused',
-      set_default_times:'Default times', set_pincode:'Pincode', set_delivery_display:'Delivery display', set_receipt:'Customize receipt',
+      set_default_times:'Default times', set_pincode:'Pincode', set_delivery_display:'Delivery display', set_receipt:'Receipt',
       pause_title:'Stop accepting orders', pause_question:'How long do you not want to accept orders?',
       pause_rest_day:'Rest of the day', pause_1h:'1 hour', pause_20m:'20 minutes', pause_custom:'Custom time',
       pause_continue:'Continue', pause_reopen:'You can reopen your store at any time.',
@@ -2331,7 +2275,7 @@
       dash_info_summary:'Volledige verkoopcijfers te vinden op het opining dashboard.', dash_info_details:'Volledige bestelgeschiedenis te vinden op het opining dashboard.', dash_info_cancelled:'Volledige annuleringsgeschiedenis te vinden op het opining dashboard.',
       set_lang_desc:'Stel de taal van deze Orderpad in',
       snd_desc:'Pas de geluiden die je op je apparaat hoort aan aan je omgeving', snd_quiet:'Stil / Relaxed', snd_default:'Default (Aanbevolen)', snd_noisy:'Rumoerig / Druk', snd_new_order:'Nieuwe bestelling', snd_original:'Origineel geluid', snd_volume:'Volume',
-      rcp_desc:'Kies de informatie die je op je bon wilt zien', rcp_print:'Kassabon afdrukken', rcp_count:'Aantal af te drukken bonnen', rcp_content:'Inhoud kassabon', rcp_customize:'Pas je kassabon aan', rcp_menu_id:'Menu/Item lijst ID',
+      rcp_desc:'Kies de informatie die je op je bon wilt zien', rcp_print:'Kassabon afdrukken', rcp_count:'Aantal af te drukken bonnen', rcp_content:'Inhoud kassabon', rcp_customize:'Pas je kassabon aan', rcp_menu_id:'Menu/Item lijst ID', rcp_autoprint:'Nieuwe bestelling automatisch printen',
       hdr_create_order:'Nieuwe bestelling', create_order_desc:'Maak hier handmatig een nieuwe bestelling aan',
       create_delivery_btn:'Nieuwe bezorgbestelling aanmaken', create_takeaway_btn:'Nieuwe afhaalbestelling aanmaken',
       hdr_products:'Producten', dd_products:'Producten', dd_choices:'Keuzemenu', dd_categories:'Categorieën',
@@ -2345,6 +2289,7 @@
       d_subtotal:'Subtotaal', d_shipping:'Bezorging', d_service:'Servicekosten',
       d_returning_customer:'Vaste klant', d_confirm:'Bevestigen', d_scheduled:'Gepland',
       d_cancel_order:'Bestelling annuleren', toast_order_cancelled:'Bestelling geannuleerd', toast_order_completed:'Bestelling afgerond',
+      d_cancel_confirm_title:'Weet je zeker dat je de bestelling wilt annuleren?', d_cancel_confirm_yes:'Ja, annuleren en terugbetalen', d_cancel_confirm_no:'Nee, bestelling behouden',
       d_change_time:'Tijd wijzigen', toast_time_changed:'Tijd gewijzigd',
       d_add_note:'Notitie toevoegen', d_admin_note:'Interne notitie', d_note_placeholder:'Notitie voor personeel...', d_save:'Opslaan', d_delete:'Verwijderen', toast_note_saved:'Notitie opgeslagen', toast_note_deleted:'Notitie verwijderd',
       co_page_title:'Bestelling aanmaken', co_sec_customer:'Klant', co_sec_products:'Producten', co_sec_payment:'Betaling',
@@ -2357,7 +2302,7 @@
       nav_open_status:'Restaurant is momenteel open voor bestellingen', nav_closed_status:'Restaurant is momenteel gesloten voor bestellingen',
       nav_closed_until:'Restaurant gesloten tot',
       hdr_status_open:'Open', hdr_status_closed:'Gesloten', hdr_status_paused:'Gepauzeerd',
-      set_default_times:'Standaard tijden', set_pincode:'Pincode', set_delivery_display:'Bezorging weergave', set_receipt:'Bon aanpassen',
+      set_default_times:'Standaard tijden', set_pincode:'Pincode', set_delivery_display:'Bezorging weergave', set_receipt:'Bon',
       pause_title:'Bestellingen stopzetten', pause_question:'Hoelang wil je geen bestellingen aannemen?',
       pause_rest_day:'Rest van de dag', pause_1h:'1 uur', pause_20m:'20 minuten', pause_custom:'Custom tijd',
       pause_continue:'Doorgaan', pause_reopen:'Je kunt op elk moment je winkel weer openen.',
@@ -2510,6 +2455,15 @@
   }
   function cancelOrder(){
     closeOrderMenu();
+    document.getElementById('d-cancel-backdrop').style.display = 'block';
+    document.getElementById('d-cancel-modal').style.display = 'block';
+  }
+  function closeCancelConfirm(){
+    document.getElementById('d-cancel-backdrop').style.display = 'none';
+    document.getElementById('d-cancel-modal').style.display = 'none';
+  }
+  function confirmCancelOrder(){
+    closeCancelConfirm();
     var card = window._detailCard;
     if (!card && window._detailOid) {
       card = document.querySelector('#orders-panes .ocard[data-oid="' + window._detailOid + '"]');
@@ -2577,13 +2531,15 @@
         if (isAsapOrder) {
           schedBadgeEl.setAttribute('data-i18n', 'otime_asap_full');
           schedBadgeEl.textContent = t('otime_asap_full');
-          schedBadgeEl.style.color = '#555';
-          schedBadgeEl.style.background = '#f0f0f0';
+          schedBadgeEl.style.color = '#888';
+          schedBadgeEl.style.background = '#fff';
+          schedBadgeEl.style.border = '1.5px solid #f0f0f0';
         } else {
           schedBadgeEl.setAttribute('data-i18n', 'd_scheduled');
           schedBadgeEl.textContent = t('d_scheduled');
           schedBadgeEl.style.color = '#7b4bc4';
           schedBadgeEl.style.background = '#f1eafc';
+          schedBadgeEl.style.border = 'none';
         }
       }
     }
@@ -2642,14 +2598,15 @@
         custAddrBlock.style.display='flex';
         if (isUnaccepted) {
           // New-order popup: single line "street, city, postcode"
+          custAddrBlock.style.display='flex';
           var pm = (cityAddr||'').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
           var pc = pm ? pm[1] : '';
           var cityName = pm ? pm[2] : cityAddr;
           if(custAddr) custAddr.textContent = streetAddr + (cityName?', '+cityName:'') + (pc?', '+pc:'');
           if(custCity) custCity.style.display='none';
         } else {
-          if(custAddr) custAddr.textContent=streetAddr;
-          if(custCity){ custCity.textContent=cityAddr; custCity.style.display=cityAddr?'block':'none'; }
+          // Accepted detail: address already shown in the top section
+          custAddrBlock.style.display='none';
         }
         if(openMap2) openMap2.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(streetAddr+(cityAddr?', '+cityAddr:''));
       } else {
@@ -4014,9 +3971,9 @@
 
     'Meldingen': '<div style="padding:8px 4px 0">'
       + '<div class="s-desc" data-i18n="snd_desc">Pas de geluiden die je op je apparaat hoort aan aan je omgeving</div>'
-      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio checked"><i></i></span><span class="s-label" data-i18n="snd_quiet">Stil / Relaxed</span></div>'
-      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_default">Default (Recommended)</span></div>'
-      + '<div class="s-opt" onclick="selectRadio(this)"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_noisy">Noisy / Busy</span></div>'
+      + '<div class="s-opt" data-preset="quiet" onclick="selectRadio(this);setSoundPreset(\'quiet\')"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_quiet">Stil / Relaxed</span></div>'
+      + '<div class="s-opt" data-preset="default" onclick="selectRadio(this);setSoundPreset(\'default\')"><span class="s-radio checked"><i></i></span><span class="s-label" data-i18n="snd_default">Default (Recommended)</span></div>'
+      + '<div class="s-opt" data-preset="noisy" onclick="selectRadio(this);setSoundPreset(\'noisy\')"><span class="s-radio"><i></i></span><span class="s-label" data-i18n="snd_noisy">Noisy / Busy</span></div>'
       + '<div class="s-card" style="margin-top:16px">'
         + '<div style="display:flex;align-items:center;justify-content:space-between">'
         + '<div><div class="s-card-title" data-i18n="snd_new_order">Nieuwe bestelling</div><div class="s-card-sub" data-i18n="snd_original">Origineel geluid</div></div>'
@@ -4026,7 +3983,7 @@
         + '</div></div>'
         + '<div style="margin-top:20px">'
         + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-weight:600;color:#111" data-i18n="snd_volume">Volume</span><span id="s-vol-val" style="color:#111">25%</span></div>'
-        + '<input type="range" min="0" max="100" value="25" class="s-slider" oninput="setVolume(this)">'
+        + '<input id="s-vol-slider" type="range" min="0" max="100" value="25" class="s-slider" oninput="setVolume(this)" onchange="playBeep()">'
         + '</div>'
       + '</div>'
       + '</div>',
@@ -4039,22 +3996,8 @@
       + '</div>',
 
     'Bon aanpassen': '<div style="padding:8px 4px 0">'
-      + '<div class="s-desc" data-i18n="rcp_desc">Kies de informatie die je op je bon wilt zien</div>'
-      + '<div class="s-card" style="margin-bottom:12px">'
-        + '<div class="s-card-title" data-i18n="rcp_print">Kassabon afdrukken</div>'
-        + '<div class="s-card-sub" style="margin-bottom:16px" data-i18n="rcp_count">Aantal af te drukken bonnen</div>'
-        + '<div style="display:flex;align-items:center;justify-content:space-between">'
-        + '<div class="s-step" onclick="stepCount(this,-1)">−</div>'
-        + '<span class="s-count">1</span>'
-        + '<div class="s-step" onclick="stepCount(this,1)">+</div>'
-        + '</div>'
-      + '</div>'
-      + '<div class="s-card" style="margin-bottom:12px;cursor:pointer">'
-        + '<div class="s-card-title" data-i18n="rcp_content">Inhoud kassabon</div>'
-        + '<div class="s-card-sub" data-i18n="rcp_customize">Pas je kassabon aan</div>'
-      + '</div>'
       + '<div class="s-row">'
-        + '<span class="s-label" data-i18n="rcp_menu_id">Menu/Item lijst ID</span>'
+        + '<span class="s-label" data-i18n="rcp_autoprint">Nieuwe bestelling automatisch printen</span>'
         + '<div class="mtoggle blue on" onclick="this.classList.toggle(\'on\')"></div>'
       + '</div>'
       + '</div>',
@@ -4144,6 +4087,7 @@
     if (span) span.textContent = Math.max(1, (parseInt(span.textContent, 10) || 1) + delta);
   }
   function setVolume(input){
+    soundVolume = parseInt(input.value, 10) || 0;
     var lbl = document.getElementById('s-vol-val'); if (lbl) lbl.textContent = input.value + '%';
   }
 
@@ -4191,6 +4135,13 @@
       var tk = settingTitleKey[name];
       document.getElementById('settings-detail-title').textContent = tk ? t(tk) : name;
     }
+    if (name === 'Meldingen') {
+      scroll.querySelectorAll('.s-opt[data-preset] .s-radio').forEach(function(r){ r.classList.remove('checked'); });
+      var presetRadio = scroll.querySelector('.s-opt[data-preset="' + soundPreset + '"] .s-radio');
+      if (presetRadio) presetRadio.classList.add('checked');
+      var sl = document.getElementById('s-vol-slider'); if (sl) sl.value = soundVolume;
+      var vv = document.getElementById('s-vol-val'); if (vv) vv.textContent = soundVolume + '%';
+    }
     goPage('settings-detail');
   }
 
@@ -4198,6 +4149,18 @@
     document.querySelectorAll('.fchip').forEach(function(c){c.classList.remove('active');});
     el.classList.add('active');
   }
+
+  var soundPreset = 'default';
+  var soundVolume = 25;
+  var SOUND_PRESETS = {
+    // Soft, gentle two-note chime — sine waves, few repeats, low level
+    quiet:   { type:'sine',     reps:2, f1:660,  f2:880, len:0.20, gap:360, base:0.16 },
+    // Balanced original alarm — square waves, medium repeats
+    default: { type:'square',   reps:5, f1:1000, f2:760, len:0.16, gap:280, base:0.28 },
+    // Loud & urgent — brighter sawtooth, more repeats, faster, higher level
+    noisy:   { type:'sawtooth', reps:7, f1:1200, f2:920, len:0.14, gap:200, base:0.45 }
+  };
+  function setSoundPreset(p){ if(SOUND_PRESETS[p]){ soundPreset = p; playBeep(); } }
 
   var sharedAudioCtx = null;
   function getAudioCtx(){
@@ -4212,21 +4175,25 @@
 
   function playBeep(){
     try{
+      var vol = soundVolume/100;
+      if(vol<=0) return;
       var ctx=getAudioCtx();
+      var p=SOUND_PRESETS[soundPreset]||SOUND_PRESETS.default;
+      var peak=p.base*vol;
       var notes=[];
-      for(var i=0;i<5;i++){
-        notes.push({f:1000,d:i*280,len:0.16});
-        notes.push({f:760,d:i*280+150,len:0.16});
+      for(var i=0;i<p.reps;i++){
+        notes.push({f:p.f1,d:i*p.gap,len:p.len});
+        notes.push({f:p.f2,d:i*p.gap+Math.round(p.len*1000*0.9),len:p.len});
       }
       notes.forEach(function(n){
         setTimeout(function(){
           var o=ctx.createOscillator();
           var g=ctx.createGain();
-          o.type='square';
+          o.type=p.type;
           o.connect(g); g.connect(ctx.destination);
           o.frequency.value=n.f;
           g.gain.setValueAtTime(0.0001,ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.28,ctx.currentTime+0.015);
+          g.gain.exponentialRampToValueAtTime(peak,ctx.currentTime+0.015);
           g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+n.len);
           o.start(ctx.currentTime); o.stop(ctx.currentTime+n.len);
         },n.d);
