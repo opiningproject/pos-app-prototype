@@ -179,6 +179,7 @@
   #p-detail .scroll [style*="font-size"] { font-size: 14px !important; }
   #p-detail .scroll #d-customer-type-badge, #p-detail .scroll #d-pay-badge { font-size: 12px !important; }
   #p-detail .scroll #d-items-count, #p-detail .scroll #d-detail-name { font-size: 16px !important; }
+  #p-detail .scroll #d-order-number { font-size: 13px !important; }
   /* New-order popup: fixed 73px header with vertically-centred title */
   #p-detail > .page-header.d-new-header { height: 73px !important; min-height: 73px !important; padding-top: 0 !important; padding-bottom: 0 !important; }
   #p-detail > .page-header.d-new-header #d-header-status { top: 50% !important; transform: translate(-50%, -50%) !important; }
@@ -195,6 +196,7 @@
   /* New-order popup: hide phone + email, keep only the address (heavier) */
   #p-detail.new-order-mode #d-customer-details > span, #p-detail.new-order-mode #d-customer-phone { display: none !important; }
   #p-detail.new-order-mode #d-customer-addr-block { margin-top: 0 !important; }
+  #p-detail.new-order-mode #d-addr-icon { display: none !important; }
   #p-detail.new-order-mode #d-customer-addr-block span { font-weight: 600 !important; font-size: 18px !important; }
   #p-detail.new-order-mode #d-detail-name, #p-detail.new-order-mode #d-items-count { font-size: 16px !important; font-weight: 500 !important; }
   #p-detail .scroll #d-sched-time { font-size: 34px !important; }
@@ -1364,6 +1366,7 @@
           <div id="d-top-timer-card" style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:16px">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:24px">
               <div>
+                <div id="d-order-number" style="font-size:13px;font-weight:500;color:#888;margin-bottom:6px">#260519 A 12</div>
                 <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Bezorging</div>
                 <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">ZSM</div>
               </div>
@@ -1396,12 +1399,14 @@
             </div>
             <div id="d-customer-details" style="display:flex;flex-direction:column;gap:10px;padding-top:18px;padding-bottom:16px">
               <div id="d-customer-phone" style="display:flex;align-items:center;gap:12px">
-                <svg width="15" height="15" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M27 20C24.096 20 21.33 19.368 18.78 18.122C18.54 18.002 18.264 17.988 18.014 18.076C17.762 18.164 17.556 18.348 17.44 18.586L15.868 21.84C11.8 19.57 8.432 16.204 6.164 12.136L9.416 10.56C9.656 10.444 9.838 10.238 9.926 9.986C10.012 9.736 9.996 9.46 9.878 9.22C8.632 6.67 8 3.904 8 1C8 0.448 7.552 0 7 0H1C0.448 0 0 0.448 0 1C0 15.888 12.112 28 27 28C27.552 28 28 27.552 28 27V21C28 20.448 27.552 20 27 20Z" fill="#2D2D2D"/></svg>
                 <span style="font-size:17px;font-weight:500;color:#111">+31 6 14 52 24 53</span>
               </div>
-              <div id="d-customer-addr-block" style="display:none;margin-top:14px;display:flex;flex-direction:column;gap:4px">
-                <span id="d-customer-addr" style="font-size:17px;font-weight:500;color:#111">—</span>
-                <span id="d-customer-city" style="font-size:17px;font-weight:500;color:#111;display:none">—</span>
+              <div id="d-customer-addr-block" style="display:none;align-items:flex-start;gap:12px">
+                <svg id="d-addr-icon" width="18" height="18" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:2px"><path d="M5.97363 0.760742C6.35299 0.72229 6.73545 0.719913 7.11523 0.753906L7.31641 0.772461C7.5855 0.796546 7.85283 0.8382 8.11621 0.897461L8.41699 0.972656C8.82226 1.0828 9.21412 1.23738 9.58594 1.43262C9.88708 1.59077 10.1737 1.77574 10.4424 1.98438L10.5752 2.08691C10.832 2.28638 11.0721 2.50647 11.293 2.74512L11.3574 2.81445C11.5376 3.00913 11.701 3.21879 11.8467 3.44043C12.0452 3.74249 12.2098 4.06655 12.3359 4.40527L12.3926 4.55859L12.5605 5.23828L12.6338 5.77246V6.24219L12.5566 6.94043C12.5037 7.18729 12.4384 7.43122 12.3594 7.6709L12.2734 7.91797L12.2705 7.9248L12.2646 7.94238L12.0693 8.51172L11.8779 8.92969L11.5342 9.54004L11.1006 10.1572L10.2744 11.1113L9.35938 12.0273L6.9873 13.9014L6.68164 14.1299L4.88965 12.7881L3.48926 11.5195L2.61133 10.6387L2.12207 9.99219C1.88392 9.6776 1.67164 9.33732 1.49121 8.98535C1.27635 8.56618 1.10353 8.12072 0.981445 7.66699L0.954102 7.56543C0.870059 7.25299 0.813111 6.93367 0.785156 6.61133L0.776367 6.50879C0.730483 5.9794 0.771356 5.44589 0.897461 4.92969C0.997249 4.52124 1.14981 4.12724 1.35059 3.75781L1.38086 3.70215C1.61736 3.26699 1.91357 2.86589 2.25977 2.51172L2.28906 2.48145C2.58404 2.17968 2.91225 1.91177 3.2666 1.68262L3.47949 1.54492L3.88379 1.35352C4.18429 1.21063 4.49564 1.0904 4.81445 0.995117L4.85938 0.982422C5.22289 0.873774 5.59617 0.799032 5.97363 0.760742Z" stroke="#2D2D2D" stroke-width="1.4"/><circle cx="6.78544" cy="5.68973" r="1.44286" stroke="#2D2D2D" stroke-width="1.4"/><path d="M10.0008 10.6864C9.33912 9.82319 8.27557 9.39916 6.7866 9.25781C5.29763 9.39916 4.44679 9.82319 3.57227 10.6864" stroke="#2D2D2D" stroke-width="1.4" stroke-linecap="round"/></svg>
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <span id="d-customer-addr" style="font-size:17px;font-weight:500;color:#111">—</span>
+                  <span id="d-customer-city" style="font-size:17px;font-weight:500;color:#111;display:none">—</span>
+                </div>
               </div>
             </div>
           </div>
@@ -2195,7 +2200,7 @@
       accept_label:'Accept',
       app_simulate:'Simulate', toast_new_order:'New order', toast_view:'View', toast_accepted:'accepted',
       hdr_sales_analysis:'Sales analysis',
-      d_wished_label:'Requested:', d_delivery:'Delivery', d_pickup:'Pickup',
+      d_wished_label:'Requested:', d_delivery:'Delivery', d_pickup:'Collection', d_pickup_full:'Being collected',
       d_subtotal:'Subtotal', d_shipping:'Delivery', d_service:'Service fee',
       d_returning_customer:'Returning customer', d_confirm:'Confirm', d_scheduled:'Scheduled',
       d_cancel_order:'Cancel order', toast_order_cancelled:'Order cancelled', toast_order_completed:'Order completed',
@@ -2285,7 +2290,7 @@
       accept_label:'Accepteren',
       app_simulate:'Simuleer', toast_new_order:'Nieuwe bestelling', toast_view:'Bekijken', toast_accepted:'geaccepteerd',
       hdr_sales_analysis:'Verkoopanalyse',
-      d_wished_label:'Gewenst:', d_delivery:'Bezorging', d_pickup:'Afhaal',
+      d_wished_label:'Gewenst:', d_delivery:'Bezorging', d_pickup:'Afhaal', d_pickup_full:'Wordt afgehaald',
       d_subtotal:'Subtotaal', d_shipping:'Bezorging', d_service:'Servicekosten',
       d_returning_customer:'Vaste klant', d_confirm:'Bevestigen', d_scheduled:'Gepland',
       d_cancel_order:'Bestelling annuleren', toast_order_cancelled:'Bestelling geannuleerd', toast_order_completed:'Bestelling afgerond',
@@ -2565,7 +2570,7 @@
     var isDelivery=(type==='Delivery'&&streetAddr&&streetAddr!=='Collection order'&&streetAddr!=='Restaurant');
     var orderTypeLbl=document.getElementById('d-order-type-label');
     if(orderTypeLbl){
-      if(type==='Collection'){ orderTypeLbl.textContent=t('d_pickup'); }
+      if(type==='Collection'){ orderTypeLbl.textContent=t('d_pickup_full'); }
       else {
         var pmT=(cityAddr||'').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
         var cityNameT=pmT?pmT[2]:cityAddr;
@@ -2614,6 +2619,7 @@
       }
     }
     var ptEl=document.getElementById('d-page-title'); if(ptEl) ptEl.textContent=oid;
+    var onEl=document.getElementById('d-order-number'); if(onEl) onEl.textContent=formatOrderNo(oid);
     var dTotal=document.getElementById('d-total'); if(dTotal) dTotal.textContent=price;
     var itemsCountEl=document.getElementById('d-items-count'); if(itemsCountEl) itemsCountEl.textContent=price;
     document.getElementById('d-detail-name').textContent=name;
@@ -4200,6 +4206,13 @@
     }catch(e){}
   }
 
+  function formatOrderNo(oid){
+    var num = String(oid||'').replace(/[^0-9]/g,'') || '0';
+    var d = new Date();
+    var p = function(n){ return String(n).padStart(2,'0'); };
+    var datePart = p(d.getFullYear()%100) + p(d.getMonth()+1) + p(d.getDate());
+    return '#' + datePart + ' A ' + num;
+  }
   function fmtCountdown(s){
     var m = Math.floor(s/60);
     var sec = s%60;
