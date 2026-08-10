@@ -1,0 +1,75 @@
+const API_BASE_URL = 'https://9569.dryfftjwieiwjw.online';
+
+const API = {
+  /**
+   * Log in user with credentials.
+   * @param {string} email
+   * @param {string} password
+   * @returns {Promise<Object>} The login response data
+   */
+  async login(email, password) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.message || `Login failed (Status ${response.status})`);
+      }
+
+      if (data.status === '0' || data.status === 0 || data.status === false) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      return data;
+    } catch (error) {
+      console.error('API login error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Fetch all orders from the server.
+   * @returns {Promise<Object>} The orders data
+   */
+  async getOrders() {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const response = await fetch(`${API_BASE_URL}/api/v1/getOrders`, {
+        method: 'POST',
+        headers: headers
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('auth_token');
+        }
+        throw new Error(responseData.message || `Failed to fetch orders (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to fetch orders');
+      }
+
+      return responseData.data || [];
+    } catch (error) {
+      console.error('API getOrders error:', error);
+      throw error;
+    }
+  }
+};

@@ -3955,8 +3955,7 @@
                 style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round" />
-                </svg>
-              </div>
+                </svg></div>
               <div data-i18n="d_change_time"
                 style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:24px">Tijd wijzigen
               </div>
@@ -3981,8 +3980,7 @@
                 style="position:absolute;top:14px;right:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M1 1L13 13M13 1L1 13" stroke="#888" stroke-width="2" stroke-linecap="round" />
-                </svg>
-              </div>
+                </svg></div>
               <div data-i18n="d_admin_note"
                 style="font-size:16px;font-weight:600;color:#111;text-align:center;margin-bottom:24px">Interne notitie
               </div>
@@ -4018,8 +4016,7 @@
                     style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                       <line x1="4" y1="11" x2="18" y2="11" stroke="#0172af" stroke-width="1.5" stroke-linecap="round" />
-                    </svg>
-                  </div>
+                    </svg></div>
                   <span id="d-sched-time"
                     style="font-weight:500;color:#111;min-width:104px;text-align:center">19:00</span>
                   <div class="sched-pm" onclick="schedStep(5)"
@@ -4027,8 +4024,7 @@
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                       <line x1="4" y1="11" x2="18" y2="11" stroke="#0172af" stroke-width="1.5" stroke-linecap="round" />
                       <line x1="11" y1="4" x2="11" y2="18" stroke="#0172af" stroke-width="1.5" stroke-linecap="round" />
-                    </svg>
-                  </div>
+                    </svg></div>
                 </div>
                 <div id="d-sched-mins" style="text-align:center;color:#888;margin-top:10px">45 min</div>
                 <div style="text-align:center;margin-top:24px">
@@ -5719,7 +5715,6 @@
       Simuleer nieuwe bestelling</button>
   </div>
 
-  <script src="api.js"></script>
   <script>
     // Clock
     function updateClock() {
@@ -5961,15 +5956,9 @@
         setTimeout(function () {
           currentDetail.classList.remove('closing');
         }, 220);
-        if (p === 'orders') {
-          loadOrders();
-        }
         return;
       }
       _goPageImmediate(p);
-      if (p === 'orders') {
-        loadOrders();
-      }
     }
     function setDeviceStatusBar(hex, lightIcons) {
       try { if (window.AndroidStatusBar && AndroidStatusBar.setColor) AndroidStatusBar.setColor(hex, !!lightIcons); } catch (e) { }
@@ -6087,122 +6076,6 @@
       var atBottom = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 8;
       document.getElementById('p-detail').classList.toggle('scrolled-bottom', atBottom);
     }
-    function renderLiveOrderDetail(order) {
-      var body = document.getElementById('d-order-summary-body');
-      if (!body) return;
-
-      var items = order.order_items || [];
-      var html = '';
-
-      items.forEach(function (item) {
-        var qty = item.quantity || 1;
-        var name = item.product_name || '';
-        var price = (parseFloat(item.price || 0) * qty).toFixed(2);
-
-        var attrsText = '';
-        if (item.attribute_items && item.attribute_items.length > 0) {
-          var attrStrings = item.attribute_items.map(function (attr) {
-            return attr.attribute_value;
-          });
-          attrsText = attrStrings.join(', ');
-        }
-
-        html += '<div style="padding:18px 0;border-top:1px solid #f0f0f0">';
-        html += '  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">';
-        html += '    <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">';
-        html += '      <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">' + qty + '</span>';
-        html += '      <div>';
-        html += '        <div style="font-size:17px;font-weight:500;color:#111">' + name + '</div>';
-        if (attrsText) {
-          html += '        <div style="font-size:15px;color:#888;margin-top:3px">' + attrsText + '</div>';
-        }
-        html += '      </div>';
-        html += '    </div>';
-        html += '    <div style="font-size:17px;color:#111;flex-shrink:0">€ ' + price + '</div>';
-        html += '  </div>';
-        html += '</div>';
-      });
-
-      var totalAmt = parseFloat(order.total_amount || 0);
-      var deliveryCharge = parseFloat(order.delivery_charge || 0);
-      var platformCharge = parseFloat(order.platform_charge || 0);
-
-      var subtotal = 0;
-      items.forEach(function (item) {
-        subtotal += parseFloat(item.price || 0) * (parseInt(item.quantity, 10) || 1);
-      });
-
-      html += '<div style="border-top:1px solid #f0f0f0;padding:16px 0 16px">';
-      html += '  <div style="display:flex;justify-content:space-between;margin-bottom:10px">';
-      html += '    <span data-i18n="d_subtotal" style="font-size:18px;color:#111">' + t('d_subtotal') + '</span>';
-      html += '    <span style="font-size:18px;color:#111">€ ' + subtotal.toFixed(2) + '</span>';
-      html += '  </div>';
-
-      if (deliveryCharge > 0) {
-        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:10px">';
-        html += '    <span data-i18n="d_shipping" style="font-size:18px;color:#111">' + t('d_shipping') + '</span>';
-        html += '    <span style="font-size:18px;color:#111">€ ' + deliveryCharge.toFixed(2) + '</span>';
-        html += '  </div>';
-      }
-
-      if (platformCharge > 0) {
-        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:16px">';
-        html += '    <span data-i18n="d_service" style="font-size:18px;color:#111">' + t('d_service') + '</span>';
-        html += '    <span style="font-size:18px;color:#111">€ ' + platformCharge.toFixed(2) + '</span>';
-        html += '  </div>';
-      }
-
-      html += '</div>';
-
-      body.innerHTML = html;
-
-      var totalText = '€ ' + totalAmt.toFixed(2);
-      var itemsCountEl = document.getElementById('d-items-count');
-      if (itemsCountEl) {
-        itemsCountEl.textContent = totalText;
-      }
-      var dTotal = document.getElementById('d-total');
-      if (dTotal) {
-        dTotal.textContent = totalText;
-      }
-
-      var phone = (order.order_user_details && order.order_user_details.phone_number) || '';
-      var phoneEl = document.querySelector('#d-customer-phone span');
-      if (phoneEl && phone) {
-        phoneEl.textContent = phone;
-      }
-
-      var noteText = document.getElementById('d-note-text');
-      var noteSection = document.getElementById('d-note-section');
-      if (noteText && noteSection) {
-        var note = order.delivery_note || order.save_note || '';
-        if (note) {
-          noteSection.style.display = 'flex';
-          noteText.textContent = note;
-        } else {
-          noteSection.style.display = 'none';
-        }
-      }
-
-      var localOrder = JSON.parse(localStorage.getItem('posCurrentOrder') || '{}');
-      if (localOrder && localOrder.oid) {
-        localOrder.note = order.delivery_note || order.save_note || '';
-        localOrder.items = items.map(function (it) {
-          var atts = (it.attribute_items || []).map(function (a) { return a.attribute_value; }).join(', ');
-          return {
-            qty: it.quantity || 1,
-            name: it.product_name || '',
-            price: it.price || 0,
-            note: atts
-          };
-        });
-        localOrder.subtotal = subtotal.toFixed(2);
-        localOrder.shipping = deliveryCharge.toFixed(2);
-        localOrder.service = platformCharge.toFixed(2);
-        localStorage.setItem('posCurrentOrder', JSON.stringify(localOrder));
-      }
-    }
-
     function goDetail(id, name, addr, oid, price, pay, type, mins, next, cardEl) {
       var currentActivePage = document.querySelector('.page.active');
       if (currentActivePage && currentActivePage.id !== 'p-detail') {
@@ -6214,21 +6087,21 @@
       var isUnaccepted = !!(cardEl && cardEl.dataset.newOrder === '1');
       document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
       document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
-      // New-order popup: always show the back button and options menu
+      // New-order popup: no way out except accepting → hide the back button and options menu
       var backBtn = document.getElementById('d-back-btn');
-      if (backBtn) backBtn.style.display = 'flex';
+      if (backBtn) backBtn.style.display = isUnaccepted ? 'none' : 'flex';
       var headerMenu = document.getElementById('d-header-menu');
-      if (headerMenu) headerMenu.style.display = 'flex';
-      // New-order popup: always show the circle timer + footer and hide the schedule block
+      if (headerMenu) headerMenu.style.display = isUnaccepted ? 'none' : 'flex';
+      // New-order popup: show the schedule/confirm block instead of the circle timer + footer
       var schedBlock = document.getElementById('d-new-schedule');
       var timerCard = document.getElementById('d-top-timer-card');
       var actionFooter = document.getElementById('d-action-footer');
-      if (schedBlock) schedBlock.style.display = 'none';
-      if (timerCard) timerCard.style.display = 'block';
-      if (actionFooter) actionFooter.style.display = 'block';
+      if (schedBlock) schedBlock.style.display = isUnaccepted ? 'block' : 'none';
+      if (timerCard) timerCard.style.display = isUnaccepted ? 'none' : 'block';
+      if (actionFooter) actionFooter.style.display = isUnaccepted ? 'none' : 'block';
       var detailHeaderEl = document.querySelector('#p-detail > .page-header');
-      if (detailHeaderEl) detailHeaderEl.classList.remove('d-new-header');
-      document.getElementById('p-detail').classList.remove('new-order-mode');
+      if (detailHeaderEl) detailHeaderEl.classList.toggle('d-new-header', isUnaccepted);
+      document.getElementById('p-detail').classList.toggle('new-order-mode', isUnaccepted);
       closeOrderMenu();
       if (isUnaccepted) {
         schedPrepMins = parseInt(mins, 10) || 45;
@@ -6303,8 +6176,19 @@
       var openMap2 = document.getElementById('d-open-map-2');
       if (custAddrBlock) {
         if (isDelivery) {
-          // Accepted detail: address already shown in the top section
-          custAddrBlock.style.display = 'none';
+          custAddrBlock.style.display = 'flex';
+          if (isUnaccepted) {
+            // New-order popup: single line "street, city, postcode"
+            custAddrBlock.style.display = 'flex';
+            var pm = (cityAddr || '').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
+            var pc = pm ? pm[1] : '';
+            var cityName = pm ? pm[2] : cityAddr;
+            if (custAddr) custAddr.textContent = streetAddr + (cityName ? ', ' + cityName : '') + (pc ? ', ' + pc : '');
+            if (custCity) custCity.style.display = 'none';
+          } else {
+            // Accepted detail: address already shown in the top section
+            custAddrBlock.style.display = 'none';
+          }
           if (openMap2) openMap2.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(streetAddr + (cityAddr ? ', ' + cityAddr : ''));
         } else {
           custAddrBlock.style.display = 'none';
@@ -6394,6 +6278,8 @@
         requestAnimationFrame(updateDetailFade);
       }
 
+      // Store this order's data so the 80mm bon (bon.html) can render the real order
+      var wished = (id === '26') ? '16:30' : t('otime_asap');
       localStorage.setItem('posCurrentOrder', JSON.stringify({
         oid: oid,
         name: name,
@@ -6405,23 +6291,6 @@
         wished: wished,
         note: hasNote ? noteText.textContent : ''
       }));
-
-      // Fetch live order detail data passing order_id parameter
-      API.getOrders({ order_id: id })
-        .then(function (responseData) {
-          var singleOrder = null;
-          if (responseData && Array.isArray(responseData.data) && responseData.data[0]) {
-            singleOrder = responseData.data[0];
-          } else if (responseData && responseData.data && !Array.isArray(responseData.data)) {
-            singleOrder = responseData.data;
-          }
-          if (singleOrder) {
-            renderLiveOrderDetail(singleOrder);
-          }
-        })
-        .catch(function (err) {
-          console.error("Failed to load order details:", err);
-        });
     }
 
     // Print button handler: immediate feedback + debounce so a tap can't fire twice
@@ -7086,10 +6955,7 @@
         order.forEach(function (t) { var e = document.getElementById('t-' + t); if (e) e.style.display = t === tab ? 'block' : 'none'; });
       }
       checkEmptyStates();
-      if (isOrders) {
-        moveOrdersUnderline(el, true);
-        loadOrders();
-      }
+      if (isOrders) moveOrdersUnderline(el, true);
     }
 
     // Slide the old orders panel out and the new one in
@@ -7535,8 +7401,7 @@
 
         // Set order count in nav badge
         document.querySelectorAll('.ni-wrap .reddot').forEach(function (dot) {
-          dot.textContent = '0';
-          dot.style.display = 'none';
+          dot.textContent = '12';
         });
 
         // Add nav labels
@@ -7989,7 +7854,7 @@
           var remainingExact = remainingMs / 60000;
           var autoArchiveEl = document.getElementById('settings-auto-archive-mins');
           var autoArchiveMins = parseInt((autoArchiveEl || { textContent: '90' }).textContent, 10) || 90;
-          if (listId === 't-delivery' && remaining <= -autoArchiveMins) {
+          if (remaining <= -autoArchiveMins) {
             autoArchiveCard(card, listId);
             return;
           }
@@ -8286,13 +8151,13 @@
       card.setAttribute('data-target-time', String(Date.now() + mins * 60000));
       card.setAttribute('data-new-order', '1');
       card.setAttribute('data-dname', type === 'Delivery' ? addr[0] : t('d_pickup'));
-      card.setAttribute('data-price-str', t('otime_asap'));
+      card.setAttribute('data-price-str', '€' + price + '  ·  ' + t('otime_asap'));
       card.setAttribute('onclick', "goDetail('" + id + "','" + name + "','" + fullAddr + "','#" + id + "','€" + price + "','" + pay + "','" + type + "','" + mins + "','kitchen',this)");
       card.innerHTML =
         '<div class="ocard-row">' +
         '<div class="mcol">' +
         '<div class="dname">' + title + '</div>' +
-        '<div class="oc-price">' + t('otime_asap') + '</div>' +
+        '<div class="oc-price">€' + price + '  ·  ' + t('otime_asap') + '</div>' +
         '</div>' +
         '<div class="oc-accept-frame">' +
         '<button type="button" class="oc-accept-btn" onclick="acceptNewCard(this,event)">' + t('accept_label') + '</button>' +
@@ -8349,328 +8214,17 @@
       toastOrderCard = null;
     }
 
-    // Native Android bridge success callback
-    window.onNativeLoginSuccess = function (token) {
-      var err = document.getElementById('login-error');
-      var btn = document.querySelector('#p-login button');
-      err.style.display = 'none';
-      document.getElementById('p-login').style.display = 'none';
-      localStorage.setItem('auth_token', token || 'session_active');
-      goPage('orders');
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.originalText || 'Aanmelden';
-      }
-    };
-
-    // Native Android bridge error callback
-    window.onNativeLoginError = function (message) {
-      var err = document.getElementById('login-error');
-      var btn = document.querySelector('#p-login button');
-      console.error('Native login error:', message);
-      err.textContent = message || 'Onjuiste gebruikersnaam of wachtwoord';
-      err.style.display = 'block';
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = btn.dataset.originalText || 'Aanmelden';
-      }
-    };
-
     function doLogin() {
       var u = document.getElementById('login-user').value.trim();
       var p = document.getElementById('login-pass').value;
       var err = document.getElementById('login-error');
-
-      // Disable inputs and button during request
-      var btn = document.querySelector('#p-login button');
-      var originalText = btn.textContent;
-      btn.dataset.originalText = originalText;
-      btn.textContent = 'Bezig met inloggen...';
-      btn.disabled = true;
-      err.style.display = 'none';
-
-      // If running in Android App WebView and native bridge is available, delegate to it
-      if (window.AndroidAuth) {
-        window.AndroidAuth.login(u, p);
-        return;
-      }
-
-      API.login(u, p)
-        .then(function (data) {
-          err.style.display = 'none';
-          document.getElementById('p-login').style.display = 'none';
-
-          // Robust token resolution
-          var token = null;
-          if (data.token) {
-            token = data.token;
-          } else if (data.data && data.data.token) {
-            token = data.data.token;
-          } else if (data.access_token) {
-            token = data.access_token;
-          } else if (data.data && data.data.access_token) {
-            token = data.data.access_token;
-          } else {
-            token = 'session_active';
-          }
-
-          localStorage.setItem('auth_token', token);
-
-          goPage('orders');
-        })
-        .catch(function (error) {
-          console.error('Login error:', error);
-          err.textContent = error.message || 'Onjuiste gebruikersnaam of wachtwoord';
-          err.style.display = 'block';
-        })
-        .finally(function () {
-          btn.textContent = originalText;
-          btn.disabled = false;
-        });
-    }
-
-    function createOrderCardElement(order) {
-      var id = order.id;
-      var name = (order.order_user_details && order.order_user_details.order_name) || '';
-      var street = (order.order_user_details && order.order_user_details.street_name) || '';
-      var house = (order.order_user_details && order.order_user_details.house_no) || '';
-      var city = (order.order_user_details && order.order_user_details.city) || '';
-      var zipcode = (order.order_user_details && order.order_user_details.zipcode) || '';
-
-      var streetAndHouse = (street + ' ' + house).trim();
-
-      // 1 = Delivery, 2 = Collection
-      var isCollection = (order.order_type == '2');
-      var deliveryType = isCollection ? 'Collection' : 'Delivery';
-
-      var address = 'Collection order';
-      if (!isCollection) {
-        address = streetAndHouse;
-        if (zipcode || city) {
-          address += '||' + (zipcode + ' ' + city).trim();
-        }
-      }
-
-      var price = parseFloat(order.total_amount || 0).toFixed(2);
-      var pay = (order.payment_status == '1') ? 'Paid' : 'Cash';
-
-      // Parse time display according to 3 conditions
-      var timeDisplay = 'ASAP';
-      var isScheduled = false;
-
-      var orderTimeIsNull = (order.order_time === null || order.order_time === undefined || String(order.order_time).trim() === '' || String(order.order_time).trim() === 'null');
-      var deliveryDateIsNull = (order.delivery_date === null || order.delivery_date === undefined || String(order.delivery_date).trim() === '' || String(order.delivery_date).trim() === 'null');
-
-      if (orderTimeIsNull && deliveryDateIsNull) {
-        timeDisplay = 'ASAP';
+      if (u === '1234' && p === '1234') {
+        err.style.display = 'none';
+        document.getElementById('p-login').style.display = 'none';
+        goPage('orders');
       } else {
-        if (order.expected_delivery_time) {
-          var dateParts = String(order.expected_delivery_time).split(' ');
-          var orderDateStr = dateParts[0]; // YYYY-MM-DD
-          var timePart = dateParts[1]; // HH:MM:SS
-
-          var formattedTime = '';
-          if (timePart) {
-            var parts = timePart.split(':');
-            if (parts[0] && parts[1]) {
-              formattedTime = parts[0] + ':' + parts[1];
-            }
-          }
-
-          if (orderDateStr) {
-            var today = new Date();
-            var tomorrow = new Date();
-            tomorrow.setDate(today.getDate() + 1);
-
-            var pad = function (n) { return String(n).padStart(2, '0'); };
-            var tomorrowIso = tomorrow.getFullYear() + '-' + pad(tomorrow.getMonth() + 1) + '-' + pad(tomorrow.getDate());
-            var todayIso = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
-
-            if (orderDateStr === tomorrowIso) {
-              timeDisplay = t('otime_tomorrow') + ', ' + formattedTime;
-              isScheduled = true;
-            } else if (orderDateStr === todayIso) {
-              timeDisplay = formattedTime;
-              isScheduled = false;
-            } else {
-              timeDisplay = orderDateStr + ' ' + formattedTime;
-              isScheduled = true;
-            }
-          }
-        }
+        err.style.display = 'block';
       }
-
-      var subheaderHtml = '';
-      if (isScheduled) {
-        subheaderHtml = '<div class="oc-when oc-when-scheduled">' + timeDisplay + '</div>';
-      } else {
-        subheaderHtml = '<div class="oc-when oc-when-asap">' + timeDisplay + '</div>';
-      }
-
-      // Calculate prep time (default 35 mins, or from expected_delivery_time)
-      var mins = 35;
-      var targetTimeMs = Date.now() + mins * 60000;
-      if (order.expected_delivery_time) {
-        var parsedTime = Date.parse(order.expected_delivery_time.replace(' ', 'T'));
-        if (!isNaN(parsedTime)) {
-          targetTimeMs = parsedTime;
-          mins = Math.max(1, Math.round((targetTimeMs - Date.now()) / 60000));
-        }
-      }
-
-      var card = document.createElement('div');
-      card.className = 'ocard';
-      card.setAttribute('data-oid', '#' + id);
-      card.setAttribute('data-total-mins', String(mins));
-      card.setAttribute('data-target-time', String(targetTimeMs));
-
-      var title = isCollection ? t('d_pickup') : streetAndHouse;
-      if (!title) {
-        title = name;
-      }
-
-      var nextTab = 'kitchen';
-      var status = String(order.order_status);
-
-      if (status === '1') {
-        nextTab = 'kitchen';
-        card.setAttribute('data-new-order', '1');
-        card.setAttribute('data-dname', isCollection ? t('d_pickup') : title);
-        card.setAttribute('data-price-str', timeDisplay);
-      } else if (status === '2') {
-        nextTab = 'delivery';
-      } else {
-        nextTab = 'archive';
-      }
-
-      card.setAttribute('onclick', "goDetail('" + id + "','" + name + "','" + address + "','#" + id + "','€" + price + "','" + pay + "','" + deliveryType + "','" + mins + "','" + nextTab + "',this)");
-
-      card.innerHTML =
-        '<div class="ocard-row 123">' +
-        '<div class="tcol">' +
-        '<svg width="96" height="96" viewBox="0 0 48 48">' +
-        '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
-        '<circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
-        '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
-        '</svg>' +
-        '</div>' +
-        '<div class="mcol">' +
-        '<div class="dname">' + (isCollection ? '<span data-i18n="d_pickup">Afhaal</span>' : title) + '</div>' +
-        '<div class="oc-price">' + subheaderHtml + '</div>' +
-        '</div>' +
-        '</div>';
-
-      return {
-        element: card,
-        status: status
-      };
-    }
-
-    function loadOrders() {
-      var token = localStorage.getItem('auth_token');
-      if (!token) {
-        doLogout();
-        return;
-      }
-
-      var newCount = 0;
-      var kitchenCount = 0;
-      var deliveryCount = 0;
-
-      // Reset UI counts
-      document.querySelectorAll('#p-orders .tab .tab-count').forEach(function (c) {
-        c.textContent = '0';
-      });
-
-      // Remove existing ocard elements
-      ['new', 'kitchen', 'delivery'].forEach(function (t) {
-        var list = document.getElementById('t-' + t);
-        if (list) {
-          list.querySelectorAll('.ocard').forEach(function (card) {
-            card.remove();
-          });
-        }
-      });
-
-      // Determine active tab to pass status parameter to API
-      var activeTabEl = document.querySelector('#orders-tab-bar .tab.active');
-      var activeTabId = 'new';
-      if (activeTabEl) {
-        if (activeTabEl.getAttribute('onclick').indexOf('kitchen') !== -1) activeTabId = 'kitchen';
-        else if (activeTabEl.getAttribute('onclick').indexOf('delivery') !== -1) activeTabId = 'delivery';
-      }
-
-      var TAB_TO_API_STATUS = {
-        'new': 'new',
-        'kitchen': 'kitchen',
-        'delivery': 'outgoing'
-      };
-      var apiStatus = TAB_TO_API_STATUS[activeTabId] || 'new';
-
-      API.getOrders({ status: apiStatus })
-        .then(function (data) {
-          var orders = [];
-          if (data && Array.isArray(data.data)) {
-            orders = data.data;
-          } else if (data && Array.isArray(data.orders)) {
-            orders = data.orders;
-          } else if (Array.isArray(data)) {
-            orders = data;
-          }
-          console.log("----", orders)
-          orders.forEach(function (order) {
-            var res = createOrderCardElement(order);
-            var status = res.status;
-            var cardEl = res.element;
-
-            var listId = 't-new';
-            if (status === '2') {
-              listId = 't-kitchen';
-              kitchenCount++;
-            } else if (status === '3') {
-              listId = 't-delivery';
-              deliveryCount++;
-            } else if (status === '1') {
-              listId = 't-new';
-              newCount++;
-            } else {
-              return;
-            }
-
-            var container = document.getElementById(listId);
-            if (container) {
-              container.appendChild(cardEl);
-            }
-          });
-
-          // Determine display counts (use server-computed values if available)
-          var showNewCount = (data && data.new_count !== undefined && data.new_count !== null) ? parseInt(data.new_count, 10) : newCount;
-          var showKitchenCount = (data && data.kitchen_count !== undefined && data.kitchen_count !== null) ? parseInt(data.kitchen_count, 10) : kitchenCount;
-          var showOutgoingCount = (data && data.outgoing_count !== undefined && data.outgoing_count !== null) ? parseInt(data.outgoing_count, 10) : deliveryCount;
-
-          // Update counts in DOM
-          var tabs = document.querySelectorAll('#p-orders .tab');
-          if (tabs[0]) tabs[0].querySelector('.tab-count').textContent = String(showNewCount);
-          if (tabs[1]) tabs[1].querySelector('.tab-count').textContent = String(showKitchenCount);
-          if (tabs[2]) tabs[2].querySelector('.tab-count').textContent = String(showOutgoingCount);
-
-          // Update nav badge reddot count
-          document.querySelectorAll('.ni-wrap .reddot').forEach(function (dot) {
-            dot.textContent = String(showNewCount);
-            dot.style.display = showNewCount > 0 ? 'flex' : 'none';
-          });
-
-          updateHeaderOrderTotal();
-          checkEmptyStates();
-          refreshLiveTimers();
-        })
-        .catch(function (error) {
-          console.error('Failed to load orders:', error);
-          if (!localStorage.getItem('auth_token')) {
-            doLogout();
-          }
-        });
     }
     function loginFlagSvg(lang) {
       var open = '<svg width="28" height="28" viewBox="0 0 28 28"><defs><clipPath id="lf-clip"><circle cx="14" cy="14" r="14"/></clipPath></defs><g clip-path="url(#lf-clip)">';
@@ -9065,13 +8619,6 @@
     }
 
     initScrollListeners();
-
-    // Load initial orders if token exists, else force logout
-    if (localStorage.getItem('auth_token')) {
-      loadOrders();
-    } else {
-      doLogout();
-    }
   </script>
 
 </body>

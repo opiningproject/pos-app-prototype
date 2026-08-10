@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
 
         webView.addJavascriptInterface(new PrinterBridge(), "AndroidPrinter");
         webView.addJavascriptInterface(new StatusBarBridge(), "AndroidStatusBar");
+        webView.addJavascriptInterface(new AuthBridge(), "AndroidAuth");
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(APP_URL);
     }
@@ -85,6 +86,38 @@ public class MainActivity extends Activity {
                         dv.setSystemUiVisibility(flags);
                     } catch (Exception ignored) {
                     }
+                }
+            });
+        }
+    }
+
+    /** Exposed to the web app as window.AndroidAuth */
+    private class AuthBridge {
+        private final ApiClient apiClient = new ApiClient();
+
+        @JavascriptInterface
+        public void login(final String email, final String password) {
+            apiClient.login(email, password, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    final String token = response.optString("token", "");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginSuccess === 'function') onNativeLoginSuccess('" + token + "');", null);
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(final Exception error) {
+                    final String message = error.getMessage();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginError === 'function') onNativeLoginError('" + message + "');", null);
+                        }
+                    });
                 }
             });
         }

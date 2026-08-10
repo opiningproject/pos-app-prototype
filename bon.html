@@ -171,11 +171,22 @@
   if (order.note) { noteEl.textContent = order.note; }
   else { noteEl.style.display = 'none'; }
 
-  // No itemized cart data exists per order in the app yet — show a single line for the order total
-  document.getElementById('pr-items').innerHTML =
-    '<div class="r-item"><span class="r-item-qty">1</span>' +
-    '<div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || '') + '</div></div>' +
-    '<span class="r-item-price">' + formatPrice(total) + '</span></div>';
+  // If itemized cart data exists, show dynamic items list, otherwise fallback to single line
+  var itemsHtml = '';
+  if (Array.isArray(order.items) && order.items.length > 0) {
+    order.items.forEach(function (it) {
+      var itemPrice = parsePrice(it.price) * (it.qty || 1);
+      itemsHtml += '<div class="r-item"><span class="r-item-qty">' + (it.qty || 1) + '</span>' +
+        '<div style="flex:1"><div class="r-item-name">' + (it.name || '') + '</div>' +
+        (it.note ? '<div class="r-item-notes" style="font-size: 11px; color: #555; margin-left: 2px;">' + it.note + '</div>' : '') + '</div>' +
+        '<span class="r-item-price">' + formatPrice(itemPrice) + '</span></div>';
+    });
+  } else {
+    itemsHtml = '<div class="r-item"><span class="r-item-qty">1</span>' +
+      '<div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || '') + '</div></div>' +
+      '<span class="r-item-price">' + formatPrice(total) + '</span></div>';
+  }
+  document.getElementById('pr-items').innerHTML = itemsHtml;
 
   document.getElementById('pr-total').textContent = formatPrice(total);
   document.getElementById('pr-btw').textContent = formatPrice(btw);
