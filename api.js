@@ -87,5 +87,57 @@ const API = {
       console.error('API getOrders error:', error);
       throw error;
     }
+  },
+
+  /**
+   * Fetch today's sales summary from the server.
+   * @param {Object} params - parameters such as { type: 'summary'|'details'|'cancelled' }
+   * @returns {Promise<Object>} The summary data
+   */
+  async getSummary(params = {}) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const body = new URLSearchParams();
+      if (params.type) {
+        body.append('type', params.type);
+      }
+      const response = await fetch(`${API_BASE_URL}/api/v1/getSummary`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('auth_token');
+        }
+        throw new Error(responseData.message || `Failed to fetch summary (Status ${response.status})`);
+      }
+
+      if (responseData.status === '2' || responseData.status === 2 || responseData.message === 'Token is Expired') {
+        localStorage.removeItem('auth_token');
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to fetch summary');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API getSummary error:', error);
+      throw error;
+    }
   }
 };
