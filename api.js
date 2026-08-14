@@ -390,5 +390,54 @@ const API = {
       console.error('API changeDishStatus error:', error);
       throw error;
     }
+  },
+
+  /**
+   * Update restaurant open/closed status.
+   * Endpoint: /api/v1/updateRestaurantStatus
+   * @param {number|string} isOpen - 1 for Open, 0 for Closed
+   * @returns {Promise<Object>} The API response data
+   */
+  async updateRestaurantStatus(isOpen) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const finalVal = (isOpen === 1 || isOpen === '1' || isOpen === true) ? '1' : '0';
+      const body = new URLSearchParams();
+      body.append('is_open', finalVal);
+
+      const response = await fetch(`${API_BASE_URL}/api/v1/updateRestaurantStatus`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (handleTokenExpiration(responseData, response.status)) {
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (!response.ok) {
+        throw new Error(responseData.message || `Failed to update restaurant status (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to update restaurant status');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API updateRestaurantStatus error:', error);
+      throw error;
+    }
   }
 };

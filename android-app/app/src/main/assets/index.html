@@ -28,6 +28,226 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* ===== 3-inch (80mm) Thermal Printer Styles ===== */
+    .receipt-thermal {
+      width: 76mm;
+      max-width: 76mm;
+      margin: 0 auto;
+      padding: 12px 6px;
+      background: #fff;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #111;
+      box-sizing: border-box;
+    }
+    .receipt-thermal .r-banner {
+      background: #333333;
+      color: #ffffff;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin: 12px 0 8px;
+      letter-spacing: 0.02em;
+    }
+    .receipt-thermal .r-section {
+      padding: 2px 0 6px;
+      word-break: break-word;
+    }
+    .receipt-thermal .r-info-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4px;
+      padding: 3px 0;
+    }
+    .receipt-thermal .r-info-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #444;
+      flex-shrink: 0;
+    }
+    .receipt-thermal .r-info-val {
+      font-size: 12px;
+      font-weight: 500;
+      color: #111;
+      text-align: right;
+      word-break: break-word;
+    }
+    .receipt-thermal .r-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e2e2e2;
+    }
+    .receipt-thermal .r-item-qty {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+      min-width: 14px;
+      flex-shrink: 0;
+    }
+    .receipt-thermal .r-item-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+      word-break: break-word;
+    }
+    .receipt-thermal .r-item-sub {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.3;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+    .receipt-thermal .r-item-price {
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+      white-space: nowrap;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    #receipt-print-area-wrapper {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+    #receipt-print-area-wrapper.is-printing {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      visibility: visible !important;
+      width: 76mm !important;
+      height: auto !important;
+      overflow: visible !important;
+      z-index: 99999 !important;
+      background: #fff !important;
+    }
+
+    @media print {
+      html, body {
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        float: none !important;
+      }
+      body > *:not(#receipt-print-area-wrapper) {
+        display: none !important;
+      }
+      #receipt-print-area-wrapper {
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 76mm !important;
+        max-width: 76mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        float: none !important;
+      }
+      #receipt-print-area {
+        display: block !important;
+        visibility: visible !important;
+        width: 76mm !important;
+        max-width: 76mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 8px 4px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+        background: #fff !important;
+      }
+      #receipt-print-area * {
+        visibility: visible !important;
+        box-sizing: border-box !important;
+      }
+      .receipt-thermal .r-info-row {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: baseline !important;
+        justify-content: space-between !important;
+        padding: 3px 0 !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .receipt-thermal .r-info-label {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        color: #444 !important;
+        flex-shrink: 0 !important;
+      }
+      .receipt-thermal .r-info-val {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #111 !important;
+        text-align: right !important;
+        word-break: break-word !important;
+        margin-left: auto !important;
+      }
+      .receipt-thermal .r-item {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        padding: 6px 0 !important;
+        border-bottom: 1px dashed #e2e2e2 !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .receipt-thermal .r-banner {
+        display: block !important;
+        background: #333333 !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        padding: 5px 10px !important;
+        border-radius: 6px !important;
+        margin: 10px 0 6px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #r-btw-section,
+      #r-btw-section *,
+      .r-footer {
+        display: block !important;
+        visibility: visible !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #r-btw-section .r-info-row {
+        display: flex !important;
+      }
+      @page {
+        margin: 0mm;
+      }
+    }
+
     body {
       background: #f0f0f0;
       display: flex;
@@ -4307,82 +4527,6 @@
         </div>
 
         <!-- ===== PRINT PAGE ===== -->
-        <!-- receipt-print-area moved to body level for silent printing -->
-
-        <!-- ===== HIDDEN RECEIPT AREA (silent print) ===== -->
-        <div style="visibility:hidden;position:absolute;left:-9999px;top:-9999px">
-          <div class="receipt-thermal" id="receipt-print-area">
-
-            <!-- Restaurant header -->
-            <div style="padding:32px 24px 0 20px;border-bottom:1px solid #f0f0f0">
-              <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:10px">STARBUCKS</div>
-              <div style="font-size:13px;color:#555;line-height:1.7">Tochtstraat 40<br>3036SK
-                Rotterdam<br>010-21-4622<br>www.pizzaworld.nl</div>
-            </div>
-
-            <!-- Besteldatum -->
-            <div class="r-band">BESTELDATUM</div>
-            <div style="font-size:13px;color:#555;padding:6px 0 14px" id="pr-date">2025-12-21 om 15:43 uur</div>
-
-            <!-- Klant -->
-            <div class="r-band">KLANT GEGEVENS</div>
-            <div class="r-section" style="padding-top:14px;padding-bottom:14px">
-              <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-phone">0614522453
-              </div>
-              <div style="font-size:13px;color:#555;line-height:1.7" id="pr-cust-addr">Tochtstraat 40<br>3036 SK
-                Rotterdam</div>
-              <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-name">Serdar Orman</div>
-            </div>
-
-            <!-- Bestelling -->
-            <div class="r-band" id="pr-pay-band">BESTELLING IS ONLINE BETAALD!</div>
-            <div class="r-band" id="pr-delivery-band">ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING
-                18:25</span></div>
-            <div id="pr-items">
-              <div class="r-item">
-                <span class="r-item-qty">1</span>
-                <div style="flex:1">
-                  <div class="r-item-name">Pizza Pollo</div>
-                  <div class="r-item-sub">Bell pepper<br>Onion</div>
-                </div>
-                <span class="r-item-price">€ 38.75</span>
-              </div>
-              <div class="r-item">
-                <span class="r-item-qty">1</span>
-                <div style="flex:1">
-                  <div class="r-item-name">Cola Zero</div>
-                </div>
-                <span class="r-item-price">€ 2.75</span>
-              </div>
-            </div>
-
-            <!-- Subtotal -->
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 30px">
-              <span style="font-size:13px;font-weight:600;color:#111">SUBTOTAL</span>
-              <span id="pr-total" style="font-size:13px;font-weight:500;color:#111">€ 41.50</span>
-            </div>
-
-            <!-- Opmerking -->
-            <div class="r-band" id="pr-note-band" style="display:none">KLANT OPMERKING:</div>
-            <div id="pr-note" style="font-size:13px;color:#555;line-height:1.7;padding:6px 0 14px;display:none">Please
-              deliver at the green door.</div>
-
-            <!-- BTW -->
-            <div id="r-btw-section" style="padding-top:14px;padding-bottom:8px">
-              <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€
-                  2.75</span></div>
-              <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span
-                  class="r-info-val">NL865792768B01</span></div>
-              <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span
-                  class="r-info-val">91850347</span></div>
-            </div>
-
-            <!-- Footer -->
-            <div style="padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Bedankt voor uw bestelling.
-              Bestel online via de website!</div>
-
-          </div>
-        </div>
 
         <!-- ===== ARCHIVE PAGE ===== -->
         <div class="page" id="p-archive">
@@ -5604,6 +5748,81 @@
     </div>
   </div>
 
+  <!-- ===== HIDDEN RECEIPT AREA (direct child of body for silent print) ===== -->
+  <div id="receipt-print-area-wrapper">
+    <div class="receipt-thermal" id="receipt-print-area">
+
+      <!-- Logo & Restaurant Header -->
+      <div style="text-align:center;padding:12px 4px 14px 4px">
+        <div style="display:flex;justify-content:center;margin-bottom:10px">
+          <img id="pr-shop-logo" src="https://admin.dryfftjwieiwjw.online/images/blank-img.svg" alt="logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:inline-block" onerror="this.style.display='none'">
+        </div>
+        <div style="font-size:12px;color:#333;line-height:1.5">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
+      </div>
+
+      <!-- Info Banner & Details -->
+      <div class="r-banner">Info</div>
+      <div class="r-section">
+        <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val" id="pr-info-oid">250621 A 31</span></div>
+        <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val" id="pr-info-date">wo 21-06-2025 21:58</span></div>
+        <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val" id="pr-info-bron">Web order</span></div>
+        <div class="r-info-row"><span class="r-info-label" id="pr-info-wished-label">Bezorgtijd:</span><span class="r-info-val" id="pr-info-wished">22:30 (ZSM)</span></div>
+        <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val" id="pr-info-pay">Online betaald</span></div>
+      </div>
+
+      <!-- Klant Banner & Details -->
+      <div class="r-banner">Klant</div>
+      <div class="r-section" style="padding-top:4px;padding-bottom:4px">
+        <div style="font-size:12px;font-weight:600;color:#111;margin-bottom:2px" id="pr-cust-name">Serdar Orman</div>
+        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr1">Tochtstraat 40</div>
+        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr2">3036 SK Rotterdam</div>
+        <div style="font-size:12px;color:#333;margin-top:2px" id="pr-cust-phone">0614522453</div>
+
+        <!-- Customer Note Box -->
+        <div id="pr-note-container" style="margin-top:10px;border:1px solid #e2e2e2;border-radius:10px;padding:10px 12px;font-size:12px;color:#333;line-height:1.4">
+          <span id="pr-note">Please deliver at the green door.<br>When arrive call me</span>
+        </div>
+      </div>
+
+      <!-- Bestelling Banner & Items -->
+      <div class="r-banner">Bestelling</div>
+      <div id="pr-items" style="padding-top:4px">
+        <div class="r-item">
+          <span class="r-item-qty">1</span>
+          <div style="flex:1;min-width:0">
+            <div class="r-item-name">Pizza Pollo</div>
+            <div class="r-item-sub">Bell pepper<br>Onion</div>
+          </div>
+          <span class="r-item-price">€ 38.75</span>
+        </div>
+        <div class="r-item">
+          <span class="r-item-qty">1</span>
+          <div style="flex:1;min-width:0">
+            <div class="r-item-name">Cola Zero</div>
+          </div>
+          <span class="r-item-price">€ 2.75</span>
+        </div>
+      </div>
+
+      <!-- Subtotal -->
+      <div class="r-info-row" style="margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0">
+        <span style="font-size:13px;font-weight:700;color:#111">Subtotal</span>
+        <span style="font-size:13px;font-weight:700;color:#111" id="pr-total">€ 41.50</span>
+      </div>
+
+      <!-- BTW Section -->
+      <div id="r-btw-section" style="padding-top:10px;padding-bottom:8px">
+        <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
+        <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
+        <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+      </div>
+
+      <!-- Footer -->
+      <div style="text-align:center;font-size:11px;color:#555;line-height:1.4;margin-top:14px;padding-top:8px">Btw bedankt voor uw bestelling. Bestel online via de website!</div>
+
+    </div>
+  </div>
+
   <!-- Demo: trigger new order after 4 seconds -->
   <div class="demo-hint" style="text-align:center;margin-top:16px;color:#888;font-size:13px">
     ?? Klik op bestellingen om detail te zien &nbsp;|&nbsp;
@@ -5962,7 +6181,7 @@
           if (stored && (stored.oid || stored.id)) {
             orderId = String(stored.oid || stored.id).replace('#', '');
           }
-        } catch (e) { }
+        } catch (e) {}
       }
 
       if (!card && orderId) {
@@ -6437,11 +6656,16 @@
 
     function silentPrint() {
       populatePrintPage();
+      var wrapper = document.getElementById('receipt-print-area-wrapper');
+      if (wrapper) wrapper.classList.add('is-printing');
       if (window.AndroidPrinter && typeof window.AndroidPrinter.printReceipt === 'function') {
         printReceiptNative();
       } else {
         try { window.print(); } catch (e) { console.warn('window.print failed', e); }
       }
+      setTimeout(function () {
+        if (wrapper) wrapper.classList.remove('is-printing');
+      }, 1000);
     }
 
     // Shop details for the receipt header/footer (matches the bon.html design)
@@ -6454,58 +6678,103 @@
     // Build the 80mm text receipt (mirrors the bon.html layout) and send it to the SUNMI printer.
     function printReceiptNative() {
       var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch (e) { }
-      var isColl = o.type === 'Collection', isPaid = o.pay === 'Paid';
+      var isColl = o.type === 'Collection' || o.order_type == '2';
+      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1;
       var pp = function (s) { var n = parseFloat(String(s || '').replace(/[^0-9.,]/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
       var eur = function (n) { return '€ ' + n.toFixed(2); };
-      var total = pp(o.price), btw = total * 9 / 109;
+      var total = pp(o.price || o.total_amount || o.total);
+      var btw = total * 9 / 109;
       var now = new Date(), pad = function (n) { return String(n).padStart(2, '0'); };
-      var dateStr = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' om ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' uur';
+      var daysNL = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+      var dayStr = daysNL[now.getDay()];
+      var dateStr = o.created_at || (dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()));
       var DIV = { t: 'text', v: '--------------------------------\n' };
       var c = [];
-      c.push({ t: 'align', v: 'left' });
-      c.push({ t: 'feed', n: 3 });   // ruimte boven de bon
-      // Restaurant header
-      c.push({ t: 'size', v: 30 }, { t: 'text', v: RECEIPT_SHOP.name + '\n' });
+      c.push({ t: 'align', v: 'center' });
+      c.push({ t: 'feed', n: 2 });
+      // Restaurant Header
+      c.push({ t: 'size', v: 28 }, { t: 'text', v: RECEIPT_SHOP.name + '\n' });
       c.push({ t: 'size', v: 22 }, { t: 'text', v: RECEIPT_SHOP.address.join('\n') + '\n' });
-      c.push(DIV);
-      // Besteldatum
-      c.push({ t: 'size', v: 24 }, { t: 'text', v: 'BESTELDATUM\n' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: dateStr + '\n' });
       c.push({ t: 'feed', n: 1 });
-      // Klant gegevens
-      c.push({ t: 'size', v: 24 }, { t: 'text', v: 'KLANT GEGEVENS\n' });
+
+      // Info Section
+      c.push({ t: 'align', v: 'center' });
+      c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Info ---\n' });
+      c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      if (o.name) c.push({ t: 'text', v: o.name + '\n' });
-      if (isColl) c.push({ t: 'text', v: 'Afhalen\n' });
-      else if (o.address) c.push({ t: 'text', v: o.address + '\n' + (o.city || '') + '\n' });
+      var oidVal = (o.oid || o.order_number || ('#' + (o.id || ''))).replace('#', '');
+      c.push({ t: 'cols', left: 'Bestelnr.', right: oidVal, wl: 16, wr: 16 });
+      c.push({ t: 'cols', left: 'Besteld op:', right: dateStr, wl: 12, wr: 20 });
+      c.push({ t: 'cols', left: 'Bron:', right: o.source || 'Web order', wl: 14, wr: 18 });
+      c.push({ t: 'cols', left: isColl ? 'Afhaaltijd:' : 'Bezorgtijd:', right: (o.wished || 'ASAP') + (o.wished ? ' (ZSM)' : ''), wl: 14, wr: 18 });
+      c.push({ t: 'cols', left: 'Betaalwijze:', right: isPaid ? 'Online betaald' : 'Contant betaald', wl: 14, wr: 18 });
       c.push({ t: 'feed', n: 1 });
-      // Betaal- en bezorgband
-      c.push({ t: 'size', v: 24 });
-      c.push({ t: 'text', v: (isPaid ? 'BESTELLING IS ONLINE BETAALD!' : 'CONTANT BETALEN') + '\n' });
-      c.push({ t: 'text', v: (isColl ? 'AFHALEN' : 'ZO SNEL MOGELIJK BEZORGEN') + '\n' });
-      c.push({ t: 'text', v: 'SCHATTING ' + (o.wished || 'ZSM') + '\n' });
-      c.push(DIV);
-      // Bestelling (1 regel voor het ordertotaal, zoals in bon.html)
+
+      // Klant Section
+      c.push({ t: 'align', v: 'center' });
+      c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Klant ---\n' });
+      c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      c.push({ t: 'cols', left: '1  Bestelling ' + (o.oid || ''), right: eur(total), wl: 32, wr: 14 });
-      c.push(DIV);
-      c.push({ t: 'size', v: 24 }, { t: 'cols', left: 'SUBTOTAAL', right: eur(total), wl: 32, wr: 14 });
-      c.push({ t: 'feed', n: 1 });
-      // Klant opmerking
-      if (o.note) {
-        c.push({ t: 'size', v: 24 }, { t: 'text', v: 'KLANT OPMERKING:\n' });
-        c.push({ t: 'size', v: 22 }, { t: 'text', v: o.note + '\n' });
-        c.push({ t: 'feed', n: 1 });
+      var u = o.order_user_details || o.user_details || {};
+      var custName = o.name || o.customer_name || u.order_name || u.name || '—';
+      c.push({ t: 'text', v: custName + '\n' });
+      if (isColl) {
+        c.push({ t: 'text', v: 'Afhalen\n' });
+      } else {
+        var a1 = o.address || o.street || u.address || '';
+        var a2 = (o.city || u.city) ? ((o.zipcode || u.zipcode || '') + ' ' + (o.city || u.city || '')).trim() : '';
+        if (a1) c.push({ t: 'text', v: a1 + '\n' });
+        if (a2) c.push({ t: 'text', v: a2 + '\n' });
       }
-      // BTW
+      var custPhone = o.phone || o.phone_number || u.phone || u.phone_number || '';
+      if (custPhone) c.push({ t: 'text', v: custPhone + '\n' });
+      if (o.note) {
+        c.push({ t: 'text', v: '\nOpmerking:\n' + o.note + '\n' });
+      }
+      c.push({ t: 'feed', n: 1 });
+
+      // Bestelling Section
+      c.push({ t: 'align', v: 'center' });
+      c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Bestelling ---\n' });
+      c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      c.push({ t: 'cols', left: 'Btw 9%:', right: eur(btw), wl: 32, wr: 14 });
+      var itemsList = o.items || o.dish_details || o.order_items || o.dishes_details || [];
+      if (Array.isArray(itemsList) && itemsList.length > 0) {
+        itemsList.forEach(function (it) {
+          var qty = it.qty || it.quantity || 1;
+          var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
+          var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
+          var itemTotalStr = eur(priceVal * qty);
+          var subText = '';
+          if (it.note) {
+            subText = String(it.note).replace(/\n/g, ', ');
+          } else if (it.attribute_items && it.attribute_items.length > 0) {
+            subText = it.attribute_items.map(function (a) { return a.attribute_value; }).join(', ');
+          } else if (it.order_dish_details && it.order_dish_details.length > 0) {
+            subText = it.order_dish_details.map(function (a) { return a.attribute_name || a.name || a.attribute_value || ''; }).filter(Boolean).join(', ');
+          }
+          c.push({ t: 'cols', left: qty + '  ' + name, right: itemTotalStr, wl: 22, wr: 10 });
+          if (subText) {
+            c.push({ t: 'text', v: '   ' + subText + '\n' });
+          }
+        });
+      } else {
+        c.push({ t: 'cols', left: '1  Bestelling ' + (o.oid || o.order_number || ''), right: eur(total), wl: 22, wr: 10 });
+      }
+      c.push(DIV);
+      c.push({ t: 'size', v: 24 }, { t: 'cols', left: 'Subtotal', right: eur(total), wl: 22, wr: 10 });
+      c.push({ t: 'feed', n: 1 });
+
+      // BTW Section
+      c.push({ t: 'size', v: 22 });
+      c.push({ t: 'cols', left: 'Btw 9%:', right: eur(btw), wl: 22, wr: 10 });
       c.push({ t: 'text', v: 'BTW-nummer: ' + RECEIPT_SHOP.btwNr + '\n' });
       c.push({ t: 'text', v: 'KVK-nummer: ' + RECEIPT_SHOP.kvkNr + '\n' });
       c.push(DIV);
+
       // Footer
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'text', v: 'Bedankt voor uw bestelling.\nBestel online via de website!\n' });
+      c.push({ t: 'text', v: 'Btw bedankt voor uw bestelling.\nBestel online via de website!\n' });
       c.push({ t: 'feed', n: 6 });   // extra ruimte onder de bon
       c.push({ t: 'cut' });
       try { window.AndroidPrinter.printReceipt(JSON.stringify(c)); } catch (e) { console.warn('native print failed', e); }
@@ -6517,38 +6786,118 @@
       var order; try { order = JSON.parse(raw); } catch (e) { return; }
       function parsePrice(s) { var n = parseFloat(String(s || '').replace(/[^0-9.,]/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; }
       function fmt(n) { return '€ ' + n.toFixed(2); }
-      var isCollection = order.type === 'Collection';
-      var isPaid = order.pay === 'Paid';
-      var total = parsePrice(order.price);
+      var isCollection = order.type === 'Collection' || order.order_type == '2';
+      var isPaid = order.pay === 'Paid' || order.payment_status === 'Paid' || order.payment_status === 1;
+      var total = parsePrice(order.price || order.total_amount || order.total);
       var btw = total * 9 / 109;
       var now = new Date();
       var pad = function (n) { return String(n).padStart(2, '0'); };
-      // Datum
-      document.getElementById('pr-date').textContent = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' om ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ' uur';
-      // Betaalstatus
-      document.getElementById('pr-pay-band').textContent = isPaid ? 'BESTELLING IS ONLINE BETAALD!' : 'BESTELLING WORDT CONTANT BETAALD';
-      // Bezorg/afhaal band
-      var deliveryBand = document.getElementById('pr-delivery-band');
-      if (isCollection) {
-        deliveryBand.innerHTML = 'AFHALEN<br><span id="pr-time-line">SCHATTING ' + (order.wished || 'ZSM') + '</span>';
-      } else {
-        deliveryBand.innerHTML = 'ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING ' + (order.wished || 'ZSM') + '</span>';
+
+      var daysNL = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+      var dayStr = daysNL[now.getDay()];
+      var dateFormatted = dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + '  ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+      // Bestelnr.
+      var oidEl = document.getElementById('pr-info-oid');
+      if (oidEl) {
+        oidEl.textContent = (order.oid || order.order_number || ('#' + (order.id || ''))).replace('#', '');
       }
-      // Klant
-      document.getElementById('pr-cust-name').textContent = order.name || '—';
-      document.getElementById('pr-cust-phone').textContent = order.phone || '';
-      var addrEl = document.getElementById('pr-cust-addr');
-      if (isCollection) { addrEl.textContent = 'Afhalen'; }
-      else { addrEl.innerHTML = (order.address || '—') + (order.city ? '<br>' + order.city : ''); }
-      // Opmerking
+
+      // Besteld op
+      var dateEl = document.getElementById('pr-info-date');
+      if (dateEl) {
+        dateEl.textContent = order.created_at || order.order_date || dateFormatted;
+      }
+
+      // Bron
+      var bronEl = document.getElementById('pr-info-bron');
+      if (bronEl) {
+        bronEl.textContent = order.source || order.order_source || 'Web order';
+      }
+
+      // Bezorgtijd / Afhaaltijd
+      var wishedLblEl = document.getElementById('pr-info-wished-label');
+      if (wishedLblEl) {
+        wishedLblEl.textContent = isCollection ? 'Afhaaltijd:' : 'Bezorgtijd:';
+      }
+      var wishedEl = document.getElementById('pr-info-wished');
+      if (wishedEl) {
+        var wVal = order.wished || 'ZSM';
+        wishedEl.textContent = (wVal.toUpperCase().indexOf('ZSM') !== -1 || wVal.toUpperCase().indexOf('ASAP') !== -1) ? 'ZSM' : (wVal + ' (ZSM)');
+      }
+
+      // Betaalwijze
+      var payEl = document.getElementById('pr-info-pay');
+      if (payEl) {
+        payEl.textContent = isPaid ? 'Online betaald' : 'Contant betaald';
+      }
+
+      // Klant Details
+      var userDetails = order.order_user_details || order.user_details || {};
+      var nameVal = order.name || order.customer_name || userDetails.order_name || userDetails.name || (userDetails.FirstName ? (userDetails.FirstName + ' ' + (userDetails.LastName || '')) : '—');
+      var custNameEl = document.getElementById('pr-cust-name');
+      if (custNameEl) custNameEl.textContent = nameVal;
+
+      var custPhoneEl = document.getElementById('pr-cust-phone');
+      if (custPhoneEl) custPhoneEl.textContent = order.phone || order.phone_number || userDetails.phone || userDetails.phone_number || '';
+
+      var addr1El = document.getElementById('pr-cust-addr1');
+      var addr2El = document.getElementById('pr-cust-addr2');
+      if (isCollection) {
+        if (addr1El) addr1El.textContent = 'Afhalen';
+        if (addr2El) addr2El.textContent = '';
+      } else {
+        if (addr1El) addr1El.textContent = order.address || order.street || userDetails.address || '—';
+        if (addr2El) addr2El.textContent = (order.city || userDetails.city) ? ((order.zipcode || userDetails.zipcode || '') + ' ' + (order.city || userDetails.city || '')).trim() : '';
+      }
+
+      // Customer Note Box
+      var noteBox = document.getElementById('pr-note-container');
       var noteEl = document.getElementById('pr-note');
-      var noteBand = document.getElementById('pr-note-band');
-      if (order.note) { noteEl.textContent = order.note; noteEl.style.display = ''; noteBand.style.display = ''; }
-      else { noteEl.style.display = 'none'; noteBand.style.display = 'none'; }
-      // Items
-      document.getElementById('pr-items').innerHTML = '<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || '') + '</div></div><span class="r-item-price">' + fmt(total) + '</span></div>';
-      document.getElementById('pr-total').textContent = fmt(total);
-      document.getElementById('pr-btw').textContent = fmt(btw);
+      if (order.note) {
+        if (noteEl) noteEl.innerHTML = String(order.note).replace(/\n/g, '<br>');
+        if (noteBox) noteBox.style.display = 'block';
+      } else {
+        if (noteBox) noteBox.style.display = 'none';
+      }
+
+      // Dynamic Items rendering
+      var itemsEl = document.getElementById('pr-items');
+      if (itemsEl) {
+        var itemsList = order.items || order.dish_details || order.order_items || order.dishes_details || [];
+        if (Array.isArray(itemsList) && itemsList.length > 0) {
+          itemsEl.innerHTML = itemsList.map(function (it) {
+            var qty = it.qty || it.quantity || 1;
+            var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
+            var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
+            var itemTotal = (priceVal * qty).toFixed(2);
+            var subText = '';
+            if (it.note) {
+              subText = String(it.note).replace(/\n/g, '<br>');
+            } else if (it.attribute_items && it.attribute_items.length > 0) {
+              subText = it.attribute_items.map(function (a) { return a.attribute_value; }).join('<br>');
+            } else if (it.order_dish_details && it.order_dish_details.length > 0) {
+              subText = it.order_dish_details.map(function (a) { return a.attribute_name || a.name || a.attribute_value || ''; }).filter(Boolean).join('<br>');
+            }
+            return '<div class="r-item">'
+              + '<span class="r-item-qty">' + qty + '</span>'
+              + '<div style="flex:1;min-width:0">'
+              + '<div class="r-item-name">' + name + '</div>'
+              + (subText ? '<div class="r-item-sub">' + subText + '</div>' : '')
+              + '</div>'
+              + '<span class="r-item-price">€ ' + itemTotal + '</span>'
+              + '</div>';
+          }).join('');
+        } else {
+          itemsEl.innerHTML = '<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || order.order_number || '') + '</div></div><span class="r-item-price">' + fmt(total) + '</span></div>';
+        }
+      }
+
+      var totalEl = document.getElementById('pr-total');
+      if (totalEl) totalEl.textContent = fmt(total);
+
+      var btwEl = document.getElementById('pr-btw');
+      if (btwEl) btwEl.textContent = fmt(btw);
     }
 
     var TAB_IDX = { new: 0, kitchen: 1, delivery: 2 };
@@ -8062,10 +8411,15 @@
       }
     }
     function toggleNavRestaurant(el) {
-      // Directly pause/resume — no pause-duration popup
       restaurantOpen = !restaurantOpen;
       restaurantReopenTime = null;
       setNavRestaurantState();
+
+      if (typeof API !== 'undefined' && API.updateRestaurantStatus) {
+        API.updateRestaurantStatus(restaurantOpen ? 1 : 0).catch(function (err) {
+          console.error('Failed to update restaurant status:', err);
+        });
+      }
     }
 
     function selectLang(row) {
@@ -9373,6 +9727,11 @@
       }
       restaurantOpen = false;
       setNavRestaurantState();
+      if (typeof API !== 'undefined' && API.updateRestaurantStatus) {
+        API.updateRestaurantStatus(0).catch(function (err) {
+          console.error('Failed to update restaurant status:', err);
+        });
+      }
       goPage(window._pauseReturn || 'orders');
       var toast = document.getElementById('accepted-toast');
       document.getElementById('accepted-toast-text').textContent = t('pause_paused') + ' · ' + label;
