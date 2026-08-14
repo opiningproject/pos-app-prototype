@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.net.http.SslError;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,7 +21,8 @@ import com.sunmi.peripheral.printer.SunmiPrinterService;
 
 public class MainActivity extends Activity {
 
-    private static final String APP_URL = "https://opiningproject.github.io/pos-app-prototype/";
+    private static final String LOCAL_URL = "file:///android_asset/index.html";
+    private static final String ONLINE_URL = "https://admin.dryfftjwieiwjw.online/";
 
     private WebView webView;
     private SunmiPrinterService printerService;
@@ -58,13 +61,22 @@ public class MainActivity extends Activity {
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
         s.setDatabaseEnabled(true);
+        s.setAllowFileAccess(true);
+        s.setAllowContentAccess(true);
+        s.setAllowFileAccessFromFileURLs(true);
+        s.setAllowUniversalAccessFromFileURLs(true);
         s.setMediaPlaybackRequiresUserGesture(false);
 
         webView.addJavascriptInterface(new PrinterBridge(), "AndroidPrinter");
         webView.addJavascriptInterface(new StatusBarBridge(), "AndroidStatusBar");
         webView.addJavascriptInterface(new AuthBridge(), "AndroidAuth");
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(APP_URL);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed(); // Handle certificate mismatches gracefully
+            }
+        });
+        webView.loadUrl(LOCAL_URL);
     }
 
     /** Exposed to the web app as window.AndroidStatusBar: recolour the system status bar */
@@ -95,29 +107,120 @@ public class MainActivity extends Activity {
     private class AuthBridge {
         private final ApiClient apiClient = new ApiClient();
 
+        private String extractToken(org.json.JSONObject response) {
+            if (response == null) return "session_active";
+            if (response.has("token") && !response.isNull("token")) {
+                String t = response.optString("token", "");
+                if (!t.isEmpty()) return t;
+            }
+            if (response.has("data") && !response.isNull("data")) {
+                org.json.JSONObject dataObj = response.optJSONObject("data");
+                if (dataObj != null) {
+                    if (dataObj.has("token") && !dataObj.isNull("token")) {
+                        String t = dataObj.optString("token", "");
+                        if (!t.isEmpty()) return t;
+                    }
+                    if (dataObj.has("access_token") && !dataObj.isNull("access_token")) {
+                        String t = dataObj.optString("access_token", "");
+                        if (!t.isEmpty()) return t;
+                    }
+                }
+            }
+            if (response.has("access_token") && !response.isNull("access_token")) {
+                String t = response.optString("access_token", "");
+                if (!t.isEmpty()) return t;
+            }
+            return "session_active";
+        }
+
+        private String escapeJsString(String str) {
+            if (str == null) return "";
+            return str.replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n").replace("\r", "");
+        }
+
         @JavascriptInterface
         public void login(final String email, final String password) {
             apiClient.login(email, password, new ApiClient.ApiCallback() {
                 @Override
                 public void onSuccess(org.json.JSONObject response) {
-                    final String token = response.optString("token", "");
+                    final String token = extractToken(response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginSuccess === 'function') onNativeLoginSuccess('" + token + "');", null);
+                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginSuccess === 'function') onNativeLoginSuccess('" + escapeJsString(token) + "');", null);
                         }
                     });
                 }
 
                 @Override
                 public void onError(final Exception error) {
-                    final String message = error.getMessage();
+                    final String message = error != null && error.getMessage() != null ? error.getMessage() : "Login failed";
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginError === 'function') onNativeLoginError('" + message + "');", null);
+                            webView.evaluateJavascript("javascript:if(typeof onNativeLoginError === 'function') onNativeLoginError('" + escapeJsString(message) + "');", null);
                         }
                     });
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void changeOrderStatus(final String orderId, final String orderStatus, final String token) {
+            apiClient.changeOrderStatus(orderId, orderStatus, token, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    android.util.Log.d("AuthBridge", "Native changeOrderStatus success: " + (response != null ? response.toString() : "ok"));
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    android.util.Log.e("AuthBridge", "Native changeOrderStatus error", error);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void cancelOrder(final String orderId, final String status, final String token) {
+            apiClient.cancelOrder(orderId, status, token, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    android.util.Log.d("AuthBridge", "Native cancelOrder success: " + (response != null ? response.toString() : "ok"));
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    android.util.Log.e("AuthBridge", "Native cancelOrder error", error);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void getCategories(final String token) {
+            apiClient.getCategories(token, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    android.util.Log.d("AuthBridge", "Native getCategories success: " + (response != null ? response.toString() : "ok"));
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    android.util.Log.e("AuthBridge", "Native getCategories error", error);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void changeDishStatus(final String dishId, final int status, final String token) {
+            apiClient.changeDishStatus(dishId, status, token, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    android.util.Log.d("AuthBridge", "Native changeDishStatus success: " + (response != null ? response.toString() : "ok"));
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    android.util.Log.e("AuthBridge", "Native changeDishStatus error", error);
                 }
             });
         }
