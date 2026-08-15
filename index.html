@@ -3631,7 +3631,7 @@
                 <div data-i18n="nav_view_sales" style="font-size:22px;font-weight:500;color:#fff">Verkopen van vandaag
                   bekijken</div>
                 <div style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);margin-top:5px"
-                  id="nav-orders-sub">47 <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
+                  id="nav-orders-sub"><span id="nav-orders-count">0</span> <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
               </div>
             </div>
             <div class="side-nav-item" onclick="goPage('menu')" style="align-items:flex-start">
@@ -6095,12 +6095,51 @@
         var iconsEl = sb.querySelector('.icons'); if (iconsEl) iconsEl.style.color = tc;
       }
     }
+    function updateTodayOrdersCount(data) {
+      if (!data) return;
+      var count = null;
+      if (data.today_count !== undefined && data.today_count !== null) {
+        count = data.today_count;
+      } else if (data.today_orders_count !== undefined && data.today_orders_count !== null) {
+        count = data.today_orders_count;
+      } else if (data.data && data.data.today_count !== undefined && data.data.today_count !== null) {
+        count = data.data.today_count;
+      } else if (typeof data === 'number') {
+        count = data;
+      }
+
+      if (count !== null && count !== undefined) {
+        var countEl = document.getElementById('nav-orders-count');
+        if (countEl) {
+          countEl.textContent = count;
+        } else {
+          var subEl = document.getElementById('nav-orders-sub');
+          if (subEl) {
+            subEl.innerHTML = '<span id="nav-orders-count">' + count + '</span> <span data-i18n="nav_completed_orders">' + t('nav_completed_orders') + '</span>';
+          }
+        }
+      }
+    }
+
+    function fetchTodayOrdersCount() {
+      if (typeof API !== 'undefined' && API.getOrders) {
+        API.getOrders()
+          .then(function (res) {
+            if (res) updateTodayOrdersCount(res);
+          })
+          .catch(function (err) {
+            console.error('Failed to fetch getOrders today_count:', err);
+          });
+      }
+    }
+
     var NAV_STATUSBAR = '#333333';
     function _goPageImmediate(p) {
       var navOverlay = document.getElementById('p-nav');
       if (p === 'nav') {
         if (navOverlay) navOverlay.style.display = 'flex';
         setDeviceStatusBar(NAV_STATUSBAR, true);
+        fetchTodayOrdersCount();
         return;
       }
       if (navOverlay) navOverlay.style.display = 'none';
@@ -6623,6 +6662,7 @@
       // Fetch live order detail data passing order_id parameter
       API.getOrders({ order_id: id })
         .then(function (responseData) {
+          if (responseData) updateTodayOrdersCount(responseData);
           var singleOrder = null;
           if (responseData && Array.isArray(responseData.data) && responseData.data[0]) {
             singleOrder = responseData.data[0];
@@ -9280,6 +9320,7 @@
 
       API.getOrders({ status: apiStatus })
         .then(function (data) {
+          if (data) updateTodayOrdersCount(data);
           var orders = [];
           if (data && Array.isArray(data.data)) {
             orders = data.data;
