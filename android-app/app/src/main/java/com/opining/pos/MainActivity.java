@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.net.http.SslError;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -42,6 +43,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Keep screen awake while app is in foreground
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // White status bar with dark icons (matches the app header)
         getWindow().setStatusBarColor(Color.WHITE);

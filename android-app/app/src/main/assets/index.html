@@ -41,6 +41,7 @@
       color: #111;
       box-sizing: border-box;
     }
+
     .receipt-thermal .r-banner {
       background: #333333;
       color: #ffffff;
@@ -52,10 +53,12 @@
       margin: 12px 0 8px;
       letter-spacing: 0.02em;
     }
+
     .receipt-thermal .r-section {
       padding: 2px 0 6px;
       word-break: break-word;
     }
+
     .receipt-thermal .r-info-row {
       display: flex;
       align-items: baseline;
@@ -63,12 +66,14 @@
       gap: 4px;
       padding: 3px 0;
     }
+
     .receipt-thermal .r-info-label {
       font-size: 12px;
       font-weight: 500;
       color: #444;
       flex-shrink: 0;
     }
+
     .receipt-thermal .r-info-val {
       font-size: 12px;
       font-weight: 500;
@@ -76,6 +81,7 @@
       text-align: right;
       word-break: break-word;
     }
+
     .receipt-thermal .r-item {
       display: flex;
       align-items: flex-start;
@@ -83,6 +89,7 @@
       padding: 8px 0;
       border-bottom: 1px dashed #e2e2e2;
     }
+
     .receipt-thermal .r-item-qty {
       font-size: 12px;
       font-weight: 600;
@@ -90,12 +97,14 @@
       min-width: 14px;
       flex-shrink: 0;
     }
+
     .receipt-thermal .r-item-name {
       font-size: 12px;
       font-weight: 600;
       color: #111;
       word-break: break-word;
     }
+
     .receipt-thermal .r-item-sub {
       font-size: 11px;
       color: #666;
@@ -103,6 +112,7 @@
       margin-top: 2px;
       word-break: break-word;
     }
+
     .receipt-thermal .r-item-price {
       font-size: 12px;
       font-weight: 600;
@@ -121,6 +131,7 @@
       height: 0;
       overflow: hidden;
     }
+
     #receipt-print-area-wrapper.is-printing {
       position: absolute !important;
       left: 0 !important;
@@ -134,7 +145,9 @@
     }
 
     @media print {
-      html, body {
+
+      html,
+      body {
         overflow: visible !important;
         height: auto !important;
         min-height: 0 !important;
@@ -145,9 +158,11 @@
         display: block !important;
         float: none !important;
       }
-      body > *:not(#receipt-print-area-wrapper) {
+
+      body>*:not(#receipt-print-area-wrapper) {
         display: none !important;
       }
+
       #receipt-print-area-wrapper {
         display: block !important;
         visibility: visible !important;
@@ -164,6 +179,7 @@
         padding: 0 !important;
         float: none !important;
       }
+
       #receipt-print-area {
         display: block !important;
         visibility: visible !important;
@@ -178,10 +194,12 @@
         box-sizing: border-box !important;
         background: #fff !important;
       }
+
       #receipt-print-area * {
         visibility: visible !important;
         box-sizing: border-box !important;
       }
+
       .receipt-thermal .r-info-row {
         display: flex !important;
         flex-direction: row !important;
@@ -192,12 +210,14 @@
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
+
       .receipt-thermal .r-info-label {
         font-size: 11px !important;
         font-weight: 500 !important;
         color: #444 !important;
         flex-shrink: 0 !important;
       }
+
       .receipt-thermal .r-info-val {
         font-size: 11px !important;
         font-weight: 600 !important;
@@ -206,6 +226,7 @@
         word-break: break-word !important;
         margin-left: auto !important;
       }
+
       .receipt-thermal .r-item {
         display: flex !important;
         flex-direction: row !important;
@@ -217,6 +238,7 @@
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
+
       .receipt-thermal .r-banner {
         display: block !important;
         background: #333333 !important;
@@ -232,6 +254,7 @@
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
+
       #r-btw-section,
       #r-btw-section *,
       .r-footer {
@@ -240,9 +263,11 @@
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
+
       #r-btw-section .r-info-row {
         display: flex !important;
       }
+
       @page {
         margin: 0mm;
       }
@@ -3631,7 +3656,8 @@
                 <div data-i18n="nav_view_sales" style="font-size:22px;font-weight:500;color:#fff">Verkopen van vandaag
                   bekijken</div>
                 <div style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);margin-top:5px"
-                  id="nav-orders-sub"><span id="nav-orders-count">0</span> <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
+                  id="nav-orders-sub"><span id="nav-orders-count">0</span> <span
+                    data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
               </div>
             </div>
             <div class="side-nav-item" onclick="goPage('menu')" style="align-items:flex-start">
@@ -5755,19 +5781,27 @@
       <!-- Logo & Restaurant Header -->
       <div style="text-align:center;padding:12px 4px 14px 4px">
         <div style="display:flex;justify-content:center;margin-bottom:10px">
-          <img id="pr-shop-logo" src="https://admin.dryfftjwieiwjw.online/images/blank-img.svg" alt="logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:inline-block" onerror="this.style.display='none'">
+          <img id="pr-shop-logo" src="https://admin.dryfftjwieiwjw.online/images/blank-img.svg" alt="logo"
+            style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:inline-block"
+            onerror="this.style.display='none'">
         </div>
-        <div style="font-size:12px;color:#333;line-height:1.5">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
+        <div style="font-size:12px;color:#333;line-height:1.5">Tochtstraat 40<br>3036SK
+          Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
       </div>
 
       <!-- Info Banner & Details -->
       <div class="r-banner">Info</div>
       <div class="r-section">
-        <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val" id="pr-info-oid">250621 A 31</span></div>
-        <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val" id="pr-info-date">wo 21-06-2025 21:58</span></div>
-        <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val" id="pr-info-bron">Web order</span></div>
-        <div class="r-info-row"><span class="r-info-label" id="pr-info-wished-label">Bezorgtijd:</span><span class="r-info-val" id="pr-info-wished">22:30 (ZSM)</span></div>
-        <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val" id="pr-info-pay">Online betaald</span></div>
+        <div class="r-info-row"><span class="r-info-label">Bestelnr.</span><span class="r-info-val"
+            id="pr-info-oid">250621 A 31</span></div>
+        <div class="r-info-row"><span class="r-info-label">Besteld op:</span><span class="r-info-val"
+            id="pr-info-date">wo 21-06-2025 21:58</span></div>
+        <div class="r-info-row"><span class="r-info-label">Bron:</span><span class="r-info-val" id="pr-info-bron">Web
+            order</span></div>
+        <div class="r-info-row"><span class="r-info-label" id="pr-info-wished-label">Bezorgtijd:</span><span
+            class="r-info-val" id="pr-info-wished">22:30 (ZSM)</span></div>
+        <div class="r-info-row"><span class="r-info-label">Betaalwijze:</span><span class="r-info-val"
+            id="pr-info-pay">Online betaald</span></div>
       </div>
 
       <!-- Klant Banner & Details -->
@@ -5779,7 +5813,8 @@
         <div style="font-size:12px;color:#333;margin-top:2px" id="pr-cust-phone">0614522453</div>
 
         <!-- Customer Note Box -->
-        <div id="pr-note-container" style="margin-top:10px;border:1px solid #e2e2e2;border-radius:10px;padding:10px 12px;font-size:12px;color:#333;line-height:1.4">
+        <div id="pr-note-container"
+          style="margin-top:10px;border:1px solid #e2e2e2;border-radius:10px;padding:10px 12px;font-size:12px;color:#333;line-height:1.4">
           <span id="pr-note">Please deliver at the green door.<br>When arrive call me</span>
         </div>
       </div>
@@ -5812,13 +5847,17 @@
 
       <!-- BTW Section -->
       <div id="r-btw-section" style="padding-top:10px;padding-bottom:8px">
-        <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
-        <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
-        <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+        <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€
+            2.75</span></div>
+        <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span
+            class="r-info-val">NL865792768B01</span></div>
+        <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span>
+        </div>
       </div>
 
       <!-- Footer -->
-      <div style="text-align:center;font-size:11px;color:#555;line-height:1.4;margin-top:14px;padding-top:8px">Btw bedankt voor uw bestelling. Bestel online via de website!</div>
+      <div style="text-align:center;font-size:11px;color:#555;line-height:1.4;margin-top:14px;padding-top:8px">Btw
+        bedankt voor uw bestelling. Bestel online via de website!</div>
 
     </div>
   </div>
@@ -5889,7 +5928,7 @@
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
         d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid', d_cash: 'Not paid', d_print_label: 'Print label',
-        d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_to_archive: 'Complete order', d_accept: 'Accept',
+        d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
         hdr_sales_analysis: 'Sales analysis',
@@ -5979,7 +6018,7 @@
         hdr_products: 'Producten', dd_products: 'Producten', dd_choices: 'Keuzemenu', dd_categories: 'Categorieën',
         tab_menu_all: 'Alle', tab_menu_active: 'Actief', tab_menu_concept: 'Concept', tab_menu_archived: 'Gearchiveerd',
         d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Betaald', d_cash: 'Niet betaald', d_print_label: 'Print label',
-        d_to_kitchen: 'Naar keuken', d_to_delivery: 'Naar bezorging', d_to_archive: 'Bestelling afronden', d_accept: 'Accepteren',
+        d_to_kitchen: 'Naar keuken', d_to_delivery: 'Naar bezorging', d_ready: 'Gereed', d_to_archive: 'Bestelling afronden', d_accept: 'Accepteren',
         accept_label: 'Accepteren',
         app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'geaccepteerd',
         hdr_sales_analysis: 'Verkoopanalyse',
@@ -6149,8 +6188,14 @@
       if (!targetPage) return;
       targetPage.classList.add('active');
       if (p === 'orders') {
-        var newTab = document.querySelector('.tab[onclick*="\'new\'"]');
-        if (newTab) switchTab(newTab, 'new');
+        var activeTabEl = document.querySelector('#orders-tab-bar .tab.active');
+        if (activeTabEl) {
+          moveOrdersUnderline(activeTabEl, false);
+          loadOrders();
+        } else {
+          var defaultTab = document.querySelector('#orders-tab-bar .tab[onclick*="\'new\'"]');
+          if (defaultTab) switchTab(defaultTab, 'new');
+        }
       } else if (p !== 'create-order') {
         var firstTabBar = targetPage.querySelector('.tabs');
         if (firstTabBar) {
@@ -6220,7 +6265,7 @@
           if (stored && (stored.oid || stored.id)) {
             orderId = String(stored.oid || stored.id).replace('#', '');
           }
-        } catch (e) {}
+        } catch (e) { }
       }
 
       if (!card && orderId) {
@@ -6594,14 +6639,42 @@
         if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '24'); num.textContent = isLate ? Math.abs(minsNum) : minsNum; }
         if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); }
       }
-      var nextKeyMap = { kitchen: 'd_to_kitchen', delivery: 'd_to_delivery', archive: 'd_to_archive' };
-      var nextKey = nextKeyMap[next] || 'd_to_kitchen';
-      var nextBtnEl = document.getElementById('d-next-btn');
-      nextBtnEl.dataset.nextKey = nextKey;
-      nextBtnEl.textContent = t(nextKey);
+      var orderTypeVal = '1';
+      if (cardEl && cardEl.dataset && cardEl.dataset.orderType) {
+        orderTypeVal = String(cardEl.dataset.orderType);
+      } else if (type === 'Collection' || type === '2' || type == 2) {
+        orderTypeVal = '2';
+      } else if (type === 'Delivery' || type === '1' || type == 1) {
+        orderTypeVal = '1';
+      }
+      window._detailOrderType = orderTypeVal;
+
       var fromTabMap = { kitchen: 'new', delivery: 'kitchen', archive: 'delivery' };
       window._detailFromTab = fromTabMap[next] || 'new';
       window._detailToTab = (next === 'archive') ? null : next;
+
+      var isKitchenSection = (next === 'delivery' || window._detailFromTab === 'kitchen' || (cardEl && cardEl.closest && cardEl.closest('#t-kitchen')));
+
+      var nextKey = 'd_to_kitchen';
+      if (next === 'archive') {
+        nextKey = 'd_to_archive';
+      } else if (isKitchenSection || next === 'delivery') {
+        if (orderTypeVal === '2') {
+          nextKey = 'd_ready';
+        } else {
+          nextKey = 'd_to_delivery';
+        }
+      } else {
+        var nextKeyMap = { kitchen: 'd_to_kitchen', delivery: 'd_to_delivery', archive: 'd_to_archive' };
+        nextKey = nextKeyMap[next] || 'd_to_kitchen';
+      }
+
+      var nextBtnEl = document.getElementById('d-next-btn');
+      if (nextBtnEl) {
+        nextBtnEl.dataset.nextKey = nextKey;
+        nextBtnEl.setAttribute('data-i18n', nextKey);
+        nextBtnEl.textContent = t(nextKey);
+      }
       var noteSection = document.getElementById('d-note-section');
       var noteText = document.getElementById('d-note-text');
       var hasNote = (type === 'Collection' || id === '37');
@@ -6696,16 +6769,14 @@
 
     function silentPrint() {
       populatePrintPage();
-      var wrapper = document.getElementById('receipt-print-area-wrapper');
-      if (wrapper) wrapper.classList.add('is-printing');
+      // var wrapper = document.getElementById('receipt-print-area-wrapper');
+      // if (wrapper) wrapper.classList.add('is-printing');
       if (window.AndroidPrinter && typeof window.AndroidPrinter.printReceipt === 'function') {
         printReceiptNative();
       } else {
         try { window.print(); } catch (e) { console.warn('window.print failed', e); }
       }
-      setTimeout(function () {
-        if (wrapper) wrapper.classList.remove('is-printing');
-      }, 1000);
+
     }
 
     // Shop details for the receipt header/footer (matches the bon.html design)
@@ -6956,7 +7027,10 @@
 
       var orderId = card ? (card.dataset.oid ? card.dataset.oid.replace('#', '') : '') : '';
       if (orderId && typeof API !== 'undefined' && API.changeOrderStatus) {
-        var statusToPass = action === 'kitchen' ? (typeof OrderStatus !== 'undefined' ? OrderStatus.InKitchen : '2') : ((action === 'delivering' || action === 'archive') ? (typeof OrderStatus !== 'undefined' ? OrderStatus.Delivered : '6') : null);
+        var cardOrderType = (card && card.dataset && card.dataset.orderType) ? String(card.dataset.orderType) : '1';
+        var statusToPass = action === 'kitchen' ? (typeof OrderStatus !== 'undefined' ? OrderStatus.InKitchen : '2') :
+          (action === 'delivering' ? (cardOrderType === '2' ? (typeof OrderStatus !== 'undefined' ? OrderStatus.ReadyForPickup : '4') : (typeof OrderStatus !== 'undefined' ? OrderStatus.OutForDelivery : '5')) :
+            (action === 'archive' ? (typeof OrderStatus !== 'undefined' ? OrderStatus.Delivered : '6') : null));
         if (statusToPass) {
           API.changeOrderStatus(orderId, statusToPass).catch(function (err) {
             console.error('Error in moveCard changeOrderStatus:', err);
@@ -8718,7 +8792,12 @@
             ring.setAttribute('stroke', color);
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
-            numEl.textContent = isLate ? (remaining < 0 ? '-' + Math.abs(remaining) : '0') : remaining;
+            var displayVal = remaining;
+            if (isLate) {
+              var lateMins = Math.abs(remaining);
+              displayVal = lateMins > 180 ? 35 : lateMins;
+            }
+            numEl.textContent = displayVal;
             if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
             tcol.classList.remove('late', 'urgent');
           }
@@ -8760,6 +8839,27 @@
     initLiveTimers();
     refreshLiveTimers();
     setInterval(refreshLiveTimers, 30000);
+
+    // Keep screen awake while app is open & in foreground (Web Screen Wake Lock API)
+    var _appWakeLock = null;
+    function requestAppWakeLock() {
+      if ('wakeLock' in navigator && typeof navigator.wakeLock.request === 'function') {
+        navigator.wakeLock.request('screen').then(function (lock) {
+          _appWakeLock = lock;
+          _appWakeLock.addEventListener('release', function () {
+            _appWakeLock = null;
+          });
+        }).catch(function (err) {
+          console.warn('Screen Wake Lock error:', err);
+        });
+      }
+    }
+    requestAppWakeLock();
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') {
+        requestAppWakeLock();
+      }
+    });
     // Initial sort all lists by target time on page load
     ['t-new', 't-kitchen', 't-delivery'].forEach(function (listId) {
       var list = document.getElementById(listId);
@@ -8847,17 +8947,22 @@
           '</div></div>';
         renderOrderCard(card);
         closeOrderToast();
-        // Print AFTER the UI has updated, so a print failure never blocks accept
-        setTimeout(function () { try { silentPrint(); } catch (e) { console.warn('print failed', e); } }, 150);
       }
 
       var orderId = window._detailId || (window._detailOid ? window._detailOid.replace('#', '') : '');
       if (orderId && typeof API !== 'undefined' && API.changeOrderStatus) {
         var targetStatus = null;
+        var isKitchenTab = (window._detailFromTab === 'kitchen' || window._detailToTab === 'delivery');
+        var orderTypeVal = window._detailOrderType || ((window._detailCard && window._detailCard.dataset && window._detailCard.dataset.orderType) ? String(window._detailCard.dataset.orderType) : (window._detailType === 'Collection' ? '2' : '1'));
+
         if (window._detailToTab === 'kitchen') {
           targetStatus = (typeof OrderStatus !== 'undefined' ? OrderStatus.InKitchen : '2');
-        } else if (window._detailToTab === 'delivery') {
-          targetStatus = (typeof OrderStatus !== 'undefined' ? OrderStatus.Delivered : '6');
+        } else if (isKitchenTab || window._detailToTab === 'delivery') {
+          if (orderTypeVal === '2') {
+            targetStatus = (typeof OrderStatus !== 'undefined' ? OrderStatus.ReadyForPickup : '4');
+          } else {
+            targetStatus = (typeof OrderStatus !== 'undefined' ? OrderStatus.OutForDelivery : '5');
+          }
         } else if (!window._detailToTab || window._detailToTab === 'archive') {
           targetStatus = (typeof OrderStatus !== 'undefined' ? OrderStatus.Delivered : '6');
         }
@@ -9257,6 +9362,8 @@
         nextTab = 'archive';
       }
 
+      var orderTypeVal = String(order.order_type !== undefined && order.order_type !== null ? order.order_type : (isCollection ? '2' : '1'));
+      card.setAttribute('data-order-type', orderTypeVal);
       card.setAttribute('onclick', "goDetail('" + id + "','" + name + "','" + address + "','#" + id + "','€" + price + "','" + pay + "','" + deliveryType + "','" + mins + "','" + nextTab + "',this)");
 
       card.innerHTML =
@@ -9281,6 +9388,7 @@
       };
     }
 
+    var _loadOrdersSeq = 0;
     function loadOrders() {
       var token = localStorage.getItem('auth_token');
       if (!token) {
@@ -9288,19 +9396,11 @@
         return;
       }
 
+      var currentSeq = ++_loadOrdersSeq;
+
       var newCount = 0;
       var kitchenCount = 0;
       var deliveryCount = 0;
-
-      // Remove existing ocard elements
-      ['new', 'kitchen', 'delivery'].forEach(function (t) {
-        var list = document.getElementById('t-' + t);
-        if (list) {
-          list.querySelectorAll('.ocard').forEach(function (card) {
-            card.remove();
-          });
-        }
-      });
 
       // Determine active tab to pass status parameter to API
       var activeTabEl = document.querySelector('#orders-tab-bar .tab.active');
@@ -9320,6 +9420,18 @@
 
       API.getOrders({ status: apiStatus })
         .then(function (data) {
+          if (currentSeq !== _loadOrdersSeq) return;
+
+          // Remove existing ocard elements right before rendering fresh API data
+          ['new', 'kitchen', 'delivery'].forEach(function (t) {
+            var list = document.getElementById('t-' + t);
+            if (list) {
+              list.querySelectorAll('.ocard').forEach(function (card) {
+                card.remove();
+              });
+            }
+          });
+
           if (data) updateTodayOrdersCount(data);
           var orders = [];
           if (data && Array.isArray(data.data)) {
@@ -9332,20 +9444,25 @@
           console.log("---- orders for " + apiStatus + ":", orders);
           orders.forEach(function (order) {
             var res = createOrderCardElement(order);
-            var status = res.status;
+            var status = String(res.status);
             var cardEl = res.element;
             console.log("order status:", status);
 
-            var listId = 't-new';
-            if (activeTabId === 'delivery' || status == '3' || status == '6' || status == '4' || status == '5' || status == '7') {
-              listId = 't-delivery';
-              deliveryCount++;
-            } else if (activeTabId === 'kitchen' || status == '2') {
-              listId = 't-kitchen';
-              kitchenCount++;
-            } else if (activeTabId === 'new' || status == '1') {
+            // Skip completed (6) and cancelled (7) orders — they move out of active tabs
+            if (status === '6' || status === '7') {
+              return;
+            }
+
+            var listId = null;
+            if (status === '1') {
               listId = 't-new';
               newCount++;
+            } else if (status === '2') {
+              listId = 't-kitchen';
+              kitchenCount++;
+            } else if (status === '3' || status === '4' || status === '5') {
+              listId = 't-delivery';
+              deliveryCount++;
             } else {
               if (activeTabId === 'delivery') {
                 listId = 't-delivery';
@@ -9361,8 +9478,11 @@
 
             var container = document.getElementById(listId);
             if (container) {
-              container.appendChild(cardEl);
-              renderOrderCard(cardEl);
+              var existingCard = container.querySelector('.ocard[data-oid="#' + order.id + '"]');
+              if (!existingCard) {
+                container.appendChild(cardEl);
+                renderOrderCard(cardEl);
+              }
             }
           });
 
