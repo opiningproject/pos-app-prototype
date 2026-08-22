@@ -228,6 +228,21 @@ public class MainActivity extends Activity {
                 }
             });
         }
+
+        @JavascriptInterface
+        public void getNewOrderDetails(final String orderId, final String token) {
+            apiClient.getNewOrderDetails(orderId, token, new ApiClient.ApiCallback() {
+                @Override
+                public void onSuccess(org.json.JSONObject response) {
+                    android.util.Log.d("AuthBridge", "Native getNewOrderDetails success: " + (response != null ? response.toString() : "ok"));
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    android.util.Log.e("AuthBridge", "Native getNewOrderDetails error", error);
+                }
+            });
+        }
     }
 
     /** Exposed to the web app as window.AndroidPrinter */

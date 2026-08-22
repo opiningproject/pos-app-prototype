@@ -15,6 +15,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>POS App</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -3752,11 +3753,11 @@
               <div class="tabs orders-tabs" id="orders-tab-bar">
                 <div class="tab-underline" aria-hidden="true"></div>
                 <div class="tab active" onclick="switchTab(this,'new')"><span class="tab-inner"><span class="tab-label"
-                      data-i18n="tab_new">Nieuw</span><span class="tab-count">7</span></span></div>
+                      data-i18n="tab_new">Nieuw</span><span class="tab-count">0</span></span></div>
                 <div class="tab" onclick="switchTab(this,'kitchen')"><span class="tab-inner"><span class="tab-label"
-                      data-i18n="tab_kitchen">Keuken</span><span class="tab-count">4</span></span></div>
+                      data-i18n="tab_kitchen">Keuken</span><span class="tab-count">0</span></span></div>
                 <div class="tab" onclick="switchTab(this,'delivery')"><span class="tab-inner"><span class="tab-label"
-                      data-i18n="tab_delivering">Uitgaand</span><span class="tab-count">1</span></span></div>
+                      data-i18n="tab_delivering">Uitgaand</span><span class="tab-count">0</span></span></div>
 
               </div>
               <div id="orders-panes">
@@ -3772,186 +3773,6 @@
                     <div class="tab-empty-sub" data-i18n="empty_new_sub">New incoming orders will appear here
                       automatically.</div>
                   </div>
-                  <div class="ocard" data-oid="#37"
-                    onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Cash','Collection','2','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol late"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#c62828" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="0" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">-9</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                        <div class="oc-price">€73.59 · ASAP</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#26"
-                    onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A||3062 WB Rotterdam','#26','€73.59','Cash','Delivery','2','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="6.43" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">2</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">Lusthofstraat 27A</div>
-                        <div class="oc-price">€73.59 · ASAP</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#42"
-                    onclick="goDetail('42','Emma Jansen','Collection order','#42','€52.00','Cash','Collection','7','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">120</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                        <div class="oc-price">€52.00 · Today, 18:00</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#48"
-                    onclick="goDetail('48','Anne Visser','Witte de Withstraat 21||3012 BM Rotterdam','#48','€24.80','Cash','Delivery','9','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol urgent"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="28.90" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">9</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">Anne Visser</div>
-                        <div class="oc-price">€24.80 · ASAP</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#45"
-                    onclick="goDetail('45','Lotte de Vries','Collection order','#45','€44.00','Cash','Collection','12','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">210</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                        <div class="oc-price">€44.00 · Today, 19:30</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#38"
-                    onclick="goDetail('38','Daan Visser','1e Pijnackerstraat 120B||3035 GW Rotterdam','#38','€73.59','Paid','Delivery','17','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">1080</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">1e Pijnackerstraat 120B</div>
-                        <div class="oc-price">€73.59 · Tomorrow, 12:00</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#41"
-                    onclick="goDetail('41','Mila van Dijk','Schiedamseweg 112||3026 GP Rotterdam','#41','€29.50','Paid','Delivery','19','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">1170</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">Schiedamseweg 112</div>
-                        <div class="oc-price">€29.50 · Tomorrow, 13:30</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#40"
-                    onclick="goDetail('40','Lars Jansen','Goudsesingel 210||3011 KD Rotterdam','#40','€73.59','Paid','Delivery','28','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">1560</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">T4</div>
-                        <div class="oc-price">€73.59 · Tomorrow, 19:30</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#43"
-                    onclick="goDetail('43','Noah Smit','Vossenburchkade 44||3072 AL Rotterdam','#43','€67.00','Paid','Delivery','33','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">1620</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">Vossenburchkade 44</div>
-                        <div class="oc-price">€67.00 · Tomorrow, 20:00</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#44"
-                    onclick="goDetail('44','Julia Mulder','Proveniersstraat 8B||3014 GH Rotterdam','#44','€18.00','Paid','Delivery','41','kitchen',this)">
-                    <div class="ocard-row">
-                      <div class="tcol"><svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="80.00" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">25</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg></div>
-                      <div class="mcol">
-                        <div class="dname">Proveniersstraat 8B</div>
-                        <div class="oc-price">€18.00 · ASAP</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <!-- KITCHEN -->
@@ -3966,46 +3787,6 @@
                     <div class="tab-empty-sub" data-i18n="empty_kitchen_sub">Orders sent to the kitchen will appear
                       here.</div>
                   </div>
-                  <div class="ocard" data-oid="#33"
-                    onclick="goDetail('33','Tim de Groot','Bergselaan 88||3038 CK Rotterdam','#33','€41.50','Paid','Delivery','4','delivery')">
-                    <div class="ocard-row">
-                      <div class="tcol late">
-                        <svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#c62828" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="0" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#c62828" font-family="Poppins,sans-serif">4</text><text x="24"
-                            y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg>
-                      </div>
-                      <div class="mcol">
-                        <div class="dname">Bergselaan 88</div>
-                        <div class="oc-price">€41.50</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#34"
-                    onclick="goDetail('34','Sophie Bakker','Collection order','#34','€28.00','Paid','Collection','8','delivery')">
-                    <div class="ocard-row">
-                      <div class="tcol">
-                        <svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="25.70" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">8</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg>
-                      </div>
-                      <div class="mcol">
-                        <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                        <div class="oc-price">€28.00</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <!-- DELIVERY -->
@@ -4019,46 +3800,6 @@
                     <div class="tab-empty-title" data-i18n="empty_delivery_title">Nothing out for delivery</div>
                     <div class="tab-empty-sub" data-i18n="empty_delivery_sub">Orders on their way to customers will
                       appear here.</div>
-                  </div>
-                  <div class="ocard" data-oid="#50"
-                    onclick="goDetail('50','Liam de Wit','Persoonshaven 12||3024 RD Rotterdam','#50','€36.90','Paid','Delivery','6','archive',this)">
-                    <div class="ocard-row">
-                      <div class="tcol">
-                        <svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="66.70" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">6</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg>
-                      </div>
-                      <div class="mcol">
-                        <div class="dname">Liam de Wit</div>
-                        <div class="oc-price">€36.90</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ocard" data-oid="#51"
-                    onclick="goDetail('51','Eva Verhoeven','Walenburgerweg 55||3039 AA Rotterdam','#51','€52.20','Cash','Delivery','11','archive',this)">
-                    <div class="ocard-row">
-                      <div class="tcol">
-                        <svg width="96" height="96" viewBox="0 0 48 48">
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2" />
-                          <circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2"
-                            stroke-dasharray="144.51" stroke-dashoffset="105.79" stroke-linecap="round"
-                            transform="rotate(-90 24 24)" /><text x="24" y="24" text-anchor="middle" font-size="12"
-                            font-weight="600" fill="#333" font-family="Poppins,sans-serif">11</text><text x="24" y="35"
-                            text-anchor="middle" font-size="9" font-weight="500" fill="#aaa"
-                            font-family="Poppins,sans-serif">min</text>
-                        </svg>
-                      </div>
-                      <div class="mcol">
-                        <div class="dname">Eva Verhoeven</div>
-                        <div class="oc-price">€52.20</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div><!-- /orders-panes -->
@@ -4352,15 +4093,14 @@
                 style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 16px">
                 <div
                   style="padding:16px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;gap:12px">
-                  <span id="d-detail-name" style="font-size:20px;font-weight:600;color:#111">Thomas Jefferson</span>
+                  <span id="d-detail-name" style="font-size:20px;font-weight:600;color:#111">—</span>
                   <span id="d-customer-type-badge"
-                    style="font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">Nieuwe
-                    klant</span>
+                    style="font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0;color:#2e7d32;background:#e6f4ea">—</span>
                 </div>
                 <div id="d-customer-details"
                   style="display:flex;flex-direction:column;gap:10px;padding-top:18px;padding-bottom:16px">
                   <div id="d-customer-phone" style="display:flex;align-items:center;gap:12px">
-                    <span style="font-size:17px;font-weight:500;color:#111">+31 6 14 52 24 53</span>
+                    <span style="font-size:17px;font-weight:500;color:#111">—</span>
                   </div>
                   <div id="d-customer-addr-block" style="display:none;align-items:flex-start;gap:12px">
                     <svg id="d-addr-icon" width="18" height="18" viewBox="0 0 14 15" fill="none"
@@ -4386,59 +4126,11 @@
                 style="margin:16px 16px 0;border:1.5px solid #f0f0f0;border-radius:16px;padding:0 16px">
                 <div>
                   <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0">
-                    <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">€ 31,00</span>
+                    <span id="d-items-count" style="font-size:20px;font-weight:600;color:#111">€ 0,00</span>
                     <span id="d-pay-badge"
-                      style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">Betaald</span>
+                      style="font-size:12px;font-weight:600;color:#2e7d32;background:#e6f4ea;border-radius:999px;padding:4px 10px;white-space:nowrap;display:inline-flex;align-items:center;flex-shrink:0">—</span>
                   </div>
                   <div id="d-order-summary-body">
-                    <div onclick="onDishClick()" style="padding:18px 0;border-top:1px solid #f0f0f0;cursor:pointer">
-                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                        <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
-                          <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
-                          <div>
-                            <div style="font-size:17px;font-weight:500;color:#111">Margarita</div>
-                            <div style="font-size:15px;color:#111;margin-top:3px">Olijven</div>
-                          </div>
-                        </div>
-                        <div style="font-size:17px;color:#111;flex-shrink:0">€ 10,00</div>
-                      </div>
-                    </div>
-                    <div onclick="onDishClick()" style="padding:18px 0;border-top:1px solid #f0f0f0;cursor:pointer">
-                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                        <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
-                          <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
-                          <div>
-                            <div style="font-size:17px;font-weight:500;color:#111">Pepperoni</div>
-                            <div style="font-size:15px;color:#111;margin-top:3px">Cipolle</div>
-                          </div>
-                        </div>
-                        <div style="font-size:17px;color:#111;flex-shrink:0">€ 10,00</div>
-                      </div>
-                    </div>
-                    <div onclick="onDishClick()" style="padding:18px 0;border-top:1px solid #f0f0f0;cursor:pointer">
-                      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                        <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">
-                          <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">2</span>
-                          <div style="font-size:17px;font-weight:500;color:#111">Coca-Cola 0,5L</div>
-                        </div>
-                        <div style="font-size:17px;color:#111;flex-shrink:0">€ 4,60</div>
-                      </div>
-                    </div>
-                    <!-- Totals -->
-                    <div style="border-top:1px solid #f0f0f0;padding:16px 0 16px">
-                      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-                        <span data-i18n="d_subtotal" style="font-size:18px;color:#111">Subtotaal</span>
-                        <span style="font-size:18px;color:#111">€ 26,50</span>
-                      </div>
-                      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-                        <span data-i18n="d_shipping" style="font-size:18px;color:#111">Bezorging</span>
-                        <span style="font-size:18px;color:#111">€ 4,00</span>
-                      </div>
-                      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
-                        <span data-i18n="d_service" style="font-size:18px;color:#111">Servicekosten</span>
-                        <span style="font-size:18px;color:#111">€ 0,50</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -4579,73 +4271,7 @@
               <div class="tab" onclick="switchTab(this,'arch-7days')" data-i18n="tab_7days">Last 7 days</div>
               <div class="tab" onclick="switchTab(this,'arch-month')" data-i18n="tab_month">This month</div>
             </div>
-            <div class="scroll">
-              <div class="sec-label">Today — 19 Jun 2026</div>
-              <div class="ocard" data-oid="#36"
-                onclick="goDetail('36','3036 SK','Tochtstraat 40','#36','€73.59','Paid','Delivery','0','archive')">
-                <div class="ocard-row">
-                  <div class="tcol">
-                    <div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:45</div>
-                  </div>
-                  <div class="mcol">
-                    <div class="dname">Tochtstraat 40</div>
-                    <div class="oc-price">€73.59</div>
-                    <div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ocard" data-oid="#37"
-                onclick="goDetail('37','Thomas Jefferson','Collection order','#37','€73.59','Paid','Collection','0','archive')">
-                <div class="ocard-row">
-                  <div class="tcol">
-                    <div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">09:20</div>
-                  </div>
-                  <div class="mcol">
-                    <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                    <div class="oc-price">€73.59</div>
-                    <div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ocard" data-oid="#26"
-                onclick="goDetail('26','Sophie de Boer','Lusthofstraat 27A||3062 WB Rotterdam','#26','€73.59','Paid','Delivery','0','archive')">
-                <div class="ocard-row">
-                  <div class="tcol">
-                    <div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:55</div>
-                  </div>
-                  <div class="mcol">
-                    <div class="dname">Lusthofstraat 27A</div>
-                    <div class="oc-price">€73.59</div>
-                    <div class="oc-pay-badge oc-pay-cash" data-i18n="oc_pay_cash">Cash</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ocard" data-oid="#25"
-                onclick="goDetail('25','3035 KH','Zwaanshals 299','#25','€44.00','Paid','Delivery','0','archive')">
-                <div class="ocard-row">
-                  <div class="tcol">
-                    <div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:30</div>
-                  </div>
-                  <div class="mcol">
-                    <div class="dname">Zwaanshals 299</div>
-                    <div class="oc-price">€44.00</div>
-                    <div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div>
-                  </div>
-                </div>
-              </div>
-              <div class="ocard" data-oid="#24"
-                onclick="goDetail('24','Sophie Bakker','Collection order','#24','€28.00','Paid','Collection','0','archive')">
-                <div class="ocard-row">
-                  <div class="tcol">
-                    <div class="tnum" style="font-size:12px;color:#bbb;font-weight:500">08:10</div>
-                  </div>
-                  <div class="mcol">
-                    <div class="dname"><span data-i18n="d_pickup">Afhaal</span></div>
-                    <div class="oc-price">€28.00</div>
-                    <div class="oc-pay-badge oc-pay-paid" data-i18n="oc_pay_paid">Paid</div>
-                  </div>
-                </div>
-              </div>
+            <div class="scroll" id="archive-orders-scroll">
             </div>
           </div><!-- /content-surface -->
           <div class="navbar">
@@ -6333,77 +5959,182 @@
       document.getElementById('p-detail').classList.toggle('scrolled-bottom', atBottom);
     }
 
+    function extractItemAttributes(item) {
+      if (!item) return '';
+      var names = [];
+
+      function pushStr(s) {
+        if (!s) return;
+        if (typeof s === 'string' || typeof s === 'number') {
+          var str = String(s).trim();
+          if (str && str !== 'null' && str !== 'undefined' && names.indexOf(str) === -1) {
+            names.push(str);
+          }
+        }
+      }
+
+      // 1. Dish Option (size, crust, etc.)
+      if (item.dish_option) {
+        var optName = item.dish_option.name || item.dish_option.name_nl || item.dish_option.name_en;
+        pushStr(optName);
+      }
+
+      // 2. Order Dish Details / Ingredients
+      var arrs = [
+        item.order_dish_details,
+        item.dish_ingredients,
+        item.ingredients,
+        item.attribute_items,
+        item.options,
+        item.addons,
+        item.selected_ingredients,
+        item.order_dish_detail
+      ];
+
+      arrs.forEach(function (arr) {
+        if (arr && Array.isArray(arr)) {
+          arr.forEach(function (attr) {
+            if (!attr) return;
+            var ingName = '';
+            if (attr.dish_ingredient && attr.dish_ingredient.ingredient) {
+              ingName = attr.dish_ingredient.ingredient.name || attr.dish_ingredient.ingredient.name_nl || attr.dish_ingredient.ingredient.name_en || '';
+            } else if (attr.dish_ingredient) {
+              ingName = attr.dish_ingredient.name || attr.dish_ingredient.name_nl || attr.dish_ingredient.name_en || '';
+            } else if (attr.ingredient) {
+              ingName = attr.ingredient.name || attr.ingredient.name_nl || attr.ingredient.name_en || '';
+            } else if (attr.dish_option) {
+              ingName = attr.dish_option.name || attr.dish_option.name_nl || attr.dish_option.name_en || '';
+            } else if (attr.attribute_value) {
+              ingName = attr.attribute_value;
+            } else if (attr.attribute_name) {
+              ingName = attr.attribute_name;
+            } else if (attr.name || attr.name_nl || attr.name_en) {
+              ingName = attr.name || attr.name_nl || attr.name_en;
+            }
+            pushStr(ingName);
+          });
+        }
+      });
+
+      // 3. Fallback to note property
+      if (names.length === 0 && item.note) {
+        pushStr(item.note);
+      }
+
+      return names.join(', ');
+    }
+
     function renderLiveOrderDetail(order) {
       var body = document.getElementById('d-order-summary-body');
       if (!body) return;
 
       var items = order.dish_details || order.order_items || [];
       var html = '';
+      var calculatedSubtotal = 0;
 
       items.forEach(function (item) {
-        var qty = item.qty || item.quantity || 1;
-        var name = (item.dish && (item.dish.name || item.dish.name_en || item.dish.name_nl)) || item.product_name || '';
-        var priceVal = parseFloat(item.price || (item.dish && item.dish.price) || 0);
-        var price = (priceVal * qty).toFixed(2);
+        var qty = parseInt(item.qty || item.quantity || 1, 10);
+        var dishObj = item.dish || item.customItem || item;
+        var name = dishObj.name || dishObj.name_en || dishObj.name_nl || item.name || item.product_name || '';
 
-        var attrStrings = [];
-        if (item.attribute_items && item.attribute_items.length > 0) {
-          attrStrings = item.attribute_items.map(function (attr) {
-            return attr.attribute_value;
+        var dishPrice = parseFloat(item.price !== undefined && item.price !== null ? item.price : (dishObj.price || item.dish_price || item.total_price || 0));
+        var paidIngTotal = parseFloat(item.paid_ingredient_total || 0);
+
+        var dishIngredientsTotalAmount = 0;
+        if (item.orderDishPaidIngredients && Array.isArray(item.orderDishPaidIngredients)) {
+          item.orderDishPaidIngredients.forEach(function (ing) {
+            dishIngredientsTotalAmount += parseFloat(ing.price || (ing.dishIngredient && ing.dishIngredient.price) || 0);
           });
-        } else if (item.order_dish_details && item.order_dish_details.length > 0) {
-          attrStrings = item.order_dish_details.map(function (attr) {
-            return attr.attribute_name || attr.name || attr.attribute_value || '';
-          }).filter(Boolean);
         }
-        var attrsText = attrStrings.join(', ');
 
-        html += '<div onclick="onDishClick()" style="padding:18px 0;border-top:1px solid #f0f0f0;cursor:pointer">';
+        var itemPrice = (dishPrice * qty) + paidIngTotal + dishIngredientsTotalAmount;
+
+        calculatedSubtotal += itemPrice;
+        var priceStr = itemPrice.toFixed(2);
+
+        var attrsText = extractItemAttributes(item);
+
+        html += '<div onclick="onDishClick()" style="padding:14px 0;border-top:1px solid #f0f0f0;cursor:pointer">';
         html += '  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">';
-        html += '    <div style="display:flex;align-items:flex-start;gap:20px;flex:1;min-width:0">';
-        html += '      <span style="font-size:17px;font-weight:600;color:#111;flex-shrink:0">' + qty + '</span>';
+        html += '    <div style="display:flex;align-items:flex-start;gap:16px;flex:1;min-width:0">';
+        html += '      <span style="font-size:16px;font-weight:700;color:#111;flex-shrink:0">' + qty + '</span>';
         html += '      <div>';
-        html += '        <div style="font-size:17px;font-weight:500;color:#111">' + name + '</div>';
+        html += '        <div style="font-size:16px;font-weight:600;color:#111">' + name + '</div>';
         if (attrsText) {
-          html += '        <div style="font-size:15px;color:#888;margin-top:3px">' + attrsText + '</div>';
+          html += '        <div style="font-size:14px;color:#888;margin-top:4px">' + attrsText + '</div>';
         }
         html += '      </div>';
         html += '    </div>';
-        html += '    <div style="font-size:17px;color:#111;flex-shrink:0">€ ' + price + '</div>';
+        html += '    <div style="font-size:16px;font-weight:600;color:#111;flex-shrink:0">€ ' + priceStr + '</div>';
         html += '  </div>';
         html += '</div>';
       });
 
-      var totalAmt = parseFloat(order.total_amount || 0);
+      var subtotal = (order.item_total !== undefined && order.item_total !== null && parseFloat(order.item_total) > 0)
+        ? parseFloat(order.item_total)
+        : calculatedSubtotal;
       var deliveryCharge = parseFloat(order.delivery_charge || 0);
       var platformCharge = parseFloat(order.platform_charge || 0);
+      var tipAmt = parseFloat(order.tip || order.tip_amount || 0);
+      var discountAmt = parseFloat(order.coupon_discount || order.auto_discount || order.redeem_discount || 0);
 
-      var subtotal = 0;
-      items.forEach(function (item) {
-        var qty = item.qty || item.quantity || 1;
-        var priceVal = parseFloat(item.price || (item.dish && item.dish.price) || 0);
-        subtotal += priceVal * qty;
-      });
+      var totalAmt = parseFloat(order.total_amount || (subtotal + deliveryCharge + platformCharge + tipAmt - discountAmt));
 
-      html += '<div style="border-top:1px solid #f0f0f0;padding:16px 0 16px">';
-      html += '  <div style="display:flex;justify-content:space-between;margin-bottom:10px">';
-      html += '    <span data-i18n="d_subtotal" style="font-size:18px;color:#111">' + t('d_subtotal') + '</span>';
-      html += '    <span style="font-size:18px;color:#111">€ ' + subtotal.toFixed(2) + '</span>';
+      html += '<div style="border-top:1px solid #f0f0f0;padding:14px 0 14px;margin-top:6px">';
+
+      // Subtotal
+      html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+      html += '    <span data-i18n="d_subtotal">' + t('d_subtotal') + '</span>';
+      html += '    <span>€ ' + subtotal.toFixed(2) + '</span>';
       html += '  </div>';
 
-      if (deliveryCharge > 0) {
-        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:10px">';
-        html += '    <span data-i18n="d_shipping" style="font-size:18px;color:#111">' + t('d_shipping') + '</span>';
-        html += '    <span style="font-size:18px;color:#111">€ ' + deliveryCharge.toFixed(2) + '</span>';
+      // Delivery fee
+      if (deliveryCharge > 0 || order.order_type == '1') {
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span data-i18n="d_shipping">' + t('d_shipping') + '</span>';
+        html += '    <span>€ ' + deliveryCharge.toFixed(2) + '</span>';
         html += '  </div>';
       }
 
+      // Platform / Service charge
       if (platformCharge > 0) {
-        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:16px">';
-        html += '    <span data-i18n="d_service" style="font-size:18px;color:#111">' + t('d_service') + '</span>';
-        html += '    <span style="font-size:18px;color:#111">€ ' + platformCharge.toFixed(2) + '</span>';
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span data-i18n="d_service">' + t('d_service') + '</span>';
+        html += '    <span>€ ' + platformCharge.toFixed(2) + '</span>';
         html += '  </div>';
       }
+
+      // Tip
+      if (tipAmt > 0) {
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span>Tip</span>';
+        html += '    <span>€ ' + tipAmt.toFixed(2) + '</span>';
+        html += '  </div>';
+      }
+
+      // Discount / Reward
+      if (discountAmt > 0) {
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#108043;font-weight:500">';
+        html += '    <span>Reward</span>';
+        html += '    <span>-€ ' + discountAmt.toFixed(2) + '</span>';
+        html += '  </div>';
+      }
+
+      // Total
+      html += '  <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:#111">';
+      html += '    <span>Total</span>';
+      html += '    <span>€ ' + totalAmt.toFixed(2) + '</span>';
+      html += '  </div>';
+
+      // Paid by
+      var isCash = (order.payment_type == '2' || order.payment_status == '0' || order.payment_status === 'cash');
+      var payText = isCash ? 'CASH' : 'PAID';
+      var payIcon = isCash ? '💵' : '💳';
+
+      html += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:15px;color:#555">';
+      html += '    <span>Paid by</span>';
+      html += '    <span style="font-weight:600;color:#111;display:flex;align-items:center;gap:6px"><span>' + payIcon + '</span> ' + payText + '</span>';
+      html += '  </div>';
 
       html += '</div>';
 
@@ -6482,10 +6213,7 @@
         localOrder.note = order.delivery_note || order.save_note || '';
         localOrder.items = items.map(function (it) {
           var nameVal = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.product_name || '';
-          var atts = (it.attribute_items || []).map(function (a) { return a.attribute_value; }).join(', ');
-          if (!atts && it.order_dish_details) {
-            atts = it.order_dish_details.map(function (a) { return a.attribute_name || a.name || a.attribute_value || ''; }).filter(Boolean).join(', ');
-          }
+          var atts = extractItemAttributes(it);
           return {
             qty: it.qty || it.quantity || 1,
             name: nameVal,
@@ -6616,10 +6344,14 @@
       var wished = (id === '26') ? '16:30' : t('otime_asap');
       var wishedEl = document.getElementById('d-wished-inline');
       if (wishedEl) wishedEl.textContent = wished;
-      var minsNum = parseInt(mins);
+      var targetMs = (cardEl && cardEl.dataset.targetTime) ? parseInt(cardEl.dataset.targetTime, 10) : (Date.now() + (parseInt(mins, 10) || 35) * 60000);
+      var currentRemaining = Math.round((targetMs - Date.now()) / 60000);
+      var minsNum = currentRemaining;
+      if (minsNum === 0) minsNum = parseInt(mins, 10) || 35;
       var isLate = minsNum <= 0;
       var isScheduled = minsNum > 90;
-      var color = isLate ? '#c62828' : minsNum <= 15 ? '#f59800' : '#4caf50';
+      var displayMins = Math.abs(minsNum);
+      var color = isLate ? '#c62828' : displayMins <= 15 ? '#f59800' : '#4caf50';
       var deliveryEl = document.getElementById('settings-delivery-mins');
       var takeawayEl = document.getElementById('settings-takeaway-mins');
       var prepTime = parseInt((deliveryEl || takeawayEl || { textContent: '45' }).textContent, 10) || 45;
@@ -6628,15 +6360,15 @@
       var lbl = document.getElementById('d-timer-label');
       if (isScheduled) {
         if (ring) { ring.setAttribute('stroke', '#e0e0e0'); ring.setAttribute('stroke-dashoffset', '144.51'); }
-        var hrs = Math.round(minsNum / 60);
+        var hrs = Math.round(displayMins / 60);
         var lbl2 = hrs >= 24 ? Math.round(hrs / 24) + 'd' : hrs + 'h';
         if (num) { num.setAttribute('fill', '#aaa'); num.setAttribute('font-size', '13'); num.setAttribute('y', '27'); num.textContent = lbl2; }
         if (lbl) lbl.textContent = '';
       } else {
-        var offset = minsNum >= prepTime ? 144.51 : Math.max(0, Math.min(144.51, (minsNum / prepTime) * 144.51));
+        var offset = displayMins >= prepTime ? 144.51 : Math.max(0, Math.min(144.51, (displayMins / prepTime) * 144.51));
         if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
         var textColor = isLate ? '#c62828' : '#333';
-        if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '24'); num.textContent = isLate ? Math.abs(minsNum) : minsNum; }
+        if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '24'); num.textContent = displayMins; }
         if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); }
       }
       var orderTypeVal = '1';
@@ -6732,22 +6464,40 @@
         note: hasNote ? noteText.textContent : ''
       }));
 
-      // Fetch live order detail data passing order_id parameter
-      API.getOrders({ order_id: id })
+      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]);
+      if (cachedOrder) {
+        renderLiveOrderDetail(cachedOrder);
+      }
+
+      // Fetch live order detail data calling API.getOrders passing order_id parameter
+      var fetchDetailsPromise = (typeof API !== 'undefined' && API.getOrders)
+        ? API.getOrders({ order_id: id })
+        : Promise.resolve(null);
+
+      fetchDetailsPromise
         .then(function (responseData) {
           if (responseData) updateTodayOrdersCount(responseData);
           var singleOrder = null;
-          if (responseData && Array.isArray(responseData.data) && responseData.data[0]) {
-            singleOrder = responseData.data[0];
-          } else if (responseData && responseData.data && !Array.isArray(responseData.data)) {
-            singleOrder = responseData.data;
+          if (responseData && responseData.data) {
+            if (Array.isArray(responseData.data)) {
+              singleOrder = responseData.data[0];
+            } else {
+              singleOrder = responseData.data;
+            }
+          } else if (responseData && responseData.order) {
+            singleOrder = responseData.order;
           }
           if (singleOrder) {
             renderLiveOrderDetail(singleOrder);
           }
         })
         .catch(function (err) {
-          console.error("Failed to load order details:", err);
+          API.getOrders({ order_id: id })
+            .then(function (responseData) {
+              var singleOrder = (responseData && Array.isArray(responseData.data)) ? responseData.data[0] : (responseData ? responseData.data : null);
+              if (singleOrder) renderLiveOrderDetail(singleOrder);
+            })
+            .catch(function (e) { console.error("Failed to load order details:", e); });
         });
     }
 
@@ -6856,14 +6606,7 @@
           var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
           var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
           var itemTotalStr = eur(priceVal * qty);
-          var subText = '';
-          if (it.note) {
-            subText = String(it.note).replace(/\n/g, ', ');
-          } else if (it.attribute_items && it.attribute_items.length > 0) {
-            subText = it.attribute_items.map(function (a) { return a.attribute_value; }).join(', ');
-          } else if (it.order_dish_details && it.order_dish_details.length > 0) {
-            subText = it.order_dish_details.map(function (a) { return a.attribute_name || a.name || a.attribute_value || ''; }).filter(Boolean).join(', ');
-          }
+          var subText = extractItemAttributes(it);
           c.push({ t: 'cols', left: qty + '  ' + name, right: itemTotalStr, wl: 22, wr: 10 });
           if (subText) {
             c.push({ t: 'text', v: '   ' + subText + '\n' });
@@ -6982,14 +6725,7 @@
             var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
             var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
             var itemTotal = (priceVal * qty).toFixed(2);
-            var subText = '';
-            if (it.note) {
-              subText = String(it.note).replace(/\n/g, '<br>');
-            } else if (it.attribute_items && it.attribute_items.length > 0) {
-              subText = it.attribute_items.map(function (a) { return a.attribute_value; }).join('<br>');
-            } else if (it.order_dish_details && it.order_dish_details.length > 0) {
-              subText = it.order_dish_details.map(function (a) { return a.attribute_name || a.name || a.attribute_value || ''; }).filter(Boolean).join('<br>');
-            }
+            var subText = extractItemAttributes(it).replace(/, /g, '<br>');
             return '<div class="r-item">'
               + '<span class="r-item-qty">' + qty + '</span>'
               + '<div style="flex:1;min-width:0">'
@@ -7381,15 +7117,7 @@
     }
 
     // ===== Product picker =====
-    var PP_PRODUCTS = [
-      { id: 'margharita', name: 'Margharita', price: 16.99, status: 'Actief' },
-      {
-        id: 'salami', name: 'Pizza salami', status: 'Actief', variants: [
-          { id: 'salami-klein', name: 'Klein', price: 19.99 },
-          { id: 'salami-groot', name: 'Groot', price: 19.99 }
-        ]
-      }
-    ];
+    var PP_PRODUCTS = [];
     var ppSelected = {}; // id -> {name, price, qty}
 
     function openProductPicker() {
@@ -8168,6 +7896,8 @@
             el.appendChild(span);
           });
         });
+        // Check tab empty states on initial load
+        if (typeof checkEmptyStates === 'function') checkEmptyStates();
       });
     })();
 
@@ -8198,11 +7928,7 @@
         row.style.display = visible ? '' : 'none';
       });
     }
-    var menuData = {
-      'Burgers': ['Burger Deluxe', 'Classic Burger', 'Veggie Burger'],
-      'Sides': ['Fries Large', 'Side Salad'],
-      'Dranken': ['Cola', 'Bier']
-    };
+    var menuData = {};
     var menuState = {};
 
     window._apiCategoriesMap = {};
@@ -8237,6 +7963,18 @@
 
             if (categories && categories.length > 0) {
               window._apiCategoriesMap = {};
+              PP_PRODUCTS = [];
+              categories.forEach(function (catObj) {
+                var items = (catObj && typeof catObj === 'object' && Array.isArray(catObj.items || catObj.products || catObj.dish || catObj.dishes_details))
+                  ? (catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
+                  : [];
+                items.forEach(function (it) {
+                  var pId = typeof it === 'string' ? it : (it.id || it.dish_id || it.product_id);
+                  var pName = typeof it === 'string' ? it : (it.name || it.name_en || it.name_nl || it.product_name || it.title || 'Product');
+                  var pPrice = (it && typeof it === 'object' && (it.price || it.amount || it.total)) ? parseFloat(it.price || it.amount || it.total) : 0;
+                  PP_PRODUCTS.push({ id: pId || pName, name: pName, price: pPrice, status: 'Actief' });
+                });
+              });
               scroll.innerHTML = categories.map(function (catObj) {
                 var catName = typeof catObj === 'string' ? catObj : (catObj.name || catObj.category_name || catObj.cat_name || catObj.name_en || catObj.name_nl || catObj.title || catObj.category || 'Category');
                 window._apiCategoriesMap[catName] = catObj;
@@ -8718,8 +8456,9 @@
         var tcol = card.querySelector('.tcol');
         var numEl = tcol ? tcol.querySelector('text') : null;
         if (!tcol || !numEl) return;
-        var displayed = parseInt(numEl.textContent, 10) || 0;
+        var displayed = parseInt(numEl.textContent, 10) || 35;
         var signed = tcol.classList.contains('late') ? -displayed : displayed;
+        if (signed === 0) signed = 35;
         card.dataset.targetTime = String(Date.now() + signed * 60000);
       });
     }
@@ -8727,9 +8466,9 @@
     function refreshLiveTimers() {
       initLiveTimers();
       ['t-new', 't-kitchen', 't-delivery'].forEach(function (listId) {
-        var list = document.getElementById(listId);
-        if (!list) return;
-        var cards = Array.prototype.slice.call(list.querySelectorAll('.ocard'));
+        var container = document.getElementById(listId);
+        if (!container) return;
+        var cards = Array.prototype.slice.call(container.querySelectorAll('.ocard'));
         cards.forEach(function (card) {
           if (!card.dataset.targetTime) return;
           var remainingMs = parseInt(card.dataset.targetTime, 10) - Date.now();
@@ -8737,7 +8476,6 @@
           var remainingExact = remainingMs / 60000;
           var autoArchiveEl = document.getElementById('settings-auto-archive-mins');
           var autoArchiveMins = parseInt((autoArchiveEl || { textContent: '90' }).textContent, 10) || 90;
-          // Keep active tab orders visible on screen even if elapsed time exceeds autoArchiveMins
           var tcol = card.querySelector('.tcol');
           var ring = card.querySelector('.tcol circle:nth-of-type(2)');
           var numEl = tcol ? tcol.querySelector('text') : null;
@@ -8751,7 +8489,7 @@
               whenEl.className = 'oc-when oc-when-scheduled';
               whenEl.removeAttribute('data-i18n');
               var st = new Date(card.dataset.targetTime ? parseInt(card.dataset.targetTime, 10) : Date.now());
-              st.setMinutes(Math.round(st.getMinutes() / 15) * 15, 0, 0); // 15-minute slots
+              st.setMinutes(Math.round(st.getMinutes() / 15) * 15, 0, 0);
               var pad2 = function (n) { return String(n).padStart(2, '0'); };
               var timeStr = pad2(st.getHours()) + ':' + pad2(st.getMinutes());
               var nowD = new Date();
@@ -8779,7 +8517,6 @@
             var textColor = isLate ? '#c62828' : '#333';
             var offset;
             if (isLate) {
-              // Progress bar towards auto-archiving: fills up as the order gets closer to autoArchiveMins late.
               var lateProgress = Math.max(0, Math.min(1, (-remainingExact) / autoArchiveMins));
               offset = Math.max(6, 144.51 * (1 - lateProgress));
             } else {
@@ -8792,17 +8529,13 @@
             ring.setAttribute('stroke', color);
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
-            var displayVal = remaining;
-            if (isLate) {
-              var lateMins = Math.abs(remaining);
-              displayVal = lateMins > 180 ? 35 : lateMins;
-            }
+            var displayVal = isLate ? Math.abs(remaining) : remaining;
             numEl.textContent = displayVal;
             if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
             tcol.classList.remove('late', 'urgent');
+            if (isLate) tcol.classList.add('late');
+            else if (remaining <= 15) tcol.classList.add('urgent');
           }
-          if (isLate) tcol.classList.add('late');
-          else if (remaining <= 15) tcol.classList.add('urgent');
         });
       });
     }
@@ -9145,6 +8878,144 @@
       goDetail(id, name, fullAddr, '#' + id, '€' + price, pay, type, mins, 'kitchen', card);
     }
 
+    function fetchAndShowNewOrderDetails(orderId) {
+      if (typeof API !== 'undefined' && API.getNewOrderDetails) {
+        API.getNewOrderDetails(orderId)
+          .then(function (responseData) {
+            console.log('getNewOrderDetails API success:', responseData);
+            var order = (responseData && responseData.data) ? responseData.data : responseData;
+            if (order && (order.id || order.order_id)) {
+              displayNewOrderPopup(order, responseData);
+            } else {
+              triggerNewOrder();
+            }
+          })
+          .catch(function (err) {
+            console.error('getNewOrderDetails API error:', err);
+            triggerNewOrder();
+          });
+      } else {
+        triggerNewOrder();
+      }
+    }
+
+    function displayNewOrderPopup(order, responseData) {
+      var id = String(order.id || order.order_id || '0');
+      var orderNo = order.order_number || ('#' + id);
+      var userDet = order.order_user_details || {};
+      var userObj = order.user || {};
+
+      var name = userDet.order_name || userObj.full_name || order.customer_name || 'Customer';
+      var street = userDet.street_name || order.street_name || '';
+      var house = userDet.house_no || order.house_no || '';
+      var city = userDet.city || order.city || '';
+      var zipcode = userDet.zipcode || order.zipcode || '';
+
+      var isCollection = (order.order_type == '2' || order.order_type === 2 || (responseData && responseData.order_type_text === 'Collection'));
+      var type = isCollection ? 'Collection' : 'Delivery';
+
+      var streetAndHouse = (street + ' ' + house).trim();
+      var fullAddr = isCollection ? 'Collection order' : (streetAndHouse + (zipcode || city ? '||' + (zipcode + ' ' + city).trim() : ''));
+      var pay = (order.payment_status == '1' || order.payment_status === 'paid' || (responseData && responseData.payment_type_text === 'Card')) ? 'Paid' : 'Cash';
+      var price = parseFloat(order.total_amount || order.item_total || 0).toFixed(2);
+
+      var settingsId = isCollection ? 'settings-takeaway-mins' : 'settings-delivery-mins';
+      var settingsEl = document.getElementById(settingsId);
+      var mins = settingsEl ? (parseInt(settingsEl.textContent, 10) || 35) : 35;
+      var title = isCollection ? t('d_pickup') : (streetAndHouse || name);
+
+      var list = document.getElementById('t-new');
+      var existingCard = list ? list.querySelector('.ocard[data-oid="#' + id + '"]') : null;
+
+      var card = existingCard;
+      if (!card) {
+        card = document.createElement('div');
+        card.className = 'ocard';
+        card.setAttribute('data-oid', '#' + id);
+        card.setAttribute('data-total-mins', String(mins));
+        card.setAttribute('data-target-time', String(Date.now() + mins * 60000));
+        card.setAttribute('data-new-order', '1');
+        card.setAttribute('data-order-type', isCollection ? '2' : '1');
+        card.setAttribute('data-dname', isCollection ? t('d_pickup') : title);
+        card.setAttribute('data-price-str', t('otime_asap'));
+        card.setAttribute('onclick', "goDetail('" + id + "','" + name + "','" + fullAddr + "','#" + id + "','€" + price + "','" + pay + "','" + type + "','" + mins + "','kitchen',this)");
+        card.innerHTML =
+          '<div class="ocard-row">' +
+          '<div class="mcol">' +
+          '<div class="dname">' + title + '</div>' +
+          '<div class="oc-price">' + t('otime_asap') + '</div>' +
+          '</div>' +
+          '<div class="oc-accept-frame">' +
+          '<button type="button" class="oc-accept-btn" onclick="acceptNewCard(this,event)">' + t('accept_label') + '</button>' +
+          '</div>' +
+          '</div>';
+        if (list) list.insertBefore(card, list.firstChild);
+      } else {
+        card.setAttribute('data-new-order', '1');
+      }
+
+      renderOrderCard(card);
+      adjustTabCount('new', 1);
+
+      document.querySelectorAll('.ni-wrap .reddot').forEach(function (dot) {
+        var cnt = parseInt(dot.textContent || '0', 10) + 1;
+        dot.textContent = String(cnt);
+        dot.style.display = cnt > 0 ? 'flex' : 'none';
+        dot.classList.remove('bump');
+        void dot.offsetWidth;
+        dot.classList.add('bump');
+        dot.addEventListener('animationend', function () { dot.classList.remove('bump'); }, { once: true });
+      });
+
+      // Play selected notification sound with preset & volume settings
+      playBeep();
+      if (card._tickInterval) clearInterval(card._tickInterval);
+      card._tickInterval = setInterval(playBeep, 2500);
+      card._acceptSecondsLeft = 60;
+      if (card._acceptInterval) clearInterval(card._acceptInterval);
+      card._acceptInterval = setInterval(function () {
+        card._acceptSecondsLeft--;
+        if (card._acceptSecondsLeft <= 0) {
+          clearInterval(card._acceptInterval);
+          clearInterval(card._tickInterval);
+        }
+      }, 1000);
+
+      var scrollEl = list ? list.closest('.scroll') : null;
+      if (scrollEl) scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+
+      goPage('orders');
+      // Open the new order detail popup instantly
+      goDetail(id, name, fullAddr, '#' + id, '€' + price, pay, type, mins, 'kitchen', card);
+    }
+
+    // Window global listeners for Socket & Android Native Bridge
+    window.onNewOrderReceived = function (orderId) {
+      fetchAndShowNewOrderDetails(orderId);
+    };
+    window.handleSocketNewOrder = function (data) {
+      var orderId = (typeof data === 'object' && data !== null) ? (data.order_id || data.id) : data;
+      fetchAndShowNewOrderDetails(orderId);
+    };
+
+    function initOrderSocket() {
+      if (typeof io !== 'undefined') {
+        try {
+          var socket = io('https://opiningstore.com/web-socket', {
+            transports: ['websocket', 'polling']
+          });
+          socket.on('sendNotificationToAdmin', function (data) {
+            console.log('Socket event sendNotificationToAdmin received:', data);
+            var orderId = (typeof data === 'object' && data !== null) ? (data.order_id || data.id) : data;
+            fetchAndShowNewOrderDetails(orderId);
+          });
+        } catch (e) {
+          console.warn('Socket connection error:', e);
+        }
+      }
+    }
+    setTimeout(initOrderSocket, 1000);
+
     var toastOrderCard = null;
     function showOrderToast(card) {
       toastOrderCard = card;
@@ -9249,6 +9120,8 @@
     }
 
     function createOrderCardElement(order) {
+      window._liveOrdersMap = window._liveOrdersMap || {};
+      window._liveOrdersMap[order.id] = order;
       var id = order.id;
       var name = (order.order_user_details && order.order_user_details.order_name) || '';
       var street = (order.order_user_details && order.order_user_details.street_name) || '';
@@ -9363,6 +9236,7 @@
       }
 
       var orderTypeVal = String(order.order_type !== undefined && order.order_type !== null ? order.order_type : (isCollection ? '2' : '1'));
+      card._rawOrderData = order;
       card.setAttribute('data-order-type', orderTypeVal);
       card.setAttribute('onclick', "goDetail('" + id + "','" + name + "','" + address + "','#" + id + "','€" + price + "','" + pay + "','" + deliveryType + "','" + mins + "','" + nextTab + "',this)");
 

@@ -23,7 +23,7 @@ import javax.net.ssl.SSLSession;
 public class ApiClient {
 
     private static final String TAG = "ApiClient";
-    private static final String BASE_URL = "https://admin.dryfftjwieiwjw.online";
+    private static final String BASE_URL = "https://admin.opiningstore.com";
     
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -670,6 +670,135 @@ public class ApiClient {
 
                 } catch (final Exception e) {
                     Log.e(TAG, "changeDishStatus network exception", e);
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callback != null) callback.onError(e);
+                        }
+                    });
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Fetch new order details.
+     * Endpoint: /api/v1/getNewOrderDetails
+     */
+    public void getNewOrderDetails(final String orderId, final String token, final ApiCallback callback) {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection urlConnection = null;
+                try {
+                    URL url = new URL(BASE_URL + "/api/v1/getNewOrderDetails");
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    if (urlConnection instanceof HttpsURLConnection) {
+                        ((HttpsURLConnection) urlConnection).setHostnameVerifier(new HostnameVerifier() {
+                            @Override
+                            public boolean verify(String hostname, SSLSession session) {
+                                return true;
+                            }
+                        });
+                    }
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    if (token != null && !token.isEmpty()) {
+                        urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+                    }
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setConnectTimeout(10000);
+                    urlConnection.setReadTimeout(10000);
+
+                    String safeId = orderId != null ? orderId : "";
+                    String postData = "order_id=" + URLEncoder.encode(safeId, "UTF-8");
+                    byte[] input = postData.getBytes(StandardCharsets.UTF_8);
+
+                    try (OutputStream os = urlConnection.getOutputStream()) {
+                        os.write(input, 0, input.length);
+                    }
+
+                    int responseCode = urlConnection.getResponseCode();
+                    BufferedReader br;
+                    if (responseCode >= 200 && responseCode < 300) {
+                        br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
+                    } else {
+                        br = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), StandardCharsets.UTF_8));
+                    }
+
+                    StringBuilder response = new StringBuilder();
+                    String responseLine;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+
+                    final String responseString = response.toString();
+                    Log.d(TAG, "getNewOrderDetails Response Code: " + responseCode + ", Response: " + responseString);
+
+                    if (responseCode >= 200 && responseCode < 300) {
+                        final JSONObject responseJson = new JSONObject(responseString);
+                        boolean isSuccess = true;
+                        String apiMessage = "Failed to fetch new order details";
+
+                        if (responseJson.has("status")) {
+                            Object statusObj = responseJson.get("status");
+                            if (statusObj instanceof String) {
+                                if ("0".equals(statusObj)) isSuccess = false;
+                            } else if (statusObj instanceof Number) {
+                                if (((Number) statusObj).intValue() == 0) isSuccess = false;
+                            } else if (statusObj instanceof Boolean) {
+                                if (!((Boolean) statusObj)) isSuccess = false;
+                            }
+                        }
+
+                        if (responseJson.has("message")) {
+                            apiMessage = responseJson.getString("message");
+                        }
+
+                        final boolean finalSuccess = isSuccess;
+                        final String finalMessage = apiMessage;
+
+                        if (finalSuccess) {
+                            mainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (callback != null) callback.onSuccess(responseJson);
+                                }
+                            });
+                        } else {
+                            final Exception error = new Exception(finalMessage);
+                            mainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (callback != null) callback.onError(error);
+                                }
+                            });
+                        }
+                    } else {
+                        String errorMessage = "Request failed with status code: " + responseCode;
+                        try {
+                            JSONObject errJson = new JSONObject(responseString);
+                            if (errJson.has("message")) {
+                                errorMessage = errJson.getString("message");
+                            }
+                        } catch (Exception ignored) {}
+
+                        final Exception error = new Exception(errorMessage);
+                        mainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (callback != null) callback.onError(error);
+                            }
+                        });
+                    }
+
+                } catch (final Exception e) {
+                    Log.e(TAG, "getNewOrderDetails network exception", e);
                     mainHandler.post(new Runnable() {
                         @Override
                         public void run() {

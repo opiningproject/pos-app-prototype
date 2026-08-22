@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://admin.dryfftjwieiwjw.online';
+const API_BASE_URL = 'https://admin.opiningstore.com';
 
 const OrderStatus = Object.freeze({
   Accepted: '1',
@@ -112,6 +112,55 @@ const API = {
       return responseData;
     } catch (error) {
       console.error('API getOrders error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Fetch new order details from the server.
+   * Endpoint: /api/v1/getNewOrderDetails
+   * @param {string|number} [orderId] - Optional order ID
+   * @returns {Promise<Object>} The new order details response data
+   */
+  async getNewOrderDetails(orderId) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const body = new URLSearchParams();
+      if (orderId !== undefined && orderId !== null) {
+        body.append('order_id', String(orderId));
+      }
+      const response = await fetch(`${API_BASE_URL}/api/v1/getNewOrderDetails`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (handleTokenExpiration(responseData, response.status)) {
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (!response.ok) {
+        throw new Error(responseData.message || `Failed to fetch new order details (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to fetch new order details');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API getNewOrderDetails error:', error);
       throw error;
     }
   },
