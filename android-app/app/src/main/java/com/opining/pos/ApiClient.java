@@ -24,6 +24,7 @@ public class ApiClient {
 
     private static final String TAG = "ApiClient";
     private static final String BASE_URL = "https://admin.opiningstore.com";
+    private static final String DEFAULT_TIMEZONE = "Europe/Amsterdam";
     
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -61,7 +62,8 @@ public class ApiClient {
 
                     // Build form-urlencoded request body matching api.js
                     String postData = "email=" + URLEncoder.encode(email != null ? email : "", "UTF-8")
-                            + "&password=" + URLEncoder.encode(password != null ? password : "", "UTF-8");
+                            + "&password=" + URLEncoder.encode(password != null ? password : "", "UTF-8")
+                            + "&timezone=" + URLEncoder.encode(DEFAULT_TIMEZONE, "UTF-8");
                     byte[] input = postData.getBytes(StandardCharsets.UTF_8);
 
                     // Write output stream
@@ -197,7 +199,8 @@ public class ApiClient {
                     String safeStatus = orderStatus != null ? orderStatus : "";
                     String postData = "id=" + URLEncoder.encode(safeId, "UTF-8")
                             + "&order_id=" + URLEncoder.encode(safeId, "UTF-8")
-                            + "&order_status=" + URLEncoder.encode(safeStatus, "UTF-8");
+                            + "&order_status=" + URLEncoder.encode(safeStatus, "UTF-8")
+                            + "&timezone=" + URLEncoder.encode(DEFAULT_TIMEZONE, "UTF-8");
                     byte[] input = postData.getBytes(StandardCharsets.UTF_8);
 
                     try (OutputStream os = urlConnection.getOutputStream()) {
@@ -331,7 +334,8 @@ public class ApiClient {
                     String postData = "id=" + URLEncoder.encode(safeId, "UTF-8")
                             + "&order_id=" + URLEncoder.encode(safeId, "UTF-8")
                             + "&status=" + URLEncoder.encode(safeStatus, "UTF-8")
-                            + "&order_status=" + URLEncoder.encode(safeStatus, "UTF-8");
+                            + "&order_status=" + URLEncoder.encode(safeStatus, "UTF-8")
+                            + "&timezone=" + URLEncoder.encode(DEFAULT_TIMEZONE, "UTF-8");
                     byte[] input = postData.getBytes(StandardCharsets.UTF_8);
 
                     try (OutputStream os = urlConnection.getOutputStream()) {
@@ -587,7 +591,8 @@ public class ApiClient {
                     String safeStatus = String.valueOf(status);
                     String postData = "status=" + URLEncoder.encode(safeStatus, "UTF-8")
                             + "&dish_id=" + URLEncoder.encode(safeDishId, "UTF-8")
-                            + "&id=" + URLEncoder.encode(safeDishId, "UTF-8");
+                            + "&id=" + URLEncoder.encode(safeDishId, "UTF-8")
+                            + "&timezone=" + URLEncoder.encode(DEFAULT_TIMEZONE, "UTF-8");
                     byte[] input = postData.getBytes(StandardCharsets.UTF_8);
 
                     try (OutputStream os = urlConnection.getOutputStream()) {
@@ -716,7 +721,8 @@ public class ApiClient {
                     urlConnection.setReadTimeout(10000);
 
                     String safeId = orderId != null ? orderId : "";
-                    String postData = "order_id=" + URLEncoder.encode(safeId, "UTF-8");
+                    String postData = "order_id=" + URLEncoder.encode(safeId, "UTF-8")
+                            + "&timezone=" + URLEncoder.encode(DEFAULT_TIMEZONE, "UTF-8");
                     byte[] input = postData.getBytes(StandardCharsets.UTF_8);
 
                     try (OutputStream os = urlConnection.getOutputStream()) {

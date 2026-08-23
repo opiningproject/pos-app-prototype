@@ -8435,7 +8435,7 @@
       }, 1000);
       if (withSound) {
         playBeep();
-        btn._tickInterval = setInterval(playBeep, 2500);
+        btn._tickInterval = setInterval(playBeep, 2000);
       }
     }
 
@@ -8862,7 +8862,7 @@
         dot.addEventListener('animationend', function () { dot.classList.remove('bump'); }, { once: true });
       });
       playBeep();
-      card._tickInterval = setInterval(playBeep, 2500);
+      card._tickInterval = setInterval(playBeep, 2000);
       card._acceptSecondsLeft = 60;
       card._acceptInterval = setInterval(function () {
         card._acceptSecondsLeft--;
@@ -8970,7 +8970,7 @@
       // Play selected notification sound with preset & volume settings
       playBeep();
       if (card._tickInterval) clearInterval(card._tickInterval);
-      card._tickInterval = setInterval(playBeep, 2500);
+      card._tickInterval = setInterval(playBeep, 2000);
       card._acceptSecondsLeft = 60;
       if (card._acceptInterval) clearInterval(card._acceptInterval);
       card._acceptInterval = setInterval(function () {
@@ -8990,29 +8990,102 @@
     }
 
     // Window global listeners for Socket & Android Native Bridge
+    window._knownNewOrderIds = window._knownNewOrderIds || {};
+    var _isInitialLoadDone = false;
+
+    function handleIncomingNewOrderId(orderId) {
+      if (!orderId) return;
+      var sid = String(orderId);
+      if (window._knownNewOrderIds[sid]) return;
+      window._knownNewOrderIds[sid] = true;
+      if (_isInitialLoadDone) {
+        fetchAndShowNewOrderDetails(sid);
+      }
+    }
+
     window.onNewOrderReceived = function (orderId) {
-      fetchAndShowNewOrderDetails(orderId);
+      handleIncomingNewOrderId(orderId);
     };
     window.handleSocketNewOrder = function (data) {
       var orderId = (typeof data === 'object' && data !== null) ? (data.order_id || data.id) : data;
-      fetchAndShowNewOrderDetails(orderId);
+      handleIncomingNewOrderId(orderId);
     };
 
-    function initOrderSocket() {
-      if (typeof io !== 'undefined') {
-        try {
-          var socket = io('https://opiningstore.com/web-socket', {
-            transports: ['websocket', 'polling']
+    function checkRealtimeOrders() {
+      if (typeof API === 'undefined' || !API.getOrders) return;
+      var token = localStorage.getItem('auth_token');
+      if (!token) return;
+
+      API.getOrders({ status: 'new' })
+        .then(function (data) {
+          var orders = [];
+          if (data && Array.isArray(data.data)) orders = data.data;
+          else if (data && Array.isArray(data.orders)) orders = data.orders;
+          else if (Array.isArray(data)) orders = data;
+
+          orders.forEach(function (order) {
+            var oid = String(order.id || order.order_id || '');
+            if (!oid) return;
+            var st = String(order.order_status !== undefined && order.order_status !== null ? order.order_status : (order.status !== undefined && order.status !== null ? order.status : '1'));
+            if (st === '1') {
+              if (!window._knownNewOrderIds[oid]) {
+                if (_isInitialLoadDone) {
+                  window._knownNewOrderIds[oid] = true;
+                  fetchAndShowNewOrderDetails(oid);
+                } else {
+                  window._knownNewOrderIds[oid] = true;
+                }
+              }
+            }
           });
-          socket.on('sendNotificationToAdmin', function (data) {
-            console.log('Socket event sendNotificationToAdmin received:', data);
-            var orderId = (typeof data === 'object' && data !== null) ? (data.order_id || data.id) : data;
-            fetchAndShowNewOrderDetails(orderId);
+          _isInitialLoadDone = true;
+        })
+        .catch(function (err) {
+          console.warn('Realtime order check error:', err);
+        });
+    }
+
+    // Run realtime polling check every 6 seconds as background heartbeat fallback
+    setInterval(checkRealtimeOrders, 6000);
+    setTimeout(checkRealtimeOrders, 2000);
+
+    function initOrderSocket() {
+      if (typeof io === 'undefined') return;
+      var socketEndpoints = [
+        'https://admin.opiningstore.com',
+        'https://opiningstore.com/web-socket',
+        'https://admin.opiningstore.com/web-socket',
+        'https://admin.dryfftjwieiwjw.online',
+        'https://dryfftjwieiwjw.online/web-socket',
+        'https://admin.dryfftjwieiwjw.online/web-socket'
+      ];
+      var socketEvents = [
+        'sendNotificationToAdmin',
+        'newOrder',
+        'new_order',
+        'orderCreated',
+        'order_created',
+        'notification',
+        'order'
+      ];
+
+      socketEndpoints.forEach(function (endpoint) {
+        try {
+          var socket = io(endpoint, {
+            transports: ['websocket', 'polling'],
+            reconnectionAttempts: 10
+          });
+          socketEvents.forEach(function (evtName) {
+            socket.on(evtName, function (data) {
+              console.log('Socket event ' + evtName + ' received from ' + endpoint + ':', data);
+              var orderId = (typeof data === 'object' && data !== null) ? (data.order_id || data.id) : data;
+              handleIncomingNewOrderId(orderId);
+            });
           });
         } catch (e) {
-          console.warn('Socket connection error:', e);
+          console.warn('Socket connection error for ' + endpoint + ':', e);
         }
-      }
+      });
     }
     setTimeout(initOrderSocket, 1000);
 

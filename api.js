@@ -1,4 +1,5 @@
 const API_BASE_URL = 'https://admin.opiningstore.com';
+const DEFAULT_TIMEZONE = 'Europe/Amsterdam';
 
 const OrderStatus = Object.freeze({
   Accepted: '1',
@@ -32,13 +33,16 @@ function handleTokenExpiration(responseData, httpStatus) {
 }
 
 const API = {
+  DEFAULT_TIMEZONE: DEFAULT_TIMEZONE,
+
   /**
    * Log in user with credentials.
    * @param {string} email
    * @param {string} password
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The login response data
    */
-  async login(email, password) {
+  async login(email, password, params = {}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/login`, {
         method: 'POST',
@@ -46,7 +50,11 @@ const API = {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json'
         },
-        body: new URLSearchParams({ email, password })
+        body: new URLSearchParams({
+          email,
+          password,
+          timezone: (params && params.timezone) || DEFAULT_TIMEZONE
+        })
       });
 
       const data = await response.json().catch(() => ({}));
@@ -86,6 +94,8 @@ const API = {
       if (params.order_id) {
         body.append('order_id', params.order_id);
       }
+      body.append('timezone', params.timezone || DEFAULT_TIMEZONE);
+
       const response = await fetch(`${API_BASE_URL}/api/v1/getOrders`, {
         method: 'POST',
         headers: {
@@ -120,9 +130,10 @@ const API = {
    * Fetch new order details from the server.
    * Endpoint: /api/v1/getNewOrderDetails
    * @param {string|number} [orderId] - Optional order ID
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The new order details response data
    */
-  async getNewOrderDetails(orderId) {
+  async getNewOrderDetails(orderId, params = {}) {
     try {
       const token = localStorage.getItem('auth_token');
       const headers = {
@@ -135,6 +146,8 @@ const API = {
       if (orderId !== undefined && orderId !== null) {
         body.append('order_id', String(orderId));
       }
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+
       const response = await fetch(`${API_BASE_URL}/api/v1/getNewOrderDetails`, {
         method: 'POST',
         headers: {
@@ -183,6 +196,8 @@ const API = {
       if (params.type) {
         body.append('type', params.type);
       }
+      body.append('timezone', params.timezone || DEFAULT_TIMEZONE);
+
       const response = await fetch(`${API_BASE_URL}/api/v1/getSummary`, {
         method: 'POST',
         headers: {
@@ -222,9 +237,10 @@ const API = {
    * Change order status.
    * @param {string|number|Object} orderId - Order ID or object containing order_id and order_status
    * @param {string|number} [orderStatus] - Order status value (e.g. '2' for InKitchen, '6' for Delivered)
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The API response data
    */
-  async changeOrderStatus(orderId, orderStatus) {
+  async changeOrderStatus(orderId, orderStatus, params = {}) {
     try {
       let id = orderId;
       let status = orderStatus;
@@ -247,6 +263,8 @@ const API = {
       if (status !== undefined && status !== null) {
         body.append('order_status', status);
       }
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+
       const response = await fetch(`${API_BASE_URL}/api/v1/changeOrderStatus`, {
         method: 'POST',
         headers: {
@@ -281,9 +299,10 @@ const API = {
    * Cancel an order.
    * @param {string|number|Object} orderId - Order ID or object with parameters
    * @param {string|number} [status='7'] - Cancelled status (default '7')
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The API response data
    */
-  async cancelOrder(orderId, status = '7') {
+  async cancelOrder(orderId, status = '7', params = {}) {
     try {
       let id = orderId;
       let orderStatus = status;
@@ -306,6 +325,7 @@ const API = {
       const finalStatus = String(orderStatus !== undefined && orderStatus !== null ? orderStatus : '7');
       body.append('status', finalStatus);
       body.append('order_status', finalStatus);
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
 
       const response = await fetch(`${API_BASE_URL}/api/v1/cancelOrder`, {
         method: 'POST',
@@ -351,6 +371,8 @@ const API = {
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
+      const body = new URLSearchParams();
+      body.append('timezone', params.timezone || DEFAULT_TIMEZONE);
 
       let response = await fetch(`${API_BASE_URL}/api/v1/getCategories`, {
         method: 'POST',
@@ -358,11 +380,11 @@ const API = {
           ...headers,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams()
+        body: body
       });
 
       if (response.status === 405 || response.status === 404) {
-        response = await fetch(`${API_BASE_URL}/api/v1/getCategories`, {
+        response = await fetch(`${API_BASE_URL}/api/v1/getCategories?timezone=${encodeURIComponent(params.timezone || DEFAULT_TIMEZONE)}`, {
           method: 'GET',
           headers: headers
         });
@@ -394,9 +416,10 @@ const API = {
    * Endpoint: /api/v1/change-dish-status/{id}
    * @param {string|number} dishId - The ID of the dish
    * @param {number|string} status - 1 for active, 0 for inactive
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The API response data
    */
-  async changeDishStatus(dishId, status) {
+  async changeDishStatus(dishId, status, params = {}) {
     try {
       const token = localStorage.getItem('auth_token');
       const headers = {
@@ -410,6 +433,7 @@ const API = {
       body.append('status', finalStatus);
       body.append('dish_id', String(dishId));
       body.append('id', String(dishId));
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
 
       const response = await fetch(`${API_BASE_URL}/api/v1/change-dish-status/${dishId}`, {
         method: 'POST',
@@ -445,9 +469,10 @@ const API = {
    * Update restaurant open/closed status.
    * Endpoint: /api/v1/updateRestaurantStatus
    * @param {number|string} isOpen - 1 for Open, 0 for Closed
+   * @param {Object} [params={}]
    * @returns {Promise<Object>} The API response data
    */
-  async updateRestaurantStatus(isOpen) {
+  async updateRestaurantStatus(isOpen, params = {}) {
     try {
       const token = localStorage.getItem('auth_token');
       const headers = {
@@ -459,6 +484,7 @@ const API = {
       const finalVal = (isOpen === 1 || isOpen === '1' || isOpen === true) ? '1' : '0';
       const body = new URLSearchParams();
       body.append('is_open', finalVal);
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
 
       const response = await fetch(`${API_BASE_URL}/api/v1/updateRestaurantStatus`, {
         method: 'POST',
