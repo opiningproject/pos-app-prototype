@@ -1294,7 +1294,7 @@
       <div class="page" id="p-detail">
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff">
           <div class="page-header-row">
-            <div id="d-back-btn" onclick="goPage('orders')" style="width:40px;height:40px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+            <div id="d-back-btn" onclick="detailGoBack()" style="width:40px;height:40px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
               <svg width="8" height="15" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <span id="d-header-status" style="position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:600;color:#111;white-space:nowrap">Nieuwe bestelling</span>
@@ -1306,6 +1306,10 @@
           </div>
           <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:250"></div>
           <div id="d-order-menu" style="display:none">
+            <div id="d-done-print-item" class="d-menu-item neutral" style="display:none" onclick="onPrintClick(this);toggleOrderMenu()">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 9V4h12v5" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="9" width="18" height="9" rx="2" stroke="#111" stroke-width="2"/><path d="M6 14h12M6 18h7" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Print bon</span>
+            </div>
             <div class="d-menu-item neutral" onclick="openChangeTime()">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <span data-i18n="d_change_time">Tijd wijzigen</span>
@@ -1370,12 +1374,20 @@
                 <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">Bezorging</div>
                 <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">ZSM</div>
               </div>
-              <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
-                <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5"/>
-                <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2.5" stroke-dasharray="138.23" stroke-dashoffset="138.23" stroke-linecap="round" transform="rotate(-90 24 24)"/>
-                <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">—</text>
-                <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>
-              </svg>
+              <div id="d-timer-wrap">
+                <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
+                  <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5"/>
+                  <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2.5" stroke-dasharray="138.23" stroke-dashoffset="138.23" stroke-linecap="round" transform="rotate(-90 24 24)"/>
+                  <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600" fill="#333" font-family="Poppins,sans-serif">—</text>
+                  <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>
+                </svg>
+              </div>
+              <div id="d-done-badge" style="display:none;width:72px;height:72px;border-radius:50%;background:#e8f5e9;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#4caf50" stroke-width="1.8"/><path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div id="d-cancelled-badge" style="display:none;width:72px;height:72px;border-radius:50%;background:#fdecea;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#c62828" stroke-width="1.8"/><path d="M8 8l8 8M16 8l-8 8" stroke="#c62828" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
             </div>
           </div>
 
@@ -1670,13 +1682,13 @@
               <div data-i18n="dash_info_details" style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige bestelgeschiedenis te vinden op het opining dashboard.</div>
             </div>
             <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">7 <span data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€31.00</div></div><div class="mcol"><div class="dname">#250715A03</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€44.00</div></div><div class="mcol"><div class="dname">#250715A04</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€12.50</div></div><div class="mcol"><div class="dname">#250715A05</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€29.00</div></div><div class="mcol"><div class="dname">#250715A06</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€56.00</div></div><div class="mcol"><div class="dname">#250715A07</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A01','Thomas Jefferson','Lusthofstraat 27A||3062 WB Rotterdam','#250715A01','€23.50','Paid','Delivery',30,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A01</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A02','Sophie de Boer','Collection order','#250715A02','€18.00','Paid','Collection',0,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A02</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A03','Emma Jansen','Tochtstraat 40||3036 SK Rotterdam','#250715A03','€31.00','Paid','Delivery',25,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€31.00</div></div><div class="mcol"><div class="dname">#250715A03</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A04','Lotte de Vries','Witte de Withstraat 21||3012 BM Rotterdam','#250715A04','€44.00','Paid','Delivery',40,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€44.00</div></div><div class="mcol"><div class="dname">#250715A04</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A05','Daan Visser','Collection order','#250715A05','€12.50','Paid','Collection',0,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€12.50</div></div><div class="mcol"><div class="dname">#250715A05</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A06','Lars Jansen','Bergselaan 88||3038 CK Rotterdam','#250715A06','€29.00','Paid','Delivery',35,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€29.00</div></div><div class="mcol"><div class="dname">#250715A06</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A07','Julia Mulder','Proveniersstraat 8B||3014 GH Rotterdam','#250715A07','€56.00','Paid','Delivery',45,'done',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€56.00</div></div><div class="mcol"><div class="dname">#250715A07</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div></div></div></div>
           </div>
 
           <!-- CANCELLED PANE -->
@@ -1686,9 +1698,9 @@
               <div data-i18n="dash_info_cancelled" style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige annuleringsgeschiedenis te vinden op het opining dashboard.</div>
             </div>
             <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">3 <span data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div><div class="oc-price" data-i18n="refund_done" style="color:#16a34a;padding-top:8px">Terugbetaald</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div><div class="oc-price" data-i18n="refund_pending" style="color:#d97706;padding-top:8px">Terugbetaling bezig</div></div></div></div>
-            <div class="ocard"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A10</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div><div class="oc-price" data-i18n="refund_none" style="padding-top:8px">Geen terugbetaling vereist</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A08','Nina Bakker','Lusthofstraat 27A||3062 WB Rotterdam','#250715A08','€23.50','Paid','Delivery',0,'cancelled',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A08</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  Card</div><div class="oc-price" data-i18n="refund_done" style="color:#16a34a;padding-top:8px">Terugbetaald</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A09','Finn de Boer','Collection order','#250715A09','€18.00','Paid','Collection',0,'cancelled',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div></div><div class="mcol"><div class="dname">#250715A09</div><div class="oc-price"><span data-i18n="d_pickup">Afhaal</span>  ·  Card</div><div class="oc-price" data-i18n="refund_pending" style="color:#d97706;padding-top:8px">Terugbetaling bezig</div></div></div></div>
+            <div class="ocard" style="cursor:pointer" onclick="goDetail('A10','Roos Hendriks','Tochtstraat 40||3036 SK Rotterdam','#250715A10','€23.50','Cash','Delivery',0,'cancelled',this)"><div class="ocard-row"><div class="tcol" style="align-self:flex-start"><div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div></div><div class="mcol"><div class="dname">#250715A10</div><div class="oc-price"><span data-i18n="d_delivery">Bezorging</span>  ·  <span data-i18n="oc_pay_cash">Contant</span></div><div class="oc-price" data-i18n="refund_none" style="padding-top:8px">Geen terugbetaling vereist</div></div></div></div>
           </div>
           </div><!-- /dash-panes -->
         </div><!-- /content-surface -->
@@ -2500,29 +2512,53 @@
     var atBottom = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 8;
     document.getElementById('p-detail').classList.toggle('scrolled-bottom', atBottom);
   }
+  function detailGoBack() {
+    var returnPage = window._detailReturnPage || 'orders';
+    goPage(returnPage);
+    if (returnPage === 'dashboard' && window._detailReturnTab) {
+      var tabIndex = window._detailReturnTab === 'details' ? 1 : window._detailReturnTab === 'cancelled' ? 2 : 0;
+      var tabs = document.querySelectorAll('#dash-tabs .tab-btn');
+      if (tabs[tabIndex]) tabs[tabIndex].click();
+    }
+  }
   function goDetail(id,name,addr,oid,price,pay,type,mins,next,cardEl){
     var currentActivePage = document.querySelector('.page.active');
     if (currentActivePage && currentActivePage.id !== 'p-detail') {
       window._detailReturnPage = currentActivePage.id.replace('p-', '');
     }
+    window._detailReturnTab = (next === 'done') ? 'details' : (next === 'cancelled') ? 'cancelled' : null;
     closeOrderToast();
     window._detailCard = cardEl || null;
     window._detailOid = oid;
     var isUnaccepted = !!(cardEl && cardEl.dataset.newOrder === '1');
-    document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
+    var isDone = (next === 'done');
+    var isCancelled = (next === 'cancelled');
+    document.getElementById('d-actions-default').style.display = (isUnaccepted || isDone || isCancelled) ? 'none' : 'flex';
     document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
     // New-order popup: no way out except accepting → hide the back button and options menu
     var backBtn = document.getElementById('d-back-btn');
     if (backBtn) backBtn.style.display = isUnaccepted ? 'none' : 'flex';
     var headerMenu = document.getElementById('d-header-menu');
     if (headerMenu) headerMenu.style.display = isUnaccepted ? 'none' : 'flex';
+    // Done/cancelled orders: show only Print in the three-dots menu
+    var isReadOnly = isDone || isCancelled;
+    var menuItems = document.querySelectorAll('#d-order-menu .d-menu-item');
+    menuItems.forEach(function(item) { item.style.display = isReadOnly ? 'none' : ''; });
+    var donePrint = document.getElementById('d-done-print-item');
+    if (donePrint) donePrint.style.display = isReadOnly ? 'flex' : 'none';
     // New-order popup: show the schedule/confirm block instead of the circle timer + footer
     var schedBlock = document.getElementById('d-new-schedule');
     var timerCard = document.getElementById('d-top-timer-card');
     var actionFooter = document.getElementById('d-action-footer');
     if (schedBlock) schedBlock.style.display = isUnaccepted ? 'block' : 'none';
     if (timerCard) timerCard.style.display = isUnaccepted ? 'none' : 'block';
-    if (actionFooter) actionFooter.style.display = isUnaccepted ? 'none' : 'block';
+    var timerWrap = document.getElementById('d-timer-wrap');
+    var doneBadge = document.getElementById('d-done-badge');
+    var cancelledBadge = document.getElementById('d-cancelled-badge');
+    if (timerWrap) timerWrap.style.display = (isDone || isCancelled) ? 'none' : 'block';
+    if (doneBadge) doneBadge.style.display = isDone ? 'flex' : 'none';
+    if (cancelledBadge) cancelledBadge.style.display = isCancelled ? 'flex' : 'none';
+    if (actionFooter) actionFooter.style.display = (isUnaccepted || isDone) ? 'none' : 'block';
     var detailHeaderEl = document.querySelector('#p-detail > .page-header');
     if (detailHeaderEl) detailHeaderEl.classList.toggle('d-new-header', isUnaccepted);
     document.getElementById('p-detail').classList.toggle('new-order-mode', isUnaccepted);
