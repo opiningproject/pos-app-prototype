@@ -2517,7 +2517,7 @@
     goPage(returnPage);
     if (returnPage === 'dashboard' && window._detailReturnTab) {
       var tabIndex = window._detailReturnTab === 'details' ? 1 : window._detailReturnTab === 'cancelled' ? 2 : 0;
-      var tabs = document.querySelectorAll('#dash-tabs .tab-btn');
+      var tabs = document.querySelectorAll('#dash-tabs .tab');
       if (tabs[tabIndex]) tabs[tabIndex].click();
     }
   }
