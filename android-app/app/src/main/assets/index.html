@@ -2038,6 +2038,32 @@
       opacity: 1;
     }
 
+    .simple-toast {
+      position: absolute;
+      left: 50%;
+      bottom: calc(env(safe-area-inset-bottom) + 50px);
+      transform: translate(-50%, 16px);
+      background: rgba(60, 60, 60, 0.95);
+      color: #fff;
+      border-radius: 100px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .simple-toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
     .accepted-toast-inner {
       box-sizing: border-box;
       padding: 11px 22px 11px 13px;
@@ -3714,6 +3740,10 @@
           <div class="accepted-toast-inner">
             <span id="accepted-toast-text"></span>
           </div>
+        </div>
+
+        <div class="simple-toast" id="simple-toast">
+          <span id="simple-toast-text">Item enabled</span>
         </div>
 
         <!-- ===== ORDERS PAGE ===== -->
@@ -5543,7 +5573,7 @@
         create_delivery_btn: 'Create new delivery order', create_takeaway_btn: 'Create new takeaway order',
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
-        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid', d_cash: 'Unpaid', d_print_label: 'Print label',
+        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
@@ -5573,12 +5603,12 @@
         login_welcome: 'Welcome back', login_subtitle: 'Log in to continue', login_username: 'Username', login_password: 'Password', login_signin: 'Sign in',
         login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device',
         co_discard_title: 'You have unsaved changes', co_discard_keep: 'Keep editing', co_discard_discard: 'Discard',
-        dash_online_paid: 'Paid online', dash_cash: 'Unpaid',
+        dash_online_paid: 'Paid online', dash_cash: 'Cash payment',
         login_error: 'Incorrect username or password', sim_new_order: 'Simulate new order', dash_cancelled_orders: 'cancelled orders',
         refund_done: 'Refunded', refund_pending: 'Refund in progress', refund_none: 'No refund required',
         otime_asap: 'ASAP', otime_asap_full: 'As soon as possible', otime_minutes: 'min', otime_hours: 'hours', otime_today: 'Today', otime_tomorrow: 'Tomorrow',
         oc_move_kitchen: 'Move to kitchen', oc_move_delivery: 'Move to delivery', oc_move_archive: 'Complete order',
-        oc_pay_paid: 'Paid', oc_pay_cash: 'Unpaid', oc_auto_archived: 'Auto-archived',
+        oc_pay_paid: 'Paid online', oc_pay_card: 'Paid online', oc_pay_cash: 'Cash payment', oc_auto_archived: 'Auto-archived',
         filter_by: 'Filter by', filter_reset: 'Reset', filter_search: 'Search options...', filter_is: 'Is', filter_isnot: 'Is not',
         filter_cat_status: 'Status', filter_cat_updated: 'Updated at', filter_cat_created: 'Created at', filter_cat_customer: 'Customer', filter_cat_source: 'Source', filter_cat_tags: 'Tagged with',
         filter_opt_new: 'New', filter_opt_kitchen: 'Kitchen', filter_opt_delivering: 'Delivering',
@@ -5633,7 +5663,7 @@
         create_delivery_btn: 'Nieuwe bezorgbestelling aanmaken', create_takeaway_btn: 'Nieuwe afhaalbestelling aanmaken',
         hdr_products: 'Producten', dd_products: 'Producten', dd_choices: 'Keuzemenu', dd_categories: 'Categorieën',
         tab_menu_all: 'Alle', tab_menu_active: 'Actief', tab_menu_concept: 'Concept', tab_menu_archived: 'Gearchiveerd',
-        d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Betaald', d_cash: 'Niet betaald', d_print_label: 'Print label',
+        d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
         d_to_kitchen: 'Naar keuken', d_to_delivery: 'Naar bezorging', d_ready: 'Gereed', d_to_archive: 'Bestelling afronden', d_accept: 'Accepteren',
         accept_label: 'Accepteren',
         app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'geaccepteerd',
@@ -5663,12 +5693,12 @@
         login_welcome: 'Welkom terug', login_subtitle: 'Log in om door te gaan', login_username: 'Gebruikersnaam', login_password: 'Wachtwoord', login_signin: 'Aanmelden',
         login_title: 'Aanmelden', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat',
         co_discard_title: 'Je hebt niet-opgeslagen wijzigingen', co_discard_keep: 'Doorgaan met bewerken', co_discard_discard: 'Verwerpen',
-        dash_online_paid: 'Online betaald', dash_cash: 'Niet betaald',
+        dash_online_paid: 'Online betaald', dash_cash: 'Contant betaling',
         login_error: 'Onjuiste gebruikersnaam of wachtwoord', sim_new_order: 'Simuleer nieuwe bestelling', dash_cancelled_orders: 'geannuleerde bestellingen',
         refund_done: 'Terugbetaald', refund_pending: 'Terugbetaling bezig', refund_none: 'Geen terugbetaling vereist',
         otime_asap: 'ZSM', otime_asap_full: 'Zo snel mogelijk', otime_minutes: 'min', otime_hours: 'uur', otime_today: 'Vandaag', otime_tomorrow: 'Morgen',
         oc_move_kitchen: 'Verplaats naar keuken', oc_move_delivery: 'Verplaats naar bezorging', oc_move_archive: 'Bestelling afronden',
-        oc_pay_paid: 'Betaald', oc_pay_cash: 'Niet betaald', oc_auto_archived: 'Automatisch gearchiveerd',
+        oc_pay_paid: 'Online betaald', oc_pay_card: 'Online betaald', oc_pay_cash: 'Contant betaling', oc_auto_archived: 'Automatisch gearchiveerd',
         filter_by: 'Filteren op', filter_reset: 'Opnieuw instellen', filter_search: 'Zoek opties...', filter_is: 'Is', filter_isnot: 'Is niet',
         filter_cat_status: 'Status', filter_cat_updated: 'Bijgewerkt op', filter_cat_created: 'Aangemaakt op', filter_cat_customer: 'Klant', filter_cat_source: 'Bron', filter_cat_tags: 'Getagd met',
         filter_opt_new: 'Nieuw', filter_opt_kitchen: 'Keuken', filter_opt_delivering: 'Bezorgen',
@@ -6061,6 +6091,7 @@
       var items = order.dish_details || order.order_items || [];
       var html = '';
       var calculatedSubtotal = 0;
+      var depositGroups = {};
 
       items.forEach(function (item) {
         var qty = parseInt(item.qty || item.quantity || 1, 10);
@@ -6081,6 +6112,44 @@
 
         calculatedSubtotal += itemPrice;
         var priceStr = itemPrice.toFixed(2);
+
+        // Check deposit parameter inside dish object or item object
+        var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
+          (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
+            (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
+              (item.deposite !== undefined && item.deposite !== null ? item.deposite :
+                (item.deposit !== undefined && item.deposit !== null ? item.deposit : item.statiegeld))));
+
+        if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
+          var depRate = 0;
+          var depLabel = '';
+          var strDep = String(rawDep).trim();
+          if (strDep === '1' || strDep === '0.15') {
+            depRate = 0.15;
+            depLabel = '0,15';
+          } else if (strDep === '2' || strDep === '0.25') {
+            depRate = 0.25;
+            depLabel = '0,25';
+          } else {
+            var parsed = parseFloat(strDep);
+            if (!isNaN(parsed) && parsed > 0) {
+              depRate = parsed;
+              depLabel = parsed.toFixed(2).replace('.', ',');
+            }
+          }
+
+          if (depRate > 0) {
+            var key = depRate.toFixed(2);
+            if (!depositGroups[key]) {
+              depositGroups[key] = {
+                rate: depRate,
+                rateLabel: depLabel,
+                count: 0
+              };
+            }
+            depositGroups[key].count += qty;
+          }
+        }
 
         var attrsText = extractItemAttributes(item);
 
@@ -6111,6 +6180,17 @@
       var totalAmt = parseFloat(order.total_amount || (subtotal + deliveryCharge + platformCharge + tipAmt - discountAmt));
 
       html += '<div style="border-top:1px solid #f0f0f0;padding:14px 0 14px;margin-top:6px">';
+
+      // Deposit line(s)
+      Object.keys(depositGroups).forEach(function (key) {
+        var group = depositGroups[key];
+        var totalDepAmt = group.rate * group.count;
+        var infoSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span style="display:flex;align-items:center;gap:4px">Deposit € ' + group.rateLabel + ' x ' + group.count + ' ' + infoSvg + '</span>';
+        html += '    <span>€ ' + totalDepAmt.toFixed(2) + '</span>';
+        html += '  </div>';
+      });
 
       // Subtotal
       html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
@@ -6160,11 +6240,6 @@
       var isCash = (order.payment_type == '2' || order.payment_type === 2 || order.payment_status == '0' || order.payment_status === 'cash' || order.payment_status == '2');
       var payText = isCash ? (t('d_cash') || 'Unpaid') : (t('d_paid') || 'Paid');
       var payIcon = isCash ? '💵' : '💳';
-
-      html += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:15px;color:#555">';
-      html += '    <span>Payment status</span>';
-      html += '    <span style="font-weight:600;color:' + (isCash ? '#c62828' : '#2e7d32') + ';display:flex;align-items:center;gap:6px"><span>' + payIcon + '</span> ' + payText + '</span>';
-      html += '  </div>';
 
       html += '</div>';
 
@@ -6591,12 +6666,7 @@
           }
         })
         .catch(function (err) {
-          API.getOrders({ order_id: id })
-            .then(function (responseData) {
-              var singleOrder = (responseData && Array.isArray(responseData.data)) ? responseData.data[0] : (responseData ? responseData.data : null);
-              if (singleOrder) renderLiveOrderDetail(singleOrder);
-            })
-            .catch(function (e) { console.error("Failed to load order details:", e); });
+          console.error("Failed to load order details:", err);
         });
     }
 
@@ -7495,7 +7565,7 @@
           detailsList.forEach(function (order) {
             var orderTypeKey = order.order_type === '2' ? 'd_pickup' : 'd_delivery';
             var isCash = (String(order.payment_type) === '2' || String(order.payment_status) === '2');
-            var payLabel = isCash ? (t('oc_pay_cash') || 'Cash') : (t('oc_pay_card') || 'Card');
+            var payLabel = isCash ? (t('oc_pay_cash') || 'Cash payment') : (t('oc_pay_card') || 'Paid online');
             var typeLabel = t(orderTypeKey);
             var subTitle = typeLabel + ' · ' + payLabel;
             var totalStr = '€' + parseFloat(order.total_amount || 0).toFixed(2);
@@ -7525,7 +7595,8 @@
           var html = '';
           cancelledList.forEach(function (order) {
             var orderTypeKey = order.order_type === '2' ? 'd_pickup' : 'd_delivery';
-            var payTypeKey = order.payment_type === '2' ? 'oc_pay_cash' : 'oc_pay_paid';
+            var isCash = (String(order.payment_type) === '2' || String(order.payment_status) === '2');
+            var payTypeKey = isCash ? 'oc_pay_cash' : 'oc_pay_card';
             var typeLabel = t(orderTypeKey);
             var payLabel = t(payTypeKey);
             var totalStr = '€' + parseFloat(order.total_amount || 0).toFixed(2);
@@ -8166,23 +8237,40 @@
                 window._apiCategoriesMap[catName] = catObj;
 
                 var safeCatName = String(catName).replace(/'/g, "\\'");
-                var items = (catObj && typeof catObj === 'object' && Array.isArray(catObj.items || catObj.products || catObj.dish || catObj.dishes_details))
-                  ? (catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
-                  : (menuData[catName] || []);
 
-                var offCount = items.filter(function (it) {
-                  var name = typeof it === 'string' ? it : (it.name || it.name_en || it.name_nl || it.product_name || it.title || '');
-                  return menuState[catName + '|' + name] === false;
-                }).length;
+                var inactiveCount = 0;
+                if (catObj && typeof catObj === 'object') {
+                  if (catObj.inactiveDIshCount !== undefined && catObj.inactiveDIshCount !== null) {
+                    inactiveCount = parseInt(catObj.inactiveDIshCount, 10) || 0;
+                  } else if (catObj.inactiveDishCount !== undefined && catObj.inactiveDishCount !== null) {
+                    inactiveCount = parseInt(catObj.inactiveDishCount, 10) || 0;
+                  } else if (catObj.inactive_dish_count !== undefined && catObj.inactive_dish_count !== null) {
+                    inactiveCount = parseInt(catObj.inactive_dish_count, 10) || 0;
+                  } else if (catObj.inactive_count !== undefined && catObj.inactive_count !== null) {
+                    inactiveCount = parseInt(catObj.inactive_count, 10) || 0;
+                  } else {
+                    var items = Array.isArray(catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
+                      ? (catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
+                      : (menuData[catName] || []);
 
-                var sub = offCount === 0
-                  ? ''
-                  : offCount + ' item' + (offCount > 1 ? 's' : '') + ' niet beschikbaar';
+                    inactiveCount = items.filter(function (it) {
+                      if (typeof it === 'object' && it !== null) {
+                        if (it.status === 0 || it.status === '0' || it.is_active === 0 || it.is_active === false) return true;
+                      }
+                      var name = typeof it === 'string' ? it : (it.name || it.name_en || it.name_nl || it.product_name || it.title || '');
+                      return menuState[catName + '|' + name] === false;
+                    }).length;
+                  }
+                }
+
+                var sub = inactiveCount > 0
+                  ? inactiveCount + ' item' + (inactiveCount > 1 ? 's' : '') + ' niet beschikbaar'
+                  : '';
 
                 return '<div class="menu-cat-row" onclick="goMenuCat(\'' + safeCatName + '\')">'
                   + '<div>'
-                  + '<div>' + catName + '</div>'
-                  + (sub ? '<div style="font-size:18px;font-weight:500;color:#888;margin-top:4px">' + sub + '</div>' : '')
+                  + '<div style="font-size:16px;font-weight:600;color:#111">' + catName + '</div>'
+                  + (sub ? '<div style="font-size:14px;font-weight:400;color:#777;margin-top:4px">' + sub + '</div>' : '')
                   + '</div>'
                   + '<svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
                   + '</div>';
@@ -8210,13 +8298,13 @@
         var offCount = items.filter(function (name) {
           return menuState[cat + '|' + name] === false;
         }).length;
-        var sub = offCount === 0
-          ? ''
-          : offCount + ' item' + (offCount > 1 ? 's' : '') + ' niet beschikbaar';
+        var sub = offCount > 0
+          ? offCount + ' item' + (offCount > 1 ? 's' : '') + ' niet beschikbaar'
+          : '';
         return '<div class="menu-cat-row" onclick="goMenuCat(\'' + cat + '\')">'
           + '<div>'
-          + '<div>' + cat + '</div>'
-          + (sub ? '<div style="font-size:18px;font-weight:500;color:#888;margin-top:4px">' + sub + '</div>' : '')
+          + '<div style="font-size:16px;font-weight:600;color:#111">' + cat + '</div>'
+          + (sub ? '<div style="font-size:14px;font-weight:400;color:#777;margin-top:4px">' + sub + '</div>' : '')
           + '</div>'
           + '<svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
           + '</div>';
@@ -8272,6 +8360,18 @@
       goPage('menu-cat');
     }
 
+    function showSimpleToast(msg) {
+      var toast = document.getElementById('simple-toast');
+      var txt = document.getElementById('simple-toast-text');
+      if (!toast || !txt) return;
+      txt.textContent = msg;
+      clearTimeout(toast._hideTimeout);
+      toast.classList.add('show');
+      toast._hideTimeout = setTimeout(function () {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
     function toggleMenuItem(el, cat, name, dishId) {
       el.classList.toggle('on');
       var isOn = el.classList.contains('on');
@@ -8280,6 +8380,9 @@
       var targetDishId = dishId || (el.dataset ? el.dataset.dishId : '');
 
       console.log('Toggle dish item:', name, 'dishId:', targetDishId, 'status:', newStatus);
+
+      var msg = newStatus === 1 ? 'Item enabled' : 'Item disabled';
+      showSimpleToast(msg);
 
       if (targetDishId && typeof API !== 'undefined' && API.changeDishStatus) {
         API.changeDishStatus(targetDishId, newStatus)
@@ -9377,13 +9480,17 @@
       handleIncomingNewOrderId(orderId);
     };
 
+    var _isCheckingRealtime = false;
     function checkRealtimeOrders() {
+      if (_isCheckingRealtime) return;
       if (typeof API === 'undefined' || !API.getOrders) return;
       var token = localStorage.getItem('auth_token');
       if (!token) return;
 
+      _isCheckingRealtime = true;
       API.getOrders({ status: 'new' })
         .then(function (data) {
+          _isCheckingRealtime = false;
           var orders = [];
           if (data && Array.isArray(data.data)) orders = data.data;
           else if (data && Array.isArray(data.orders)) orders = data.orders;
@@ -9407,24 +9514,22 @@
           _isInitialLoadDone = true;
         })
         .catch(function (err) {
+          _isCheckingRealtime = false;
           console.warn('Realtime order check error:', err);
         });
     }
 
     // Run realtime polling check every 30 seconds as background fallback
     setInterval(checkRealtimeOrders, 30000);
-    setTimeout(checkRealtimeOrders, 2000);
+    setTimeout(checkRealtimeOrders, 1500);
 
     function initOrderSocket() {
       if (typeof io === 'undefined') return;
-      var socketEndpoints = [
-        'https://admin.opiningstore.com',
-        'https://opiningstore.com/web-socket',
-        'https://admin.opiningstore.com/web-socket',
-        'https://admin.dryfftjwieiwjw.online',
-        'https://dryfftjwieiwjw.online/web-socket',
-        'https://admin.dryfftjwieiwjw.online/web-socket'
-      ];
+      var baseUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://admin.opiningstore.com').replace(/\/+$/, '');
+      var socketEndpoints = Array.from(new Set([
+        baseUrl
+      ]));
+
       var socketEvents = [
         'sendNotificationToAdmin',
         'newOrder',
@@ -9438,8 +9543,12 @@
       socketEndpoints.forEach(function (endpoint) {
         try {
           var socket = io(endpoint, {
-            transports: ['websocket', 'polling'],
-            reconnectionAttempts: 10
+            transports: ['websocket'],
+            reconnectionAttempts: 2,
+            timeout: 4000
+          });
+          socket.on('connect_error', function () {
+            try { socket.close(); } catch (err) { }
           });
           socketEvents.forEach(function (evtName) {
             socket.on(evtName, function (data) {
@@ -9449,7 +9558,7 @@
             });
           });
         } catch (e) {
-          console.warn('Socket connection error for ' + endpoint + ':', e);
+          // Ignore socket error
         }
       });
     }
