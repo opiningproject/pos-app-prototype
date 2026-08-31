@@ -514,5 +514,224 @@ const API = {
       console.error('API updateRestaurantStatus error:', error);
       throw error;
     }
+  },
+
+  /**
+   * Fetch restaurant details from server.
+   * Endpoint: /api/v1/getRestaurentDetails
+   * @param {Object} [params={}]
+   * @returns {Promise<Object>} The restaurant details data
+   */
+  async getRestaurentDetails(params = {}) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const body = new URLSearchParams();
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+
+      let response = await fetch(`${API_BASE_URL}/api/v1/getRestaurentDetails`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      if (response.status === 405 || response.status === 404) {
+        response = await fetch(`${API_BASE_URL}/api/v1/getRestaurentDetails?timezone=${encodeURIComponent((params && params.timezone) || DEFAULT_TIMEZONE)}`, {
+          method: 'GET',
+          headers: headers
+        });
+      }
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (handleTokenExpiration(responseData, response.status)) {
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (!response.ok) {
+        throw new Error(responseData.message || `Failed to fetch restaurant details (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to fetch restaurant details');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API getRestaurentDetails error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Update delivery and takeaway default times.
+   * Endpoint: /api/v1/updateDeliveryTime
+   * @param {string|number} deliveryTime - e.g. "45 Min" or 45
+   * @param {string|number} takeawayTime - e.g. "15 Min" or 15
+   * @param {Object} [params={}]
+   * @returns {Promise<Object>} The API response data
+   */
+  async updateDeliveryTime(param1, param2, params = {}) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const body = new URLSearchParams();
+      let isOrderUpdate = false;
+      let orderIdVal = null;
+      let expectedTimeVal = null;
+
+      if (typeof param1 === 'object' && param1 !== null) {
+        isOrderUpdate = true;
+        orderIdVal = param1.order_id || param1.orderId || param1.id;
+        expectedTimeVal = param1.expected_time || param1.expected_delivery_time || param1.time;
+      } else if (param1 && param2 && (String(param2).indexOf(':') !== -1 || String(param2).indexOf('-') !== -1)) {
+        isOrderUpdate = true;
+        orderIdVal = param1;
+        expectedTimeVal = param2;
+      }
+
+      if (isOrderUpdate) {
+        body.append('order_id', String(orderIdVal));
+        body.append('orderId', String(orderIdVal));
+        body.append('expected_time', String(expectedTimeVal));
+        body.append('expected_delivery_time', String(expectedTimeVal));
+        body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+      } else {
+        var delStr = String(param1).indexOf('Min') !== -1 ? param1 : (parseInt(param1, 10) + ' Min');
+        var pickStr = String(param2).indexOf('Min') !== -1 ? param2 : (parseInt(param2, 10) + ' Min');
+        body.append('delivery_time', delStr);
+        body.append('take_away_time', pickStr);
+        body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+      }
+
+      let response = await fetch(`${API_BASE_URL}/api/v1/updateDeliveryTime`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      if (response.status === 405 || response.status === 404) {
+        let queryStr = body.toString();
+        response = await fetch(`${API_BASE_URL}/api/v1/updateDeliveryTime?${queryStr}`, {
+          method: 'GET',
+          headers: headers
+        });
+      }
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (handleTokenExpiration(responseData, response.status)) {
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (!response.ok) {
+        throw new Error(responseData.message || `Failed to update delivery time (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to update delivery time');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API updateDeliveryTime error:', error);
+      throw error;
+    }
+  },
+
+  async updateOrderDeliveryTime(orderId, expectedTime, params = {}) {
+    return this.updateDeliveryTime({ order_id: orderId, expected_time: expectedTime }, null, params);
+  },
+
+  /**
+   * Update order wished / expected delivery time.
+   * Endpoint: /api/v1/updateWishedTime
+   * @param {string|number|Object} param1 - order_id or payload object
+   * @param {string} [param2] - expected_time
+   * @param {Object} [params={}]
+   * @returns {Promise<Object>}
+   */
+  async updateWishedTime(param1, param2, params = {}) {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const headers = {
+        'Accept': 'application/json',
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      let orderIdVal = null;
+      let expectedTimeVal = null;
+
+      if (typeof param1 === 'object' && param1 !== null) {
+        orderIdVal = param1.order_id || param1.orderId || param1.id;
+        expectedTimeVal = param1.expected_time || param1.expected_delivery_time || param1.wished_time || param1.time;
+      } else {
+        orderIdVal = param1;
+        expectedTimeVal = param2;
+      }
+
+      const body = new URLSearchParams();
+      body.append('order_id', String(orderIdVal));
+      body.append('orderId', String(orderIdVal));
+      body.append('expected_time', String(expectedTimeVal));
+      body.append('wished_time', String(expectedTimeVal));
+      body.append('expected_delivery_time', String(expectedTimeVal));
+      body.append('timezone', (params && params.timezone) || DEFAULT_TIMEZONE);
+
+      let response = await fetch(`${API_BASE_URL}/api/v1/updateWishedTime`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+
+      if (response.status === 405 || response.status === 404) {
+        let queryStr = body.toString();
+        response = await fetch(`${API_BASE_URL}/api/v1/updateWishedTime?${queryStr}`, {
+          method: 'GET',
+          headers: headers
+        });
+      }
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (handleTokenExpiration(responseData, response.status)) {
+        throw new Error(responseData.message || 'Token is Expired');
+      }
+
+      if (!response.ok) {
+        throw new Error(responseData.message || `Failed to update wished time (Status ${response.status})`);
+      }
+
+      if (responseData.status === '0' || responseData.status === 0 || responseData.status === false) {
+        throw new Error(responseData.message || 'Failed to update wished time');
+      }
+
+      return responseData;
+    } catch (error) {
+      console.error('API updateWishedTime error:', error);
+      throw error;
+    }
   }
 };
