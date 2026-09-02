@@ -23,7 +23,7 @@ import javax.net.ssl.SSLSession;
 public class ApiClient {
 
     private static final String TAG = "ApiClient";
-    private static final String BASE_URL = "https://admin.opiningstore.com";
+    private static final String BASE_URL = "https://admin.dryfftjwieiwjw.online";
     private static final String DEFAULT_TIMEZONE = "Europe/Amsterdam";
     
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();

@@ -4037,7 +4037,7 @@
                     </svg>
                   </div>
                   <span id="d-sched-time"
-                    style="font-weight:500;color:#111;min-width:104px;text-align:center">11:30</span>
+                    style="font-weight:500;color:#111;min-width:104px;text-align:center"></span>
                   <div class="sched-pm" onclick="schedStep(5)"
                     style="width:48px;height:48px;border-radius:50%;background:#eaf4fb;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -4049,8 +4049,7 @@
                 <div id="d-sched-mins" style="text-align:center;color:#888;margin-top:10px">35 min</div>
                 <div style="text-align:center;margin-top:24px">
                   <span id="d-sched-badge" data-i18n="otime_asap_full"
-                    style="font-weight: 600; color: rgb(136, 136, 136); background: rgb(255, 255, 255); border-radius: 999px; padding: 4px 12px; display: inline-block; border: 1.5px solid rgb(240, 240, 240);">Zo
-                    snel mogelijk</span>
+                    style="font-weight: 600; color: rgb(136, 136, 136); background: rgb(255, 255, 255); border-radius: 999px; padding: 4px 12px; display: inline-block; border: 1.5px solid rgb(240, 240, 240);"></span>
                 </div>
                 <button id="d-confirm-btn" onclick="confirmSchedule()"
                   style="width:100%;height:48px;margin-top:24px;font-weight:600;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif"><span
@@ -4062,12 +4061,9 @@
                 style="margin: 16px 16px 0px; border: 1.5px solid rgb(240, 240, 240); border-radius: 16px; padding: 16px; display: block;">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:24px">
                   <div>
-                    <div id="d-order-number" style="font-size:13px;font-weight:500;color:#888;margin-bottom:6px">#260519
-                      A 12</div>
-                    <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3">
-                      Bezorging</div>
-                    <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">
-                      ZSM</div>
+                    <div id="d-order-number" style="font-size:13px;font-weight:500;color:#888;margin-bottom:6px"></div>
+                    <div id="d-order-type-label" style="font-size:20px;font-weight:600;color:#111;line-height:1.3"></div>
+                    <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px"></div>
                   </div>
                   <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
                     <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5" />
@@ -4097,8 +4093,7 @@
                     d="M10.3998 10.4008H5.5998C5.38763 10.4008 5.18415 10.3165 5.03412 10.1665C4.88409 10.0164 4.7998 9.81295 4.7998 9.60078C4.7998 9.38861 4.88409 9.18512 5.03412 9.0351C5.18415 8.88507 5.38763 8.80078 5.5998 8.80078H10.3998C10.612 8.80078 10.8155 8.88507 10.9655 9.0351C11.1155 9.18512 11.1998 9.38861 11.1998 9.60078C11.1998 9.81295 11.1155 10.0164 10.9655 10.1665C10.8155 10.3165 10.612 10.4008 10.3998 10.4008Z"
                     fill="#0172AF" />
                 </svg>
-                <div id="d-note-text" style="font-size:18px;font-weight:500;color:#0a4f73;line-height:1.5">Extra napkins
-                  please</div>
+                <div id="d-note-text" style="font-size:18px;font-weight:500;color:#0a4f73;line-height:1.5"></div>
               </div>
 
               <div id="d-admin-note"
@@ -5427,12 +5422,11 @@
       <!-- Logo & Restaurant Header -->
       <div style="text-align:center;padding:12px 4px 14px 4px">
         <div style="display:flex;justify-content:center;margin-bottom:10px">
-          <img id="pr-shop-logo" src="https://admin.opiningstore.com/images/blank-img.svg" alt="logo"
-            style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:inline-block"
+          <img id="pr-shop-logo" src="" alt="logo"
+            style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:none"
             onerror="this.style.display='none'">
         </div>
-        <div style="font-size:12px;color:#333;line-height:1.5">Tochtstraat 40<br>3036SK
-          Rotterdam<br>010-21-4622<br>www.starbucks.com</div>
+        <div id="pr-shop-header-info" style="font-size:12px;color:#333;line-height:1.5"></div>
       </div>
 
       <!-- Info Banner & Details -->
@@ -5453,15 +5447,15 @@
       <!-- Klant Banner & Details -->
       <div class="r-banner">Klant</div>
       <div class="r-section" style="padding-top:4px;padding-bottom:4px">
-        <div style="font-size:12px;font-weight:600;color:#111;margin-bottom:2px" id="pr-cust-name">Serdar Orman</div>
-        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr1">Tochtstraat 40</div>
-        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr2">3036 SK Rotterdam</div>
-        <div style="font-size:12px;color:#333;margin-top:2px" id="pr-cust-phone">0614522453</div>
+        <div style="font-size:12px;font-weight:600;color:#111;margin-bottom:2px" id="pr-cust-name"></div>
+        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr1"></div>
+        <div style="font-size:12px;color:#333;line-height:1.4" id="pr-cust-addr2"></div>
+        <div style="font-size:12px;color:#333;margin-top:2px" id="pr-cust-phone"></div>
 
         <!-- Customer Note Box -->
         <div id="pr-note-container"
           style="margin-top:10px;border:1px solid #e2e2e2;border-radius:10px;padding:10px 12px;font-size:12px;color:#333;line-height:1.4">
-          <span id="pr-note">Please deliver at the green door.<br>When arrive call me</span>
+          <span id="pr-note"></span>
         </div>
       </div>
 
@@ -5812,6 +5806,35 @@
           }
         }
       }
+
+      // Check inactive_dishes_count parameter
+      var inactiveCount = null;
+      if (data.inactive_dishes_count !== undefined && data.inactive_dishes_count !== null) {
+        inactiveCount = parseInt(data.inactive_dishes_count, 10);
+      } else if (data.inactiveDishesCount !== undefined && data.inactiveDishesCount !== null) {
+        inactiveCount = parseInt(data.inactiveDishesCount, 10);
+      } else if (data.inactive_dish_count !== undefined && data.inactive_dish_count !== null) {
+        inactiveCount = parseInt(data.inactive_dish_count, 10);
+      } else if (data.inactiveDIshCount !== undefined && data.inactiveDIshCount !== null) {
+        inactiveCount = parseInt(data.inactiveDIshCount, 10);
+      } else if (data.data && data.data.inactive_dishes_count !== undefined && data.data.inactive_dishes_count !== null) {
+        inactiveCount = parseInt(data.data.inactive_dishes_count, 10);
+      } else if (data.data && data.data.inactiveDishesCount !== undefined && data.data.inactiveDishesCount !== null) {
+        inactiveCount = parseInt(data.data.inactiveDishesCount, 10);
+      } else if (data.data && data.data.inactive_dish_count !== undefined && data.data.inactive_dish_count !== null) {
+        inactiveCount = parseInt(data.data.inactive_dish_count, 10);
+      }
+
+      if (inactiveCount !== null && !isNaN(inactiveCount)) {
+        var navMenuSub = document.getElementById('nav-menu-sub');
+        if (navMenuSub) {
+          if (inactiveCount > 0) {
+            navMenuSub.textContent = inactiveCount + ' item' + (inactiveCount > 1 ? 's' : '') + ' disabled';
+          } else {
+            navMenuSub.textContent = t('nav_all_available') || 'All items are available';
+          }
+        }
+      }
     }
 
     function fetchTodayOrdersCount() {
@@ -5891,6 +5914,30 @@
       }
     }
 
+    function formatRemainingHoursAndMins(totalMins) {
+      totalMins = parseInt(totalMins, 10);
+      if (isNaN(totalMins) || totalMins <= 0) return '0 min';
+
+      var lang = (typeof currentLang !== 'undefined' ? currentLang : (localStorage.getItem('appLang') || 'nl'));
+      var isEn = lang === 'en';
+
+      var hours = Math.floor(totalMins / 60);
+      var mins = totalMins % 60;
+
+      var hourLabel = isEn ? (hours === 1 ? 'hour' : 'hours') : (hours === 1 ? 'uur' : 'uur');
+      var minLabel = 'min';
+
+      if (hours > 0) {
+        if (mins > 0) {
+          return hours + ' ' + hourLabel + ' ' + mins + ' ' + minLabel;
+        } else {
+          return hours + ' ' + hourLabel;
+        }
+      } else {
+        return mins + ' ' + minLabel;
+      }
+    }
+
     var schedPrepMins = 45;
     function schedRender() {
       var timeEl = document.getElementById('d-sched-time');
@@ -5899,7 +5946,7 @@
       t.setMinutes(Math.round(t.getMinutes() / 5) * 5, 0, 0); // snap to 5-minute marks
       var pad = function (n) { return String(n).padStart(2, '0'); };
       if (timeEl) timeEl.textContent = pad(t.getHours()) + ':' + pad(t.getMinutes());
-      if (minsEl) minsEl.textContent = schedPrepMins + ' min';
+      if (minsEl) minsEl.textContent = formatRemainingHoursAndMins(schedPrepMins);
     }
     function schedStep(delta) {
       schedPrepMins = Math.max(5, schedPrepMins + delta);
@@ -6217,7 +6264,7 @@
       // Tip
       if (tipAmt > 0) {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
-        html += '    <span>Tip</span>';
+        html += '    <span>' + (t('d_tip') || 'Tip') + '</span>';
         html += '    <span>€ ' + tipAmt.toFixed(2) + '</span>';
         html += '  </div>';
       }
@@ -6225,20 +6272,20 @@
       // Discount / Reward
       if (discountAmt > 0) {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#108043;font-weight:500">';
-        html += '    <span>Reward</span>';
+        html += '    <span data-i18n="co_discount">' + (t('co_discount') || 'Discount') + '</span>';
         html += '    <span>-€ ' + discountAmt.toFixed(2) + '</span>';
         html += '  </div>';
       }
 
       // Total
       html += '  <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:#111">';
-      html += '    <span>Total</span>';
+      html += '    <span data-i18n="create_total">' + (t('create_total') || 'Total') + '</span>';
       html += '    <span>€ ' + totalAmt.toFixed(2) + '</span>';
       html += '  </div>';
 
       // Paid by
-      var isCash = (order.payment_type == '2' || order.payment_type === 2 || order.payment_status == '0' || order.payment_status === 'cash' || order.payment_status == '2');
-      var payText = isCash ? (t('d_cash') || 'Unpaid') : (t('d_paid') || 'Paid');
+      var isCash = (order.payment_type == '2' || order.payment_type === 2 || String(order.payment_type) === '2');
+      var payText = isCash ? (t('d_cash') || 'Cash payment') : (t('d_paid') || 'Paid online');
       var payIcon = isCash ? '💵' : '💳';
 
       html += '</div>';
@@ -6346,6 +6393,7 @@
         localOrder.service = platformCharge.toFixed(2);
         localStorage.setItem('posCurrentOrder', JSON.stringify(localOrder));
       }
+      try { updatePopupHeaderTime(order, window._detailCard, 35); } catch (e) { }
     }
 
     function onDishClick() {
@@ -6360,6 +6408,170 @@
             console.error('getOrders API error on dish click:', err);
           });
       }
+    }
+
+    function formatOrderDateLabel(dateStr, timeStr) {
+      if (!dateStr) return timeStr || '';
+
+      var str = String(dateStr).trim();
+      var datePart = str.split(' ')[0];
+      var parts = datePart.split('-');
+      if (parts.length !== 3) return timeStr ? (datePart + ', ' + timeStr) : datePart;
+
+      var yyyy, mm, dd;
+      if (parts[0].length === 4) {
+        // YYYY-MM-DD
+        yyyy = parseInt(parts[0], 10);
+        mm = parseInt(parts[1], 10) - 1;
+        dd = parseInt(parts[2], 10);
+      } else if (parts[2].length === 4) {
+        // DD-MM-YYYY
+        dd = parseInt(parts[0], 10);
+        mm = parseInt(parts[1], 10) - 1;
+        yyyy = parseInt(parts[2], 10);
+      } else {
+        return timeStr ? (datePart + ', ' + timeStr) : datePart;
+      }
+
+      var orderDate = new Date(yyyy, mm, dd);
+      orderDate.setHours(0, 0, 0, 0);
+
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      var tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+
+      var timeSuffix = timeStr ? ', ' + timeStr : '';
+
+      if (orderDate.getTime() === today.getTime()) {
+        return timeStr || (t('otime_today') || 'Today');
+      } else if (orderDate.getTime() === tomorrow.getTime()) {
+        return (t('otime_tomorrow') || 'Tomorrow') + timeSuffix;
+      } else {
+        // Day after tomorrow or any date after tomorrow -> show Day Name! (e.g. Thursday, 16:00 / Donderdag, 16:00)
+        var lang = (typeof currentLang !== 'undefined' ? currentLang : (localStorage.getItem('appLang') || 'nl'));
+        var dayNamesNl = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+        var dayNamesEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        var dayName = (lang === 'en' ? dayNamesEn : dayNamesNl)[orderDate.getDay()];
+        return dayName + timeSuffix;
+      }
+    }
+
+    function checkIsScheduledOrder(orderData) {
+      if (!orderData || typeof orderData !== 'object') return false;
+
+      // 1. If delivery_time is null/undefined/empty/'null' -> consider as ASAP (return false)
+      var dt = orderData.delivery_time;
+      var isDeliveryTimeNull = (dt === null || dt === undefined || String(dt).trim() === '' || String(dt).trim().toLowerCase() === 'null');
+      if (isDeliveryTimeNull) {
+        return false;
+      }
+
+      // 2. Check expected_delivery_time or delivery_date
+      var expTime = orderData.expected_delivery_time || orderData.delivery_date;
+      var isNotToday = false;
+      if (expTime) {
+        var strExp = String(expTime).trim();
+        var datePart = strExp.split(' ')[0]; // YYYY-MM-DD or DD-MM-YYYY
+
+        var now = new Date();
+        var yyyy = now.getFullYear();
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var dd = String(now.getDate()).padStart(2, '0');
+        var todayIso = yyyy + '-' + mm + '-' + dd;
+        var todayDdMm = dd + '-' + mm + '-' + yyyy;
+
+        if (datePart && datePart.indexOf('-') !== -1 && datePart !== todayIso && datePart !== todayDdMm) {
+          isNotToday = true;
+        }
+      }
+
+      if (isNotToday) {
+        return true;
+      }
+
+      // Otherwise if delivery_time is not null -> Scheduled!
+      return true;
+    }
+
+    function updatePopupHeaderTime(cachedOrder, cardEl, mins) {
+      if (!cachedOrder && !cardEl) return;
+      var isScheduledOrder = checkIsScheduledOrder(cachedOrder);
+
+      var rawOrderTime = (cachedOrder && (cachedOrder.expected_delivery_time || cachedOrder.delivery_time || cachedOrder.wished_time || cachedOrder.order_time || cachedOrder.created_at))
+        || (cardEl && cardEl.getAttribute('data-expected-delivery-time'))
+        || '';
+
+      var formattedOrderTime = '';
+      if (rawOrderTime) {
+        var strT = String(rawOrderTime).trim();
+        var dateParts = strT.split(' ');
+        var timePart = dateParts[1] || dateParts[0];
+        if (timePart && timePart.indexOf(':') !== -1) {
+          var parts = timePart.split(':');
+          if (parts[0] && parts[1]) {
+            formattedOrderTime = parts[0] + ':' + parts[1];
+          }
+        }
+      }
+
+      var rawOrderDate = (cachedOrder && (cachedOrder.expected_delivery_time || cachedOrder.delivery_date))
+        || (cardEl && cardEl.getAttribute('data-expected-delivery-time'))
+        || '';
+      var dateLabel = formatOrderDateLabel(rawOrderDate, formattedOrderTime);
+
+      var schedBadgeEl = document.getElementById('d-sched-badge');
+      if (schedBadgeEl) {
+        if (isScheduledOrder) {
+          schedBadgeEl.removeAttribute('data-i18n');
+          schedBadgeEl.textContent = t('d_scheduled');
+          schedBadgeEl.style.color = '#7b4bc4';
+          schedBadgeEl.style.background = '#f1eafc';
+          schedBadgeEl.style.border = 'none';
+        } else {
+          schedBadgeEl.setAttribute('data-i18n', 'otime_asap_full');
+          schedBadgeEl.textContent = t('otime_asap_full');
+          schedBadgeEl.style.color = '#888';
+          schedBadgeEl.style.background = '#fff';
+          schedBadgeEl.style.border = '1.5px solid #f0f0f0';
+        }
+      }
+
+      if (isScheduledOrder && formattedOrderTime) {
+        var schedTimeEl = document.getElementById('d-sched-time');
+        if (schedTimeEl) schedTimeEl.textContent = formattedOrderTime;
+      }
+
+      var targetMins = mins;
+      if (cachedOrder && cachedOrder.expected_delivery_time) {
+        var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
+        if (!isNaN(parsedExp) && parsedExp > Date.now()) {
+          targetMins = Math.round((parsedExp - Date.now()) / 60000);
+        }
+      }
+      var schedMinsEl = document.getElementById('d-sched-mins');
+      if (schedMinsEl && targetMins) {
+        schedMinsEl.textContent = formatRemainingHoursAndMins(targetMins);
+      }
+
+      var whenBadge = document.getElementById('d-when-badge');
+      if (whenBadge) {
+        if (isScheduledOrder) {
+          whenBadge.className = 'oc-when oc-when-scheduled';
+          whenBadge.removeAttribute('data-i18n');
+          whenBadge.textContent = dateLabel || formattedOrderTime || t('d_scheduled');
+        } else {
+          whenBadge.className = 'oc-when oc-when-asap';
+          whenBadge.setAttribute('data-i18n', 'otime_asap');
+          whenBadge.textContent = t('otime_asap');
+        }
+      }
+
+      var wished = isScheduledOrder ? (dateLabel || formattedOrderTime || t('d_scheduled')) : t('otime_asap');
+      var wishedEl = document.getElementById('d-wished-inline');
+      if (wishedEl) wishedEl.textContent = wished;
     }
 
     function goDetail(id, name, addr, oid, price, pay, type, mins, next, cardEl, isNewOrderPopup) {
@@ -6396,6 +6608,8 @@
       closeOrderMenu();
       closeChangeTime();
       closeAddNote();
+      var summaryBodyEl = document.getElementById('d-order-summary-body');
+      if (summaryBodyEl) summaryBodyEl.innerHTML = '';
 
       if (isUnaccepted) {
         if (backBtn) backBtn.style.display = 'none';
@@ -6407,24 +6621,8 @@
         if (pDetail) pDetail.classList.add('new-order-mode');
 
         schedPrepMins = parseInt(mins, 10) || 45;
-        schedRender();
-        var schedBadgeEl = document.getElementById('d-sched-badge');
-        if (schedBadgeEl) {
-          var isAsapOrder = (id !== '26'); // demo: only #26 has a fixed requested time
-          if (isAsapOrder) {
-            schedBadgeEl.setAttribute('data-i18n', 'otime_asap_full');
-            schedBadgeEl.textContent = t('otime_asap_full');
-            schedBadgeEl.style.color = '#888';
-            schedBadgeEl.style.background = '#fff';
-            schedBadgeEl.style.border = '1.5px solid #f0f0f0';
-          } else {
-            schedBadgeEl.setAttribute('data-i18n', 'd_scheduled');
-            schedBadgeEl.textContent = t('d_scheduled');
-            schedBadgeEl.style.color = '#7b4bc4';
-            schedBadgeEl.style.background = '#f1eafc';
-            schedBadgeEl.style.border = 'none';
-          }
-        }
+        var cachedOrderForBadge = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || window._detailOrderRaw;
+        updatePopupHeaderTime(cachedOrderForBadge, cardEl, mins);
       } else {
         document.getElementById('d-actions-default').style.display = 'flex';
         document.getElementById('d-actions-accept').style.display = 'none';
@@ -6450,23 +6648,8 @@
           orderTypeLbl.textContent = streetAddr + (cityNameT ? ', ' + cityNameT : '');
         }
       }
-      var whenBadge = document.getElementById('d-when-badge');
-      if (whenBadge) {
-        var ttD = (cardEl && cardEl.dataset.targetTime) ? parseInt(cardEl.dataset.targetTime, 10) : (Date.now() + (parseInt(mins, 10) || 45) * 60000);
-        if (((ttD - Date.now()) / 60000) > 90) {
-          whenBadge.className = 'oc-when oc-when-scheduled';
-          whenBadge.removeAttribute('data-i18n');
-          var stB = new Date(ttD);
-          stB.setMinutes(Math.round(stB.getMinutes() / 15) * 15, 0, 0);
-          var padB = function (n) { return String(n).padStart(2, '0'); };
-          var tStr = padB(stB.getHours()) + ':' + padB(stB.getMinutes());
-          whenBadge.textContent = (stB.toDateString() === new Date().toDateString()) ? tStr : (t('otime_tomorrow') + ', ' + tStr);
-        } else {
-          whenBadge.className = 'oc-when oc-when-asap';
-          whenBadge.setAttribute('data-i18n', 'otime_asap');
-          whenBadge.textContent = t('otime_asap');
-        }
-      }
+      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
+      updatePopupHeaderTime(cachedOrder, cardEl, mins);
       var fullSingleLineAddr = [streetAddr, cityAddr].filter(Boolean).join(', ');
       var custAddrBlock = document.getElementById('d-customer-addr-block');
       var custAddr = document.getElementById('d-customer-addr');
@@ -6582,39 +6765,29 @@
       }
       var noteSection = document.getElementById('d-note-section');
       var noteText = document.getElementById('d-note-text');
-      var hasNote = (type === 'Collection' || id === '37');
-      noteSection.style.display = hasNote ? 'flex' : 'none';
-      if (hasNote) noteText.textContent = 'Extra napkins please';
+      if (noteSection) noteSection.style.display = 'none';
+      if (noteText) noteText.textContent = '';
       showAdminNote((cardEl && cardEl.dataset.adminNote) || '');
       var payBadge = document.getElementById('d-pay-badge');
-      var isExplicitUnpaid = (pay === '2' || pay === 'Cash' || pay === 'Unpaid' || (cardEl && cardEl.dataset && cardEl.dataset.paymentType === '2'));
-      var isPaid = (pay === 'Paid' && !isExplicitUnpaid);
-      var payKey = isPaid ? 'd_paid' : 'd_cash';
+      var isCash = (pay === '2' || pay === 2 || String(pay) === '2' || pay === 'Cash' || (cardEl && cardEl.dataset && cardEl.dataset.paymentType === '2'));
+      var payKey = isCash ? 'd_cash' : 'd_paid';
       if (payBadge) {
         payBadge.dataset.payKey = payKey;
-        if (isPaid) {
-          payBadge.innerHTML = t('d_paid');
-          payBadge.style.color = '#2e7d32';
-          payBadge.style.background = '#e6f4ea';
-        } else {
+        if (isCash) {
           payBadge.innerHTML = t('d_cash');
           payBadge.style.color = '#c62828';
           payBadge.style.background = '#fdecea';
+        } else {
+          payBadge.innerHTML = t('d_paid');
+          payBadge.style.color = '#2e7d32';
+          payBadge.style.background = '#e6f4ea';
         }
       }
-      var newCustomerIds = ['37', '42', '48', '50', '51'];
-      var isNewCustomer = newCustomerIds.indexOf(id) !== -1;
       var custBadge = document.getElementById('d-customer-type-badge');
       if (custBadge) {
-        if (isNewCustomer) {
-          custBadge.textContent = t('d_new_customer');
-          custBadge.style.color = '#2e7d32';
-          custBadge.style.background = '#e6f4ea';
-        } else {
-          custBadge.textContent = t('d_returning_customer');
-          custBadge.style.color = '#555';
-          custBadge.style.background = '#f0f0f0';
-        }
+        custBadge.textContent = t('d_returning_customer');
+        custBadge.style.color = '#555';
+        custBadge.style.background = '#f0f0f0';
       }
       var statusEl = document.getElementById('d-header-status');
       if (statusEl) statusEl.textContent = isDelivery ? t('d_delivery') : t('d_pickup');
@@ -6698,14 +6871,7 @@
 
     }
 
-    // Shop details for the receipt header/footer (matches the bon.html design)
-    var RECEIPT_SHOP = {
-      name: 'STARBUCKS',
-      address: ['Tochtstraat 40', '3036SK Rotterdam', '010-21-4622', 'www.pizzaworld.nl'],
-      btwNr: 'NL865792768B01',
-      kvkNr: '91850347'
-    };
-    // Build the 80mm text receipt (mirrors the bon.html layout) and send it to the SUNMI printer.
+    // Build the 80mm text receipt and send it to the SUNMI printer.
     function printReceiptNative() {
       var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch (e) { }
       var isColl = o.type === 'Collection' || o.order_type == '2';
@@ -6719,12 +6885,41 @@
       var dayStr = daysNL[now.getDay()];
       var dateStr = o.created_at || (dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()));
       var DIV = { t: 'text', v: '--------------------------------\n' };
+
+      // Dynamic Restaurant Details from API / LocalStorage
+      var res = window._restaurantDetails;
+      if (!res) {
+        try { res = JSON.parse(localStorage.getItem('restaurant_details')) || {}; } catch (e) { res = {}; }
+      }
+      var logoUrl = res.restaurant_logo || '';
+      var resName = res.restaurant_name || '';
+      var phoneVal = res.phone_no || '';
+
       var c = [];
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'feed', n: 2 });
-      // Restaurant Header
-      c.push({ t: 'size', v: 28 }, { t: 'text', v: RECEIPT_SHOP.name + '\n' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: RECEIPT_SHOP.address.join('\n') + '\n' });
+      c.push({ t: 'feed', n: 1 });
+
+      if (logoUrl) {
+        c.push({ t: 'image', v: logoUrl });
+      }
+
+      // Restaurant Header sequence: restaurant_name -> rest_address -> rest_city -> rest_zipcode
+      if (resName) {
+        c.push({ t: 'size', v: 28 }, { t: 'text', v: resName + '\n' });
+      }
+      c.push({ t: 'size', v: 22 });
+      if (res.rest_address) {
+        c.push({ t: 'text', v: res.rest_address + '\n' });
+      }
+      if (res.rest_city) {
+        c.push({ t: 'text', v: res.rest_city + '\n' });
+      }
+      if (res.rest_zipcode) {
+        c.push({ t: 'text', v: res.rest_zipcode + '\n' });
+      }
+      if (phoneVal) {
+        c.push({ t: 'text', v: 'Tel: ' + phoneVal + '\n' });
+      }
       c.push({ t: 'feed', n: 1 });
 
       // Info Section
@@ -6791,13 +6986,14 @@
       // BTW Section
       c.push({ t: 'size', v: 22 });
       c.push({ t: 'cols', left: 'Btw 9%:', right: eur(btw), wl: 22, wr: 10 });
-      c.push({ t: 'text', v: 'BTW-nummer: ' + RECEIPT_SHOP.btwNr + '\n' });
-      c.push({ t: 'text', v: 'KVK-nummer: ' + RECEIPT_SHOP.kvkNr + '\n' });
+      if (res.permit_id) {
+        c.push({ t: 'text', v: 'Permit ID: ' + res.permit_id + '\n' });
+      }
       c.push(DIV);
 
       // Footer
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'text', v: 'Btw bedankt voor uw bestelling.\nBestel online via de website!\n' });
+      c.push({ t: 'text', v: 'Bedankt voor uw bestelling.\nBestel online via de website!\n' });
       c.push({ t: 'feed', n: 6 });   // extra ruimte onder de bon
       c.push({ t: 'cut' });
       try { window.AndroidPrinter.printReceipt(JSON.stringify(c)); } catch (e) { console.warn('native print failed', e); }
@@ -6819,6 +7015,46 @@
       var daysNL = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
       var dayStr = daysNL[now.getDay()];
       var dateFormatted = dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + '  ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+      // Restaurant Header
+      var res = window._restaurantDetails;
+      if (!res) {
+        try { res = JSON.parse(localStorage.getItem('restaurant_details')) || {}; } catch (e) { res = {}; }
+      }
+      var logoUrl = res.restaurant_logo || '';
+      var resName = res.restaurant_name || '';
+      var phoneVal = res.phone_no || '';
+
+      var logoEl = document.getElementById('pr-shop-logo');
+      if (logoEl) {
+        if (logoUrl) {
+          logoEl.src = logoUrl;
+          logoEl.style.display = 'inline-block';
+        } else {
+          logoEl.style.display = 'none';
+        }
+      }
+
+      var shopHeaderEl = document.getElementById('pr-shop-header-info');
+      if (shopHeaderEl) {
+        var hHtml = '';
+        if (resName) {
+          hHtml += '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:3px">' + resName + '</div>';
+        }
+        if (res.rest_address) {
+          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_address + '</div>';
+        }
+        if (res.rest_city) {
+          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_city + '</div>';
+        }
+        if (res.rest_zipcode) {
+          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_zipcode + '</div>';
+        }
+        if (phoneVal) {
+          hHtml += '<div style="font-size:12px;color:#333;margin-top:2px">Tel: ' + phoneVal + '</div>';
+        }
+        shopHeaderEl.innerHTML = hHtml;
+      }
 
       // Bestelnr.
       var oidEl = document.getElementById('pr-info-oid');
@@ -7564,14 +7800,12 @@
           var html = '';
           detailsList.forEach(function (order) {
             var orderTypeKey = order.order_type === '2' ? 'd_pickup' : 'd_delivery';
-            var isCash = (String(order.payment_type) === '2' || String(order.payment_status) === '2');
+            var isCash = (String(order.payment_type) === '2' || order.payment_type === 2);
             var payLabel = isCash ? (t('oc_pay_cash') || 'Cash payment') : (t('oc_pay_card') || 'Paid online');
             var typeLabel = t(orderTypeKey);
             var subTitle = typeLabel + ' · ' + payLabel;
             var totalStr = '€' + parseFloat(order.total_amount || 0).toFixed(2);
             var orderNo = order.order_number || ('#' + order.id);
-
-            var cashBadgeHtml = isCash ? '<div style="font-size:13px;font-weight:500;color:#16a34a;margin-top:6px">' + (t('betaald_bij_bezorging') || 'Betaald bij bezorging') + '</div>' : '';
 
             html += '<div class="ocard" onclick="goDetail(\'' + order.id + '\', \'\', \'\', \'' + orderNo + '\', \'' + order.total_amount + '\', \'' + order.payment_type + '\', \'' + (order.order_type === '2' ? 'Collection' : 'Delivery') + '\', \'\', \'\', this)" style="cursor:pointer;background:#fff;border-radius:12px;border:1.5px solid #f3f3f3;padding:16px 20px;margin-bottom:12px;">' +
               '<div style="display:flex;align-items:center;justify-content:space-between;">' +
@@ -7579,7 +7813,6 @@
               '<div style="font-size:15px;font-weight:600;color:#111">' + totalStr + '</div>' +
               '</div>' +
               '<div style="font-size:14px;color:#777;margin-top:4px">' + subTitle + '</div>' +
-              cashBadgeHtml +
               '</div>';
           });
           detailsListEl.innerHTML = html;
@@ -8650,6 +8883,7 @@
 
             if (res && typeof res === 'object') {
               window._restaurantDetails = res;
+              try { localStorage.setItem('restaurant_details', JSON.stringify(res)); } catch (e) { }
               var delTime = (res.delivery_time !== undefined && res.delivery_time !== null) ? res.delivery_time : res.delivery_mins;
               var pickTime = (res.take_away_time !== undefined && res.take_away_time !== null) ? res.take_away_time : (res.takeaway_time || res.pickup_time);
 
@@ -8851,15 +9085,28 @@
           var isLate = remaining <= 0;
           var whenEl = card.querySelector('.oc-when');
           if (whenEl) {
-            if (isScheduled) {
+            var rawData = card._rawOrderData || (window._liveOrdersMap && (window._liveOrdersMap[card.dataset.oid] || window._liveOrdersMap[card.dataset.oid ? card.dataset.oid.replace('#', '') : '']));
+            var isSched = checkIsScheduledOrder(rawData);
+            if (isSched) {
               whenEl.className = 'oc-when oc-when-scheduled';
               whenEl.removeAttribute('data-i18n');
-              var st = new Date(card.dataset.targetTime ? parseInt(card.dataset.targetTime, 10) : Date.now());
-              st.setMinutes(Math.round(st.getMinutes() / 15) * 15, 0, 0);
-              var pad2 = function (n) { return String(n).padStart(2, '0'); };
-              var timeStr = pad2(st.getHours()) + ':' + pad2(st.getMinutes());
-              var nowD = new Date();
-              whenEl.textContent = (st.toDateString() === nowD.toDateString()) ? timeStr : (t('otime_tomorrow') + ', ' + timeStr);
+              var rawExp = (rawData && rawData.expected_delivery_time) || card.getAttribute('data-expected-delivery-time') || (rawData && rawData.delivery_date) || '';
+              var rawTimeStr = '';
+              if (rawExp) {
+                var p = String(rawExp).trim().split(' ');
+                var tP = p[1] || (rawData && rawData.delivery_time) || '';
+                if (tP && tP.indexOf(':') !== -1) {
+                  var pT = tP.split(':');
+                  if (pT[0] && pT[1]) rawTimeStr = pT[0] + ':' + pT[1];
+                }
+              }
+              if (!rawTimeStr) {
+                var st = new Date(card.dataset.targetTime ? parseInt(card.dataset.targetTime, 10) : Date.now());
+                var pad2 = function (n) { return String(n).padStart(2, '0'); };
+                rawTimeStr = pad2(st.getHours()) + ':' + pad2(st.getMinutes());
+              }
+              var rawDatePart = rawExp ? String(rawExp).trim().split(' ')[0] : '';
+              whenEl.textContent = formatOrderDateLabel(rawDatePart, rawTimeStr);
             } else {
               whenEl.className = 'oc-when oc-when-asap';
               whenEl.setAttribute('data-i18n', 'otime_asap');
@@ -9383,8 +9630,8 @@
 
       var streetAndHouse = (street + ' ' + house).trim();
       var fullAddr = isCollection ? 'Collection order' : (streetAndHouse + (zipcode || city ? '||' + (zipcode + ' ' + city).trim() : ''));
-      var isExplicitUnpaid = (String(order.payment_type) === '2' || order.payment_status == '0' || order.payment_status === 'cash' || order.payment_status == '2');
-      var pay = (isExplicitUnpaid) ? 'Unpaid' : ((order.payment_status == '1' || order.payment_status === 'paid' || (responseData && responseData.payment_type_text === 'Card')) ? 'Paid' : 'Unpaid');
+      var isCashOrder = (String(order.payment_type) === '2' || order.payment_type === 2);
+      var pay = isCashOrder ? '2' : '1';
       var price = parseFloat(order.total_amount || order.item_total || 0).toFixed(2);
 
       var settingsId = isCollection ? 'settings-takeaway-mins' : 'settings-delivery-mins';
@@ -9525,7 +9772,7 @@
 
     function initOrderSocket() {
       if (typeof io === 'undefined') return;
-      var baseUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://admin.opiningstore.com').replace(/\/+$/, '');
+      var baseUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://admin.dryfftjwieiwjw.online').replace(/\/+$/, '');
       var socketEndpoints = Array.from(new Set([
         baseUrl
       ]));
@@ -9694,52 +9941,30 @@
       }
 
       var price = parseFloat(order.total_amount || 0).toFixed(2);
-      var pay = (order.payment_status == '1') ? 'Paid' : 'Cash';
+      var isCashOrder = (String(order.payment_type) === '2' || order.payment_type === 2);
+      var pay = isCashOrder ? '2' : '1';
 
-      // Parse time display according to 3 conditions
+      // Parse time display according to scheduled order rules
       var timeDisplay = 'ASAP';
-      var isScheduled = false;
+      var isScheduled = checkIsScheduledOrder(order);
 
-      var orderTimeIsNull = (order.order_time === null || order.order_time === undefined || String(order.order_time).trim() === '' || String(order.order_time).trim() === 'null');
-      var deliveryDateIsNull = (order.delivery_date === null || order.delivery_date === undefined || String(order.delivery_date).trim() === '' || String(order.delivery_date).trim() === 'null');
-
-      if (orderTimeIsNull && deliveryDateIsNull) {
-        timeDisplay = 'ASAP';
-      } else {
-        if (order.expected_delivery_time) {
-          var dateParts = String(order.expected_delivery_time).split(' ');
-          var orderDateStr = dateParts[0]; // YYYY-MM-DD
-          var timePart = dateParts[1]; // HH:MM:SS
-
-          var formattedTime = '';
-          if (timePart) {
-            var parts = timePart.split(':');
-            if (parts[0] && parts[1]) {
-              formattedTime = parts[0] + ':' + parts[1];
-            }
-          }
-
-          if (orderDateStr) {
-            var today = new Date();
-            var tomorrow = new Date();
-            tomorrow.setDate(today.getDate() + 1);
-
-            var pad = function (n) { return String(n).padStart(2, '0'); };
-            var tomorrowIso = tomorrow.getFullYear() + '-' + pad(tomorrow.getMonth() + 1) + '-' + pad(tomorrow.getDate());
-            var todayIso = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
-
-            if (orderDateStr === tomorrowIso) {
-              timeDisplay = t('otime_tomorrow') + ', ' + formattedTime;
-              isScheduled = true;
-            } else if (orderDateStr === todayIso) {
-              timeDisplay = formattedTime;
-              isScheduled = false;
-            } else {
-              timeDisplay = orderDateStr + ' ' + formattedTime;
-              isScheduled = true;
-            }
-          }
+      var expTimeStr = order.expected_delivery_time || order.delivery_date;
+      if (expTimeStr) {
+        var dateParts = String(expTimeStr).trim().split(' ');
+        var orderDateStr = dateParts[0];
+        var timePart = dateParts[1] || order.delivery_time || '';
+        var formattedTime = '';
+        if (timePart && timePart.indexOf(':') !== -1) {
+          var pT = timePart.split(':');
+          if (pT[0] && pT[1]) formattedTime = pT[0] + ':' + pT[1];
         }
+        if (isScheduled) {
+          timeDisplay = formatOrderDateLabel(orderDateStr, formattedTime);
+        } else {
+          timeDisplay = formattedTime || t('otime_asap');
+        }
+      } else {
+        timeDisplay = isScheduled ? t('d_scheduled') : t('otime_asap');
       }
 
       var subheaderHtml = '';
@@ -9804,7 +10029,7 @@
         '</svg>' +
         '</div>' +
         '<div class="mcol">' +
-        '<div class="dname">' + (isCollection ? '<span data-i18n="d_pickup">Afhaal</span>' : title) + '</div>' +
+        '<div class="dname">' + (isCollection ? '<span data-i18n="d_pickup">' + t('d_pickup') + '</span>' : title) + '</div>' +
         '<div class="oc-price">' + subheaderHtml + '</div>' +
         '</div>' +
         '</div>';
