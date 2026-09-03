@@ -23,7 +23,7 @@ import com.sunmi.peripheral.printer.SunmiPrinterService;
 public class MainActivity extends Activity {
 
     private static final String LOCAL_URL = "file:///android_asset/index.html";
-    private static final String ONLINE_URL = "https://admin.dryfftjwieiwjw.online/";
+    private static final String ONLINE_URL = "https://admin.opiningstore.com/";
 
     private WebView webView;
     private SunmiPrinterService printerService;
