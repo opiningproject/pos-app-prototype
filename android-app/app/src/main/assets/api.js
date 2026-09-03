@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://admin.opiningstore.com';
+const API_BASE_URL = 'https://admin.dryfftjwieiwjw.online';
 const DEFAULT_TIMEZONE = 'Europe/Amsterdam';
 
 const OrderStatus = Object.freeze({
@@ -365,12 +365,14 @@ const API = {
   async getCategories(params = {}) {
     try {
       const token = localStorage.getItem('auth_token');
+      if (!token) {
+        console.warn('API.getCategories: No auth token found, skipping category request before login.');
+        return Promise.reject(new Error('Unauthenticated: No auth token found'));
+      }
       const headers = {
         'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
       };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
       const body = new URLSearchParams();
       body.append('timezone', params.timezone || DEFAULT_TIMEZONE);
 

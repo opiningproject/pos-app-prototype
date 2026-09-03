@@ -773,6 +773,134 @@
       font-weight: 500 !important;
     }
 
+    /* Mode 1: NEW ORDER POPUP DESIGN */
+    #p-detail.mode-new-order #d-back-btn {
+      display: none !important;
+    }
+
+    #p-detail.mode-new-order #d-header-menu {
+      display: none !important;
+    }
+
+    #p-detail.mode-new-order #d-new-schedule {
+      display: block !important;
+    }
+
+    #p-detail.mode-new-order #d-top-timer-card {
+      display: none !important;
+    }
+
+    #p-detail.mode-new-order #d-status-icon-completed {
+      display: none !important;
+    }
+
+    #p-detail.mode-new-order #d-cancelled-badge {
+      display: none !important;
+    }
+
+    #p-detail.mode-new-order #d-action-footer {
+      display: none !important;
+    }
+
+    /* Mode 2: DISH DETAILS / LIVE ORDER POPUP DESIGN */
+    #p-detail.mode-live-order #d-back-btn {
+      display: flex !important;
+    }
+
+    #p-detail.mode-live-order #d-header-menu {
+      display: flex !important;
+    }
+
+    #p-detail.mode-live-order #d-new-schedule {
+      display: none !important;
+    }
+
+    #p-detail.mode-live-order #d-top-timer-card {
+      display: block !important;
+    }
+
+    #p-detail.mode-live-order #d-timer-svg {
+      display: block !important;
+    }
+
+    #p-detail.mode-live-order #d-status-icon-completed {
+      display: none !important;
+    }
+
+    #p-detail.mode-live-order #d-cancelled-badge {
+      display: none !important;
+    }
+
+    #p-detail.mode-live-order #d-action-footer {
+      display: block !important;
+    }
+
+    /* Mode 3: COMPLETED ORDER PAGE DESIGN */
+    #p-detail.mode-completed-order #d-back-btn {
+      display: flex !important;
+    }
+
+    #p-detail.mode-completed-order #d-header-menu {
+      display: flex !important;
+    }
+
+    #p-detail.mode-completed-order #d-new-schedule {
+      display: none !important;
+    }
+
+    #p-detail.mode-completed-order #d-top-timer-card {
+      display: block !important;
+    }
+
+    #p-detail.mode-completed-order #d-timer-svg {
+      display: none !important;
+    }
+
+    #p-detail.mode-completed-order #d-status-icon-completed {
+      display: flex !important;
+    }
+
+    #p-detail.mode-completed-order #d-cancelled-badge {
+      display: none !important;
+    }
+
+    #p-detail.mode-completed-order #d-action-footer {
+      display: none !important;
+    }
+
+    /* Mode 4: CANCELLED ORDER DESIGN */
+    #p-detail.mode-cancelled-order #d-back-btn {
+      display: flex !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-header-menu {
+      display: flex !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-new-schedule {
+      display: none !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-top-timer-card {
+      display: block !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-timer-svg {
+      display: none !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-status-icon-completed {
+      display: none !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-cancelled-badge {
+      display: flex !important;
+    }
+
+    #p-detail.mode-cancelled-order #d-action-footer {
+      display: none !important;
+    }
+
     #p-detail .scroll #d-sched-time {
       font-size: 34px !important;
     }
@@ -4066,7 +4194,7 @@
                     <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">
                     </div>
                   </div>
-                  <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
+                  <svg id="d-timer-svg" width="72" height="72" viewBox="0 0 48 48" style="flex-shrink:0">
                     <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5" />
                     <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2.5"
                       stroke-dasharray="138.23" stroke-dashoffset="138.23" stroke-linecap="round"
@@ -4076,6 +4204,14 @@
                     <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
                       fill="#aaa" font-family="Poppins,sans-serif">min</text>
                   </svg>
+
+                  <div id="d-cancelled-badge"
+                    style="display:none;width:72px;height:72px;border-radius:50%;background:rgb(253, 236, 234);align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="11" stroke="#c62828" stroke-width="1.8"></circle>
+                      <path d="M8 8l8 8M16 8l-8 8" stroke="#c62828" stroke-width="2" stroke-linecap="round"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
 
@@ -4127,12 +4263,6 @@
                   style="display:flex;flex-direction:column;gap:10px;padding-top:18px;padding-bottom:16px">
                   <div id="d-customer-phone" style="display:flex;align-items:center;gap:12px">
                     <span style="font-size:17px;font-weight:500;color:#111">—</span>
-                  </div>
-                  <div id="d-customer-addr-block" style="display:none;align-items:flex-start;gap:12px">
-                    <div style="display:flex;flex-direction:column;gap:4px">
-                      <span id="d-customer-addr" style="font-size:17px;font-weight:500;color:#111">—</span>
-                      <span id="d-customer-city" style="font-size:17px;font-weight:500;color:#111;display:none">—</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -4481,7 +4611,7 @@
                     style="font-size:14px;font-weight:500;color:#0a4f73;line-height:1.5">Volledige bestelgeschiedenis te
                     vinden op het opining dashboard.</div>
                 </div>
-                <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px" id="dash-details-title-row">7
+                <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px" id="dash-details-title-row">
                   <span data-i18n="nav_completed_orders">afgeronde bestellingen</span>
                 </div>
                 <div id="dash-details-list">
@@ -4504,7 +4634,8 @@
                     annuleringsgeschiedenis te vinden op het opining dashboard.</div>
                 </div>
                 <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px" id="dash-cancelled-title-row">
-                  3 <span data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span></div>
+                  <span data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span>
+                </div>
                 <div id="dash-cancelled-list">
                   <!-- Dynamic card rows -->
                 </div>
@@ -5775,10 +5906,57 @@
         var iconsEl = sb.querySelector('.icons'); if (iconsEl) iconsEl.style.color = tc;
       }
     }
+    function fetchSummaryAfterLogin() {
+      if (typeof API !== 'undefined' && API.getSummary) {
+        API.getSummary({ type: 'details' })
+          .then(function (responseData) {
+            console.log('getSummary response after login:', responseData);
+            if (responseData) {
+              updateTodayOrdersCount(responseData);
+            }
+          })
+          .catch(function (err) {
+            console.error('Failed to fetch summary after login:', err);
+          });
+        API.getSummary({ type: 'summary' })
+          .then(function (responseData) {
+            if (responseData) {
+              updateTodayOrdersCount(responseData);
+            }
+          })
+          .catch(function () {});
+      }
+    }
+
     function updateTodayOrdersCount(data) {
       if (!data) return;
       var count = null;
-      if (data.todayComplatedOrder !== undefined && data.todayComplatedOrder !== null) {
+
+      if (data.summary && data.summary.orders && data.summary.orders.total_count !== undefined && data.summary.orders.total_count !== null) {
+        count = data.summary.orders.total_count;
+      } else if (data.data && data.data.summary && data.data.summary.orders && data.data.summary.orders.total_count !== undefined && data.data.summary.orders.total_count !== null) {
+        count = data.data.summary.orders.total_count;
+      } else if (data.summary && data.summary.revenue && data.summary.revenue.total_count !== undefined && data.summary.revenue.total_count !== null) {
+        count = data.summary.revenue.total_count;
+      } else if (data.data && data.data.summary && data.data.summary.revenue && data.data.summary.revenue.total_count !== undefined && data.data.summary.revenue.total_count !== null) {
+        count = data.data.summary.revenue.total_count;
+      } else if (data.orders && data.orders.total_count !== undefined && data.orders.total_count !== null) {
+        count = data.orders.total_count;
+      } else if (data.data && data.data.orders && data.data.orders.total_count !== undefined && data.data.orders.total_count !== null) {
+        count = data.data.orders.total_count;
+      } else if (data.delivery_count !== undefined && data.delivery_count !== null) {
+        count = data.delivery_count;
+      } else if (data.orders && data.orders.delivery_count !== undefined && data.orders.delivery_count !== null) {
+        count = data.orders.delivery_count;
+      } else if (data.summary && data.summary.orders && data.summary.orders.delivery_count !== undefined && data.summary.orders.delivery_count !== null) {
+        count = data.summary.orders.delivery_count;
+      } else if (data.data && data.data.delivery_count !== undefined && data.data.delivery_count !== null) {
+        count = data.data.delivery_count;
+      } else if (data.data && data.data.orders && data.data.orders.delivery_count !== undefined && data.data.orders.delivery_count !== null) {
+        count = data.data.orders.delivery_count;
+      } else if (data.data && data.data.summary && data.data.summary.orders && data.data.summary.orders.delivery_count !== undefined && data.data.summary.orders.delivery_count !== null) {
+        count = data.data.summary.orders.delivery_count;
+      } else if (data.todayComplatedOrder !== undefined && data.todayComplatedOrder !== null) {
         count = data.todayComplatedOrder;
       } else if (data.todayCompletedOrder !== undefined && data.todayCompletedOrder !== null) {
         count = data.todayCompletedOrder;
@@ -5839,23 +6017,14 @@
     }
 
     function fetchTodayOrdersCount() {
-      if (typeof API !== 'undefined') {
-        if (API.getOrders) {
-          API.getOrders()
-            .then(function (res) {
-              if (res) updateTodayOrdersCount(res);
-            })
-            .catch(function (err) {
-              console.error('Failed to fetch getOrders today_count:', err);
-            });
-        }
-        if (API.getTodaySales) {
-          API.getTodaySales()
-            .then(function (res) {
-              if (res) updateTodayOrdersCount(res);
-            })
-            .catch(function (err) { });
-        }
+      if (typeof API !== 'undefined' && API.getSummary) {
+        API.getSummary({ type: 'summary' })
+          .then(function (res) {
+            if (res) updateTodayOrdersCount(res);
+          })
+          .catch(function (err) {
+            console.error('Failed to fetch getSummary count for nav:', err);
+          });
       }
     }
 
@@ -5919,23 +6088,17 @@
       totalMins = parseInt(totalMins, 10);
       if (isNaN(totalMins) || totalMins <= 0) return '0 min';
 
-      var lang = (typeof currentLang !== 'undefined' ? currentLang : (localStorage.getItem('appLang') || 'nl'));
-      var isEn = lang === 'en';
-
       var hours = Math.floor(totalMins / 60);
       var mins = totalMins % 60;
 
-      var hourLabel = isEn ? (hours === 1 ? 'hour' : 'hours') : (hours === 1 ? 'uur' : 'uur');
-      var minLabel = 'min';
-
       if (hours > 0) {
         if (mins > 0) {
-          return hours + ' ' + hourLabel + ' ' + mins + ' ' + minLabel;
+          return hours + 'h ' + mins + ' min';
         } else {
-          return hours + ' ' + hourLabel;
+          return hours + 'h';
         }
       } else {
-        return mins + ' ' + minLabel;
+        return mins + ' min';
       }
     }
 
@@ -6132,11 +6295,66 @@
       return names.join(', ');
     }
 
+    function extractSingleOrder(responseData) {
+      if (!responseData) return null;
+      if (responseData.data && Array.isArray(responseData.data.data) && responseData.data.data.length > 0) {
+        return responseData.data.data[0];
+      }
+      if (responseData.data && Array.isArray(responseData.data) && responseData.data.length > 0) {
+        return responseData.data[0];
+      }
+      if (responseData.data && typeof responseData.data === 'object' && !Array.isArray(responseData.data) && (responseData.data.id || responseData.data.order_number)) {
+        return responseData.data;
+      }
+      if (responseData.order && typeof responseData.order === 'object') {
+        return responseData.order;
+      }
+      if (Array.isArray(responseData.orders) && responseData.orders.length > 0) {
+        return responseData.orders[0];
+      }
+      if (Array.isArray(responseData.result) && responseData.result.length > 0) {
+        return responseData.result[0];
+      }
+      if (typeof responseData === 'object' && (responseData.id || responseData.order_number)) {
+        return responseData;
+      }
+      return null;
+    }
+
+    function extractOrderItems(order) {
+      if (!order || typeof order !== 'object') return [];
+      var candidateArrays = [
+        order.dish_details,
+        order.order_details,
+        order.order_dish_details,
+        order.order_dish,
+        order.order_dishes,
+        order.dishes_details,
+        order.dish_detail,
+        order.items,
+        order.order_items,
+        order.dishes,
+        order.dish,
+        order.details,
+        order.data && order.data.dish_details,
+        order.data && order.data.order_details,
+        order.data && order.data.items
+      ];
+      for (var i = 0; i < candidateArrays.length; i++) {
+        var arr = candidateArrays[i];
+        if (arr && Array.isArray(arr) && arr.length > 0) {
+          return arr;
+        }
+      }
+      return [];
+    }
+
     function renderLiveOrderDetail(order) {
       var body = document.getElementById('d-order-summary-body');
       if (!body) return;
 
-      var items = order.dish_details || order.order_items || [];
+      var items = extractOrderItems(order);
+
       var html = '';
       var calculatedSubtotal = 0;
       var depositGroups = {};
@@ -6199,43 +6417,45 @@
           }
         }
 
-        var attrsText = extractItemAttributes(item);
+        // Render item row
+        var optionsText = extractItemAttributes(item);
+        var subtextHtml = optionsText ? '<div style="font-size:13px;color:#777;margin-top:2px">' + optionsText + '</div>' : '';
 
-        html += '<div onclick="onDishClick()" style="padding:14px 0;border-top:1px solid #f0f0f0;cursor:pointer">';
-        html += '  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">';
-        html += '    <div style="display:flex;align-items:flex-start;gap:16px;flex:1;min-width:0">';
-        html += '      <span style="font-size:16px;font-weight:700;color:#111;flex-shrink:0">' + qty + '</span>';
+        html += '  <div onclick="onDishClick()" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;font-size:15px;color:#111;cursor:pointer">';
+        html += '    <div style="display:flex;gap:12px;align-items:flex-start;flex:1;padding-right:12px">';
+        html += '      <span style="font-weight:600;min-width:18px">' + qty + '</span>';
         html += '      <div>';
-        html += '        <div style="font-size:16px;font-weight:600;color:#111">' + name + '</div>';
-        if (attrsText) {
-          html += '        <div style="font-size:14px;color:#888;margin-top:4px">' + attrsText + '</div>';
-        }
+        html += '        <div style="font-weight:500">' + name + '</div>';
+        html += subtextHtml;
         html += '      </div>';
         html += '    </div>';
-        html += '    <div style="font-size:16px;font-weight:600;color:#111;flex-shrink:0">€ ' + priceStr + '</div>';
+        html += '    <span style="font-weight:500;white-space:nowrap">€ ' + priceStr + '</span>';
         html += '  </div>';
-        html += '</div>';
       });
 
-      var subtotal = (order.item_total !== undefined && order.item_total !== null && parseFloat(order.item_total) > 0)
-        ? parseFloat(order.item_total)
-        : calculatedSubtotal;
-      var deliveryCharge = parseFloat(order.delivery_charge || 0);
-      var platformCharge = parseFloat(order.platform_charge || 0);
+      // Calculate order totals
+      var subtotal = (order.subtotal !== undefined && order.subtotal !== null && order.subtotal > 0)
+        ? parseFloat(order.subtotal)
+        : ((order.item_total !== undefined && order.item_total !== null && order.item_total > 0) ? parseFloat(order.item_total) : calculatedSubtotal);
+
+      var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || 0);
+      var platformCharge = parseFloat(order.platform_charge || order.service_fee || order.service_charge || 0);
       var tipAmt = parseFloat(order.tip || order.tip_amount || 0);
-      var discountAmt = parseFloat(order.coupon_discount || order.auto_discount || order.redeem_discount || 0);
+      var discountAmt = parseFloat(order.discount_amount || order.discount || order.reward || 0);
 
-      var totalAmt = parseFloat(order.total_amount || (subtotal + deliveryCharge + platformCharge + tipAmt - discountAmt));
+      var totalAmt = (order.total_amount !== undefined && order.total_amount !== null && order.total_amount > 0)
+        ? parseFloat(order.total_amount)
+        : (subtotal + deliveryCharge + platformCharge + tipAmt - discountAmt);
 
-      html += '<div style="border-top:1px solid #f0f0f0;padding:14px 0 14px;margin-top:6px">';
+      html += '<div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">';
 
       // Deposit line(s)
-      Object.keys(depositGroups).forEach(function (key) {
-        var group = depositGroups[key];
-        var totalDepAmt = group.rate * group.count;
-        var infoSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
-        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
-        html += '    <span style="display:flex;align-items:center;gap:4px">Deposit € ' + group.rateLabel + ' x ' + group.count + ' ' + infoSvg + '</span>';
+      Object.keys(depositGroups).forEach(function (k) {
+        var group = depositGroups[k];
+        var totalDepAmt = group.count * group.rate;
+        var infoIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:3px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+        html += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span>Deposit € ' + group.rateLabel + ' x ' + group.count + ' ' + infoIcon + '</span>';
         html += '    <span>€ ' + totalDepAmt.toFixed(2) + '</span>';
         html += '  </div>';
       });
@@ -6284,11 +6504,6 @@
       html += '    <span>€ ' + totalAmt.toFixed(2) + '</span>';
       html += '  </div>';
 
-      // Paid by
-      var isCash = (order.payment_type == '2' || order.payment_type === 2 || String(order.payment_type) === '2');
-      var payText = isCash ? (t('d_cash') || 'Cash payment') : (t('d_paid') || 'Paid online');
-      var payIcon = isCash ? '💵' : '💳';
-
       html += '</div>';
 
       body.innerHTML = html;
@@ -6303,20 +6518,33 @@
         dTotal.textContent = totalText;
       }
 
+      // Populate order number
+      var orderNo = order.order_number || ('#' + (order.transaction_id || order.id || ''));
+      var orderNoEl = document.getElementById('d-order-number');
+      if (orderNoEl) orderNoEl.textContent = orderNo;
+
       // Populate user details
       var userDetails = order.order_user_details || order.user_details || {};
-      var nameVal = userDetails.order_name || userDetails.name || (userDetails.FirstName ? (userDetails.FirstName + ' ' + (userDetails.LastName || '')) : '');
+      var nameVal = userDetails.order_name || userDetails.name || (userDetails.FirstName ? (userDetails.FirstName + ' ' + (userDetails.LastName || '')) : (order.FirstName ? (order.FirstName + ' ' + (order.LastName || '')) : ''));
       if (nameVal) {
         var nameEl = document.getElementById('d-detail-name');
         if (nameEl) nameEl.textContent = nameVal;
       }
 
-      var phone = userDetails.order_contact_number || userDetails.phone_number || '';
+      // Populate phone number
+      var phone = userDetails.order_contact_number || userDetails.phone_number || userDetails.phone || userDetails.Phone || order.phone || order.order_contact_number || order.phone_number || order.user_phone || '';
+      var phoneContainer = document.getElementById('d-customer-phone');
       var phoneEl = document.querySelector('#d-customer-phone span');
-      if (phoneEl && phone) {
-        var countryCode = userDetails.country_code || '';
-        var fullPhone = countryCode ? (countryCode + ' ' + phone) : phone;
-        phoneEl.textContent = fullPhone;
+      if (phoneEl) {
+        if (phone) {
+          var countryCode = userDetails.country_code || order.country_code || '';
+          var fullPhone = countryCode ? (countryCode + ' ' + phone) : phone;
+          phoneEl.textContent = fullPhone;
+          if (phoneContainer) phoneContainer.style.display = 'flex';
+        } else {
+          phoneEl.textContent = '';
+          if (phoneContainer) phoneContainer.style.display = 'none';
+        }
       }
 
       // Populate order status & address
@@ -6575,6 +6803,26 @@
       if (wishedEl) wishedEl.textContent = wished;
     }
 
+    function setPopupModeFromOrder(order, isUnaccepted, next) {
+      var pDetail = document.getElementById('p-detail');
+      if (!pDetail) return;
+      var statusVal = String((order && (order.order_status !== undefined ? order.order_status : order.status)) || '');
+      var isCancelled = (statusVal === '7' || statusVal === 'cancelled' || next === 'cancelled_screen' || next === 'cancelled');
+      var isCompletedOrder = (statusVal === '6' || statusVal === 'completed' || next === 'completed_screen' || next === 'archive');
+
+      pDetail.classList.remove('mode-new-order', 'mode-live-order', 'mode-completed-order', 'mode-cancelled-order');
+
+      if (isUnaccepted) {
+        pDetail.classList.add('mode-new-order');
+      } else if (isCancelled) {
+        pDetail.classList.add('mode-cancelled-order');
+      } else if (isCompletedOrder) {
+        pDetail.classList.add('mode-completed-order');
+      } else {
+        pDetail.classList.add('mode-live-order');
+      }
+    }
+
     function goDetail(id, name, addr, oid, price, pay, type, mins, next, cardEl, isNewOrderPopup) {
       var currentActivePage = document.querySelector('.page.active');
       if (currentActivePage && currentActivePage.id !== 'p-detail') {
@@ -6612,6 +6860,9 @@
       var summaryBodyEl = document.getElementById('d-order-summary-body');
       if (summaryBodyEl) summaryBodyEl.innerHTML = '';
 
+      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
+      setPopupModeFromOrder(cachedOrder, isUnaccepted, next);
+
       if (isUnaccepted) {
         if (backBtn) backBtn.style.display = 'none';
         if (headerMenu) headerMenu.style.display = 'none';
@@ -6619,11 +6870,13 @@
         if (timerCard) timerCard.style.display = 'none';
         if (actionFooter) actionFooter.style.display = 'none';
         if (detailHeaderEl) detailHeaderEl.classList.add('d-new-header');
-        if (pDetail) pDetail.classList.add('new-order-mode');
 
-        schedPrepMins = parseInt(mins, 10) || 45;
+        schedPrepMins = parseInt(mins, 10) || 35;
+        window._popupDeltaMins = 0;
         var cachedOrderForBadge = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || window._detailOrderRaw;
+        window._currentPopupOrder = cachedOrderForBadge;
         updatePopupHeaderTime(cachedOrderForBadge, cardEl, mins);
+        schedRender();
       } else {
         document.getElementById('d-actions-default').style.display = 'flex';
         document.getElementById('d-actions-accept').style.display = 'none';
@@ -6633,7 +6886,6 @@
         if (timerCard) timerCard.style.display = 'block';
         if (actionFooter) actionFooter.style.display = 'block';
         if (detailHeaderEl) detailHeaderEl.classList.remove('d-new-header');
-        if (pDetail) pDetail.classList.remove('new-order-mode');
       }
 
       var addrParts = (addr || '').split('||');
@@ -6809,7 +7061,7 @@
         pay: pay,
         price: price,
         wished: wished,
-        note: hasNote ? noteText.textContent : ''
+        note: (noteText ? noteText.textContent : '')
       }));
 
       var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]);
@@ -6817,30 +7069,26 @@
         renderLiveOrderDetail(cachedOrder);
       }
 
+      var targetOrderId = id || (cardEl && cardEl.dataset ? (cardEl.dataset.id || cardEl.dataset.oid) : '') || (oid ? String(oid).replace('#', '') : '');
+
       // Fetch live order detail data calling API.getOrders passing order_id parameter
-      var fetchDetailsPromise = (typeof API !== 'undefined' && API.getOrders)
-        ? API.getOrders({ order_id: id })
+      var fetchDetailsPromise = (typeof API !== 'undefined' && API.getOrders && targetOrderId)
+        ? API.getOrders({ order_id: targetOrderId })
         : Promise.resolve(null);
 
       fetchDetailsPromise
         .then(function (responseData) {
-          if (responseData) updateTodayOrdersCount(responseData);
-          var singleOrder = null;
-          if (responseData && responseData.data) {
-            if (Array.isArray(responseData.data)) {
-              singleOrder = responseData.data[0];
-            } else {
-              singleOrder = responseData.data;
-            }
-          } else if (responseData && responseData.order) {
-            singleOrder = responseData.order;
-          }
+          var singleOrder = extractSingleOrder(responseData);
           if (singleOrder) {
+            window._detailOrderRaw = singleOrder;
+            if (cardEl) cardEl._rawOrderData = singleOrder;
             renderLiveOrderDetail(singleOrder);
+            updatePopupHeaderTime(singleOrder, cardEl, mins);
+            setPopupModeFromOrder(singleOrder, isUnaccepted, next);
           }
         })
         .catch(function (err) {
-          console.error("Failed to load order details:", err);
+          console.error("Failed to load order details for order_id=" + targetOrderId + ":", err);
         });
     }
 
@@ -7502,10 +7750,10 @@
     function renderAllOrderCards() {
       document.querySelectorAll('#orders-panes .ocard[onclick]').forEach(renderOrderCard);
     }
-    renderAllOrderCards(); // initial render now that the icon constants are defined
-    setDeviceStatusBar('#ffffff', false); // default white status bar on load
-    if (location.hash === '#login') doLogout(); // dev: open straight on the login screen
     updateHeaderOrderTotal();
+    if (localStorage.getItem('auth_token')) {
+      fetchSummaryAfterLogin();
+    }
 
     function toggleCoDropdown() {
       var dd = document.getElementById('co-dropdown');
@@ -7735,8 +7983,9 @@
       API.getSummary({ type: type })
         .then(function (responseData) {
           console.log('getSummary API success:', responseData);
-          if (responseData && responseData.data) {
-            renderDashData(type, responseData.data);
+          var dashData = (responseData && responseData.data) ? responseData.data : responseData;
+          if (dashData) {
+            renderDashData(type, dashData);
           }
         })
         .catch(function (err) {
@@ -7791,7 +8040,10 @@
           takeRowEl.innerHTML = ord.takeaway_count + ' <span data-i18n="dash_takeaway_word">' + t('dash_takeaway_word') + '</span> · €' + parseFloat(ord.takeaway_amount || 0).toFixed(2);
         }
       } else if (type === 'details' || type === 'detials') {
-        var detailsList = data.details || [];
+        var detailsList = Array.isArray(data) ? data :
+          ((data && data.details && Array.isArray(data.details)) ? data.details :
+            ((data && data.data && Array.isArray(data.data.details)) ? data.data.details :
+              ((data && data.data && Array.isArray(data.data)) ? data.data : [])));
         var countTitleEl = document.getElementById('dash-details-title-row');
         if (countTitleEl) {
           countTitleEl.innerHTML = detailsList.length + ' <span data-i18n="nav_completed_orders">' + t('nav_completed_orders') + '</span>';
@@ -7800,15 +8052,15 @@
         if (detailsListEl) {
           var html = '';
           detailsList.forEach(function (order) {
-            var orderTypeKey = order.order_type === '2' ? 'd_pickup' : 'd_delivery';
-            var isCash = (String(order.payment_type) === '2' || order.payment_type === 2);
-            var payLabel = isCash ? (t('oc_pay_cash') || 'Cash payment') : (t('oc_pay_card') || 'Paid online');
-            var typeLabel = t(orderTypeKey);
+            var orderTypeKey = (order.order_type === '2' || order.order_type_text === 'Collection' || order.order_type_text === 'Takeaway') ? 'd_pickup' : 'd_delivery';
+            var isCash = (String(order.payment_type) === '2' || String(order.payment_type_text).toLowerCase() === 'cash' || String(order.payment_status) === '2');
+            var payLabel = order.payment_type_text ? (order.payment_type_text + ' payment') : (isCash ? (t('oc_pay_cash') || 'Cash payment') : (t('oc_pay_card') || 'Paid online'));
+            var typeLabel = order.order_type_text || t(orderTypeKey);
             var subTitle = typeLabel + ' · ' + payLabel;
             var totalStr = '€' + parseFloat(order.total_amount || 0).toFixed(2);
             var orderNo = order.order_number || ('#' + order.id);
 
-            html += '<div class="ocard" onclick="goDetail(\'' + order.id + '\', \'\', \'\', \'' + orderNo + '\', \'' + order.total_amount + '\', \'' + order.payment_type + '\', \'' + (order.order_type === '2' ? 'Collection' : 'Delivery') + '\', \'\', \'\', this)" style="cursor:pointer;background:#fff;border-radius:12px;border:1.5px solid #f3f3f3;padding:16px 20px;margin-bottom:12px;">' +
+            html += '<div class="ocard" onclick="goDetail(\'' + order.id + '\', \'\', \'\', \'' + orderNo + '\', \'' + order.total_amount + '\', \'' + order.payment_type + '\', \'' + (order.order_type === '2' ? 'Collection' : 'Delivery') + '\', \'\', \'completed_screen\', this)" style="cursor:pointer;background:#fff;border-radius:12px;border:1.5px solid #f3f3f3;padding:16px 20px;margin-bottom:12px;">' +
               '<div style="display:flex;align-items:center;justify-content:space-between;">' +
               '<div style="font-size:15px;font-weight:600;color:#111">' + orderNo + '</div>' +
               '<div style="font-size:15px;font-weight:600;color:#111">' + totalStr + '</div>' +
@@ -7818,47 +8070,60 @@
           });
           detailsListEl.innerHTML = html;
         }
-      } else if (type === 'cancelled') {
-        var cancelledList = data.cancelled || [];
+      } else if (type === 'cancelled' || type === 'cancel') {
+        var cancelledList = Array.isArray(data) ? data :
+          ((data && data.cancelled && Array.isArray(data.cancelled)) ? data.cancelled :
+            ((data && data.cancel && Array.isArray(data.cancel)) ? data.cancel :
+              ((data && data.canceled && Array.isArray(data.canceled)) ? data.canceled :
+                ((data && data.cancelled_orders && Array.isArray(data.cancelled_orders)) ? data.cancelled_orders :
+                  ((data && data.data && Array.isArray(data.data)) ? data.data : [])))));
+
         var cancelTitleEl = document.getElementById('dash-cancelled-title-row');
         if (cancelTitleEl) {
-          cancelTitleEl.innerHTML = cancelledList.length + ' <span data-i18n="dash_cancelled_orders">' + t('dash_cancelled_orders') + '</span>';
+          cancelTitleEl.innerHTML = cancelledList.length + ' <span data-i18n="dash_cancelled_orders">' + (t('dash_cancelled_orders') || 'geannuleerde bestellingen') + '</span>';
         }
         var cancelledListEl = document.getElementById('dash-cancelled-list');
         if (cancelledListEl) {
           var html = '';
           cancelledList.forEach(function (order) {
-            var orderTypeKey = order.order_type === '2' ? 'd_pickup' : 'd_delivery';
-            var isCash = (String(order.payment_type) === '2' || String(order.payment_status) === '2');
+            var orderTypeKey = (order.order_type === '2' || order.order_type_text === 'Collection' || order.order_type_text === 'Takeaway') ? 'd_pickup' : 'd_delivery';
+            var isCash = (String(order.payment_type) === '2' || String(order.payment_type_text).toLowerCase() === 'cash' || String(order.payment_status) === '2');
             var payTypeKey = isCash ? 'oc_pay_cash' : 'oc_pay_card';
-            var typeLabel = t(orderTypeKey);
-            var payLabel = t(payTypeKey);
+            var typeLabel = order.order_type_text || t(orderTypeKey);
+            var payLabel = order.payment_type_text ? (order.payment_type_text + ' payment') : (t(payTypeKey) || (isCash ? 'Cash payment' : 'Paid online'));
             var totalStr = '€' + parseFloat(order.total_amount || 0).toFixed(2);
             var orderNo = order.order_number || ('#' + order.id);
 
-            var refundStatusText = '';
-            var refundStatusStyle = 'padding-top:8px;';
-            if (order.refund_status === '1') {
-              refundStatusText = t('refund_done');
-              refundStatusStyle += 'color:#16a34a;';
-            } else if (order.refund_status === '2') {
-              refundStatusText = t('refund_pending');
-              refundStatusStyle += 'color:#d97706;';
+            var refundStatusText = order.refund_status_text || '';
+            var refundStatusStyle = 'padding-top:8px;font-size:13px;';
+            if (!refundStatusText) {
+              if (order.refund_status === '1') {
+                refundStatusText = t('refund_done') || 'Terugbetaald';
+                refundStatusStyle += 'color:#16a34a;';
+              } else if (order.refund_status === '2') {
+                refundStatusText = t('refund_pending') || 'Terugbetaling bezig';
+                refundStatusStyle += 'color:#d97706;';
+              } else {
+                refundStatusText = t('refund_none') || 'Geen terugbetaling vereist';
+                refundStatusStyle += 'color:#777;';
+              }
             } else {
-              refundStatusText = t('refund_none');
+              if (String(order.refund_status) === '1' || refundStatusText.toLowerCase().indexOf('done') !== -1 || refundStatusText.toLowerCase().indexOf('refunded') !== -1) {
+                refundStatusStyle += 'color:#16a34a;';
+              } else if (String(order.refund_status) === '2' || refundStatusText.toLowerCase().indexOf('pending') !== -1) {
+                refundStatusStyle += 'color:#d97706;';
+              } else {
+                refundStatusStyle += 'color:#777;';
+              }
             }
 
-            html += '<div class="ocard" onclick="goDetail(\'' + order.id + '\', \'\', \'\', \'' + orderNo + '\', \'' + order.total_amount + '\', \'' + order.payment_type + '\', \'' + (order.order_type === '2' ? 'Collection' : 'Delivery') + '\', \'\', \'\', null)" style="cursor:pointer">' +
-              '<div class="ocard-row">' +
-              '<div class="tcol" style="align-self:flex-start">' +
-              '<div class="tnum" style="font-size:14px;font-weight:600;color:#111">' + totalStr + '</div>' +
+            html += '<div class="ocard" onclick="goDetail(\'' + order.id + '\', \'\', \'\', \'' + orderNo + '\', \'' + order.total_amount + '\', \'' + order.payment_type + '\', \'' + (order.order_type === '2' ? 'Collection' : 'Delivery') + '\', \'\', \'cancelled_screen\', this)" style="cursor:pointer;background:#fff;border-radius:12px;border:1.5px solid #f3f3f3;padding:16px 20px;margin-bottom:12px;">' +
+              '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+              '<div style="font-size:15px;font-weight:600;color:#111">' + orderNo + '</div>' +
+              '<div style="font-size:15px;font-weight:600;color:#111">' + totalStr + '</div>' +
               '</div>' +
-              '<div class="mcol">' +
-              '<div class="dname">' + orderNo + '</div>' +
-              '<div class="oc-price"><span>' + typeLabel + '</span> · ' + payLabel + '</div>' +
-              '<div class="oc-price" style="' + refundStatusStyle + '">' + refundStatusText + '</div>' +
-              '</div>' +
-              '</div>' +
+              '<div style="font-size:14px;color:#777;margin-top:4px">' + typeLabel + ' · ' + payLabel + '</div>' +
+              '<div style="' + refundStatusStyle + '">' + refundStatusText + '</div>' +
               '</div>';
           });
           cancelledListEl.innerHTML = html;
@@ -7996,7 +8261,7 @@
       if (!animate) requestAnimationFrame(function () { underline.classList.remove('no-anim'); });
     }
     window.addEventListener('resize', function () { moveOrdersUnderline(null, false); moveDashUnderline(null, false); moveMenuUnderline(null, false); });
-    window.addEventListener('load', function () { moveOrdersUnderline(null, false); moveDashUnderline(null, false); moveMenuUnderline(null, false); renderMenuCatList(); });
+    window.addEventListener('load', function () { moveOrdersUnderline(null, false); moveDashUnderline(null, false); moveMenuUnderline(null, false); });
 
     // Interactive finger-following pager for the orders panels (like Google Drive tabs)
     (function initOrdersPager() {
@@ -8445,6 +8710,12 @@
     function renderMenuCatList() {
       var scroll = document.getElementById('menu-items-list');
       if (!scroll) return;
+
+      var token = localStorage.getItem('auth_token');
+      if (!token) {
+        console.warn('renderMenuCatList skipped: user is not logged in yet.');
+        return;
+      }
 
       if (typeof API !== 'undefined' && API.getCategories) {
         API.getCategories()
@@ -9144,8 +9415,17 @@
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
             var displayVal = isLate ? Math.abs(remaining) : remaining;
-            numEl.textContent = displayVal;
-            if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+            if (displayVal > 60) {
+              var h = Math.floor(displayVal / 60);
+              var m = displayVal % 60;
+              numEl.setAttribute('font-size', '11');
+              numEl.textContent = m > 0 ? (h + 'h ' + m + 'm') : (h + 'h');
+              if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+            } else {
+              numEl.setAttribute('font-size', '14');
+              numEl.textContent = displayVal;
+              if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+            }
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
             else if (remaining <= 15) tcol.classList.add('urgent');
@@ -9843,6 +10123,8 @@
       document.getElementById('p-login').style.display = 'none';
       localStorage.setItem('auth_token', token || 'session_active');
       fetchRestaurantDetails();
+      fetchSummaryAfterLogin();
+      renderMenuCatList();
       goPage('orders');
       if (btn) {
         btn.disabled = false;
@@ -9903,6 +10185,8 @@
 
           localStorage.setItem('auth_token', token);
           fetchRestaurantDetails();
+          fetchSummaryAfterLogin();
+          renderMenuCatList();
 
           goPage('orders');
         })
@@ -10085,7 +10369,9 @@
             }
           });
 
-          if (data) updateTodayOrdersCount(data);
+          if (data && (data.summary || (data.data && data.data.summary) || data.todayComplatedOrder || data.todayCompletedOrder || data.delivery_count)) {
+            updateTodayOrdersCount(data);
+          }
           var orders = [];
           if (data && Array.isArray(data.data)) {
             orders = data.data;
@@ -10579,6 +10865,8 @@
     if (localStorage.getItem('auth_token')) {
       loadOrders();
       fetchRestaurantDetails();
+      fetchSummaryAfterLogin();
+      renderMenuCatList();
     } else {
       doLogout();
     }
