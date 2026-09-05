@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://admin.opiningstore.com';
+const API_BASE_URL = 'https://admin.dryfftjwieiwjw.online';
 const DEFAULT_TIMEZONE = 'Europe/Amsterdam';
 
 const OrderStatus = Object.freeze({
