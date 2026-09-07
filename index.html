@@ -754,7 +754,12 @@
       display: none !important;
     }
 
-    #p-detail.new-order-mode #d-customer-addr-block {
+    #p-detail:not(.mode-new-order):not(.new-order-mode) #d-customer-addr-block {
+      display: none !important;
+    }
+
+    #p-detail.new-order-mode #d-customer-addr-block,
+    #p-detail.mode-new-order #d-customer-addr-block {
       margin-top: 0 !important;
     }
 
@@ -865,7 +870,7 @@
     }
 
     #p-detail.mode-completed-order #d-action-footer {
-      display: none !important;
+      display: block !important;
     }
 
     /* Mode 4: CANCELLED ORDER DESIGN */
@@ -5711,7 +5716,7 @@
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
         hdr_sales_analysis: 'Sales analysis',
         d_wished_label: 'Requested:', d_delivery: 'Delivery', d_pickup: 'Collection', d_pickup_full: 'Being collected',
-        d_subtotal: 'Subtotal', d_shipping: 'Delivery', d_service: 'Service fee',
+        d_subtotal: 'Subtotal', d_shipping: 'Delivery', d_service: 'Service fee', d_tip: 'Tip',
         d_returning_customer: 'Returning customer', d_confirm: 'Confirm', d_scheduled: 'Scheduled',
         d_cancel_order: 'Cancel order', toast_order_cancelled: 'Order cancelled', toast_order_completed: 'Order completed',
         d_cancel_confirm_title: 'Are you sure you want to cancel the order?', d_cancel_confirm_yes: 'Yes, cancel and refund', d_cancel_confirm_no: 'No, keep order',
@@ -5801,7 +5806,7 @@
         app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'geaccepteerd',
         hdr_sales_analysis: 'Verkoopanalyse',
         d_wished_label: 'Gewenst:', d_delivery: 'Bezorging', d_pickup: 'Afhaal', d_pickup_full: 'Wordt afgehaald',
-        d_subtotal: 'Subtotaal', d_shipping: 'Bezorging', d_service: 'Servicekosten',
+        d_subtotal: 'Subtotaal', d_shipping: 'Bezorging', d_service: 'Servicekosten', d_tip: 'Fooi',
         d_returning_customer: 'Vaste klant', d_confirm: 'Bevestigen', d_scheduled: 'Gepland',
         d_cancel_order: 'Bestelling annuleren', toast_order_cancelled: 'Bestelling geannuleerd', toast_order_completed: 'Bestelling afgerond',
         d_cancel_confirm_title: 'Weet je zeker dat je de bestelling wilt annuleren?', d_cancel_confirm_yes: 'Ja, annuleren en terugbetalen', d_cancel_confirm_no: 'Nee, bestelling behouden',
@@ -6109,16 +6114,57 @@
     }
 
     var schedPrepMins = 45;
+    window._popupDeltaMins = 0;
+
     function schedRender() {
       var timeEl = document.getElementById('d-sched-time');
       var minsEl = document.getElementById('d-sched-mins');
-      var t = new Date(Date.now() + schedPrepMins * 60000);
-      t.setMinutes(Math.round(t.getMinutes() / 5) * 5, 0, 0); // snap to 5-minute marks
+
+      var orderObj = window._currentPopupOrder || (window._detailCard && window._detailCard._rawOrderData) || window._detailOrderRaw;
+      var rawExp = (orderObj && (orderObj.expected_delivery_time || orderObj.delivery_time || orderObj.delivery_date || orderObj.wished_time))
+        || (window._detailCard && window._detailCard.getAttribute('data-expected-delivery-time'))
+        || '';
+
+      var baseTimeMs = null;
+      var strExp = String(rawExp || '').trim();
+
+      if (strExp && strExp.toUpperCase() !== 'ASAP' && strExp.toLowerCase() !== 'null') {
+        var parsedMs = Date.parse(strExp.replace(' ', 'T'));
+        if (!isNaN(parsedMs)) {
+          baseTimeMs = parsedMs;
+        } else if (strExp.indexOf(':') !== -1) {
+          var parts = strExp.split(':');
+          var h = parseInt(parts[0], 10);
+          var m = parseInt(parts[1], 10);
+          if (!isNaN(h) && !isNaN(m)) {
+            var d = new Date();
+            d.setHours(h, m, 0, 0);
+            baseTimeMs = d.getTime();
+          }
+        }
+      }
+
+      var targetDate;
+      var remainingMins;
+
+      if (baseTimeMs) {
+        var adjustedMs = baseTimeMs + (window._popupDeltaMins || 0) * 60000;
+        targetDate = new Date(adjustedMs);
+        remainingMins = Math.max(0, Math.round((adjustedMs - Date.now()) / 60000));
+        schedPrepMins = remainingMins;
+      } else {
+        var t = new Date(Date.now() + schedPrepMins * 60000);
+        t.setMinutes(Math.round(t.getMinutes() / 5) * 5, 0, 0); // snap to 5-minute marks
+        targetDate = t;
+        remainingMins = schedPrepMins;
+      }
+
       var pad = function (n) { return String(n).padStart(2, '0'); };
-      if (timeEl) timeEl.textContent = pad(t.getHours()) + ':' + pad(t.getMinutes());
-      if (minsEl) minsEl.textContent = formatRemainingHoursAndMins(schedPrepMins);
+      if (timeEl) timeEl.textContent = pad(targetDate.getHours()) + ':' + pad(targetDate.getMinutes());
+      if (minsEl) minsEl.textContent = formatRemainingHoursAndMins(remainingMins);
     }
     function schedStep(delta) {
+      window._popupDeltaMins = (window._popupDeltaMins || 0) + delta;
       schedPrepMins = Math.max(5, schedPrepMins + delta);
       schedRender();
     }
@@ -6427,7 +6473,7 @@
         var optionsText = extractItemAttributes(item);
         var subtextHtml = optionsText ? '<div style="font-size:13px;color:#777;margin-top:2px">' + optionsText + '</div>' : '';
 
-        html += '  <div onclick="onDishClick()" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;font-size:15px;color:#111;cursor:pointer">';
+        html += '  <div onclick="onDishClick()" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;font-size:15px;color:#111;cursor:pointer;border-top:1px solid #f0f0f0;padding:10px 0;">';
         html += '    <div style="display:flex;gap:12px;align-items:flex-start;flex:1;padding-right:12px">';
         html += '      <span style="font-weight:600;min-width:18px">' + qty + '</span>';
         html += '      <div>';
@@ -6447,11 +6493,31 @@
       var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || 0);
       var platformCharge = parseFloat(order.platform_charge || order.service_fee || order.service_charge || 0);
       var tipAmt = parseFloat(order.tip || order.tip_amount || 0);
-      var discountAmt = parseFloat(order.discount_amount || order.discount || order.reward || 0);
+      var discountAmt = parseFloat(order.discount_amount || order.discount || (order.redeem_discount === undefined ? order.reward : 0) || 0);
+
+      var customerFee = 0;
+      var rawCustomerFee = (order.paymentDetails && order.paymentDetails.customer_fee !== undefined && order.paymentDetails.customer_fee !== null)
+        ? order.paymentDetails.customer_fee
+        : ((order.data && order.data.paymentDetails && order.data.paymentDetails.customer_fee !== undefined && order.data.paymentDetails.customer_fee !== null)
+          ? order.data.paymentDetails.customer_fee
+          : (order.customer_fee !== undefined && order.customer_fee !== null ? order.customer_fee : null));
+      if (rawCustomerFee !== null) {
+        customerFee = Math.abs(parseFloat(rawCustomerFee) || 0);
+      }
+
+      var redeemDiscount = 0;
+      var rawRedeem = (order.redeem_discount !== undefined && order.redeem_discount !== null)
+        ? order.redeem_discount
+        : ((order.data && order.data.redeem_discount !== undefined && order.data.redeem_discount !== null)
+          ? order.data.redeem_discount
+          : null);
+      if (rawRedeem !== null) {
+        redeemDiscount = Math.abs(parseFloat(rawRedeem) || 0);
+      }
 
       var totalAmt = (order.total_amount !== undefined && order.total_amount !== null && order.total_amount > 0)
         ? parseFloat(order.total_amount)
-        : (subtotal + deliveryCharge + platformCharge + tipAmt - discountAmt);
+        : (subtotal + deliveryCharge + platformCharge + customerFee + tipAmt - discountAmt - redeemDiscount);
 
       html += '<div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">';
 
@@ -6472,6 +6538,14 @@
       html += '    <span>€ ' + subtotal.toFixed(2) + '</span>';
       html += '  </div>';
 
+      // Transaction Costs
+      if (customerFee > 0 || (rawCustomerFee !== null && parseFloat(rawCustomerFee) > 0)) {
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+        html += '    <span>Transaction Costs</span>';
+        html += '    <span>€ ' + customerFee.toFixed(2) + '</span>';
+        html += '  </div>';
+      }
+
       // Delivery fee
       if (deliveryCharge > 0 || order.order_type == '1') {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
@@ -6491,24 +6565,25 @@
       // Tip
       if (tipAmt > 0) {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
-        html += '    <span>' + (t('d_tip') || 'Tip') + '</span>';
+        html += '    <span data-i18n="d_tip">' + (t('d_tip') || 'Tip') + '</span>';
         html += '    <span>€ ' + tipAmt.toFixed(2) + '</span>';
         html += '  </div>';
       }
 
-      // Discount / Reward
-      if (discountAmt > 0) {
+      // Reward (redeem_discount) or Discount
+      if (redeemDiscount > 0 || (rawRedeem !== null && parseFloat(rawRedeem) > 0)) {
+        html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#d81b60;font-weight:600">';
+        html += '    <span>Reward</span>';
+        html += '    <span>-€ ' + redeemDiscount.toFixed(2) + '</span>';
+        html += '  </div>';
+      } else if (discountAmt > 0) {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#108043;font-weight:500">';
         html += '    <span data-i18n="co_discount">' + (t('co_discount') || 'Discount') + '</span>';
         html += '    <span>-€ ' + discountAmt.toFixed(2) + '</span>';
         html += '  </div>';
       }
 
-      // Total
-      html += '  <div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:#111">';
-      html += '    <span data-i18n="create_total">' + (t('create_total') || 'Total') + '</span>';
-      html += '    <span>€ ' + totalAmt.toFixed(2) + '</span>';
-      html += '  </div>';
+
 
       html += '</div>';
 
@@ -6554,12 +6629,18 @@
       }
 
       // Populate order status & address
-      var isCollection = (order.order_type == '2');
-      var street = userDetails.street_name || '';
-      var house = userDetails.house_no || '';
-      var city = userDetails.city || '';
-      var zipcode = userDetails.zipcode || '';
+      var isCollection = (
+        order.order_type == '2' || order.order_type == 2 ||
+        String(order.order_type || '').toLowerCase() === 'collection' ||
+        String(order.type || '').toLowerCase() === 'collection' ||
+        (order.data && (order.data.order_type == '2' || order.data.order_type == 2 || String(order.data.order_type || '').toLowerCase() === 'collection'))
+      );
+      var street = userDetails.street_name || order.street_name || order.street || (order.address ? order.address.split(',')[0] : '') || '';
+      var house = userDetails.house_no || order.house_no || order.house || '';
+      var city = userDetails.city || order.city || (order.address ? (order.address.split(',')[1] || '') : '') || '';
+      var zipcode = userDetails.zipcode || order.zipcode || order.postcode || '';
       var streetAndHouse = (street + ' ' + house).trim();
+      if (!streetAndHouse && order.address) streetAndHouse = order.address.trim();
       var fullSingleLineAddr = [streetAndHouse, city, zipcode].filter(Boolean).join(', ');
 
       var orderTypeLbl = document.getElementById('d-order-type-label');
@@ -6567,7 +6648,7 @@
         if (isCollection) {
           orderTypeLbl.textContent = t('d_pickup_full');
         } else {
-          orderTypeLbl.textContent = streetAndHouse + (city ? ', ' + city : '');
+          orderTypeLbl.textContent = streetAndHouse ? (streetAndHouse + (city ? ', ' + city.trim() : '')) : (order.customer_name || t('d_delivery'));
         }
       }
       var statusEl = document.getElementById('d-header-status');
@@ -6578,8 +6659,10 @@
       var custAddrBlock = document.getElementById('d-customer-addr-block');
       var custAddr = document.getElementById('d-customer-addr');
       var custCity = document.getElementById('d-customer-city');
+      var pDetailEl = document.getElementById('p-detail');
+      var isNewOrderPopupMode = pDetailEl && (pDetailEl.classList.contains('mode-new-order') || pDetailEl.classList.contains('new-order-mode'));
       if (custAddrBlock) {
-        if (!isCollection && fullSingleLineAddr) {
+        if (isNewOrderPopupMode && !isCollection && fullSingleLineAddr) {
           custAddrBlock.style.display = 'flex';
           if (custAddr) custAddr.textContent = fullSingleLineAddr;
           if (custCity) custCity.style.display = 'none';
@@ -6902,17 +6985,32 @@
       var addrParts = (addr || '').split('||');
       var streetAddr = addrParts[0];
       var cityAddr = addrParts[1] || '';
-      var isDelivery = (type === 'Delivery' && streetAddr && streetAddr !== 'Collection order' && streetAddr !== 'Restaurant');
+      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
+
+      var isDelivery = (
+        type === 'Delivery' || type === '1' ||
+        (cachedOrder && (cachedOrder.order_type == '1' || cachedOrder.order_type == 1 || String(cachedOrder.order_type || '').toLowerCase() === 'delivery'))
+      );
+      if (type === 'Collection' || type === '2' || (cachedOrder && (cachedOrder.order_type == '2' || cachedOrder.order_type == 2 || String(cachedOrder.order_type || '').toLowerCase() === 'collection'))) {
+        isDelivery = false;
+      }
+
       var orderTypeLbl = document.getElementById('d-order-type-label');
       if (orderTypeLbl) {
-        if (type === 'Collection') { orderTypeLbl.textContent = t('d_pickup_full'); }
-        else {
+        if (!isDelivery) {
+          orderTypeLbl.textContent = t('d_pickup_full');
+        } else {
           var pmT = (cityAddr || '').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
           var cityNameT = pmT ? pmT[2] : cityAddr;
-          orderTypeLbl.textContent = streetAddr + (cityNameT ? ', ' + cityNameT : '');
+          var displayAddr = streetAddr + (cityNameT ? ', ' + cityNameT : '');
+          if (!displayAddr.trim() && cachedOrder) {
+            var s = cachedOrder.street_name || (cachedOrder.order_user_details && cachedOrder.order_user_details.street_name) || cachedOrder.address || '';
+            var c = cachedOrder.city || (cachedOrder.order_user_details && cachedOrder.order_user_details.city) || '';
+            displayAddr = s + (c ? ', ' + c : '');
+          }
+          orderTypeLbl.textContent = displayAddr.trim() || name || t('d_delivery');
         }
       }
-      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
       updatePopupHeaderTime(cachedOrder, cardEl, mins);
       var fullSingleLineAddr = [streetAddr, cityAddr].filter(Boolean).join(', ');
       var custAddrBlock = document.getElementById('d-customer-addr-block');
@@ -6920,7 +7018,7 @@
       var custCity = document.getElementById('d-customer-city');
       var openMap2 = document.getElementById('d-open-map-2');
       if (custAddrBlock) {
-        if (isDelivery && fullSingleLineAddr) {
+        if (isUnaccepted && isDelivery && fullSingleLineAddr) {
           custAddrBlock.style.display = 'flex';
           if (custAddr) custAddr.textContent = fullSingleLineAddr;
           if (custCity) custCity.style.display = 'none';
@@ -9986,9 +10084,22 @@
       var pay = isCashOrder ? '2' : '1';
       var price = parseFloat(order.total_amount || order.item_total || 0).toFixed(2);
 
-      var settingsId = isCollection ? 'settings-takeaway-mins' : 'settings-delivery-mins';
-      var settingsEl = document.getElementById(settingsId);
-      var mins = settingsEl ? (parseInt(settingsEl.textContent, 10) || 35) : 35;
+      var expTimeStr = order.expected_delivery_time || order.delivery_time || order.delivery_date;
+      var mins = 35;
+      if (expTimeStr && String(expTimeStr).toUpperCase() !== 'ASAP' && String(expTimeStr).toLowerCase() !== 'null') {
+        var parsedMs = Date.parse(String(expTimeStr).replace(' ', 'T'));
+        if (!isNaN(parsedMs)) {
+          mins = Math.max(1, Math.round((parsedMs - Date.now()) / 60000));
+        } else {
+          var settingsId = isCollection ? 'settings-takeaway-mins' : 'settings-delivery-mins';
+          var settingsEl = document.getElementById(settingsId);
+          if (settingsEl) mins = parseInt(settingsEl.textContent, 10) || 35;
+        }
+      } else {
+        var settingsId = isCollection ? 'settings-takeaway-mins' : 'settings-delivery-mins';
+        var settingsEl = document.getElementById(settingsId);
+        if (settingsEl) mins = parseInt(settingsEl.textContent, 10) || 35;
+      }
       var title = isCollection ? t('d_pickup') : (streetAndHouse || name);
 
       var list = document.getElementById('t-new');
@@ -10019,6 +10130,12 @@
         if (list) list.insertBefore(card, list.firstChild);
       } else {
         card.setAttribute('data-new-order', '1');
+      }
+
+      card._rawOrderData = order;
+      window._detailOrderRaw = order;
+      if (expTimeStr) {
+        card.setAttribute('data-expected-delivery-time', String(expTimeStr));
       }
 
       renderOrderCard(card);
