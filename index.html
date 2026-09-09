@@ -5622,11 +5622,8 @@
         </div>
       </div>
 
-      <!-- Subtotal -->
-      <div class="r-info-row" style="margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0">
-        <span style="font-size:13px;font-weight:700;color:#111">Subtotal</span>
-        <span style="font-size:13px;font-weight:700;color:#111" id="pr-total">€ 41.50</span>
-      </div>
+      <!-- Order Breakdown Section -->
+      <div id="pr-breakdown" style="margin-top:12px;padding-top:8px;border-top:1px solid #f0f0f0"></div>
 
       <!-- BTW Section -->
       <div id="r-btw-section" style="padding-top:10px;padding-bottom:8px">
@@ -6486,9 +6483,19 @@
       });
 
       // Calculate order totals
-      var subtotal = (order.subtotal !== undefined && order.subtotal !== null && order.subtotal > 0)
+      var totalDepositAmt = 0;
+      Object.keys(depositGroups).forEach(function (k) {
+        totalDepositAmt += depositGroups[k].count * depositGroups[k].rate;
+      });
+
+      var rawSub = (order.subtotal !== undefined && order.subtotal !== null && order.subtotal > 0)
         ? parseFloat(order.subtotal)
         : ((order.item_total !== undefined && order.item_total !== null && order.item_total > 0) ? parseFloat(order.item_total) : calculatedSubtotal);
+
+      // Deposit will not calculate in subtotal
+      var subtotal = (Math.abs(rawSub - (calculatedSubtotal + totalDepositAmt)) < 0.05)
+        ? (rawSub - totalDepositAmt)
+        : (rawSub > calculatedSubtotal && totalDepositAmt > 0 ? (rawSub - totalDepositAmt) : calculatedSubtotal);
 
       var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || 0);
       var platformCharge = parseFloat(order.platform_charge || order.service_fee || order.service_charge || 0);
@@ -6517,9 +6524,15 @@
 
       var totalAmt = (order.total_amount !== undefined && order.total_amount !== null && order.total_amount > 0)
         ? parseFloat(order.total_amount)
-        : (subtotal + deliveryCharge + platformCharge + customerFee + tipAmt - discountAmt - redeemDiscount);
+        : (subtotal + totalDepositAmt + deliveryCharge + platformCharge + customerFee + tipAmt - discountAmt - redeemDiscount);
 
       html += '<div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">';
+
+      // Subtotal
+      html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
+      html += '    <span data-i18n="d_subtotal">' + t('d_subtotal') + '</span>';
+      html += '    <span>€ ' + subtotal.toFixed(2) + '</span>';
+      html += '  </div>';
 
       // Deposit line(s)
       Object.keys(depositGroups).forEach(function (k) {
@@ -6527,16 +6540,10 @@
         var totalDepAmt = group.count * group.rate;
         var infoIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:3px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
         html += '  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:15px;color:#333">';
-        html += '    <span>Deposit € ' + group.rateLabel + ' x ' + group.count + ' ' + infoIcon + '</span>';
+        html += '    <span>Statiegeld € ' + group.rateLabel + ' x ' + group.count + ' ' + infoIcon + '</span>';
         html += '    <span>€ ' + totalDepAmt.toFixed(2) + '</span>';
         html += '  </div>';
       });
-
-      // Subtotal
-      html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
-      html += '    <span data-i18n="d_subtotal">' + t('d_subtotal') + '</span>';
-      html += '    <span>€ ' + subtotal.toFixed(2) + '</span>';
-      html += '  </div>';
 
       // Transaction Costs
       if (customerFee > 0 || (rawCustomerFee !== null && parseFloat(rawCustomerFee) > 0)) {
@@ -6694,23 +6701,54 @@
       }
 
       var localOrder = JSON.parse(localStorage.getItem('posCurrentOrder') || '{}');
-      if (localOrder && localOrder.oid) {
-        localOrder.note = order.delivery_note || order.save_note || '';
-        localOrder.items = items.map(function (it) {
-          var nameVal = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.product_name || '';
-          var atts = extractItemAttributes(it);
-          return {
-            qty: it.qty || it.quantity || 1,
-            name: nameVal,
-            price: parseFloat(it.price || (it.dish && it.dish.price) || 0),
-            note: atts
-          };
-        });
-        localOrder.subtotal = subtotal.toFixed(2);
-        localOrder.shipping = deliveryCharge.toFixed(2);
-        localOrder.service = platformCharge.toFixed(2);
-        localStorage.setItem('posCurrentOrder', JSON.stringify(localOrder));
-      }
+      if (!localOrder) localOrder = {};
+      localOrder.oid = order.oid || order.order_number || localOrder.oid || ('#' + (order.id || ''));
+      localOrder.id = order.id || localOrder.id;
+      localOrder.order_number = order.order_number || order.oid || localOrder.order_number;
+      localOrder.created_at = order.created_at || order.order_date || localOrder.created_at;
+      localOrder.source = order.source || order.order_source || localOrder.source || 'Web order';
+      localOrder.wished = order.wished || localOrder.wished || 'ASAP';
+      localOrder.type = order.type || (order.order_type == '2' ? 'Collection' : 'Delivery');
+      localOrder.order_type = order.order_type || localOrder.order_type;
+      localOrder.pay = (order.pay || order.payment_status === 'Paid' || order.payment_status === 1) ? 'Paid' : 'Unpaid';
+      localOrder.payment_status = order.payment_status !== undefined ? order.payment_status : localOrder.payment_status;
+
+      var u = order.order_user_details || order.user_details || {};
+      localOrder.name = order.name || order.customer_name || u.order_name || u.name || (u.FirstName ? (u.FirstName + ' ' + (u.LastName || '')) : '') || localOrder.name || '';
+      localOrder.phone = order.phone || order.phone_number || u.phone || u.phone_number || localOrder.phone || '';
+      localOrder.address = order.address || order.street || u.address || u.street || localOrder.address || '';
+      localOrder.city = order.city || u.city || localOrder.city || '';
+      localOrder.zipcode = order.zipcode || u.zipcode || localOrder.zipcode || '';
+      localOrder.note = order.delivery_note || order.save_note || order.note || localOrder.note || '';
+
+      localOrder.items = items.map(function (it) {
+        var nameVal = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.product_name || it.name || '';
+        var atts = extractItemAttributes(it);
+        var priceVal = parseFloat(it.price !== undefined && it.price !== null ? it.price : (it.dish ? it.dish.price : 0));
+        return {
+          qty: parseInt(it.qty || it.quantity || 1, 10),
+          name: nameVal,
+          price: priceVal,
+          note: atts
+        };
+      });
+
+      localOrder.subtotal = subtotal;
+      localOrder.depositGroups = depositGroups;
+      localOrder.totalDepositAmt = totalDepositAmt;
+      localOrder.customerFee = customerFee;
+      localOrder.rawCustomerFee = rawCustomerFee;
+      localOrder.shipping = deliveryCharge;
+      localOrder.isDeliveryOrder = (deliveryCharge > 0 || order.order_type == '1');
+      localOrder.service = platformCharge;
+      localOrder.tip = tipAmt;
+      localOrder.discount = discountAmt;
+      localOrder.redeemDiscount = redeemDiscount;
+      localOrder.rawRedeem = rawRedeem;
+      localOrder.totalAmt = totalAmt;
+      localOrder.fullOrder = order;
+
+      localStorage.setItem('posCurrentOrder', JSON.stringify(localOrder));
       try { updatePopupHeaderTime(order, window._detailCard, 35); } catch (e) { }
     }
 
@@ -7269,22 +7307,50 @@
 
     }
 
+    function formatPrintOrderTime(orderObj) {
+      if (!orderObj) return '(zsm)';
+      var full = orderObj.fullOrder || orderObj;
+      var isSched = checkIsScheduledOrder(full) || checkIsScheduledOrder(orderObj);
+      var rawExp = (full && (full.expected_delivery_time || full.delivery_time || full.wished_time || full.delivery_date))
+        || (orderObj && (orderObj.expected_delivery_time || orderObj.delivery_time || orderObj.wished_time || orderObj.wished || orderObj.delivery_date))
+        || '';
+
+      var timeOnly = '';
+      if (rawExp) {
+        var strExp = String(rawExp).trim();
+        if (strExp.toUpperCase() !== 'ASAP' && strExp.toLowerCase() !== 'null') {
+          var parts = strExp.split(' ');
+          var timePart = parts[1] || parts[0] || '';
+          if (timePart && timePart.indexOf(':') !== -1) {
+            var tParts = timePart.split(':');
+            if (tParts[0] && tParts[1]) {
+              timeOnly = tParts[0].padStart(2, '0') + ':' + tParts[1].padStart(2, '0');
+            }
+          }
+        }
+      }
+
+      if (isSched && timeOnly) {
+        return timeOnly;
+      }
+      return '(zsm)';
+    }
+
     // Build the 80mm text receipt and send it to the SUNMI printer.
     function printReceiptNative() {
       var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch (e) { }
-      var isColl = o.type === 'Collection' || o.order_type == '2';
-      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1;
-      var pp = function (s) { var n = parseFloat(String(s || '').replace(/[^0-9.,]/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-      var eur = function (n) { return '€ ' + n.toFixed(2); };
-      var total = pp(o.price || o.total_amount || o.total);
-      var btw = total * 9 / 109;
+      var full = o.fullOrder || o;
+      var isColl = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
+      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1 || full.pay === 'Paid' || full.payment_status === 'Paid' || full.payment_status === 1;
+
+      var eur = function (n) { return '€ ' + (parseFloat(n) || 0).toFixed(2); };
       var now = new Date(), pad = function (n) { return String(n).padStart(2, '0'); };
       var daysNL = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
       var dayStr = daysNL[now.getDay()];
-      var dateStr = o.created_at || (dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()));
+      var dateStr = o.created_at || full.created_at || full.order_date || (dayStr + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()));
       var DIV = { t: 'text', v: '--------------------------------\n' };
 
-      // Dynamic Restaurant Details from API / LocalStorage
+      // Dynamic Restaurant Details
       var res = window._restaurantDetails;
       if (!res) {
         try { res = JSON.parse(localStorage.getItem('restaurant_details')) || {}; } catch (e) { res = {}; }
@@ -7301,23 +7367,14 @@
         c.push({ t: 'image', v: logoUrl });
       }
 
-      // Restaurant Header sequence: restaurant_name -> rest_address -> rest_city -> rest_zipcode
       if (resName) {
         c.push({ t: 'size', v: 28 }, { t: 'text', v: resName + '\n' });
       }
       c.push({ t: 'size', v: 22 });
-      if (res.rest_address) {
-        c.push({ t: 'text', v: res.rest_address + '\n' });
-      }
-      if (res.rest_city) {
-        c.push({ t: 'text', v: res.rest_city + '\n' });
-      }
-      if (res.rest_zipcode) {
-        c.push({ t: 'text', v: res.rest_zipcode + '\n' });
-      }
-      if (phoneVal) {
-        c.push({ t: 'text', v: 'Tel: ' + phoneVal + '\n' });
-      }
+      if (res.rest_address) c.push({ t: 'text', v: res.rest_address + '\n' });
+      if (res.rest_city) c.push({ t: 'text', v: res.rest_city + '\n' });
+      if (res.rest_zipcode) c.push({ t: 'text', v: res.rest_zipcode + '\n' });
+      if (phoneVal) c.push({ t: 'text', v: 'Tel: ' + phoneVal + '\n' });
       c.push({ t: 'feed', n: 1 });
 
       // Info Section
@@ -7325,11 +7382,14 @@
       c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Info ---\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      var oidVal = (o.oid || o.order_number || ('#' + (o.id || ''))).replace('#', '');
+
+      var oidVal = String(o.oid || o.order_number || full.oid || full.order_number || ('#' + (o.id || full.id || ''))).replace('#', '');
       c.push({ t: 'cols', left: 'Bestelnr.', right: oidVal, wl: 16, wr: 16 });
       c.push({ t: 'cols', left: 'Besteld op:', right: dateStr, wl: 12, wr: 20 });
-      c.push({ t: 'cols', left: 'Bron:', right: o.source || 'Web order', wl: 14, wr: 18 });
-      c.push({ t: 'cols', left: isColl ? 'Afhaaltijd:' : 'Bezorgtijd:', right: (o.wished || 'ASAP') + (o.wished ? ' (ZSM)' : ''), wl: 14, wr: 18 });
+      c.push({ t: 'cols', left: 'Bron:', right: o.source || full.source || 'Web order', wl: 14, wr: 18 });
+
+      var wishedStr = formatPrintOrderTime(o);
+      c.push({ t: 'cols', left: isColl ? 'Afhaaltijd:' : 'Bezorgtijd:', right: wishedStr, wl: 14, wr: 18 });
       c.push({ t: 'cols', left: 'Betaalwijze:', right: isPaid ? 'Online betaald' : 'Contant betaald', wl: 14, wr: 18 });
       c.push({ t: 'feed', n: 1 });
 
@@ -7338,21 +7398,25 @@
       c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Klant ---\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      var u = o.order_user_details || o.user_details || {};
-      var custName = o.name || o.customer_name || u.order_name || u.name || '—';
+
+      var u = full.order_user_details || full.user_details || o.order_user_details || o.user_details || {};
+      var custName = o.name || o.customer_name || u.order_name || u.name || (u.FirstName ? (u.FirstName + ' ' + (u.LastName || '')) : '') || full.name || full.customer_name || '—';
       c.push({ t: 'text', v: custName + '\n' });
+
       if (isColl) {
         c.push({ t: 'text', v: 'Afhalen\n' });
       } else {
-        var a1 = o.address || o.street || u.address || '';
-        var a2 = (o.city || u.city) ? ((o.zipcode || u.zipcode || '') + ' ' + (o.city || u.city || '')).trim() : '';
+        var a1 = o.address || o.street || u.address || u.street || full.address || full.street || '';
+        var a2 = (o.city || u.city || full.city) ? ((o.zipcode || u.zipcode || full.zipcode || '') + ' ' + (o.city || u.city || full.city || '')).trim() : '';
         if (a1) c.push({ t: 'text', v: a1 + '\n' });
         if (a2) c.push({ t: 'text', v: a2 + '\n' });
       }
-      var custPhone = o.phone || o.phone_number || u.phone || u.phone_number || '';
+      var custPhone = o.phone || o.phone_number || u.phone || u.phone_number || full.phone || full.phone_number || '';
       if (custPhone) c.push({ t: 'text', v: custPhone + '\n' });
-      if (o.note) {
-        c.push({ t: 'text', v: '\nOpmerking:\n' + o.note + '\n' });
+
+      var noteVal = o.note || full.delivery_note || full.save_note || full.note || '';
+      if (noteVal) {
+        c.push({ t: 'text', v: '\nOpmerking:\n' + noteVal + '\n' });
       }
       c.push({ t: 'feed', n: 1 });
 
@@ -7361,28 +7425,151 @@
       c.push({ t: 'size', v: 24 }, { t: 'text', v: '--- Bestelling ---\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
-      var itemsList = o.items || o.dish_details || o.order_items || o.dishes_details || [];
-      if (Array.isArray(itemsList) && itemsList.length > 0) {
-        itemsList.forEach(function (it) {
-          var qty = it.qty || it.quantity || 1;
-          var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
-          var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
-          var itemTotalStr = eur(priceVal * qty);
-          var subText = extractItemAttributes(it);
-          c.push({ t: 'cols', left: qty + '  ' + name, right: itemTotalStr, wl: 22, wr: 10 });
+
+      var rawItems = (full && (full.items || full.dish_details || full.order_items || full.dishes_details)) || o.items || [];
+      var depositGroups = o.depositGroups ? JSON.parse(JSON.stringify(o.depositGroups)) : {};
+      var calculatedSubtotal = 0;
+
+      if (Array.isArray(rawItems) && rawItems.length > 0) {
+        rawItems.forEach(function (it) {
+          var qty = parseInt(it.qty || it.quantity || 1, 10);
+          var dishObj = it.dish || it.customItem || it;
+          var name = dishObj.name || dishObj.name_en || dishObj.name_nl || it.name || it.product_name || 'Item';
+          var dishPrice = parseFloat(it.price !== undefined && it.price !== null ? it.price : (dishObj.price || it.dish_price || it.total_price || 0));
+          var paidIngTotal = parseFloat(it.paid_ingredient_total || 0);
+          var dishIngsTotal = 0;
+          if (it.orderDishPaidIngredients && Array.isArray(it.orderDishPaidIngredients)) {
+            it.orderDishPaidIngredients.forEach(function (ing) {
+              dishIngsTotal += parseFloat(ing.price || (ing.dishIngredient && ing.dishIngredient.price) || 0);
+            });
+          }
+          var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
+          calculatedSubtotal += itemTotal;
+          var subText = it.note || extractItemAttributes(it);
+          if (subText) subText = subText.replace(/, /g, '\n  ');
+
+          if (!o.depositGroups) {
+            var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
+              (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
+                (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
+                  (it.deposite !== undefined && it.deposite !== null ? it.deposite :
+                    (it.deposit !== undefined && it.deposit !== null ? it.deposit : it.statiegeld))));
+            if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
+              var depRate = 0, depLabel = '';
+              var strDep = String(rawDep).trim();
+              if (strDep === '1' || strDep === '0.15') { depRate = 0.15; depLabel = '0,15'; }
+              else if (strDep === '2' || strDep === '0.25') { depRate = 0.25; depLabel = '0,25'; }
+              else {
+                var parsed = parseFloat(strDep);
+                if (!isNaN(parsed) && parsed > 0) { depRate = parsed; depLabel = parsed.toFixed(2).replace('.', ','); }
+              }
+              if (depRate > 0) {
+                var key = depRate.toFixed(2);
+                if (!depositGroups[key]) depositGroups[key] = { rate: depRate, rateLabel: depLabel, count: 0 };
+                depositGroups[key].count += qty;
+              }
+            }
+          }
+
+          var line = qty + 'x ' + name;
+          c.push({ t: 'cols', left: line, right: eur(itemTotal), wl: 22, wr: 10 });
           if (subText) {
             c.push({ t: 'text', v: '   ' + subText + '\n' });
           }
         });
       } else {
-        c.push({ t: 'cols', left: '1  Bestelling ' + (o.oid || o.order_number || ''), right: eur(total), wl: 22, wr: 10 });
+        var fallbackOid = String(o.oid || o.order_number || full.oid || full.order_number || '').replace('#', '');
+        c.push({ t: 'cols', left: '1x Bestelling ' + fallbackOid, right: eur(o.totalAmt || o.price || 0), wl: 22, wr: 10 });
       }
+
       c.push(DIV);
-      c.push({ t: 'size', v: 24 }, { t: 'cols', left: 'Subtotal', right: eur(total), wl: 22, wr: 10 });
-      c.push({ t: 'feed', n: 1 });
+
+      // Financial breakdown calculations
+      var totalDepositAmt = 0;
+      Object.keys(depositGroups).forEach(function (k) {
+        totalDepositAmt += depositGroups[k].count * depositGroups[k].rate;
+      });
+
+      var subtotal = 0;
+      if (o.subtotal !== undefined && o.subtotal !== null) {
+        subtotal = parseFloat(o.subtotal);
+      } else {
+        var rawSub = (full.subtotal !== undefined && full.subtotal !== null && full.subtotal > 0)
+          ? parseFloat(full.subtotal)
+          : ((full.item_total !== undefined && full.item_total !== null && full.item_total > 0) ? parseFloat(full.item_total) : calculatedSubtotal);
+        subtotal = (Math.abs(rawSub - (calculatedSubtotal + totalDepositAmt)) < 0.05)
+          ? (rawSub - totalDepositAmt)
+          : (rawSub > calculatedSubtotal && totalDepositAmt > 0 ? (rawSub - totalDepositAmt) : calculatedSubtotal);
+      }
+
+      var customerFee = o.customerFee !== undefined ? parseFloat(o.customerFee) : 0;
+      if (!customerFee && full) {
+        var rawCustFee = (full.paymentDetails && full.paymentDetails.customer_fee !== undefined) ? full.paymentDetails.customer_fee :
+          ((full.data && full.data.paymentDetails && full.data.paymentDetails.customer_fee !== undefined) ? full.data.paymentDetails.customer_fee : full.customer_fee);
+        if (rawCustFee !== undefined && rawCustFee !== null) customerFee = Math.abs(parseFloat(rawCustFee) || 0);
+      }
+
+      var shipping = o.shipping !== undefined ? parseFloat(o.shipping) : parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
+      var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
+      var tip = o.tip !== undefined ? parseFloat(o.tip) : parseFloat(full.tip || full.tip_amount || 0);
+      var discount = o.discount !== undefined ? parseFloat(o.discount) : parseFloat(full.discount_amount || full.discount || 0);
+      var redeemDiscount = o.redeemDiscount !== undefined ? parseFloat(o.redeemDiscount) : 0;
+      if (!redeemDiscount && full) {
+        var rawRed = full.redeem_discount !== undefined ? full.redeem_discount : (full.data && full.data.redeem_discount !== undefined ? full.data.redeem_discount : null);
+        if (rawRed !== null) redeemDiscount = Math.abs(parseFloat(rawRed) || 0);
+      }
+
+      var grandTotal = o.totalAmt !== undefined ? parseFloat(o.totalAmt) :
+        ((full.total_amount !== undefined && full.total_amount !== null && full.total_amount > 0)
+          ? parseFloat(full.total_amount)
+          : (subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount));
+
+      // 1. Subtotal
+      c.push({ t: 'cols', left: 'Subtotal', right: eur(subtotal), wl: 22, wr: 10 });
+
+      // 2. Statiegeld
+      Object.keys(depositGroups).forEach(function (k) {
+        var group = depositGroups[k];
+        var depAmt = group.count * group.rate;
+        c.push({ t: 'cols', left: 'Statiegeld € ' + group.rateLabel + ' x ' + group.count, right: eur(depAmt), wl: 22, wr: 10 });
+      });
+
+      // 3. Transaction Costs
+      if (customerFee > 0) {
+        c.push({ t: 'cols', left: 'Transaction Costs', right: eur(customerFee), wl: 22, wr: 10 });
+      }
+
+      // 4. Delivery
+      if (shipping > 0 || isDelivery) {
+        c.push({ t: 'cols', left: 'Bezorging', right: eur(shipping), wl: 22, wr: 10 });
+      }
+
+      // 5. Service fee
+      if (service > 0) {
+        c.push({ t: 'cols', left: 'Servicekosten', right: eur(service), wl: 22, wr: 10 });
+      }
+
+      // 6. Tip
+      if (tip > 0) {
+        c.push({ t: 'cols', left: 'Fooi', right: eur(tip), wl: 22, wr: 10 });
+      }
+
+      // 7. Reward / Discount
+      if (redeemDiscount > 0) {
+        c.push({ t: 'cols', left: 'Reward', right: '- ' + eur(redeemDiscount), wl: 22, wr: 10 });
+      } else if (discount > 0) {
+        c.push({ t: 'cols', left: 'Korting', right: '- ' + eur(discount), wl: 22, wr: 10 });
+      }
+
+      c.push(DIV);
+
+      // Grand Total
+      c.push({ t: 'size', v: 26 }, { t: 'bold', v: 1 }, { t: 'cols', left: 'Totaal', right: eur(grandTotal), wl: 18, wr: 14 });
+      c.push({ t: 'size', v: 22 }, { t: 'bold', v: 0 });
 
       // BTW Section
-      c.push({ t: 'size', v: 22 });
+      var btw = grandTotal * 9 / 109;
       c.push({ t: 'cols', left: 'Btw 9%:', right: eur(btw), wl: 22, wr: 10 });
       if (res.permit_id) {
         c.push({ t: 'text', v: 'Permit ID: ' + res.permit_id + '\n' });
@@ -7392,21 +7579,21 @@
       // Footer
       c.push({ t: 'align', v: 'center' });
       c.push({ t: 'text', v: 'Bedankt voor uw bestelling.\nBestel online via de website!\n' });
-      c.push({ t: 'feed', n: 6 });   // extra ruimte onder de bon
+      c.push({ t: 'feed', n: 6 });
       c.push({ t: 'cut' });
+
       try { window.AndroidPrinter.printReceipt(JSON.stringify(c)); } catch (e) { console.warn('native print failed', e); }
     }
 
     function populatePrintPage() {
       var raw = localStorage.getItem('posCurrentOrder');
       if (!raw) return;
-      var order; try { order = JSON.parse(raw); } catch (e) { return; }
-      function parsePrice(s) { var n = parseFloat(String(s || '').replace(/[^0-9.,]/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; }
-      function fmt(n) { return '€ ' + n.toFixed(2); }
-      var isCollection = order.type === 'Collection' || order.order_type == '2';
-      var isPaid = order.pay === 'Paid' || order.payment_status === 'Paid' || order.payment_status === 1;
-      var total = parsePrice(order.price || order.total_amount || order.total);
-      var btw = total * 9 / 109;
+      var o; try { o = JSON.parse(raw); } catch (e) { return; }
+      var full = o.fullOrder || o;
+      var isCollection = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
+      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1 || full.pay === 'Paid' || full.payment_status === 'Paid' || full.payment_status === 1;
+
+      function fmt(n) { return '€ ' + (parseFloat(n) || 0).toFixed(2); }
       var now = new Date();
       var pad = function (n) { return String(n).padStart(2, '0'); };
 
@@ -7436,40 +7623,31 @@
       var shopHeaderEl = document.getElementById('pr-shop-header-info');
       if (shopHeaderEl) {
         var hHtml = '';
-        if (resName) {
-          hHtml += '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:3px">' + resName + '</div>';
-        }
-        if (res.rest_address) {
-          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_address + '</div>';
-        }
-        if (res.rest_city) {
-          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_city + '</div>';
-        }
-        if (res.rest_zipcode) {
-          hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_zipcode + '</div>';
-        }
-        if (phoneVal) {
-          hHtml += '<div style="font-size:12px;color:#333;margin-top:2px">Tel: ' + phoneVal + '</div>';
-        }
+        if (resName) hHtml += '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:3px">' + resName + '</div>';
+        if (res.rest_address) hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_address + '</div>';
+        if (res.rest_city) hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_city + '</div>';
+        if (res.rest_zipcode) hHtml += '<div style="font-size:12px;color:#333;line-height:1.3">' + res.rest_zipcode + '</div>';
+        if (phoneVal) hHtml += '<div style="font-size:12px;color:#333;margin-top:2px">Tel: ' + phoneVal + '</div>';
         shopHeaderEl.innerHTML = hHtml;
       }
 
       // Bestelnr.
       var oidEl = document.getElementById('pr-info-oid');
       if (oidEl) {
-        oidEl.textContent = (order.oid || order.order_number || ('#' + (order.id || ''))).replace('#', '');
+        var oidVal = String(o.oid || o.order_number || full.oid || full.order_number || ('#' + (o.id || full.id || ''))).replace('#', '');
+        oidEl.textContent = oidVal;
       }
 
       // Besteld op
       var dateEl = document.getElementById('pr-info-date');
       if (dateEl) {
-        dateEl.textContent = order.created_at || order.order_date || dateFormatted;
+        dateEl.textContent = o.created_at || full.created_at || full.order_date || dateFormatted;
       }
 
       // Bron
       var bronEl = document.getElementById('pr-info-bron');
       if (bronEl) {
-        bronEl.textContent = order.source || order.order_source || 'Web order';
+        bronEl.textContent = o.source || full.source || 'Web order';
       }
 
       // Bezorgtijd / Afhaaltijd
@@ -7479,8 +7657,7 @@
       }
       var wishedEl = document.getElementById('pr-info-wished');
       if (wishedEl) {
-        var wVal = order.wished || 'ZSM';
-        wishedEl.textContent = (wVal.toUpperCase().indexOf('ZSM') !== -1 || wVal.toUpperCase().indexOf('ASAP') !== -1) ? 'ZSM' : (wVal + ' (ZSM)');
+        wishedEl.textContent = formatPrintOrderTime(o);
       }
 
       // Betaalwijze
@@ -7490,13 +7667,16 @@
       }
 
       // Klant Details
-      var userDetails = order.order_user_details || order.user_details || {};
-      var nameVal = order.name || order.customer_name || userDetails.order_name || userDetails.name || (userDetails.FirstName ? (userDetails.FirstName + ' ' + (userDetails.LastName || '')) : '—');
+      var u = full.order_user_details || full.user_details || o.order_user_details || o.user_details || {};
+      var nameVal = o.name || o.customer_name || u.order_name || u.name || (u.FirstName ? (u.FirstName + ' ' + (u.LastName || '')) : '') || full.name || full.customer_name || '—';
       var custNameEl = document.getElementById('pr-cust-name');
       if (custNameEl) custNameEl.textContent = nameVal;
 
       var custPhoneEl = document.getElementById('pr-cust-phone');
-      if (custPhoneEl) custPhoneEl.textContent = order.phone || order.phone_number || userDetails.phone || userDetails.phone_number || '';
+      if (custPhoneEl) {
+        var phoneStr = o.phone || o.phone_number || u.phone || u.phone_number || full.phone || full.phone_number || '';
+        custPhoneEl.textContent = phoneStr ? ('Tel: ' + phoneStr) : '';
+      }
 
       var addr1El = document.getElementById('pr-cust-addr1');
       var addr2El = document.getElementById('pr-cust-addr2');
@@ -7504,48 +7684,173 @@
         if (addr1El) addr1El.textContent = 'Afhalen';
         if (addr2El) addr2El.textContent = '';
       } else {
-        if (addr1El) addr1El.textContent = order.address || order.street || userDetails.address || '—';
-        if (addr2El) addr2El.textContent = (order.city || userDetails.city) ? ((order.zipcode || userDetails.zipcode || '') + ' ' + (order.city || userDetails.city || '')).trim() : '';
+        if (addr1El) addr1El.textContent = o.address || o.street || u.address || u.street || full.address || full.street || '—';
+        if (addr2El) addr2El.textContent = (o.city || u.city || full.city) ? ((o.zipcode || u.zipcode || full.zipcode || '') + ' ' + (o.city || u.city || full.city || '')).trim() : '';
       }
 
       // Customer Note Box
       var noteBox = document.getElementById('pr-note-container');
       var noteEl = document.getElementById('pr-note');
-      if (order.note) {
-        if (noteEl) noteEl.innerHTML = String(order.note).replace(/\n/g, '<br>');
+      var noteVal = o.note || full.delivery_note || full.save_note || full.note || '';
+      if (noteVal) {
+        if (noteEl) noteEl.innerHTML = String(noteVal).replace(/\n/g, '<br>');
         if (noteBox) noteBox.style.display = 'block';
       } else {
         if (noteBox) noteBox.style.display = 'none';
       }
 
       // Dynamic Items rendering
+      var rawItems = (full && (full.items || full.dish_details || full.order_items || full.dishes_details)) || o.items || [];
+      var depositGroups = o.depositGroups ? JSON.parse(JSON.stringify(o.depositGroups)) : {};
+      var calculatedSubtotal = 0;
+
       var itemsEl = document.getElementById('pr-items');
       if (itemsEl) {
-        var itemsList = order.items || order.dish_details || order.order_items || order.dishes_details || [];
-        if (Array.isArray(itemsList) && itemsList.length > 0) {
-          itemsEl.innerHTML = itemsList.map(function (it) {
-            var qty = it.qty || it.quantity || 1;
-            var name = (it.dish && (it.dish.name || it.dish.name_en || it.dish.name_nl)) || it.name || it.product_name || 'Item';
-            var priceVal = parseFloat(it.price || (it.dish && it.dish.price) || 0);
-            var itemTotal = (priceVal * qty).toFixed(2);
-            var subText = extractItemAttributes(it).replace(/, /g, '<br>');
+        if (Array.isArray(rawItems) && rawItems.length > 0) {
+          itemsEl.innerHTML = rawItems.map(function (it) {
+            var qty = parseInt(it.qty || it.quantity || 1, 10);
+            var dishObj = it.dish || it.customItem || it;
+            var name = dishObj.name || dishObj.name_en || dishObj.name_nl || it.name || it.product_name || 'Item';
+            var dishPrice = parseFloat(it.price !== undefined && it.price !== null ? it.price : (dishObj.price || it.dish_price || it.total_price || 0));
+            var paidIngTotal = parseFloat(it.paid_ingredient_total || 0);
+            var dishIngsTotal = 0;
+            if (it.orderDishPaidIngredients && Array.isArray(it.orderDishPaidIngredients)) {
+              it.orderDishPaidIngredients.forEach(function (ing) {
+                dishIngsTotal += parseFloat(ing.price || (ing.dishIngredient && ing.dishIngredient.price) || 0);
+              });
+            }
+            var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
+            calculatedSubtotal += itemTotal;
+            var subText = it.note || extractItemAttributes(it);
+            if (subText) subText = subText.replace(/, /g, '<br>');
+
+            if (!o.depositGroups) {
+              var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
+                (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
+                  (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
+                    (it.deposite !== undefined && it.deposite !== null ? it.deposite :
+                      (it.deposit !== undefined && it.deposit !== null ? it.deposit : it.statiegeld))));
+              if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
+                var depRate = 0, depLabel = '';
+                var strDep = String(rawDep).trim();
+                if (strDep === '1' || strDep === '0.15') { depRate = 0.15; depLabel = '0,15'; }
+                else if (strDep === '2' || strDep === '0.25') { depRate = 0.25; depLabel = '0,25'; }
+                else {
+                  var parsed = parseFloat(strDep);
+                  if (!isNaN(parsed) && parsed > 0) { depRate = parsed; depLabel = parsed.toFixed(2).replace('.', ','); }
+                }
+                if (depRate > 0) {
+                  var key = depRate.toFixed(2);
+                  if (!depositGroups[key]) depositGroups[key] = { rate: depRate, rateLabel: depLabel, count: 0 };
+                  depositGroups[key].count += qty;
+                }
+              }
+            }
+
             return '<div class="r-item">'
               + '<span class="r-item-qty">' + qty + '</span>'
               + '<div style="flex:1;min-width:0">'
               + '<div class="r-item-name">' + name + '</div>'
               + (subText ? '<div class="r-item-sub">' + subText + '</div>' : '')
               + '</div>'
-              + '<span class="r-item-price">€ ' + itemTotal + '</span>'
+              + '<span class="r-item-price">' + fmt(itemTotal) + '</span>'
               + '</div>';
           }).join('');
         } else {
-          itemsEl.innerHTML = '<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling ' + (order.oid || order.order_number || '') + '</div></div><span class="r-item-price">' + fmt(total) + '</span></div>';
+          var fallbackOid = String(o.oid || o.order_number || full.oid || full.order_number || '').replace('#', '');
+          itemsEl.innerHTML = '<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling ' + fallbackOid + '</div></div><span class="r-item-price">' + fmt(o.totalAmt || o.price || 0) + '</span></div>';
         }
       }
 
-      var totalEl = document.getElementById('pr-total');
-      if (totalEl) totalEl.textContent = fmt(total);
+      // Breakdown calculations
+      var totalDepositAmt = 0;
+      Object.keys(depositGroups).forEach(function (k) {
+        totalDepositAmt += depositGroups[k].count * depositGroups[k].rate;
+      });
 
+      var subtotal = 0;
+      if (o.subtotal !== undefined && o.subtotal !== null) {
+        subtotal = parseFloat(o.subtotal);
+      } else {
+        var rawSub = (full.subtotal !== undefined && full.subtotal !== null && full.subtotal > 0)
+          ? parseFloat(full.subtotal)
+          : ((full.item_total !== undefined && full.item_total !== null && full.item_total > 0) ? parseFloat(full.item_total) : calculatedSubtotal);
+        subtotal = (Math.abs(rawSub - (calculatedSubtotal + totalDepositAmt)) < 0.05)
+          ? (rawSub - totalDepositAmt)
+          : (rawSub > calculatedSubtotal && totalDepositAmt > 0 ? (rawSub - totalDepositAmt) : calculatedSubtotal);
+      }
+
+      var customerFee = o.customerFee !== undefined ? parseFloat(o.customerFee) : 0;
+      if (!customerFee && full) {
+        var rawCustFee = (full.paymentDetails && full.paymentDetails.customer_fee !== undefined) ? full.paymentDetails.customer_fee :
+          ((full.data && full.data.paymentDetails && full.data.paymentDetails.customer_fee !== undefined) ? full.data.paymentDetails.customer_fee : full.customer_fee);
+        if (rawCustFee !== undefined && rawCustFee !== null) customerFee = Math.abs(parseFloat(rawCustFee) || 0);
+      }
+
+      var shipping = o.shipping !== undefined ? parseFloat(o.shipping) : parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
+      var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
+      var tip = o.tip !== undefined ? parseFloat(o.tip) : parseFloat(full.tip || full.tip_amount || 0);
+      var discount = o.discount !== undefined ? parseFloat(o.discount) : parseFloat(full.discount_amount || full.discount || 0);
+      var redeemDiscount = o.redeemDiscount !== undefined ? parseFloat(o.redeemDiscount) : 0;
+      if (!redeemDiscount && full) {
+        var rawRed = full.redeem_discount !== undefined ? full.redeem_discount : (full.data && full.data.redeem_discount !== undefined ? full.data.redeem_discount : null);
+        if (rawRed !== null) redeemDiscount = Math.abs(parseFloat(rawRed) || 0);
+      }
+
+      var grandTotal = o.totalAmt !== undefined ? parseFloat(o.totalAmt) :
+        ((full.total_amount !== undefined && full.total_amount !== null && full.total_amount > 0)
+          ? parseFloat(full.total_amount)
+          : (subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount));
+
+      // Build breakdown HTML
+      var bdEl = document.getElementById('pr-breakdown');
+      if (bdEl) {
+        var bHtml = '';
+        // 1. Subtotal
+        bHtml += '<div class="r-info-row"><span class="r-info-label" style="font-weight:600;color:#111">Subtotal</span><span class="r-info-val" style="font-weight:600;color:#111">' + fmt(subtotal) + '</span></div>';
+
+        // 2. Statiegeld
+        Object.keys(depositGroups).forEach(function (k) {
+          var group = depositGroups[k];
+          var depAmt = group.count * group.rate;
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Statiegeld € ' + group.rateLabel + ' x ' + group.count + '</span><span class="r-info-val">' + fmt(depAmt) + '</span></div>';
+        });
+
+        // 3. Transaction Costs
+        if (customerFee > 0) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Transaction Costs</span><span class="r-info-val">' + fmt(customerFee) + '</span></div>';
+        }
+
+        // 4. Delivery
+        if (shipping > 0 || isDelivery) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Bezorging</span><span class="r-info-val">' + fmt(shipping) + '</span></div>';
+        }
+
+        // 5. Service fee
+        if (service > 0) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Servicekosten</span><span class="r-info-val">' + fmt(service) + '</span></div>';
+        }
+
+        // 6. Tip
+        if (tip > 0) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Fooi</span><span class="r-info-val">' + fmt(tip) + '</span></div>';
+        }
+
+        // 7. Reward / Discount
+        if (redeemDiscount > 0) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label" style="color:#d81b60;font-weight:600">Reward</span><span class="r-info-val" style="color:#d81b60;font-weight:600">- ' + fmt(redeemDiscount) + '</span></div>';
+        } else if (discount > 0) {
+          bHtml += '<div class="r-info-row"><span class="r-info-label">Korting</span><span class="r-info-val">- ' + fmt(discount) + '</span></div>';
+        }
+
+        // Grand Total
+        bHtml += '<div class="r-info-row" style="margin-top:6px;padding-top:6px;border-top:1px solid #111;font-size:14px;font-weight:700"><span>Totaal</span><span>' + fmt(grandTotal) + '</span></div>';
+
+        bdEl.innerHTML = bHtml;
+      }
+
+      var btw = grandTotal * 9 / 109;
       var btwEl = document.getElementById('pr-btw');
       if (btwEl) btwEl.textContent = fmt(btw);
     }
@@ -9485,10 +9790,39 @@
       if (btn._tickInterval) { clearInterval(btn._tickInterval); btn._tickInterval = null; }
     }
 
+    function parseDisplayMinutes(str) {
+      if (!str) return 35;
+      var s = String(str).trim();
+      if (s.indexOf('h') !== -1) {
+        var parts = s.split('h');
+        var h = parseInt(parts[0], 10) || 0;
+        var m = parseInt((parts[1] || '').replace('m', ''), 10) || 0;
+        return h * 60 + m;
+      }
+      var n = parseInt(s, 10);
+      return isNaN(n) ? 35 : n;
+    }
+
     function getCardMinutes(card) {
-      var txt = card.querySelector('.tcol text');
-      var v = txt ? parseInt(txt.textContent, 10) : 0;
-      return isNaN(v) ? 0 : v;
+      if (!card) return Infinity;
+      if (card.dataset && card.dataset.targetTime) {
+        var tTime = parseInt(card.dataset.targetTime, 10);
+        if (!isNaN(tTime)) {
+          var rem = Math.round((tTime - Date.now()) / 60000);
+          return Math.abs(rem);
+        }
+      }
+      var tcol = card.querySelector('.tcol');
+      var numEl = tcol ? tcol.querySelector('text') : null;
+      if (numEl) {
+        var subEl = numEl.nextElementSibling && numEl.nextElementSibling.tagName === 'text' ? numEl.nextElementSibling : null;
+        var val = parseDisplayMinutes(numEl.textContent);
+        if (subEl && subEl.textContent.trim().indexOf('hour') !== -1) {
+          val = val * 60;
+        }
+        return val;
+      }
+      return Infinity;
     }
 
     function initLiveTimers() {
@@ -9497,7 +9831,11 @@
         var tcol = card.querySelector('.tcol');
         var numEl = tcol ? tcol.querySelector('text') : null;
         if (!tcol || !numEl) return;
-        var displayed = parseInt(numEl.textContent, 10) || 35;
+        var displayed = parseDisplayMinutes(numEl.textContent);
+        var subEl = numEl.nextElementSibling && numEl.nextElementSibling.tagName === 'text' ? numEl.nextElementSibling : null;
+        if (subEl && subEl.textContent.trim().indexOf('hour') !== -1) {
+          displayed = displayed * 60;
+        }
         var signed = tcol.classList.contains('late') ? -displayed : displayed;
         if (signed === 0) signed = 35;
         card.dataset.targetTime = String(Date.now() + signed * 60000);
@@ -9656,13 +9994,14 @@
         requestAppWakeLock();
       }
     });
-    // Initial sort all lists by target time on page load
+    function sortCardsByTargetTime(listId) {
+      // Disabled client-side sorting: render order strictly as returned by API response
+      return;
+    }
+
+    // Initial sort disabled to preserve API response order
     ['t-new', 't-kitchen', 't-delivery'].forEach(function (listId) {
-      var list = document.getElementById(listId);
-      if (!list) return;
-      var cards = Array.prototype.slice.call(list.querySelectorAll('.ocard'));
-      cards.sort(function (a, b) { return parseInt(a.dataset.targetTime, 10) - parseInt(b.dataset.targetTime, 10); });
-      cards.forEach(function (c) { list.appendChild(c); });
+      sortCardsByTargetTime(listId);
     });
 
     function acceptOrderClick(btn, e) {
@@ -9929,34 +10268,8 @@
     }
 
     function reorderNewList(changedCard) {
-      var list = document.getElementById('t-new');
-      var cards = Array.prototype.slice.call(list.querySelectorAll('.ocard'));
-      var oldTops = cards.map(function (c) { return c.getBoundingClientRect().top; });
-
-      var sorted = cards.slice().sort(function (a, b) {
-        return parseInt(a.dataset.targetTime, 10) - parseInt(b.dataset.targetTime, 10);
-      });
-      sorted.forEach(function (c) { list.appendChild(c); });
-
-      cards.forEach(function (c, i) {
-        var newTop = c.getBoundingClientRect().top;
-        var delta = oldTops[i] - newTop;
-        if (delta) {
-          c.style.transition = 'none';
-          c.style.transform = 'translateY(' + delta + 'px)';
-        }
-      });
-
-      requestAnimationFrame(function () {
-        cards.forEach(function (c) {
-          c.style.transition = 'transform 0.35s ease';
-          c.style.transform = '';
-        });
-      });
-
-      setTimeout(function () {
-        cards.forEach(function (c) { c.style.transition = ''; });
-      }, 400);
+      // Disabled sorting: preserve API response sequence
+      return;
     }
 
     function initAcceptButtons() {
