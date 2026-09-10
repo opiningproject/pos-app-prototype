@@ -5176,6 +5176,7 @@
             style="text-align:center;font-size:14px;color:#0172af;cursor:pointer;margin-top:20px">Je wachtwoord
             vergeten?</div>
         </div>
+
       </div>
 
       <!-- New order notification overlay -->
@@ -10961,7 +10962,8 @@
         })
         .catch(function (error) {
           console.error('Failed to load orders:', error);
-          if (!localStorage.getItem('auth_token')) {
+          var token = localStorage.getItem('auth_token');
+          if (!token || token === 'session_active' || (error && (error.message === 'Unauthenticated.' || error.message === 'Token is Expired' || error.message === 'Authorization Token not found' || String(error.message).indexOf('Status 401') !== -1))) {
             doLogout();
           }
         });
@@ -10980,6 +10982,8 @@
     }
     function doLogout() {
       localStorage.removeItem('auth_token');
+      localStorage.removeItem('pos_token');
+      localStorage.removeItem('posCurrentOrder');
       document.getElementById('login-user').value = '';
       document.getElementById('login-pass').value = '';
       document.getElementById('login-error').style.display = 'none';
@@ -11366,8 +11370,9 @@
 
     initScrollListeners();
 
-    // Load initial orders if token exists, else force logout
-    if (localStorage.getItem('auth_token')) {
+    // Load initial orders if valid token exists, else force logout & show login screen
+    var initToken = localStorage.getItem('auth_token');
+    if (initToken && initToken !== 'session_active') {
       loadOrders();
       fetchRestaurantDetails();
       fetchSummaryAfterLogin();

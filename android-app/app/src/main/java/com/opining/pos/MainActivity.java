@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
     }
 
     /** Exposed to the web app as window.AndroidStatusBar: recolour the system status bar */
-    private class StatusBarBridge {
+    public class StatusBarBridge {
         @JavascriptInterface
         public void setColor(final String hex, final boolean lightIcons) {
             runOnUiThread(new Runnable() {
@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
     }
 
     /** Exposed to the web app as window.AndroidAuth */
-    private class AuthBridge {
+    public class AuthBridge {
         private final ApiClient apiClient = new ApiClient();
 
         private String extractToken(org.json.JSONObject response) {
@@ -246,7 +246,7 @@ public class MainActivity extends Activity {
     }
 
     /** Exposed to the web app as window.AndroidPrinter */
-    private class PrinterBridge {
+    public class PrinterBridge {
 
         @JavascriptInterface
         public boolean isReady() {

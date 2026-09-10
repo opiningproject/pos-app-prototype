@@ -412,7 +412,8 @@
     }
 
     /* All page headers: tight 16px padding (overrides the safe-area media-query rules) */
-    .page>.page-header {
+    .page>.page-header,
+    #p-legal>.page-header {
       padding: 16px !important;
       min-height: 0 !important;
     }
@@ -578,7 +579,8 @@
     #p-menu-cat>.page-header [style*="font-size"],
     #p-pause>.page-header [style*="font-size"],
     #p-settings>.page-header [style*="font-size"],
-    #p-settings-detail>.page-header [style*="font-size"] {
+    #p-settings-detail>.page-header [style*="font-size"],
+    #p-legal>.page-header [style*="font-size"] {
       font-size: 16px !important;
     }
 
@@ -3065,6 +3067,40 @@
       display: flex;
     }
 
+    /* Login legal links */
+    .login-legal-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: #0172af;
+      cursor: pointer;
+    }
+
+    .login-legal-link:active {
+      opacity: 0.6;
+    }
+
+    /* Legal page */
+    #legal-scroll h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      margin: 24px 0 8px;
+    }
+
+    #legal-scroll h3:first-child {
+      margin-top: 0;
+    }
+
+    #legal-scroll p {
+      margin: 0 0 12px;
+    }
+
+    #legal-scroll .legal-updated {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
     /* Menu dropdown */
     .mdd-item {
       display: flex;
@@ -3122,6 +3158,11 @@
 
     .menu-cat-row:active {
       background: #f7f7f7;
+    }
+
+    /* Settings: logout sits back from the navigation rows */
+    .menu-cat-row.logout {
+      color: #888;
     }
 
     .mcat-left {
@@ -3902,7 +3943,7 @@
           <div class="page-header"
             style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff">
             <div class="page-header-row">
-              <div id="d-back-btn" onclick="goPage('orders')"
+              <div id="d-back-btn" onclick="detailGoBack()"
                 style="width:40px;height:40px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
                 <svg width="8" height="15" viewBox="0 0 10 18" fill="none">
                   <path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round"
@@ -3922,6 +3963,15 @@
             <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()"
               style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:250"></div>
             <div id="d-order-menu" style="display:none">
+              <div id="d-done-print-item" class="d-menu-item neutral" style="display:none"
+                onclick="onPrintClick(this);toggleOrderMenu()">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9V4h12v5" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <rect x="3" y="9" width="18" height="9" rx="2" stroke="#111" stroke-width="2" />
+                  <path d="M6 14h12M6 18h7" stroke="#111" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span>Print bon</span>
+              </div>
               <div class="d-menu-item neutral" onclick="openChangeTime()">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="9" stroke="#111" stroke-width="2" />
@@ -4048,16 +4098,33 @@
                     <div id="d-when-badge" class="oc-when oc-when-asap" data-i18n="otime_asap" style="margin-top:8px">
                       ZSM</div>
                   </div>
-                  <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
-                    <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5" />
-                    <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2.5"
-                      stroke-dasharray="138.23" stroke-dashoffset="138.23" stroke-linecap="round"
-                      transform="rotate(-90 24 24)" />
-                    <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600"
-                      fill="#333" font-family="Poppins,sans-serif">—</text>
-                    <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
-                      fill="#aaa" font-family="Poppins,sans-serif">min</text>
-                  </svg>
+                  <div id="d-timer-wrap">
+                    <svg width="72" height="72" viewBox="0 0 48 48" flex-shrink="0">
+                      <circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2.5" />
+                      <circle id="d-timer-ring" cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2.5"
+                        stroke-dasharray="138.23" stroke-dashoffset="138.23" stroke-linecap="round"
+                        transform="rotate(-90 24 24)" />
+                      <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600"
+                        fill="#333" font-family="Poppins,sans-serif">—</text>
+                      <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
+                        fill="#aaa" font-family="Poppins,sans-serif">min</text>
+                    </svg>
+                  </div>
+                  <div id="d-done-badge"
+                    style="display:none;width:72px;height:72px;border-radius:50%;background:#e8f5e9;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="11" stroke="#4caf50" stroke-width="1.8" />
+                      <path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <div id="d-cancelled-badge"
+                    style="display:none;width:72px;height:72px;border-radius:50%;background:#fdecea;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="11" stroke="#c62828" stroke-width="1.8" />
+                      <path d="M8 8l8 8M16 8l-8 8" stroke="#c62828" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                  </div>
                 </div>
               </div>
 
@@ -4662,81 +4729,90 @@
                 </div>
                 <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">7 <span
                     data-i18n="nav_completed_orders">afgeronde bestellingen</span></div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A01','Thomas Jefferson','Lusthofstraat 27A||3062 WB Rotterdam','#260826 A 01','€23.50','Paid','Delivery',30,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A01</div>
+                      <div class="dname">#260826 A 01</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · Card</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A02','Sophie de Boer','Collection order','#260826 A 02','€18.00','Paid','Collection',0,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A02</div>
+                      <div class="dname">#260826 A 02</div>
                       <div class="oc-price"><span data-i18n="d_pickup">Afhaal</span> · Card</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A03','Emma Jansen','Tochtstraat 40||3036 SK Rotterdam','#260826 A 03','€31.00','Paid','Delivery',25,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€31.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A03</div>
+                      <div class="dname">#260826 A 03</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · <span
                           data-i18n="oc_pay_cash">Contant</span></div>
+                      <div class="oc-price" style="color:#16a34a;padding-top:4px">Betaald bij bezorging</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A04','Lotte de Vries','Witte de Withstraat 21||3012 BM Rotterdam','#260826 A 04','€44.00','Paid','Delivery',40,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€44.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A04</div>
+                      <div class="dname">#260826 A 04</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · Card</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A05','Daan Visser','Collection order','#260826 A 05','€12.50','Paid','Collection',0,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€12.50</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A05</div>
+                      <div class="dname">#260826 A 05</div>
                       <div class="oc-price"><span data-i18n="d_pickup">Afhaal</span> · Card</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A06','Lars Jansen','Bergselaan 88||3038 CK Rotterdam','#260826 A 06','€29.00','Paid','Delivery',35,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€29.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A06</div>
+                      <div class="dname">#260826 A 06</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · <span
                           data-i18n="oc_pay_cash">Contant</span></div>
+                      <div class="oc-price" style="color:#16a34a;padding-top:4px">Betaald bij bezorging</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A07','Julia Mulder','Proveniersstraat 8B||3014 GH Rotterdam','#260826 A 07','€56.00','Paid','Delivery',45,'done',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€56.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A07</div>
+                      <div class="dname">#260826 A 07</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · Card</div>
                     </div>
                   </div>
@@ -4759,43 +4835,45 @@
                 </div>
                 <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:24px">3 <span
                     data-i18n="dash_cancelled_orders">geannuleerde bestellingen</span></div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A08','Nina Bakker','Lusthofstraat 27A||3062 WB Rotterdam','#260826 A 08','€23.50','Paid','Delivery',0,'cancelled',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A08</div>
+                      <div class="dname">#260826 A 08</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · Card</div>
                       <div class="oc-price" data-i18n="refund_done" style="color:#16a34a;padding-top:8px">Terugbetaald
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A09','Finn de Boer','Collection order','#260826 A 09','€18.00','Paid','Collection',0,'cancelled',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€18.00</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A09</div>
+                      <div class="dname">#260826 A 09</div>
                       <div class="oc-price"><span data-i18n="d_pickup">Afhaal</span> · Card</div>
                       <div class="oc-price" data-i18n="refund_pending" style="color:#d97706;padding-top:8px">
                         Terugbetaling bezig</div>
                     </div>
                   </div>
                 </div>
-                <div class="ocard">
+                <div class="ocard" style="cursor:pointer"
+                  onclick="goDetail('A10','Roos Hendriks','Tochtstraat 40||3036 SK Rotterdam','#260826 A 10','€23.50','Cash','Delivery',0,'cancelled',this)">
                   <div class="ocard-row">
                     <div class="tcol" style="align-self:flex-start">
                       <div class="tnum" style="font-size:14px;font-weight:600;color:#111">€23.50</div>
                     </div>
                     <div class="mcol">
-                      <div class="dname">#250715A10</div>
+                      <div class="dname">#260826 A 10</div>
                       <div class="oc-price"><span data-i18n="d_delivery">Bezorging</span> · <span
                           data-i18n="oc_pay_cash">Contant</span></div>
-                      <div class="oc-price" data-i18n="refund_none" style="padding-top:8px">Geen terugbetaling vereist
-                      </div>
+                      <div class="oc-price" style="color:#888;padding-top:8px">Geannuleerd</div>
                     </div>
                   </div>
                 </div>
@@ -5252,17 +5330,8 @@
                     stroke-linejoin="round" />
                 </svg>
               </div>
-              <div class="menu-cat-row" onclick="doLogout()">
+              <div class="menu-cat-row logout" onclick="doLogout()">
                 <span data-i18n="sc_logout">Uitloggen</span>
-                <svg width="10" height="18" viewBox="0 0 8 14" fill="none">
-                  <path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-              <div style="margin-top:4px">
-                <button data-i18n="sim_new_order" onclick="triggerNewOrder()"
-                  style="width:100%;height:52px;background:#111;color:#fff;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Simuleer
-                  nieuwe bestelling</button>
               </div>
             </div>
           </div>
@@ -5298,8 +5367,8 @@
 
       <!-- Login page (outside screen-content, covers full screen) -->
       <div id="p-login"
-        style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;justify-content:center;overflow-y:auto">
-        <div style="padding:24px;margin-bottom:56px">
+        style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;overflow-y:auto">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px;margin-bottom:56px">
           <img src="logo.png" alt="Opining" style="width:120px;height:auto;display:block;margin:0 auto 32px">
           <div class="s-card" style="padding:24px;border-radius:12px">
             <div data-i18n="login_title" style="font-size:22px;font-weight:500;color:#111;margin-bottom:24px">Aanmelden
@@ -5321,9 +5390,36 @@
             <button data-i18n="login_signin" onclick="doLogin()"
               style="width:100%;height:44px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aanmelden</button>
           </div>
-          <div data-i18n="login_forgot"
-            style="text-align:center;font-size:14px;color:#0172af;cursor:pointer;margin-top:20px">Je wachtwoord
-            vergeten?</div>
+        </div>
+        <div style="flex-shrink:0;display:flex;justify-content:center;gap:24px;padding:0 24px 24px">
+          <span class="login-legal-link" onclick="openLegal('privacy')"
+            data-i18n="login_legal_privacy">Privacybeleid</span>
+          <span class="login-legal-link" onclick="openLegal('terms')" data-i18n="login_legal_terms">Algemene
+            voorwaarden</span>
+        </div>
+      </div>
+
+      <!-- Legal page (Terms / Privacy), sits above the login screen -->
+      <div id="p-legal"
+        style="display:none;position:absolute;inset:0;background:#fff;z-index:600;flex-direction:column">
+        <div class="page-header"
+          style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <div class="page-header-row">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div onclick="closeLegal()"
+                style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+                <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
+                  <path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <span id="legal-title"
+              style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap"></span>
+          </div>
+        </div>
+        <div id="legal-scroll"
+          style="flex:1;overflow-y:auto;background:#fafafa;padding:16px 24px 48px;font-size:14px;line-height:1.7;color:#333">
         </div>
       </div>
 
@@ -5799,7 +5895,9 @@
         pause_continue: 'Continue', pause_reopen: 'You can reopen your store at any time.',
         pause_paused: 'Orders paused',
         login_welcome: 'Welcome back', login_subtitle: 'Log in to continue', login_username: 'Username', login_password: 'Password', login_signin: 'Sign in',
-        login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device',
+        login_title: 'Sign in', login_email: 'E-mail', login_remember: 'Remember me on this device',
+        login_legal_terms: 'Terms of Service', login_legal_privacy: 'Privacy Policy',
+        legal_terms_title: 'Terms of Service', legal_privacy_title: 'Privacy Policy', legal_updated: 'Last updated',
         co_discard_title: 'You have unsaved changes', co_discard_keep: 'Keep editing', co_discard_discard: 'Discard',
         dash_online_paid: 'Paid online', dash_cash: 'Cash',
         login_error: 'Incorrect username or password', sim_new_order: 'Simulate new order', dash_cancelled_orders: 'cancelled orders',
@@ -5889,7 +5987,9 @@
         pause_continue: 'Doorgaan', pause_reopen: 'Je kunt op elk moment je winkel weer openen.',
         pause_paused: 'Bestellingen gepauzeerd',
         login_welcome: 'Welkom terug', login_subtitle: 'Log in om door te gaan', login_username: 'Gebruikersnaam', login_password: 'Wachtwoord', login_signin: 'Aanmelden',
-        login_title: 'Aanmelden', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat',
+        login_title: 'Aanmelden', login_email: 'E-mail', login_remember: 'Onthoud mij op dit apparaat',
+        login_legal_terms: 'Algemene voorwaarden', login_legal_privacy: 'Privacybeleid',
+        legal_terms_title: 'Algemene voorwaarden', legal_privacy_title: 'Privacybeleid', legal_updated: 'Laatst bijgewerkt',
         co_discard_title: 'Je hebt niet-opgeslagen wijzigingen', co_discard_keep: 'Doorgaan met bewerken', co_discard_discard: 'Verwerpen',
         dash_online_paid: 'Online betaald', dash_cash: 'Contant',
         login_error: 'Onjuiste gebruikersnaam of wachtwoord', sim_new_order: 'Simuleer nieuwe bestelling', dash_cancelled_orders: 'geannuleerde bestellingen',
@@ -5911,6 +6011,87 @@
     };
     var currentLang = 'en';
     function t(key) { return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || key; }
+
+    /* ===== Legal pages (placeholder copy — replace with the final legal text) ===== */
+    var LEGAL_UPDATED = '10-09-2026';
+    var LEGAL_CONTENT = {
+      nl: {
+        terms:
+          '<h3>1. Over deze voorwaarden</h3>'
+          + '<p>Deze voorwaarden gelden voor het gebruik van de Opining Orderpad op je kassa-apparaat. Door in te loggen ga je namens je onderneming akkoord met deze voorwaarden.</p>'
+          + '<h3>2. Je account</h3>'
+          + '<p>Je account is persoonlijk en bedoeld voor medewerkers van de aangesloten vestiging. Je bent verantwoordelijk voor het geheimhouden van je inloggegevens en voor alles wat er via je account gebeurt.</p>'
+          + '<h3>3. Gebruik van de app</h3>'
+          + '<p>De Orderpad wordt gebruikt om binnenkomende bestellingen te ontvangen, te accepteren, te bereiden en af te ronden. Je gebruikt de app niet voor andere doeleinden en niet in strijd met de wet.</p>'
+          + '<h3>4. Beschikbaarheid</h3>'
+          + '<p>We doen ons best de dienst beschikbaar te houden, maar onderhoud en storingen kunnen tot onderbreking leiden. Zorg altijd voor een alternatieve manier om bestellingen te blijven ontvangen.</p>'
+          + '<h3>5. Aansprakelijkheid</h3>'
+          + '<p>Onze aansprakelijkheid is beperkt tot het bedrag dat je in de betreffende maand voor de dienst hebt betaald, voor zover de wet dat toelaat.</p>'
+          + '<h3>6. Wijzigingen</h3>'
+          + '<p>We kunnen deze voorwaarden aanpassen. Bij belangrijke wijzigingen laten we dat in de app weten voordat ze ingaan.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Vragen over deze voorwaarden? Neem contact op via info@opiningstore.com.</p>',
+        privacy:
+          '<h3>1. Wie verwerkt je gegevens</h3>'
+          + '<p>Opining verwerkt de gegevens die via de Orderpad worden vastgelegd. We doen dat als verwerker in opdracht van de vestiging waar je werkt.</p>'
+          + '<h3>2. Welke gegevens we verwerken</h3>'
+          + '<p>We verwerken je accountgegevens (naam en e-mailadres), gegevens over het apparaat waarop je werkt, en de bestelgegevens die je in de app afhandelt. Bestelgegevens bevatten klantgegevens zoals adres en telefoonnummer.</p>'
+          + '<h3>3. Waarom we ze verwerken</h3>'
+          + '<p>We gebruiken deze gegevens om bestellingen af te handelen, de app te laten werken, storingen op te lossen en de dienst te verbeteren.</p>'
+          + '<h3>4. Hoe lang we ze bewaren</h3>'
+          + '<p>Bestelgegevens bewaren we zolang dat nodig is voor de administratie van de vestiging en de wettelijke bewaartermijnen. Accountgegevens verwijderen we nadat je account is opgeheven.</p>'
+          + '<h3>5. Delen met anderen</h3>'
+          + '<p>We delen gegevens alleen met partijen die nodig zijn om de dienst te leveren, zoals hosting- en bezorgpartners, en alleen onder een verwerkersovereenkomst.</p>'
+          + '<h3>6. Je rechten</h3>'
+          + '<p>Je hebt recht op inzage, correctie en verwijdering van je gegevens, en je kunt bezwaar maken tegen de verwerking. Neem daarvoor contact op met je vestiging of met ons.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Vragen over privacy? Mail naar info@opiningstore.com.</p>'
+      },
+      en: {
+        terms:
+          '<h3>1. About these terms</h3>'
+          + '<p>These terms apply to your use of the Opining Orderpad on your point-of-sale device. By signing in you agree to them on behalf of your business.</p>'
+          + '<h3>2. Your account</h3>'
+          + '<p>Your account is personal and intended for staff of the connected location. You are responsible for keeping your credentials secret and for everything that happens through your account.</p>'
+          + '<h3>3. Using the app</h3>'
+          + '<p>The Orderpad is used to receive, accept, prepare and complete incoming orders. You will not use the app for other purposes or in breach of the law.</p>'
+          + '<h3>4. Availability</h3>'
+          + '<p>We work to keep the service available, but maintenance and outages can cause interruptions. Always keep an alternative way to receive orders.</p>'
+          + '<h3>5. Liability</h3>'
+          + '<p>Our liability is limited to the amount you paid for the service in the month concerned, to the extent the law allows.</p>'
+          + '<h3>6. Changes</h3>'
+          + '<p>We may update these terms. For significant changes we will tell you in the app before they take effect.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Questions about these terms? Contact us at info@opiningstore.com.</p>',
+        privacy:
+          '<h3>1. Who processes your data</h3>'
+          + '<p>Opining processes the data captured through the Orderpad. We do so as a processor on behalf of the location where you work.</p>'
+          + '<h3>2. What we process</h3>'
+          + '<p>We process your account details (name and email address), information about the device you work on, and the order data you handle in the app. Order data includes customer details such as address and phone number.</p>'
+          + '<h3>3. Why we process it</h3>'
+          + '<p>We use this data to handle orders, keep the app working, resolve faults and improve the service.</p>'
+          + '<h3>4. How long we keep it</h3>'
+          + '<p>We keep order data for as long as the location needs it for its administration and for statutory retention periods. Account details are deleted once your account is closed.</p>'
+          + '<h3>5. Sharing with others</h3>'
+          + '<p>We only share data with parties needed to deliver the service, such as hosting and delivery partners, and only under a data processing agreement.</p>'
+          + '<h3>6. Your rights</h3>'
+          + '<p>You have the right to access, correct and delete your data, and to object to processing. Contact your location or us to exercise these rights.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Questions about privacy? Email info@opiningstore.com.</p>'
+      }
+    };
+
+    function openLegal(kind) {
+      var lang = LEGAL_CONTENT[currentLang] ? currentLang : 'nl';
+      document.getElementById('legal-title').textContent = t(kind === 'terms' ? 'legal_terms_title' : 'legal_privacy_title');
+      var scroll = document.getElementById('legal-scroll');
+      scroll.innerHTML = '<div class="legal-updated">' + t('legal_updated') + ' ' + LEGAL_UPDATED + '</div>' + LEGAL_CONTENT[lang][kind];
+      scroll.scrollTop = 0;
+      document.getElementById('p-legal').style.display = 'flex';
+    }
+    function closeLegal() {
+      document.getElementById('p-legal').style.display = 'none';
+    }
     function setLang(lang) {
       currentLang = lang;
       localStorage.setItem('appLang', lang);
@@ -6076,29 +6257,53 @@
       var atBottom = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 8;
       document.getElementById('p-detail').classList.toggle('scrolled-bottom', atBottom);
     }
+    function detailGoBack() {
+      var returnPage = window._detailReturnPage || 'orders';
+      goPage(returnPage);
+      if (returnPage === 'dashboard' && window._detailReturnTab) {
+        var tabIndex = window._detailReturnTab === 'details' ? 1 : window._detailReturnTab === 'cancelled' ? 2 : 0;
+        var tabs = document.querySelectorAll('#dash-tabs .tab');
+        if (tabs[tabIndex]) tabs[tabIndex].click();
+      }
+    }
     function goDetail(id, name, addr, oid, price, pay, type, mins, next, cardEl) {
       var currentActivePage = document.querySelector('.page.active');
       if (currentActivePage && currentActivePage.id !== 'p-detail') {
         window._detailReturnPage = currentActivePage.id.replace('p-', '');
       }
+      window._detailReturnTab = (next === 'done') ? 'details' : (next === 'cancelled') ? 'cancelled' : null;
       closeOrderToast();
       window._detailCard = cardEl || null;
       window._detailOid = oid;
       var isUnaccepted = !!(cardEl && cardEl.dataset.newOrder === '1');
-      document.getElementById('d-actions-default').style.display = isUnaccepted ? 'none' : 'flex';
+      var isDone = (next === 'done');
+      var isCancelled = (next === 'cancelled');
+      document.getElementById('d-actions-default').style.display = (isUnaccepted || isDone || isCancelled) ? 'none' : 'flex';
       document.getElementById('d-actions-accept').style.display = isUnaccepted ? 'block' : 'none';
       // New-order popup: no way out except accepting → hide the back button and options menu
       var backBtn = document.getElementById('d-back-btn');
       if (backBtn) backBtn.style.display = isUnaccepted ? 'none' : 'flex';
       var headerMenu = document.getElementById('d-header-menu');
       if (headerMenu) headerMenu.style.display = isUnaccepted ? 'none' : 'flex';
+      // Done/cancelled orders: show only Print in the three-dots menu
+      var isReadOnly = isDone || isCancelled;
+      var menuItems = document.querySelectorAll('#d-order-menu .d-menu-item');
+      menuItems.forEach(function (item) { item.style.display = isReadOnly ? 'none' : ''; });
+      var donePrint = document.getElementById('d-done-print-item');
+      if (donePrint) donePrint.style.display = isReadOnly ? 'flex' : 'none';
       // New-order popup: show the schedule/confirm block instead of the circle timer + footer
       var schedBlock = document.getElementById('d-new-schedule');
       var timerCard = document.getElementById('d-top-timer-card');
       var actionFooter = document.getElementById('d-action-footer');
       if (schedBlock) schedBlock.style.display = isUnaccepted ? 'block' : 'none';
       if (timerCard) timerCard.style.display = isUnaccepted ? 'none' : 'block';
-      if (actionFooter) actionFooter.style.display = isUnaccepted ? 'none' : 'block';
+      var timerWrap = document.getElementById('d-timer-wrap');
+      var doneBadge = document.getElementById('d-done-badge');
+      var cancelledBadge = document.getElementById('d-cancelled-badge');
+      if (timerWrap) timerWrap.style.display = (isDone || isCancelled) ? 'none' : 'block';
+      if (doneBadge) doneBadge.style.display = isDone ? 'flex' : 'none';
+      if (cancelledBadge) cancelledBadge.style.display = isCancelled ? 'flex' : 'none';
+      if (actionFooter) actionFooter.style.display = (isUnaccepted || isDone) ? 'none' : 'block';
       var detailHeaderEl = document.querySelector('#p-detail > .page-header');
       if (detailHeaderEl) detailHeaderEl.classList.toggle('d-new-header', isUnaccepted);
       document.getElementById('p-detail').classList.toggle('new-order-mode', isUnaccepted);
