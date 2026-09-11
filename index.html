@@ -29,6 +29,40 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* Login legal links */
+    .login-legal-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: #0172af;
+      cursor: pointer;
+    }
+
+    .login-legal-link:active {
+      opacity: 0.6;
+    }
+
+    /* Legal page */
+    #legal-scroll h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      margin: 24px 0 8px;
+    }
+
+    #legal-scroll h3:first-child {
+      margin-top: 0;
+    }
+
+    #legal-scroll p {
+      margin: 0 0 12px;
+    }
+
+    #legal-scroll .legal-updated {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
     /* ===== 3-inch (80mm) Thermal Printer Styles ===== */
     .receipt-thermal {
       width: 76mm;
@@ -5110,11 +5144,6 @@
                     stroke-linejoin="round" />
                 </svg>
               </div>
-              <div style="margin-top:4px">
-                <button data-i18n="sim_new_order" onclick="triggerNewOrder()"
-                  style="width:100%;height:52px;background:#111;color:#fff;border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif">Simuleer
-                  nieuwe bestelling</button>
-              </div>
             </div>
           </div>
         </div>
@@ -5149,8 +5178,8 @@
 
       <!-- Login page (outside screen-content, covers full screen) -->
       <div id="p-login"
-        style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;justify-content:center;overflow-y:auto">
-        <div style="padding:24px;margin-bottom:56px">
+        style="display:none;position:absolute;inset:0;background:#fff;z-index:500;flex-direction:column;overflow-y:auto">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px;margin-bottom:56px">
           <img src="logo.png" alt="Opining" style="width:120px;height:auto;display:block;margin:0 auto 32px">
           <div class="s-card" style="padding:24px;border-radius:12px">
             <div data-i18n="login_title" style="font-size:22px;font-weight:500;color:#111;margin-bottom:24px">Aanmelden
@@ -5172,11 +5201,37 @@
             <button data-i18n="login_signin" onclick="doLogin()"
               style="width:100%;height:44px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Aanmelden</button>
           </div>
-          <div data-i18n="login_forgot"
-            style="text-align:center;font-size:14px;color:#0172af;cursor:pointer;margin-top:20px">Je wachtwoord
-            vergeten?</div>
         </div>
+        <div style="flex-shrink:0;display:flex;justify-content:center;gap:24px;padding:0 24px 24px">
+          <span class="login-legal-link" onclick="openLegal('privacy')"
+            data-i18n="login_legal_privacy">Privacybeleid</span>
+          <span class="login-legal-link" onclick="openLegal('terms')" data-i18n="login_legal_terms">Algemene
+            voorwaarden</span>
+        </div>
+      </div>
 
+      <!-- Legal page (Terms / Privacy), sits above the login screen -->
+      <div id="p-legal"
+        style="display:none;position:absolute;inset:0;background:#fff;z-index:600;flex-direction:column">
+        <div class="page-header"
+          style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          <div class="page-header-row">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div onclick="closeLegal()"
+                style="width:48px;height:48px;border-radius:999px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;margin:-4px">
+                <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
+                  <path d="M9 1L1 9L9 17" stroke="#111" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <span id="legal-title"
+              style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap"></span>
+          </div>
+        </div>
+        <div id="legal-scroll"
+          style="flex:1;overflow-y:auto;background:#fafafa;padding:16px 24px 48px;font-size:14px;line-height:1.7;color:#333">
+        </div>
       </div>
 
       <!-- New order notification overlay -->
@@ -5736,7 +5791,7 @@
         pause_continue: 'Continue', pause_reopen: 'You can reopen your store at any time.',
         pause_paused: 'Orders paused',
         login_welcome: 'Welcome back', login_subtitle: 'Log in to continue', login_username: 'Username', login_password: 'Password', login_signin: 'Sign in',
-        login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device',
+        login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device', login_legal_terms: 'Terms of Service', login_legal_privacy: 'Privacy Policy', legal_terms_title: 'Terms of Service', legal_privacy_title: 'Privacy Policy', legal_updated: 'Last updated',
         co_discard_title: 'You have unsaved changes', co_discard_keep: 'Keep editing', co_discard_discard: 'Discard',
         dash_online_paid: 'Paid online', dash_cash: 'Cash payment',
         login_error: 'Incorrect username or password', sim_new_order: 'Simulate new order', dash_cancelled_orders: 'cancelled orders',
@@ -5826,7 +5881,7 @@
         pause_continue: 'Doorgaan', pause_reopen: 'Je kunt op elk moment je winkel weer openen.',
         pause_paused: 'Bestellingen gepauzeerd',
         login_welcome: 'Welkom terug', login_subtitle: 'Log in om door te gaan', login_username: 'Gebruikersnaam', login_password: 'Wachtwoord', login_signin: 'Aanmelden',
-        login_title: 'Aanmelden', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat',
+        login_title: 'Aanmelden', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat', login_legal_terms: 'Algemene voorwaarden', login_legal_privacy: 'Privacybeleid', legal_terms_title: 'Algemene voorwaarden', legal_privacy_title: 'Privacybeleid', legal_updated: 'Laatst bijgewerkt',
         co_discard_title: 'Je hebt niet-opgeslagen wijzigingen', co_discard_keep: 'Doorgaan met bewerken', co_discard_discard: 'Verwerpen',
         dash_online_paid: 'Online betaald', dash_cash: 'Contant betaling',
         login_error: 'Onjuiste gebruikersnaam of wachtwoord', sim_new_order: 'Simuleer nieuwe bestelling', dash_cancelled_orders: 'geannuleerde bestellingen',
@@ -7412,8 +7467,12 @@
         if (a1) c.push({ t: 'text', v: a1 + '\n' });
         if (a2) c.push({ t: 'text', v: a2 + '\n' });
       }
-      var custPhone = o.phone || o.phone_number || u.phone || u.phone_number || full.phone || full.phone_number || '';
-      if (custPhone) c.push({ t: 'text', v: custPhone + '\n' });
+      var custPhone = u.order_contact_number || u.phone_number || u.phone || u.Phone || u.user_phone || u.contact_number || o.phone || o.order_contact_number || o.phone_number || o.user_phone || o.contact_number || full.phone || full.order_contact_number || full.phone_number || full.user_phone || full.contact_number || '';
+      var countryCode = u.country_code || u.countryCode || o.country_code || o.countryCode || full.country_code || full.countryCode || '';
+      if (custPhone && countryCode && String(custPhone).indexOf('+') === -1 && !String(custPhone).startsWith(countryCode)) {
+        custPhone = countryCode + ' ' + custPhone;
+      }
+      if (custPhone) c.push({ t: 'text', v: 'Tel: ' + custPhone + '\n' });
 
       var noteVal = o.note || full.delivery_note || full.save_note || full.note || '';
       if (noteVal) {
@@ -7675,8 +7734,13 @@
 
       var custPhoneEl = document.getElementById('pr-cust-phone');
       if (custPhoneEl) {
-        var phoneStr = o.phone || o.phone_number || u.phone || u.phone_number || full.phone || full.phone_number || '';
+        var phoneStr = u.order_contact_number || u.phone_number || u.phone || u.Phone || u.user_phone || u.contact_number || o.phone || o.order_contact_number || o.phone_number || o.user_phone || o.contact_number || full.phone || full.order_contact_number || full.phone_number || full.user_phone || full.contact_number || '';
+        var countryCode = u.country_code || u.countryCode || o.country_code || o.countryCode || full.country_code || full.countryCode || '';
+        if (phoneStr && countryCode && String(phoneStr).indexOf('+') === -1 && !String(phoneStr).startsWith(countryCode)) {
+          phoneStr = countryCode + ' ' + phoneStr;
+        }
         custPhoneEl.textContent = phoneStr ? ('Tel: ' + phoneStr) : '';
+        custPhoneEl.style.display = phoneStr ? 'block' : 'none';
       }
 
       var addr1El = document.getElementById('pr-cust-addr1');
@@ -10555,7 +10619,7 @@
 
     function initOrderSocket() {
       if (typeof io === 'undefined') return;
-      var baseUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://admin.dryfftjwieiwjw.online').replace(/\/+$/, '');
+      var baseUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://admin.opiningstore.com').replace(/\/+$/, '');
       var socketEndpoints = Array.from(new Set([
         baseUrl
       ]));
@@ -10990,6 +11054,87 @@
       var f = document.getElementById('login-flag');
       if (f) f.innerHTML = loginFlagSvg(currentLang);
       document.getElementById('p-login').style.display = 'flex';
+    }
+
+    /* ===== Legal pages ===== */
+    var LEGAL_UPDATED = '10-09-2026';
+    var LEGAL_CONTENT = {
+      nl: {
+        terms:
+          '<h3>1. Over deze voorwaarden</h3>'
+          + '<p>Deze voorwaarden gelden voor het gebruik van de Opining Orderpad op je kassa-apparaat. Door in te loggen ga je namens je onderneming akkoord met deze voorwaarden.</p>'
+          + '<h3>2. Je account</h3>'
+          + '<p>Je account is persoonlijk en bedoeld voor medewerkers van de aangesloten vestiging. Je bent verantwoordelijk voor het geheimhouden van je inloggegevens en voor alles wat er via je account gebeurt.</p>'
+          + '<h3>3. Gebruik van de app</h3>'
+          + '<p>De Orderpad wordt gebruikt om binnenkomende bestellingen te ontvangen, te accepteren, te bereiden en af te ronden. Je gebruikt de app niet voor andere doeleinden en niet in strijd met de wet.</p>'
+          + '<h3>4. Beschikbaarheid</h3>'
+          + '<p>We doen ons best de dienst beschikbaar te houden, maar onderhoud en storingen kunnen tot onderbreking leiden. Zorg altijd voor een alternatieve manier om bestellingen te blijven ontvangen.</p>'
+          + '<h3>5. Aansprakelijkheid</h3>'
+          + '<p>Onze aansprakelijkheid is beperkt tot het bedrag dat je in de betreffende maand voor de dienst hebt betaald, voor zover de wet dat toelaat.</p>'
+          + '<h3>6. Wijzigingen</h3>'
+          + '<p>We kunnen deze voorwaarden aanpassen. Bij belangrijke wijzigingen laten we dat in de app weten voordat ze ingaan.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Vragen over deze voorwaarden? Neem contact op via info@opiningstore.com.</p>',
+        privacy:
+          '<h3>1. Wie verwerkt je gegevens</h3>'
+          + '<p>Opining verwerkt de gegevens die via de Orderpad worden vastgelegd. We doen dat als verwerker in opdracht van de vestiging waar je werkt.</p>'
+          + '<h3>2. Welke gegevens we verwerken</h3>'
+          + '<p>We verwerken je accountgegevens (naam en e-mailadres), gegevens over het apparaat waarop je werkt, en de bestelgegevens die je in de app afhandelt. Bestelgegevens bevatten klantgegevens zoals adres en telefoonnummer.</p>'
+          + '<h3>3. Waarom we ze verwerken</h3>'
+          + '<p>We gebruiken deze gegevens om bestellingen af te handelen, de app te laten werken, storingen op te lossen en de dienst te verbeteren.</p>'
+          + '<h3>4. Hoe lang we ze bewaren</h3>'
+          + '<p>Bestelgegevens bewaren we zolang dat nodig is voor de administratie van de vestiging en de wettelijke bewaartermijnen. Accountgegevens verwijderen we nadat je account is opgeheven.</p>'
+          + '<h3>5. Delen met anderen</h3>'
+          + '<p>We delen gegevens alleen met partijen die nodig zijn om de dienst te leveren, zoals hosting- en bezorgpartners, en alleen onder een verwerkersovereenkomst.</p>'
+          + '<h3>6. Je rechten</h3>'
+          + '<p>Je hebt recht op inzage, correctie en verwijdering van je gegevens, en je kunt bezwaar maken tegen de verwerking. Neem daarvoor contact op met je vestiging of met ons.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Vragen over privacy? Mail naar info@opiningstore.com.</p>'
+      },
+      en: {
+        terms:
+          '<h3>1. About these terms</h3>'
+          + '<p>These terms apply to your use of the Opining Orderpad on your point-of-sale device. By signing in you agree to them on behalf of your business.</p>'
+          + '<h3>2. Your account</h3>'
+          + '<p>Your account is personal and intended for staff of the connected location. You are responsible for keeping your credentials secret and for everything that happens through your account.</p>'
+          + '<h3>3. Using the app</h3>'
+          + '<p>The Orderpad is used to receive, accept, prepare and complete incoming orders. You will not use the app for other purposes or in breach of the law.</p>'
+          + '<h3>4. Availability</h3>'
+          + '<p>We work to keep the service available, but maintenance and outages can cause interruptions. Always keep an alternative way to receive orders.</p>'
+          + '<h3>5. Liability</h3>'
+          + '<p>Our liability is limited to the amount you paid for the service in the month concerned, to the extent the law allows.</p>'
+          + '<h3>6. Changes</h3>'
+          + '<p>We may update these terms. For significant changes we will tell you in the app before they take effect.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Questions about these terms? Contact us at info@opiningstore.com.</p>',
+        privacy:
+          '<h3>1. Who processes your data</h3>'
+          + '<p>Opining processes the data captured through the Orderpad. We do so as a processor on behalf of the location where you work.</p>'
+          + '<h3>2. What we process</h3>'
+          + '<p>We process your account details (name and email address), information about the device you work on, and the order data you handle in the app. Order data includes customer details such as address and phone number.</p>'
+          + '<h3>3. Why we process it</h3>'
+          + '<p>We use this data to handle orders, keep the app working, resolve faults and improve the service.</p>'
+          + '<h3>4. How long we keep it</h3>'
+          + '<p>We keep order data for as long as the location needs it for its administration and for statutory retention periods. Account details are deleted once your account is closed.</p>'
+          + '<h3>5. Sharing with others</h3>'
+          + '<p>We only share data with parties needed to deliver the service, such as hosting and delivery partners, and only under a data processing agreement.</p>'
+          + '<h3>6. Your rights</h3>'
+          + '<p>You have the right to access, correct and delete your data, and to object to processing. Contact your location or us to exercise these rights.</p>'
+          + '<h3>7. Contact</h3>'
+          + '<p>Questions about privacy? Email info@opiningstore.com.</p>'
+      }
+    };
+
+    function openLegal(kind) {
+      var lang = LEGAL_CONTENT[currentLang] ? currentLang : 'nl';
+      document.getElementById('legal-title').textContent = t(kind === 'terms' ? 'legal_terms_title' : 'legal_privacy_title');
+      var scroll = document.getElementById('legal-scroll');
+      scroll.innerHTML = '<div class="legal-updated">' + t('legal_updated') + ' ' + LEGAL_UPDATED + '</div>' + LEGAL_CONTENT[lang][kind];
+      scroll.scrollTop = 0;
+      document.getElementById('p-legal').style.display = 'flex';
+    }
+    function closeLegal() {
+      document.getElementById('p-legal').style.display = 'none';
     }
 
 
