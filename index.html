@@ -15,6 +15,7 @@
 <title>POS App</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   button { border-radius: 50px !important; font-family: 'Poppins', sans-serif; }
@@ -1069,32 +1070,41 @@
   .mbadge-draft { background:#e8f0fe;color:#1a5fc8; }
   .tab.bump { animation: tabBump 0.25s ease; }
 
-  /* Thermal receipt (80mm) */
-  .receipt-thermal {
-    width: 100%;
-    padding: 24px 16px;
-    background: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    line-height: 1.6;
-    color: #111;
+  /* Receipt — matches printReciept.html design */
+  #receipt-print-area {
+    width: 390px;
+    max-width: 100%;
+    background-color: #FFFFFF;
+    padding: 32px 24px 28px 24px;
+    color: #111827;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
   }
-  .receipt-thermal .r-center { text-align: center; }
-  .receipt-thermal .r-bold { font-weight: 700; }
-  .receipt-thermal .r-lg { font-size: 15px; }
-  .receipt-thermal .r-band { background: none; color: #111; text-align: left; font-weight: 700; font-size: 15px; padding: 14px 0 6px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .receipt-thermal .r-section { padding: 4px 0 8px; }
-  .receipt-thermal #r-info-section .r-info-row { border-bottom: none; padding: 3px 0; }
-  .receipt-thermal #r-btw-section .r-info-row { border-bottom: none; padding: 2px 0; }
-  .receipt-thermal .r-info-row { display:flex; align-items:baseline; gap:8px; padding:8px 0; border-bottom:1px solid #f5f5f5; }
-  .receipt-thermal .r-info-label { font-size:13px; font-weight:500; color:#888; min-width:92px; flex-shrink:0; }
-  .receipt-thermal .r-info-val { font-size:13px; font-weight:500; color:#111; }
-  .receipt-thermal .r-item { display:flex; align-items:flex-start; gap:10px; padding:14px 0; border-bottom:1.5px solid #e2e2e2; }
-  .receipt-thermal .r-item-qty { font-size:13px; font-weight:500; color:#888; min-width:14px; }
-  .receipt-thermal .r-item-name { font-size:13px; font-weight:500; color:#111; }
-  .receipt-thermal .r-item-sub { font-size:13px; font-weight:500; color:#111; line-height:1.5; }
-  .receipt-thermal .r-item-price { font-size:13px; font-weight:500; color:#111; white-space:nowrap; margin-left:auto; }
-  .receipt-thermal .r-note { border:0.5px solid #999; padding:14px 16px; margin:12px 0 0; font-size:13px; color:#555; line-height:1.5; }
+  .rp-header-logo { display:block; margin:0 auto 16px; width:64px; height:64px; object-fit:contain; filter:grayscale(100%) contrast(1.1); }
+  .rp-shop-title { font-size:16px; font-weight:600; text-align:center; color:#111827; margin-bottom:4px; letter-spacing:-0.01em; }
+  .rp-shop-info { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; }
+  .rp-shop-phone { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; margin-bottom:24px; }
+  .rp-section-divider { display:flex; align-items:center; text-align:center; color:#111827; font-size:14px; font-weight:500; margin:24px 0; }
+  .rp-section-divider::before, .rp-section-divider::after { content:''; flex:1; border-bottom:1px dashed #9CA3AF; }
+  .rp-section-divider::before { margin-right:12px; }
+  .rp-section-divider::after { margin-left:12px; }
+  .rp-info-row { display:flex; font-size:14px; line-height:1.5; margin-bottom:8px; }
+  .rp-info-label { width:110px; flex-shrink:0; color:#111827; }
+  .rp-info-value { color:#111827; }
+  .rp-klant-name { font-size:14px; font-weight:500; color:#111827; margin-bottom:2px; }
+  .rp-klant-address { font-size:14px; color:#111827; line-height:1.4; }
+  .rp-klant-phone { font-size:14px; color:#111827; margin-top:12px; margin-bottom:16px; }
+  .rp-note-box { border:1px solid #E5E7EB; padding:16px; background:#FFFFFF; font-size:14px; line-height:1.5; color:#111827; }
+  .rp-item-row { display:flex; align-items:flex-start; font-size:14px; line-height:1.4; }
+  .rp-item-qty { width:24px; flex-shrink:0; color:#111827; }
+  .rp-item-name { flex:1; font-weight:500; color:#111827; }
+  .rp-item-price { font-weight:500; color:#111827; text-align:right; white-space:nowrap; }
+  .rp-item-mods { margin-left:24px; margin-top:4px; font-size:14px; color:#374151; line-height:1.4; }
+  .rp-dashed { border-top:1px dashed #D1D5DB; margin:12px 0; }
+  .rp-total-row { display:flex; justify-content:space-between; align-items:center; font-size:14px; line-height:1.6; margin-bottom:4px; color:#111827; }
+  .rp-total-row.rp-bold { font-weight:600; }
+  .rp-footer { font-size:14px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#111827; }
 
   @media print {
     body * { visibility: hidden; }
@@ -1103,10 +1113,11 @@
       position: fixed;
       left: 0;
       top: 0;
-      width: 80mm;
-      box-shadow: none;
-      margin: 0;
-      padding: 8mm 4mm 12mm;
+      width: 80mm !important;
+      max-width: 100% !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 8mm 4mm !important;
     }
     @page { margin: 0; size: 80mm auto; }
   }
@@ -1526,67 +1537,73 @@
 
       <!-- ===== HIDDEN RECEIPT AREA (silent print) ===== -->
       <div style="visibility:hidden;position:absolute;left:-9999px;top:-9999px">
-        <div class="receipt-thermal" id="receipt-print-area">
+        <div id="receipt-print-area">
 
-            <!-- Restaurant header -->
-            <div style="padding:0 0 16px 0;border-bottom:1px solid #f0f0f0">
-              <div style="font-size:17px;font-weight:700;color:#111;margin-bottom:10px">STARBUCKS</div>
-              <div style="font-size:13px;color:#555;line-height:1.7">Tochtstraat 40<br>3036SK Rotterdam<br>010-21-4622<br>www.pizzaworld.nl</div>
-            </div>
+          <!-- Restaurant header -->
+          <img class="rp-header-logo" id="pr-logo" alt="Logo"
+               src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
+          <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
+          <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
+          <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
+          <div class="rp-shop-phone" id="pr-shop-phone">010-21-4622</div>
 
-            <!-- Besteldatum -->
-            <div class="r-band">BESTELDATUM</div>
-            <div style="font-size:13px;color:#555;padding:6px 0 14px" id="pr-date">2025-12-21 om 15:43 uur</div>
-
-            <!-- Klant -->
-            <div class="r-band">KLANT GEGEVENS</div>
-            <div class="r-section" style="padding-top:14px;padding-bottom:14px">
-              <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:4px" id="pr-cust-phone">0614522453</div>
-              <div style="font-size:13px;color:#555;line-height:1.7" id="pr-cust-addr">Tochtstraat 40<br>3036 SK Rotterdam</div>
-              <div style="font-size:13px;color:#555;margin-top:2px" id="pr-cust-name">Serdar Orman</div>
-            </div>
-
-            <!-- Bestelling -->
-            <div class="r-band" id="pr-pay-band">BESTELLING IS ONLINE BETAALD!</div>
-            <div class="r-band" id="pr-delivery-band">ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING 18:25</span></div>
-            <div id="pr-items">
-              <div class="r-item">
-                <span class="r-item-qty">1</span>
-                <div style="flex:1">
-                  <div class="r-item-name">Pizza Pollo</div>
-                  <div class="r-item-sub">Bell pepper<br>Onion</div>
-                </div>
-                <span class="r-item-price">€ 38.75</span>
-              </div>
-              <div class="r-item">
-                <span class="r-item-qty">1</span>
-                <div style="flex:1"><div class="r-item-name">Cola Zero</div></div>
-                <span class="r-item-price">€ 2.75</span>
-              </div>
-            </div>
-
-            <!-- Subtotal -->
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 30px">
-              <span style="font-size:13px;font-weight:600;color:#111">SUBTOTAL</span>
-              <span id="pr-total" style="font-size:13px;font-weight:500;color:#111">€ 41.50</span>
-            </div>
-
-            <!-- Opmerking -->
-            <div class="r-band" id="pr-note-band" style="display:none">KLANT OPMERKING:</div>
-            <div id="pr-note" style="font-size:13px;color:#555;line-height:1.7;padding:6px 0 14px;display:none">Please deliver at the green door.</div>
-
-            <!-- BTW -->
-            <div id="r-btw-section" style="padding-top:14px;padding-bottom:8px">
-              <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
-              <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
-              <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
-            </div>
-
-            <!-- Footer -->
-            <div style="padding:16px 0 32px;font-size:13px;color:#555;line-height:1.5">Bedankt voor uw bestelling. Bestel online via de website!</div>
-
+          <!-- Section: Info -->
+          <div class="rp-section-divider">Info</div>
+          <div class="rp-info-row">
+            <span class="rp-info-label">Bestelnr.</span>
+            <span class="rp-info-value" id="pr-oid">—</span>
           </div>
+          <div class="rp-info-row">
+            <span class="rp-info-label">Besteld op:</span>
+            <span class="rp-info-value" id="pr-date">—</span>
+          </div>
+          <div class="rp-info-row" id="pr-wished-row">
+            <span class="rp-info-label" id="pr-wished-label">Bezorgtijd:</span>
+            <span class="rp-info-value" id="pr-wished">—</span>
+          </div>
+          <div class="rp-info-row">
+            <span class="rp-info-label">Betaalwijze:</span>
+            <span class="rp-info-value" id="pr-pay">—</span>
+          </div>
+
+          <!-- Section: Klant -->
+          <div class="rp-section-divider">Klant</div>
+          <div class="rp-klant-name" id="pr-cust-name">—</div>
+          <div class="rp-klant-address" id="pr-cust-addr1">—</div>
+          <div class="rp-klant-address" id="pr-cust-addr2"></div>
+          <div class="rp-klant-phone" id="pr-cust-phone"></div>
+          <div class="rp-note-box" id="pr-note-box" style="display:none">
+            <div id="pr-note"></div>
+          </div>
+
+          <!-- Section: Bestelling -->
+          <div class="rp-section-divider">Bestelling</div>
+          <div id="pr-items"></div>
+
+          <!-- Totals -->
+          <div class="rp-dashed"></div>
+          <div class="rp-total-row">
+            <span>Subtotal</span>
+            <span id="pr-subtotal">€ 0,00</span>
+          </div>
+          <div class="rp-dashed"></div>
+          <div class="rp-total-row rp-bold">
+            <span>Totaal</span>
+            <span id="pr-total">€ 0,00</span>
+          </div>
+
+          <!-- BTW -->
+          <div style="margin-top:24px">
+            <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
+            <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value">NL865792768B01</span></div>
+            <div class="rp-info-row"><span class="rp-info-label">KVK-nummer:</span><span class="rp-info-value">91850347</span></div>
+          </div>
+
+          <!-- Footer -->
+          <div class="rp-footer">Bedankt voor uw bestelling. Bestel online via de website!</div>
+
         </div>
+      </div>
 
       <!-- ===== ARCHIVE PAGE ===== -->
       <div class="page" id="p-archive">
@@ -2960,39 +2977,47 @@
     if (!raw) return;
     var order; try { order = JSON.parse(raw); } catch(e){ return; }
     function parsePrice(s){ var n=parseFloat(String(s||'').replace(/[^0-9.,]/g,'').replace(',','.')); return isNaN(n)?0:n; }
-    function fmt(n){ return '€ '+n.toFixed(2); }
+    function fmt(n){ return '€ '+n.toFixed(2).replace('.',','); }
     var isCollection = order.type==='Collection';
     var isPaid = order.pay==='Paid';
+    var isCash = order.pay==='Cash';
     var total = parsePrice(order.price);
     var btw = total*9/109;
     var now = new Date();
+    var days = ['zo','ma','di','wo','do','vr','za'];
     var pad=function(n){return String(n).padStart(2,'0');};
     // Datum
-    document.getElementById('pr-date').textContent = now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+' om '+pad(now.getHours())+':'+pad(now.getMinutes())+' uur';
-    // Betaalstatus
-    document.getElementById('pr-pay-band').textContent = isPaid ? 'BESTELLING IS ONLINE BETAALD!' : 'BESTELLING WORDT CONTANT BETAALD';
-    // Bezorg/afhaal band
-    var deliveryBand = document.getElementById('pr-delivery-band');
-    if(isCollection){
-      deliveryBand.innerHTML = 'AFHALEN<br><span id="pr-time-line">SCHATTING '+(order.wished||'ZSM')+'</span>';
-    } else {
-      deliveryBand.innerHTML = 'ZO SNEL MOGELIJK BEZORGEN<br><span id="pr-time-line">SCHATTING '+(order.wished||'ZSM')+'</span>';
-    }
+    document.getElementById('pr-date').textContent = days[now.getDay()]+' '+pad(now.getDate())+'-'+pad(now.getMonth()+1)+'-'+now.getFullYear()+' '+pad(now.getHours())+':'+pad(now.getMinutes());
+    // Order nr
+    if(order.oid) document.getElementById('pr-oid').textContent = order.oid;
+    // Bezorgtijd / afhaaltijd
+    var wishedRow = document.getElementById('pr-wished-row');
+    var wishedLabel = document.getElementById('pr-wished-label');
+    var wishedEl = document.getElementById('pr-wished');
+    if(order.wished){ wishedEl.textContent = order.wished+' (ZSM)'; wishedLabel.textContent = isCollection ? 'Afhaaltijd:' : 'Bezorgtijd:'; wishedRow.style.display=''; }
+    else { wishedRow.style.display='none'; }
+    // Betaalwijze
+    var payText = isPaid ? 'Online betaald' : isCash ? 'Contant bij bezorging' : 'Contant';
+    document.getElementById('pr-pay').textContent = payText;
     // Klant
     document.getElementById('pr-cust-name').textContent = order.name||'—';
     document.getElementById('pr-cust-phone').textContent = order.phone||'';
-    var addrEl=document.getElementById('pr-cust-addr');
-    if(isCollection){ addrEl.textContent='Afhalen'; }
-    else { addrEl.innerHTML=(order.address||'—')+(order.city?'<br>'+order.city:''); }
+    document.getElementById('pr-cust-addr1').textContent = isCollection ? 'Afhalen' : (order.address||'—');
+    document.getElementById('pr-cust-addr2').textContent = isCollection ? '' : (order.city||'');
     // Opmerking
-    var noteEl=document.getElementById('pr-note');
-    var noteBand=document.getElementById('pr-note-band');
-    if(order.note){ noteEl.textContent=order.note; noteEl.style.display=''; noteBand.style.display=''; }
-    else { noteEl.style.display='none'; noteBand.style.display='none'; }
-    // Items
-    document.getElementById('pr-items').innerHTML='<div class="r-item"><span class="r-item-qty">1</span><div style="flex:1"><div class="r-item-name">Bestelling '+(order.oid||'')+'</div></div><span class="r-item-price">'+fmt(total)+'</span></div>';
-    document.getElementById('pr-total').textContent=fmt(total);
-    document.getElementById('pr-btw').textContent=fmt(btw);
+    if(order.note){
+      document.getElementById('pr-note').innerHTML = order.note.replace(/\n/g,'<br>');
+      document.getElementById('pr-note-box').style.display='';
+    } else {
+      document.getElementById('pr-note-box').style.display='none';
+    }
+    // Items — single line with order total
+    document.getElementById('pr-items').innerHTML =
+      '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling '+(order.oid||'')+'</span><span class="rp-item-price">'+fmt(total)+'</span></div>';
+    // Totals
+    document.getElementById('pr-subtotal').textContent = fmt(total);
+    document.getElementById('pr-total').textContent = fmt(total);
+    document.getElementById('pr-btw').textContent = fmt(btw);
   }
 
   var TAB_IDX = {new:0, kitchen:1, delivery:2};
@@ -4463,10 +4488,13 @@
             var g = document.createElementNS('http://www.w3.org/2000/svg','g');
             g.setAttribute('class','sched-clock');
             // Clock face scaled to fit inside 48x48 viewBox circle (r=22, center 24,24), icon fits ~16px square centered
-            g.innerHTML = '<circle cx="24" cy="24" r="10" fill="none" stroke="#aaa" stroke-width="1.6"/>'
-              + '<path d="M24 17.5V24L21 27.5" stroke="#aaa" stroke-width="1.6" stroke-linecap="round"/>'
-              + '<path d="M30.5 18.5l3.5-3.5M31 17l2-4" stroke="#aaa" stroke-width="1.4" stroke-linecap="round"/>'
-              + '<path d="M33.5 17.5C33.5 17.5 31.5 15.5 29.5 17.5" stroke="#aaa" stroke-width="1.4" stroke-linecap="round" fill="none"/>';
+            /* 3/4 solid arc (12→9 clockwise), 1/4 dashed (9→12), arrowhead at 9, short hands */
+            g.innerHTML = '<path d="M24 15 A9 9 0 1 1 15 24" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>'
+              + '<path d="M15 24 A9 9 0 0 1 24 15" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2.5"/>'
+              + '<path d="M12.5 22 L15 26 L17.5 22" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'
+              + '<line x1="24" y1="24" x2="24" y2="19" stroke="#aaa" stroke-width="1.8" stroke-linecap="round"/>'
+              + '<line x1="24" y1="24" x2="28" y2="24" stroke="#aaa" stroke-width="1.8" stroke-linecap="round"/>'
+              + '<circle cx="24" cy="24" r="1.2" fill="#aaa"/>';
             svgEl.appendChild(g);
           }
           tcol.classList.remove('late','urgent');
