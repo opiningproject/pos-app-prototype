@@ -3018,9 +3018,37 @@
       itemsHtml = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling '+(order.oid||'')+'</span><span class="rp-item-price">'+fmt(total)+'</span></div>';
     }
     document.getElementById('pr-items').innerHTML = itemsHtml;
+    // Extract subtotaal, statiegeld etc from detail page totals block
+    var subtotal = total, statiegeld = 0;
+    var summaryBodyTotals = document.getElementById('d-order-summary-body');
+    if (summaryBodyTotals) {
+      var lastChild = summaryBodyTotals.lastElementChild;
+      if (lastChild) {
+        var totalsRows = lastChild.children;
+        if (totalsRows[0]) {
+          var subtotalSpan = totalsRows[0].querySelector('span:last-child');
+          if (subtotalSpan) subtotal = parsePrice(subtotalSpan.textContent) || total;
+        }
+        // Check for statiegeld row (any row whose label contains 'statiegeld' case-insensitive)
+        Array.prototype.forEach.call(totalsRows, function(r) {
+          var spans = r.querySelectorAll('span');
+          if (spans[0] && /statiegeld/i.test(spans[0].textContent)) {
+            statiegeld = parsePrice(spans[1] ? spans[1].textContent : '') || 0;
+          }
+        });
+      }
+    }
     // Totals
-    document.getElementById('pr-subtotal').textContent = fmt(total);
+    document.getElementById('pr-subtotal').textContent = fmt(subtotal);
+    var statiegeldRow = document.getElementById('pr-statiegeld-row');
+    if (statiegeld > 0 && statiegeldRow) {
+      statiegeldRow.style.display = '';
+      document.getElementById('pr-statiegeld').textContent = fmt(statiegeld);
+    } else if (statiegeldRow) {
+      statiegeldRow.style.display = 'none';
+    }
     document.getElementById('pr-total').textContent = fmt(total);
+    document.getElementById('pr-nog-te-betalen').textContent = isPaid ? fmt(0) : fmt(total);
     document.getElementById('pr-btw').textContent = fmt(btw);
   }
 
@@ -5286,8 +5314,10 @@
     <div id="pr-items"></div>
     <div class="rp-dashed"></div>
     <div class="rp-total-row"><span>Subtotaal</span><span id="pr-subtotal">€ 0,00</span></div>
+    <div class="rp-total-row" id="pr-statiegeld-row" style="display:none"><span id="pr-statiegeld-label">Statiegeld</span><span id="pr-statiegeld">€ 0,00</span></div>
+    <div class="rp-total-row"><span>Totaal</span><span id="pr-total">€ 0,00</span></div>
     <div class="rp-dashed"></div>
-    <div class="rp-total-row rp-bold"><span>Totaal</span><span id="pr-total">€ 0,00</span></div>
+    <div class="rp-total-row rp-bold"><span>Nog te betalen</span><span id="pr-nog-te-betalen">€ 0,00</span></div>
     <div style="margin-top:24px">
       <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
       <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value">NL865792768B01</span></div>
