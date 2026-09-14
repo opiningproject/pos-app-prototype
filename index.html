@@ -2974,7 +2974,7 @@
     if (summaryBody) {
       Array.prototype.forEach.call(summaryBody.children, function(row) {
         var qtySpan = row.querySelector('span');
-        if (!qtySpan) return;
+        if (!qtySpan || isNaN(parseInt(qtySpan.textContent.trim()))) return;
         var qty = qtySpan.textContent.trim();
         var innerRow = row.firstElementChild;
         if (!innerRow) return;
@@ -3062,7 +3062,7 @@
     if (summaryBody) {
       Array.prototype.forEach.call(summaryBody.children, function(row) {
         var qtySpan = row.querySelector('span');
-        if (!qtySpan) return; // skip totals block (no span)
+        if (!qtySpan || isNaN(parseInt(qtySpan.textContent.trim()))) return; // skip totals block
         var qty = qtySpan.textContent.trim();
         var innerRow = row.firstElementChild;
         if (!innerRow) return;
