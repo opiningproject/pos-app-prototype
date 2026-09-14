@@ -4581,8 +4581,9 @@
   refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
 
-  // Fix: CSS zoom on mobile breakpoints makes phone-inner taller than viewport,
-  // cutting off the footer and breaking touch scroll on real devices (e.g. Sunmi).
+  // Fix: CSS zoom makes phone-inner visually taller than the viewport,
+  // hiding the sticky footer and cutting off scroll on real devices (e.g. Sunmi).
+  // Must use setProperty(...,'important') to override the !important in the stylesheet.
   (function fixZoomedHeight(){
     var inner = document.querySelector('.phone-inner');
     if (!inner) return;
@@ -4590,14 +4591,14 @@
       var w = window.innerWidth;
       var scale = w <= 480 ? (w / 360) : w <= 900 ? 1.15 : 1;
       if (scale > 1.01) {
-        var h = Math.floor(window.innerHeight / scale);
-        inner.style.height = h + 'px';
-        inner.style.minHeight = h + 'px';
-        inner.style.maxHeight = h + 'px';
+        var h = Math.floor(window.innerHeight / scale) + 'px';
+        inner.style.setProperty('height', h, 'important');
+        inner.style.setProperty('min-height', h, 'important');
+        inner.style.setProperty('max-height', h, 'important');
       } else {
-        inner.style.height = '';
-        inner.style.minHeight = '';
-        inner.style.maxHeight = '';
+        inner.style.removeProperty('height');
+        inner.style.removeProperty('min-height');
+        inner.style.removeProperty('max-height');
       }
     }
     apply();
