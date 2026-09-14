@@ -28,6 +28,22 @@
     padding: 30px 20px;
     font-family: 'Poppins', sans-serif;
   }
+  /* ===== All touch/POS devices: full screen, no zoom ===== */
+  @media (pointer: coarse) {
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    body { display: block !important; }
+    .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
+    .notch { display: none !important; }
+    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1 !important; }
+    .android-navbar { display: none !important; }
+    .demo-hint { display: none !important; }
+    .statusbar { display: none !important; }
+    .page-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
+    .topbar { padding-top: calc(env(safe-area-inset-top) + 10px) !important; }
+    #screen-content.has-toast .page-header { min-height: 0 !important; padding: 16px !important; }
+    .filter-header { height: auto !important; min-height: calc(88px + env(safe-area-inset-top)) !important; padding-top: calc(env(safe-area-inset-top) + 32px) !important; }
+  }
+
   @media (max-width: 480px) {
     html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
     body { display: block !important; }
