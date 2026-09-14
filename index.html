@@ -143,7 +143,7 @@
     flex-shrink: 0;
     height: 48px;
     background: #000;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 36px;
@@ -1931,10 +1931,7 @@
         </div>
         <div class="content-surface" style="border-radius:0;background:#fafafa">
           <div class="scroll" style="background:#fafafa;padding:16px;display:flex;flex-direction:column;gap:12px;padding-bottom:120px">
-            <div class="menu-cat-row" onclick="(function(){var i=document.querySelector('.phone-inner');var sc=document.getElementById('screen-content');alert('innerW='+window.innerWidth+'\ninnerH='+window.innerHeight+'\npointer='+window.matchMedia('(pointer:coarse)').matches+'\ninner-H='+i.offsetHeight+'\nsc-H='+(sc?sc.offsetHeight:'?')+'\nscroll-H='+(document.querySelector('.scroll')?document.querySelector('.scroll').offsetHeight:'?'));})()" style="background:#fee;border:1px solid #c00">
-              <span style="color:#c00;font-weight:600">🔧 Debug info (verwijder later)</span>
-            </div>
-            <div class="menu-cat-row" onclick="goSettingDetail('Taal')">
+<div class="menu-cat-row" onclick="goSettingDetail('Taal')">
               <span data-i18n="settings_language">Taal</span>
               <svg width="10" height="18" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#0172af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
