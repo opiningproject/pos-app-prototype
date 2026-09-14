@@ -1552,79 +1552,6 @@
         </div></div>
       </div>
 
-      <!-- ===== PRINT PAGE ===== -->
-      <!-- receipt-print-area moved to body level for silent printing -->
-
-      <!-- ===== HIDDEN RECEIPT AREA (silent print) ===== -->
-      <div id="receipt-print-wrapper" style="display:none">
-        <div id="receipt-print-area">
-
-          <!-- Restaurant header -->
-          <img class="rp-header-logo" id="pr-logo" alt="Logo"
-               src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
-          <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
-          <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
-          <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
-          <div class="rp-shop-phone" id="pr-shop-phone">010-21-4622</div>
-
-          <!-- Section: Info -->
-          <div class="rp-section-divider">Info</div>
-          <div class="rp-info-row">
-            <span class="rp-info-label">Bestelnr.</span>
-            <span class="rp-info-value" id="pr-oid">—</span>
-          </div>
-          <div class="rp-info-row">
-            <span class="rp-info-label">Besteld op:</span>
-            <span class="rp-info-value" id="pr-date">—</span>
-          </div>
-          <div class="rp-info-row" id="pr-wished-row">
-            <span class="rp-info-label" id="pr-wished-label">Bezorgtijd:</span>
-            <span class="rp-info-value" id="pr-wished">—</span>
-          </div>
-          <div class="rp-info-row">
-            <span class="rp-info-label">Betaalwijze:</span>
-            <span class="rp-info-value" id="pr-pay">—</span>
-          </div>
-
-          <!-- Section: Klant -->
-          <div class="rp-section-divider">Klant</div>
-          <div class="rp-klant-name" id="pr-cust-name">—</div>
-          <div class="rp-klant-address" id="pr-cust-addr1">—</div>
-          <div class="rp-klant-address" id="pr-cust-addr2"></div>
-          <div class="rp-klant-phone" id="pr-cust-phone"></div>
-          <div class="rp-note-box" id="pr-note-box" style="display:none">
-            <div id="pr-note"></div>
-          </div>
-
-          <!-- Section: Bestelling -->
-          <div class="rp-section-divider">Bestelling</div>
-          <div id="pr-items"></div>
-
-          <!-- Totals -->
-          <div class="rp-dashed"></div>
-          <div class="rp-total-row">
-            <span>Subtotal</span>
-            <span id="pr-subtotal">€ 0,00</span>
-          </div>
-          <div class="rp-dashed"></div>
-          <div class="rp-total-row rp-bold">
-            <span>Totaal</span>
-            <span id="pr-total">€ 0,00</span>
-          </div>
-
-          <!-- BTW -->
-          <div style="margin-top:24px">
-            <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
-            <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value">NL865792768B01</span></div>
-            <div class="rp-info-row"><span class="rp-info-label">KVK-nummer:</span><span class="rp-info-value">91850347</span></div>
-          </div>
-
-          <!-- Footer -->
-          <div class="rp-footer">Bedankt voor uw bestelling. Bestel online via de website!</div>
-
-        </div>
-      </div>
-
       <!-- ===== ARCHIVE PAGE ===== -->
       <div class="page" id="p-archive">
         <div class="page-header" style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3">
@@ -5334,6 +5261,41 @@
 
   initScrollListeners();
 </script>
+
+<!-- ===== HIDDEN RECEIPT AREA — direct body child for @media print ===== -->
+<div id="receipt-print-wrapper" style="display:none">
+  <div id="receipt-print-area">
+    <img class="rp-header-logo" id="pr-logo" alt="Logo"
+         src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
+    <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
+    <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
+    <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
+    <div class="rp-shop-phone" id="pr-shop-phone">010-21-4622</div>
+    <div class="rp-section-divider">Info</div>
+    <div class="rp-info-row"><span class="rp-info-label">Bestelnr.</span><span class="rp-info-value" id="pr-oid">—</span></div>
+    <div class="rp-info-row"><span class="rp-info-label">Besteld op:</span><span class="rp-info-value" id="pr-date">—</span></div>
+    <div class="rp-info-row" id="pr-wished-row"><span class="rp-info-label" id="pr-wished-label">Bezorgtijd:</span><span class="rp-info-value" id="pr-wished">—</span></div>
+    <div class="rp-info-row"><span class="rp-info-label">Betaalwijze:</span><span class="rp-info-value" id="pr-pay">—</span></div>
+    <div class="rp-section-divider">Klant</div>
+    <div class="rp-klant-name" id="pr-cust-name">—</div>
+    <div class="rp-klant-address" id="pr-cust-addr1">—</div>
+    <div class="rp-klant-address" id="pr-cust-addr2"></div>
+    <div class="rp-klant-phone" id="pr-cust-phone"></div>
+    <div class="rp-note-box" id="pr-note-box" style="display:none"><div id="pr-note"></div></div>
+    <div class="rp-section-divider">Bestelling</div>
+    <div id="pr-items"></div>
+    <div class="rp-dashed"></div>
+    <div class="rp-total-row"><span>Subtotaal</span><span id="pr-subtotal">€ 0,00</span></div>
+    <div class="rp-dashed"></div>
+    <div class="rp-total-row rp-bold"><span>Totaal</span><span id="pr-total">€ 0,00</span></div>
+    <div style="margin-top:24px">
+      <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value">NL865792768B01</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">KVK-nummer:</span><span class="rp-info-value">91850347</span></div>
+    </div>
+    <div class="rp-footer">Bedankt voor uw bestelling. Bestel online via de website!</div>
+  </div>
+</div>
 
 </body>
 </html>
