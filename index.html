@@ -419,7 +419,7 @@
   }
 
   /* Scroll area */
-  .scroll { flex: 1; min-height: 0; overflow-y: auto; background: #fff; padding-bottom: 120px; }
+  .scroll { flex: 1; min-height: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch; background: #fff; padding-bottom: 120px; }
   #p-orders .content-surface { background: #fff; }
   #p-orders .scroll { background: #fff; }
   .scroll::-webkit-scrollbar { width: 3px; }
@@ -2575,6 +2575,7 @@
         if(firstTab) try { firstTab.click(); } catch(e){}
       }
     }
+    if (typeof fixTouchScroll === 'function') setTimeout(fixTouchScroll, 50);
   }
 
   var schedPrepMins = 45;
@@ -3286,6 +3287,21 @@
     document.querySelectorAll('#orders-panes .ocard[onclick]').forEach(renderOrderCard);
   }
   renderAllOrderCards(); // initial render now that the icon constants are defined
+
+  // On touch devices: explicitly size each .scroll container so Android WebView can scroll them
+  function fixTouchScroll(){
+    if (!window.matchMedia('(pointer: coarse)').matches) return;
+    document.querySelectorAll('.page.active .scroll').forEach(function(sc){
+      var pg = sc.closest('.page');
+      var hdr = pg && pg.querySelector('.page-header, .topbar, .filter-header');
+      if (!hdr) return;
+      var h = pg.offsetHeight - hdr.offsetHeight;
+      if (h > 0) sc.style.height = h + 'px';
+    });
+  }
+  fixTouchScroll();
+  window.addEventListener('resize', fixTouchScroll);
+  document.addEventListener('visibilitychange', fixTouchScroll);
   setDeviceStatusBar('#ffffff', false); // default white status bar on load
   if (location.hash === '#login') doLogout(); // dev: open straight on the login screen
   updateHeaderOrderTotal();
@@ -3756,6 +3772,7 @@
     document.addEventListener('touchstart', function(e){ var t=e.touches[0]; onStart(t.clientX,t.clientY,e); }, { passive: true });
     document.addEventListener('touchmove', function(e){ var t=e.touches[0]; onMove(t.clientX,t.clientY,e); }, { passive: true });
     document.addEventListener('touchend', function(e){ var t=e.changedTouches[0]; onEnd(t.clientX,t.clientY); }, { passive: true });
+    document.addEventListener('touchcancel', function(){ if(armed||dragging){ settle(0); armed=false; } }, { passive: true });
     // mouse drag fallback (desktop preview)
     var mouseDown = false;
     document.addEventListener('mousedown', function(e){ mouseDown = true; onStart(e.clientX,e.clientY,e); });
@@ -3888,6 +3905,7 @@
     document.addEventListener('touchstart',function(e){ var t=e.touches[0]; onStart(t.clientX,t.clientY,e); },{passive:true});
     document.addEventListener('touchmove',function(e){ var t=e.touches[0]; onMove(t.clientX,t.clientY,e); },{passive:true});
     document.addEventListener('touchend',function(e){ var t=e.changedTouches[0]; onEnd(t.clientX,t.clientY); },{passive:true});
+    document.addEventListener('touchcancel',function(){ if(armed||dragging){ settle(0); armed=false; } },{passive:true});
     var mouseDown=false;
     document.addEventListener('mousedown',function(e){ mouseDown=true; onStart(e.clientX,e.clientY,e); });
     document.addEventListener('mousemove',function(e){ if(mouseDown) onMove(e.clientX,e.clientY,e); });
