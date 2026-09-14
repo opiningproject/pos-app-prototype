@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Receipt - The Hague Pizza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #E5E7EB;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px 80px;
+      color: #111827;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Floating Action Control Bar for Browser */
+    .action-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background-color: #111827;
+      color: #FFFFFF;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background-color: #1F2937;
+    }
+
+    .btn-secondary {
+      background-color: #FFFFFF;
+      color: #374151;
+      border: 1px solid #D1D5DB;
+    }
+
+    .btn-secondary:hover {
+      background-color: #F3F4F6;
+    }
+
+    /* Receipt Frame Container matching Figma design */
+    .receipt-container {
+      width: 390px;
+      max-width: 100%;
+      background-color: #FFFFFF;
+      border-radius: 0;
+      padding: 32px 24px 28px 24px;
+      box-shadow: none;
+      color: #111827;
+    }
+
+    /* Header */
+    /* Restaurant logo — DYNAMIC: replaced by whatever the restaurant owner uploads.
+       Forced to black & white because the receipt is printed on a B&W thermal printer. */
+    .header-logo {
+      display: block;
+      margin: 0 auto 16px;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .shop-title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      color: #111827;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .shop-info-line {
+      font-size: 14px;
+      font-weight: 400;
+      text-align: center;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    .shop-phone {
+      font-size: 14px;
+      font-weight: 400;
+      text-align: center;
+      color: #111827;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    /* Section Divider with dashed line */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #111827;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 24px 0;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px dashed #9CA3AF;
+    }
+
+    .section-divider::before {
+      margin-right: 12px;
+    }
+
+    .section-divider::after {
+      margin-left: 12px;
+    }
+
+    /* Info Grid */
+    .info-row {
+      display: flex;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .info-label {
+      width: 110px;
+      flex-shrink: 0;
+      color: #111827;
+    }
+
+    .info-value {
+      color: #111827;
+    }
+
+    /* Customer Section */
+    .klant-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+
+    .klant-address {
+      font-size: 14px;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    .klant-phone {
+      font-size: 14px;
+      color: #111827;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+
+    .delivery-note-box {
+      border: 1px solid #E5E7EB;
+      border-radius: 0;
+      padding: 16px;
+      background-color: #FFFFFF;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #111827;
+    }
+
+    /* Order Items */
+    .order-items {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .order-item {
+      margin-bottom: 0;
+    }
+
+    .item-row {
+      display: flex;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .item-qty {
+      width: 24px;
+      flex-shrink: 0;
+      color: #111827;
+    }
+
+    .item-name {
+      flex: 1;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .item-price {
+      font-weight: 500;
+      color: #111827;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .item-modifiers {
+      margin-left: 24px;
+      margin-top: 4px;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.4;
+    }
+
+    .dashed-line-separator {
+      border-top: 1px dashed #D1D5DB;
+      margin: 12px 0;
+    }
+
+    /* Totals */
+    .totals-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+
+    .total-row.font-semibold {
+      font-weight: 600;
+    }
+
+    .total-row.font-bold {
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* Footer Notice */
+    .footer-notice {
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 32px;
+      line-height: 1.4;
+      color: #111827;
+    }
+
+    /* Thermal Print Adjustments */
+    @media print {
+      body {
+        background-color: #FFFFFF !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .action-controls {
+        display: none !important;
+      }
+
+      .receipt-container {
+        width: 80mm !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 8mm 4mm !important;
+        margin: 0 auto !important;
+        background-color: #FFFFFF !important;
+      }
+
+      .delivery-note-box {
+        background-color: #FFFFFF !important;
+        border: 1px solid #111827 !important;
+      }
+
+      @page {
+        size: 80mm auto;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top action controls for interactive preview -->
+  <div class="action-controls">
+    <button class="btn btn-primary" onclick="window.print()">
+      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+        </path>
+      </svg>
+      Adfrukken / Print Receipt
+    </button>
+  </div>
+
+  <!-- Main Receipt Container (Matches Figma Design) -->
+  <div class="receipt-container" id="receipt-print-area">
+
+    <!-- Restaurant logo (DYNAMIC) — the `src` is set from the restaurant's uploaded logo.
+         Below is only a placeholder shown when no logo has been uploaded yet.
+         In production: set #val-shop-logo `src` to the owner's uploaded logo URL. -->
+    <img class="header-logo" id="val-shop-logo" alt="Restaurant logo"
+      src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
+
+
+    <!-- Restaurant Header -->
+    <div class="shop-title" id="val-shop-name">The Hague Pizza</div>
+    <div class="shop-info-line" id="val-shop-addr1">Tochtatraat 40</div>
+    <div class="shop-info-line" id="val-shop-addr2">3036 SK, Rotterdam</div>
+    <div class="shop-phone" id="val-shop-phone">010-21-4622</div>
+
+    <!-- Section: Info -->
+    <div class="section-divider">Info</div>
+    <div class="info-row">
+      <span class="info-label">Bestelnr.</span>
+      <span class="info-value" id="val-oid">250621 A 31</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Besteld op:</span>
+      <span class="info-value" id="val-date">wo 21-06-2025 21:58</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Bezorgtijd:</span>
+      <span class="info-value" id="val-wished">22:30 (ZSM)</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Betaalwijze:</span>
+      <span class="info-value" id="val-pay">Online betaald</span>
+    </div>
+
+    <!-- Section: Klant -->
+    <div class="section-divider">Klant</div>
+    <div class="klant-name" id="val-name">Serdar Orman</div>
+    <div class="klant-address" id="val-addr1">Tochtstraat 40</div>
+    <div class="klant-address" id="val-addr2">3036 SK Rotterdam</div>
+    <div class="klant-phone" id="val-phone">0614522453</div>
+
+    <!-- Delivery Instructions Box -->
+    <div class="delivery-note-box" id="val-note-box">
+      <div id="val-note">Please deliver at the green door.<br>When arrive call me</div>
+    </div>
+
+    <!-- Section: Bestelling -->
+    <div class="section-divider">Bestelling</div>
+
+    <div class="order-items" id="val-items-container">
+      <!-- Item 1 -->
+      <div class="order-item">
+        <div class="item-row">
+          <span class="item-qty">1</span>
+          <span class="item-name">Pizza Pollo</span>
+          <span class="item-price">€ 38.75</span>
+        </div>
+        <div class="item-modifiers">
+          <div>+ Bell pepper</div>
+          <div>+ Onion</div>
+        </div>
+      </div>
+
+      <div class="dashed-line-separator"></div>
+
+      <!-- Item 2 -->
+      <div class="order-item">
+        <div class="item-row">
+          <span class="item-qty">1</span>
+          <span class="item-name">Cola Zero</span>
+          <span class="item-price">€ 2.75</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Totals -->
+    <div class="dashed-line-separator"></div>
+
+    <div class="totals-section">
+      <div class="total-row">
+        <span class="total-label">Subtotal</span>
+        <span class="total-value" id="val-subtotal">€ 41.50</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Statiegeld € 0,15 x 1</span>
+        <span class="total-value" id="val-statiegeld">€ 0,15</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Totaal</span>
+        <span class="total-value" id="val-totaal">€ 41,65</span>
+      </div>
+
+      <div class="dashed-line-separator"></div>
+
+      <div class="total-row font-bold">
+        <span class="total-label">Nog te betalen</span>
+        <span class="total-value" id="val-nog-te-betalen">€ 00,00</span>
+      </div>
+    </div>
+
+    <!-- Section: Tax & Registration Info -->
+    <div style="margin-top: 24px;">
+      <div class="info-row">
+        <span class="info-label">Btw 9%:</span>
+        <span class="info-value" id="val-btw">€ 2.75</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">BTW-nummer:</span>
+        <span class="info-value" id="val-btw-nr">NL865792768B01</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">KVK-nummer:</span>
+        <span class="info-value" id="val-kvk-nr">91850347</span>
+      </div>
+    </div>
+
+    <!-- Footer Notice -->
+    <div class="footer-notice">
+      Btw bedankt voor uw bestelling. Bestel online via de website!
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      // Dynamic Order Population (if posCurrentOrder exists in localStorage)
+      try {
+        var raw = localStorage.getItem('posCurrentOrder');
+        if (!raw) return;
+        var order = JSON.parse(raw);
+        if (!order) return;
+
+        // Restaurant logo is dynamic: use the owner's uploaded logo when available,
+        // otherwise the placeholder in the markup stays visible.
+        if (order.shopLogo) document.getElementById('val-shop-logo').src = order.shopLogo;
+
+        if (order.oid) document.getElementById('val-oid').textContent = order.oid;
+
+        var now = new Date();
+        var days = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+        var pad = function (n) { return String(n).padStart(2, '0'); };
+        document.getElementById('val-date').textContent = days[now.getDay()] + ' ' + pad(now.getDate()) + '-' + pad(now.getMonth() + 1) + '-' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+        if (order.wished) document.getElementById('val-wished').textContent = order.wished + ' (ZSM)';
+        if (order.pay) document.getElementById('val-pay').textContent = order.pay === 'Paid' ? 'Online betaald' : 'Contant betaald';
+        if (order.name) document.getElementById('val-name').textContent = order.name;
+        if (order.address) document.getElementById('val-addr1').textContent = order.address;
+        if (order.city) document.getElementById('val-addr2').textContent = order.city;
+
+        if (order.note) {
+          document.getElementById('val-note').innerHTML = order.note.replace(/\n/g, '<br>');
+        } else {
+          document.getElementById('val-note-box').style.display = 'none';
+        }
+
+        if (order.price) {
+          var n = parseFloat(String(order.price).replace(/[^0-9.,]/g, '').replace(',', '.'));
+          if (!isNaN(n)) {
+            document.getElementById('val-subtotal').textContent = '€ ' + n.toFixed(2).replace('.', ',');
+            document.getElementById('val-totaal').textContent = '€ ' + n.toFixed(2).replace('.', ',');
+            var btw = n * 9 / 109;
+            document.getElementById('val-btw').textContent = '€ ' + btw.toFixed(2).replace('.', ',');
+          }
+        }
+      } catch (e) {
+        console.warn('Could not populate order from localStorage:', e);
+      }
+    })();
+  </script>
+</body>
+
+</html>
