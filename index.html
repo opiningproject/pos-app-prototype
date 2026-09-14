@@ -34,7 +34,9 @@
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
-    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1 !important; }
+    .phone-inner { border-radius: 0 !important; height: auto !important; min-height: 100vh !important; width: 100% !important; zoom: 1 !important; overflow: visible !important; }
+    .page-header { position: sticky !important; top: 0 !important; z-index: 210 !important; }
+    #orders-tab-bar { position: sticky !important; z-index: 5 !important; background: #fff !important; }
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
@@ -49,7 +51,9 @@
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
-    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1 !important; }
+    .phone-inner { border-radius: 0 !important; height: auto !important; min-height: 100vh !important; width: 100% !important; zoom: 1 !important; overflow: visible !important; }
+    .page-header { position: sticky !important; top: 0 !important; z-index: 210 !important; }
+    #orders-tab-bar { position: sticky !important; z-index: 5 !important; background: #fff !important; }
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
@@ -65,7 +69,9 @@
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
-    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1 !important; }
+    .phone-inner { border-radius: 0 !important; height: auto !important; min-height: 100vh !important; width: 100% !important; zoom: 1 !important; overflow: visible !important; }
+    .page-header { position: sticky !important; top: 0 !important; z-index: 210 !important; }
+    #orders-tab-bar { position: sticky !important; z-index: 5 !important; background: #fff !important; }
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
@@ -420,8 +426,8 @@
 
   /* Scroll area */
   .scroll { flex: 1; min-height: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch; background: #fff; padding-bottom: 120px; }
-  #p-orders .content-surface { background: #fff; position: relative; }
-  #p-orders .scroll { position: absolute; left: 0; right: 0; bottom: 0; top: 0; background: #fff; height: auto; flex: none; min-height: 0; }
+  #p-orders .content-surface { background: #fff; }
+  #p-orders .scroll { display: block; width: 100%; background: #fff; flex: none; min-height: 0; }
   .scroll::-webkit-scrollbar { width: 3px; }
   .scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
 
@@ -2962,9 +2968,33 @@
     c.push({t:'text', v:(isColl ? 'AFHALEN' : 'ZO SNEL MOGELIJK BEZORGEN') + '\n'});
     c.push({t:'text', v:'SCHATTING ' + (o.wished || 'ZSM') + '\n'});
     c.push(DIV);
-    // Bestelling (1 regel voor het ordertotaal, zoals in bon.html)
+    // Bestelling — echte items uit DOM
     c.push({t:'size', v:22});
-    c.push({t:'cols', left:'1  Bestelling ' + (o.oid || ''), right:eur(total), wl:32, wr:14});
+    var summaryBody = document.getElementById('d-order-summary-body');
+    var hasItems = false;
+    if (summaryBody) {
+      Array.prototype.forEach.call(summaryBody.children, function(row) {
+        var qtySpan = row.querySelector('span');
+        if (!qtySpan) return;
+        var qty = qtySpan.textContent.trim();
+        var innerRow = row.firstElementChild;
+        if (!innerRow) return;
+        var priceDiv = innerRow.lastElementChild;
+        var price = priceDiv ? priceDiv.textContent.trim() : '';
+        var leftGroup = innerRow.firstElementChild;
+        var name = '';
+        if (leftGroup) {
+          var nameWrap = leftGroup.lastElementChild;
+          if (nameWrap) {
+            var firstChild = nameWrap.firstElementChild;
+            name = firstChild ? firstChild.textContent.trim() : nameWrap.textContent.trim();
+          }
+        }
+        c.push({t:'cols', left:qty+'  '+name, right:price, wl:32, wr:14});
+        hasItems = true;
+      });
+    }
+    if (!hasItems) c.push({t:'cols', left:'1  Bestelling ' + (o.oid || ''), right:eur(total), wl:32, wr:14});
     c.push(DIV);
     c.push({t:'size', v:24}, {t:'cols', left:'SUBTOTAAL', right:eur(total), wl:32, wr:14});
     c.push({t:'feed', n:1});
@@ -3027,9 +3057,41 @@
     } else {
       document.getElementById('pr-note-box').style.display='none';
     }
-    // Items — single line with order total
-    document.getElementById('pr-items').innerHTML =
-      '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling '+(order.oid||'')+'</span><span class="rp-item-price">'+fmt(total)+'</span></div>';
+    // Items — extract from detail page DOM
+    var itemsHtml = '';
+    var summaryBody = document.getElementById('d-order-summary-body');
+    if (summaryBody) {
+      Array.prototype.forEach.call(summaryBody.children, function(row) {
+        var qtySpan = row.querySelector('span');
+        if (!qtySpan) return; // skip totals block (no span)
+        var qty = qtySpan.textContent.trim();
+        var innerRow = row.firstElementChild;
+        if (!innerRow) return;
+        var priceDiv = innerRow.lastElementChild;
+        var price = priceDiv ? priceDiv.textContent.trim() : '';
+        var leftGroup = innerRow.firstElementChild;
+        var name = '', variant = '';
+        if (leftGroup) {
+          var nameWrap = leftGroup.lastElementChild;
+          if (nameWrap) {
+            var firstChild = nameWrap.firstElementChild;
+            if (firstChild) {
+              name = firstChild.textContent.trim();
+              var secChild = nameWrap.children[1];
+              if (secChild) variant = secChild.textContent.trim();
+            } else {
+              name = nameWrap.textContent.trim();
+            }
+          }
+        }
+        itemsHtml += '<div class="rp-item-row"><span class="rp-item-qty">'+qty+'</span><span class="rp-item-name">'+name+'</span><span class="rp-item-price">'+price+'</span></div>';
+        if (variant) itemsHtml += '<div class="rp-item-mods">'+variant+'</div>';
+      });
+    }
+    if (!itemsHtml) {
+      itemsHtml = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling '+(order.oid||'')+'</span><span class="rp-item-price">'+fmt(total)+'</span></div>';
+    }
+    document.getElementById('pr-items').innerHTML = itemsHtml;
     // Totals
     document.getElementById('pr-subtotal').textContent = fmt(total);
     document.getElementById('pr-total').textContent = fmt(total);
@@ -3287,25 +3349,24 @@
   }
   renderAllOrderCards(); // initial render now that the icon constants are defined
 
-  // On touch devices: explicitly size each .scroll container so Android WebView can scroll them
+  // On touch devices: set sticky top for tabbar and detail footer
   function fixTouchScroll(){
     if (!window.matchMedia('(pointer: coarse)').matches) return;
-    // Orders page: absolute-positioned .scroll — set top to tab bar height
-    var tabbar = document.getElementById('orders-tab-bar');
-    var ordersScroll = document.querySelector('#p-orders .scroll');
-    if (tabbar && ordersScroll) {
-      ordersScroll.style.top = tabbar.offsetHeight + 'px';
+    // Orders page: set tab bar sticky top = header height
+    var ordersPage = document.getElementById('p-orders');
+    if (ordersPage) {
+      var header = ordersPage.querySelector('.page-header');
+      var tabbar = document.getElementById('orders-tab-bar');
+      if (header && tabbar) tabbar.style.top = header.offsetHeight + 'px';
     }
-    // Other pages: flex-based scroll, set explicit height
-    document.querySelectorAll('.page.active .scroll').forEach(function(sc){
-      if (sc === ordersScroll) return;
-      var cs = sc.parentElement;
-      if (!cs) return;
-      var sibH = 0;
-      Array.prototype.forEach.call(cs.children, function(c){ if (c !== sc) sibH += c.offsetHeight; });
-      var h = cs.offsetHeight - sibH;
-      if (h > 0) sc.style.height = h + 'px';
-    });
+    // Detail page: make action footer sticky at bottom
+    var detailFooter = document.getElementById('d-action-footer');
+    if (detailFooter) {
+      detailFooter.style.position = 'sticky';
+      detailFooter.style.bottom = '0';
+      detailFooter.style.left = '';
+      detailFooter.style.right = '';
+    }
   }
   fixTouchScroll();
   window.addEventListener('resize', fixTouchScroll);
