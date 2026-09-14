@@ -30,7 +30,7 @@
   }
   /* ===== All touch/POS devices: full screen, no zoom ===== */
   @media (pointer: coarse) {
-    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; height: 100% !important; width: 100% !important; }
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
@@ -45,7 +45,7 @@
   }
 
   @media (max-width: 480px) {
-    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; height: 100% !important; width: 100% !important; }
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
@@ -61,7 +61,7 @@
 
   /* ===== POS tablet breakpoint (e.g. SUNMI V3 Plus, ~720px wide portrait) ===== */
   @media (min-width: 481px) and (max-width: 900px) {
-    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: hidden !important; height: 100% !important; width: 100% !important; }
+    html, body { background: #111 !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; height: 100% !important; width: 100% !important; }
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
@@ -168,8 +168,8 @@
   .statusbar .time { font-size: 13px; font-weight: 600; color: #fff; }
   .statusbar .icons { display: flex; gap: 6px; align-items: center; color: #fff; font-size: 14px; }
 
-  .screen-content { position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column; }
-  .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+  .screen-content { position: relative; flex: 1; overflow: visible; display: flex; flex-direction: column; }
+  .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: visible; }
   .page.active { display: flex; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
@@ -321,7 +321,7 @@
     background: #fff;
     border-radius: 22px 22px 0 0;
     flex: 1;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
   }
