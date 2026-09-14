@@ -33,7 +33,7 @@
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
-    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: calc(100vw / 360) !important; }
+    .phone-inner { border-radius: 0 !important; height: 100dvh; width: 100% !important; zoom: calc(100vw / 360) !important; }
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
@@ -49,7 +49,7 @@
     body { display: block !important; }
     .phone { width: 100% !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; background: #111 !important; max-width: none !important; }
     .notch { display: none !important; }
-    .phone-inner { border-radius: 0 !important; height: 100dvh !important; width: 100% !important; zoom: 1.15 !important; }
+    .phone-inner { border-radius: 0 !important; height: 100dvh; width: 100% !important; zoom: 1.15 !important; }
     .android-navbar { display: none !important; }
     .demo-hint { display: none !important; }
     .statusbar { display: none !important; }
@@ -404,7 +404,7 @@
   }
 
   /* Scroll area */
-  .scroll { flex: 1; min-height: 0; overflow-y: auto; background: #fff; padding-bottom: 120px; }
+  .scroll { flex: 1; min-height: 0; overflow-y: auto; background: #fff; padding-bottom: 16px; }
   #p-orders .content-surface { background: #fff; }
   #p-orders .scroll { background: #fff; }
   .scroll::-webkit-scrollbar { width: 3px; }
@@ -1373,7 +1373,7 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
-        <div class="scroll" style="background:#fff;padding-bottom:140px">
+        <div class="scroll" style="background:#fff;padding-bottom:16px">
 
           <!-- New-order schedule block (shown only for unaccepted orders) -->
           <div id="d-new-schedule" style="display:none;margin:20px 16px 4px">
@@ -1510,7 +1510,7 @@
         </div><!-- /content-surface -->
 
         <!-- Sticky action footer -->
-        <div id="d-action-footer" style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 40px);border-top:1.5px solid #f3f3f3;z-index:10">
+        <div id="d-action-footer" style="flex-shrink:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
             <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
             <button id="d-next-btn" data-i18n="d_to_kitchen" onclick="detailNextAction()" style="flex:1;height:42px;font-size:14px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
@@ -4592,13 +4592,13 @@
       var scale = w <= 480 ? (w / 360) : w <= 900 ? 1.15 : 1;
       if (scale > 1.01) {
         var h = Math.floor(window.innerHeight / scale) + 'px';
-        inner.style.setProperty('height', h, 'important');
-        inner.style.setProperty('min-height', h, 'important');
-        inner.style.setProperty('max-height', h, 'important');
+        inner.style.height = h;
+        inner.style.minHeight = h;
+        inner.style.maxHeight = h;
       } else {
-        inner.style.removeProperty('height');
-        inner.style.removeProperty('min-height');
-        inner.style.removeProperty('max-height');
+        inner.style.height = '';
+        inner.style.minHeight = '';
+        inner.style.maxHeight = '';
       }
     }
     apply();
