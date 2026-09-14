@@ -2815,6 +2815,7 @@
 
     // Store this order's data so the 80mm bon (bon.html) can render the real order
     var wished=(id==='26')?'16:30':t('otime_asap');
+    var phoneEl = document.querySelector('#d-customer-phone span');
     localStorage.setItem('posCurrentOrder', JSON.stringify({
       oid: oid,
       name: name,
@@ -2824,7 +2825,8 @@
       pay: pay,
       price: price,
       wished: wished,
-      note: hasNote ? noteText.textContent : ''
+      note: hasNote ? noteText.textContent : '',
+      phone: phoneEl ? phoneEl.textContent.trim() : ''
     }));
   }
 
