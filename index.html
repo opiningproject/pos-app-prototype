@@ -481,7 +481,7 @@
   .orders-tabs .tab { flex: 1; justify-content: center; height: auto; padding: 0; font-size: 12px; font-weight: 600; border-radius: 0; background: transparent; color: #999; display: flex; align-items: center; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
   .orders-tabs .tab .tab-inner { display: inline-flex; align-items: center; gap: 10px; padding-bottom: 32px; position: relative; }
   .orders-tabs .tab.active { background: transparent; color: #111; }
-  #orders-tab-bar { position: sticky; top: 0; z-index: 5; background: #fff; }
+  #orders-tab-bar { position: relative; z-index: 5; background: #fff; }
   #orders-tab-bar .tab-underline, #dash-tabs .tab-underline, #menu-tabs .tab-underline { position: absolute; bottom: 0; left: 0; width: 0; height: 4px; background: #0172af; border-radius: 0; pointer-events: none; transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1); }
   #orders-tab-bar .tab-underline.no-anim, #dash-tabs .tab-underline.no-anim, #menu-tabs .tab-underline.no-anim { transition: none; }
   .dash-pane { display: none !important; }
@@ -1231,14 +1231,13 @@
 
 
         <div class="content-surface" style="border-radius:0">
-        <div class="scroll">
-          <div class="tabs orders-tabs" id="orders-tab-bar">
+          <div class="tabs orders-tabs" id="orders-tab-bar" style="flex-shrink:0">
             <div class="tab-underline" aria-hidden="true"></div>
             <div class="tab active" onclick="switchTab(this,'new')"><span class="tab-inner"><span class="tab-label" data-i18n="tab_new">Nieuw</span><span class="tab-count">7</span></span></div>
             <div class="tab" onclick="switchTab(this,'kitchen')"><span class="tab-inner"><span class="tab-label" data-i18n="tab_kitchen">Keuken</span><span class="tab-count">4</span></span></div>
             <div class="tab" onclick="switchTab(this,'delivery')"><span class="tab-inner"><span class="tab-label" data-i18n="tab_delivering">Uitgaand</span><span class="tab-count">1</span></span></div>
-            
           </div>
+        <div class="scroll">
           <div id="orders-panes">
           <!-- NEW -->
           <div id="t-new">
@@ -3293,9 +3292,13 @@
     if (!window.matchMedia('(pointer: coarse)').matches) return;
     document.querySelectorAll('.page.active .scroll').forEach(function(sc){
       var pg = sc.closest('.page');
-      var hdr = pg && pg.querySelector('.page-header, .topbar, .filter-header');
-      if (!hdr) return;
-      var h = pg.offsetHeight - hdr.offsetHeight;
+      if (!pg) return;
+      var used = 0;
+      pg.childNodes.forEach(function(n){
+        if (n === sc || !(n.offsetHeight)) return;
+        if (n.nodeType === 1) used += n.offsetHeight;
+      });
+      var h = pg.offsetHeight - used;
       if (h > 0) sc.style.height = h + 'px';
     });
   }
