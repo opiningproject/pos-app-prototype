@@ -170,7 +170,6 @@
 
   .screen-content { position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column; }
   .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
-  #p-detail { position: relative; }
   .page.active { display: flex; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
@@ -420,7 +419,7 @@
   }
 
   /* Scroll area */
-  .scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; background: #fff; padding-bottom: 16px; }
+  .scroll { flex: 1; min-height: 0; overflow-y: auto; background: #fff; padding-bottom: 120px; }
   #p-orders .content-surface { background: #fff; }
   #p-orders .scroll { background: #fff; }
   .scroll::-webkit-scrollbar { width: 3px; }
@@ -4595,29 +4594,6 @@
   refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
 
-  // Fix: CSS zoom makes phone-inner visually taller than the viewport,
-  // hiding the sticky footer and cutting off scroll on real devices (e.g. Sunmi).
-  // Must use setProperty(...,'important') to override the !important in the stylesheet.
-  (function fixZoomedHeight(){
-    var inner = document.querySelector('.phone-inner');
-    if (!inner) return;
-    function apply(){
-      var w = window.innerWidth;
-      var scale = w <= 480 ? (w / 360) : w <= 900 ? 1.15 : 1;
-      if (scale > 1.01) {
-        var h = Math.floor(window.innerHeight / scale) + 'px';
-        inner.style.height = h;
-        inner.style.minHeight = h;
-        inner.style.maxHeight = h;
-      } else {
-        inner.style.height = '';
-        inner.style.minHeight = '';
-        inner.style.maxHeight = '';
-      }
-    }
-    apply();
-    window.addEventListener('resize', apply);
-  })();
   // Initial sort all lists by target time on page load
   ['t-new','t-kitchen','t-delivery'].forEach(function(listId){
     var list = document.getElementById(listId);
