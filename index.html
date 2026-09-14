@@ -1389,7 +1389,7 @@
           </div>
         </div>
         <div class="content-surface" style="border-radius:0">
-        <div class="scroll" style="background:#fff;padding-bottom:16px">
+        <div class="scroll" style="background:#fff;padding-bottom:120px">
 
           <!-- New-order schedule block (shown only for unaccepted orders) -->
           <div id="d-new-schedule" style="display:none;margin:20px 16px 4px">
@@ -1526,7 +1526,7 @@
         </div><!-- /content-surface -->
 
         <!-- Sticky action footer -->
-        <div id="d-action-footer" style="flex-shrink:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);border-top:1.5px solid #f3f3f3;z-index:10">
+        <div id="d-action-footer" style="position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);border-top:1.5px solid #f3f3f3;z-index:10">
           <div id="d-actions-default" style="display:flex;flex-direction:row;gap:10px">
             <button onclick="onPrintClick(this)" style="height:42px;padding:0 24px;font-size:14px;font-weight:500;color:#0172af;background:#fff;border:1px solid #0172af;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;flex-shrink:0">Print</button>
             <button id="d-next-btn" data-i18n="d_to_kitchen" onclick="detailNextAction()" style="flex:1;height:42px;font-size:14px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Naar keuken</button>
@@ -3890,7 +3890,7 @@
       settle(x-startX);
     }
     document.addEventListener('touchstart',function(e){ var t=e.touches[0]; onStart(t.clientX,t.clientY,e); },{passive:true});
-    document.addEventListener('touchmove',function(e){ var t=e.touches[0]; onMove(t.clientX,t.clientY,e); },{passive:false});
+    document.addEventListener('touchmove',function(e){ var t=e.touches[0]; onMove(t.clientX,t.clientY,e); },{passive:true});
     document.addEventListener('touchend',function(e){ var t=e.changedTouches[0]; onEnd(t.clientX,t.clientY); },{passive:true});
     var mouseDown=false;
     document.addEventListener('mousedown',function(e){ mouseDown=true; onStart(e.clientX,e.clientY,e); });
