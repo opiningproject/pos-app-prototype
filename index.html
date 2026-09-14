@@ -1129,12 +1129,11 @@
   .rp-footer { font-size:14px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#111827; }
 
   @media print {
-    body * { visibility: hidden; }
-    #receipt-print-area, #receipt-print-area * { visibility: visible; }
+    body > * { display: none !important; }
+    #receipt-print-wrapper { display: block !important; }
     #receipt-print-area {
-      position: fixed;
-      left: 0;
-      top: 0;
+      display: block !important;
+      position: static !important;
       width: 80mm !important;
       max-width: 100% !important;
       box-shadow: none !important;
@@ -1557,7 +1556,7 @@
       <!-- receipt-print-area moved to body level for silent printing -->
 
       <!-- ===== HIDDEN RECEIPT AREA (silent print) ===== -->
-      <div style="visibility:hidden;position:absolute;left:-9999px;top:-9999px">
+      <div id="receipt-print-wrapper" style="display:none">
         <div id="receipt-print-area">
 
           <!-- Restaurant header -->
