@@ -420,8 +420,8 @@
 
   /* Scroll area */
   .scroll { flex: 1; min-height: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch; background: #fff; padding-bottom: 120px; }
-  #p-orders .content-surface { background: #fff; }
-  #p-orders .scroll { background: #fff; }
+  #p-orders .content-surface { background: #fff; position: relative; }
+  #p-orders .scroll { position: absolute; left: 0; right: 0; bottom: 0; top: 0; background: #fff; height: auto; flex: none; min-height: 0; }
   .scroll::-webkit-scrollbar { width: 3px; }
   .scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
 
@@ -3290,15 +3290,20 @@
   // On touch devices: explicitly size each .scroll container so Android WebView can scroll them
   function fixTouchScroll(){
     if (!window.matchMedia('(pointer: coarse)').matches) return;
+    // Orders page: absolute-positioned .scroll — set top to tab bar height
+    var tabbar = document.getElementById('orders-tab-bar');
+    var ordersScroll = document.querySelector('#p-orders .scroll');
+    if (tabbar && ordersScroll) {
+      ordersScroll.style.top = tabbar.offsetHeight + 'px';
+    }
+    // Other pages: flex-based scroll, set explicit height
     document.querySelectorAll('.page.active .scroll').forEach(function(sc){
-      var pg = sc.closest('.page');
-      if (!pg) return;
-      var used = 0;
-      pg.childNodes.forEach(function(n){
-        if (n === sc || !(n.offsetHeight)) return;
-        if (n.nodeType === 1) used += n.offsetHeight;
-      });
-      var h = pg.offsetHeight - used;
+      if (sc === ordersScroll) return;
+      var cs = sc.parentElement;
+      if (!cs) return;
+      var sibH = 0;
+      Array.prototype.forEach.call(cs.children, function(c){ if (c !== sc) sibH += c.offsetHeight; });
+      var h = cs.offsetHeight - sibH;
       if (h > 0) sc.style.height = h + 'px';
     });
   }
