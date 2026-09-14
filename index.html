@@ -4581,13 +4581,15 @@
   refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
 
-  // Fix: on Sunmi/Android devices where CSS zoom causes phone-inner to exceed viewport height
+  // Fix: CSS zoom on mobile breakpoints makes phone-inner taller than viewport,
+  // cutting off the footer and breaking touch scroll on real devices (e.g. Sunmi).
   (function fixZoomedHeight(){
     var inner = document.querySelector('.phone-inner');
     if (!inner) return;
     function apply(){
-      var scale = window.innerWidth / 360;
-      if (scale > 1.05 && window.innerWidth <= 480) {
+      var w = window.innerWidth;
+      var scale = w <= 480 ? (w / 360) : w <= 900 ? 1.15 : 1;
+      if (scale > 1.01) {
         var h = Math.floor(window.innerHeight / scale);
         inner.style.height = h + 'px';
         inner.style.minHeight = h + 'px';
