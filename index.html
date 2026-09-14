@@ -154,6 +154,7 @@
 
   .screen-content { position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column; }
   .page { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+  #p-detail { position: relative; }
   .page.active { display: flex; }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
@@ -4579,6 +4580,27 @@
   initLiveTimers();
   refreshLiveTimers();
   setInterval(refreshLiveTimers, 30000);
+
+  // Fix: on Sunmi/Android devices where CSS zoom causes phone-inner to exceed viewport height
+  (function fixZoomedHeight(){
+    var inner = document.querySelector('.phone-inner');
+    if (!inner) return;
+    function apply(){
+      var scale = window.innerWidth / 360;
+      if (scale > 1.05 && window.innerWidth <= 480) {
+        var h = Math.floor(window.innerHeight / scale);
+        inner.style.height = h + 'px';
+        inner.style.minHeight = h + 'px';
+        inner.style.maxHeight = h + 'px';
+      } else {
+        inner.style.height = '';
+        inner.style.minHeight = '';
+        inner.style.maxHeight = '';
+      }
+    }
+    apply();
+    window.addEventListener('resize', apply);
+  })();
   // Initial sort all lists by target time on page load
   ['t-new','t-kitchen','t-delivery'].forEach(function(listId){
     var list = document.getElementById(listId);
