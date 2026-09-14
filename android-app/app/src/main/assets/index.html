@@ -4168,7 +4168,7 @@
                     <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600"
                       fill="#333" font-family="Poppins,sans-serif">—</text>
                     <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
-                      fill="#aaa" font-family="Poppins,sans-serif">min</text>
+                      fill="#aaa" font-family="Poppins,sans-serif">m</text>
                   </svg>
 
                   <div id="d-cancelled-badge"
@@ -5638,11 +5638,11 @@
           <span class="info-label">Btw 9%:</span>
           <span class="info-value" id="pr-btw">€ 2.75</span>
         </div>
-        <div class="info-row">
+        <div class="info-row" id="pr-btw-row">
           <span class="info-label">BTW-nummer:</span>
           <span class="info-value" id="pr-btw-num">NL865792768B01</span>
         </div>
-        <div class="info-row">
+        <div class="info-row" id="pr-kvk-row">
           <span class="info-label">KVK-nummer:</span>
           <span class="info-value" id="pr-kvk-num">91850347</span>
         </div>
@@ -6108,18 +6108,18 @@
 
     function formatRemainingHoursAndMins(totalMins) {
       totalMins = parseInt(totalMins, 10);
-      if (isNaN(totalMins) || totalMins <= 0) return '0 min';
+      if (isNaN(totalMins) || totalMins <= 0) return '0 m';
 
       if (totalMins > 120) {
         var hours = Math.floor(totalMins / 60);
         var mins = totalMins % 60;
         if (mins > 0) {
-          return hours + 'h ' + mins + ' min';
+          return hours + 'h ' + mins + 'm';
         } else {
           return hours + 'h';
         }
       } else {
-        return totalMins + ' min';
+        return totalMins + ' m';
       }
     }
 
@@ -7141,7 +7141,7 @@
           if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
           var textColor = isLate ? '#c62828' : '#333';
           if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '26'); num.textContent = displayMins; }
-          if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); }
+          if (lbl) { lbl.textContent = 'm'; lbl.setAttribute('fill', '#aaa'); }
         }
       }
 
@@ -7362,7 +7362,7 @@
         || o.shopLogo || o.restaurant_logo || o.logo
         || (full && (full.restaurant_logo || full.shopLogo || full.logo))
         || '';
-      var resName = res.restaurant_name || 'The Hague Pizza';
+      var resName = (res && (res.restaurant_name || res.name || res.shop_name)) || o.shop_name || o.restaurant_name || (full && (full.restaurant_name || full.shop_name)) || '';
       var phoneVal = res.phone_no || '';
 
       var c = [];
@@ -7626,15 +7626,16 @@
 
       // BTW & Registration info
       var btw = grandTotal * 9 / 109;
-      var vatNo = res.vat_number || res.vat_no || res.btw_number || 'NL865792768B01';
-      var kvkNo = res.kvk_number || res.kvk_no || '91850347';
-
       c.push({ t: 'cols', left: 'Btw 9%:', right: eur(btw), wl: 14, wr: 18 });
+
+      var vatNo = 'NL865792768B01';
+      var kvkNo = '91850347';
+
       c.push({ t: 'cols', left: 'BTW-nummer:', right: vatNo, wl: 14, wr: 18 });
       c.push({ t: 'cols', left: 'KVK-nummer:', right: kvkNo, wl: 14, wr: 18 });
       c.push({ t: 'feed', n: 1 });
 
-      c.push({ t: 'text', v: 'Btw bedankt voor uw bestelling.\nBestel online via de website!\n' });
+      c.push({ t: 'text', v: 'Bedankt voor uw bestelling.\nBestel online via de website!\n' });
       c.push({ t: 'feed', n: 4 });
       c.push({ t: 'cut' });
 
@@ -7981,10 +7982,14 @@
       var btwEl = document.getElementById('pr-btw');
       if (btwEl) btwEl.textContent = fmt(btw);
 
+      var vatNo = 'NL865792768B01';
+      var kvkNo = '91850347';
+
       var btwNumEl = document.getElementById('pr-btw-num');
-      if (btwNumEl) btwNumEl.textContent = res.vat_number || res.vat_no || res.btw_number || 'NL865792768B01';
+      if (btwNumEl) btwNumEl.textContent = vatNo;
+
       var kvkNumEl = document.getElementById('pr-kvk-num');
-      if (kvkNumEl) kvkNumEl.textContent = res.kvk_number || res.kvk_no || '91850347';
+      if (kvkNumEl) kvkNumEl.textContent = kvkNo;
     }
 
     var TAB_IDX = { new: 0, kitchen: 1, delivery: 2 };
@@ -10038,7 +10043,7 @@
               numEl.setAttribute('font-size', '12');
               numEl.textContent = hours + 'h';
             }
-            if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+            if (subEl) { subEl.textContent = ''; }
             tcol.classList.remove('late', 'urgent');
           } else {
             numEl.setAttribute('y', '24');
@@ -10064,11 +10069,11 @@
               var m = displayVal % 60;
               numEl.setAttribute('font-size', m > 0 ? '10' : '12');
               numEl.textContent = m > 0 ? (h + 'h ' + m + 'm') : (h + 'h');
-              if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+              if (subEl) { subEl.textContent = ''; }
             } else {
               numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
               numEl.textContent = displayVal;
-              if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
+              if (subEl) { subEl.textContent = 'm'; subEl.setAttribute('fill', '#aaa'); }
             }
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
@@ -10170,7 +10175,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
         '</svg></div>' +
         '<div class="mcol">' +
         '<div class="dname">' + dname + '</div>' +
@@ -10218,7 +10223,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10282,7 +10287,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10355,7 +10360,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10952,7 +10957,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
         '</svg>' +
         '</div>' +
         '<div class="mcol">' +

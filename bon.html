@@ -115,8 +115,8 @@
       <!-- BTW -->
       <div id="r-btw-section" style="padding-top:14px;padding-bottom:8px">
         <div class="r-info-row"><span class="r-info-label">Btw 9%:</span><span class="r-info-val" id="pr-btw">€ 2.75</span></div>
-        <div class="r-info-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val">NL865792768B01</span></div>
-        <div class="r-info-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val">91850347</span></div>
+        <div class="r-info-row" id="r-btw-row"><span class="r-info-label">BTW-nummer:</span><span class="r-info-val" id="pr-btw-num">NL865792768B01</span></div>
+        <div class="r-info-row" id="r-kvk-row"><span class="r-info-label">KVK-nummer:</span><span class="r-info-val" id="pr-kvk-num">91850347</span></div>
       </div>
 
       <!-- Footer -->
@@ -190,6 +190,15 @@
 
   document.getElementById('pr-total').textContent = formatPrice(total);
   document.getElementById('pr-btw').textContent = formatPrice(btw);
+
+  var vatNo = 'NL865792768B01';
+  var kvkNo = '91850347';
+
+  var btwNrEl = document.getElementById('pr-btw-num');
+  if (btwNrEl) btwNrEl.textContent = vatNo;
+
+  var kvkNrEl = document.getElementById('pr-kvk-num');
+  if (kvkNrEl) kvkNrEl.textContent = kvkNo;
 })();
 </script>
 

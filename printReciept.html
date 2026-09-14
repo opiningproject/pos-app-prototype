@@ -434,11 +434,11 @@
         <span class="info-label">Btw 9%:</span>
         <span class="info-value" id="val-btw">€ 2.75</span>
       </div>
-      <div class="info-row">
+      <div class="info-row" id="row-btw-nr">
         <span class="info-label">BTW-nummer:</span>
         <span class="info-value" id="val-btw-nr">NL865792768B01</span>
       </div>
-      <div class="info-row">
+      <div class="info-row" id="row-kvk-nr">
         <span class="info-label">KVK-nummer:</span>
         <span class="info-value" id="val-kvk-nr">91850347</span>
       </div>
@@ -446,7 +446,7 @@
 
     <!-- Footer Notice -->
     <div class="footer-notice">
-      Btw bedankt voor uw bestelling. Bestel online via de website!
+      Bedankt voor uw bestelling. Bestel online via de website!
     </div>
 
   </div>
@@ -492,6 +492,15 @@
             document.getElementById('val-btw').textContent = '€ ' + btw.toFixed(2).replace('.', ',');
           }
         }
+
+        var vatNo = 'NL865792768B01';
+        var kvkNo = '91850347';
+
+        var btwNrEl = document.getElementById('val-btw-nr');
+        if (btwNrEl) btwNrEl.textContent = vatNo;
+
+        var kvkNrEl = document.getElementById('val-kvk-nr');
+        if (kvkNrEl) kvkNrEl.textContent = kvkNo;
       } catch (e) {
         console.warn('Could not populate order from localStorage:', e);
       }
