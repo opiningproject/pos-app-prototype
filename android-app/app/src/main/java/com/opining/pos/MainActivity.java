@@ -281,6 +281,40 @@ public class MainActivity extends Activity {
                             printerService.sendRAWData(new byte[]{0x1B, 0x45, on}, null);
                         } else if ("text".equals(t)) {
                             printerService.printText(c.optString("v"), null);
+                        } else if ("image".equals(t)) {
+                            String imgUrl = c.optString("v");
+                            if (imgUrl != null && !imgUrl.isEmpty()) {
+                                try {
+                                    Bitmap bitmap = null;
+                                    if (imgUrl.startsWith("data:image")) {
+                                        String base64 = imgUrl.replaceFirst("^data:image/[a-zA-Z0-9+]+;base64,", "");
+                                        byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+                                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    } else if (imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+                                        java.net.URL url = new java.net.URL(imgUrl);
+                                        java.io.InputStream is = url.openStream();
+                                        bitmap = BitmapFactory.decodeStream(is);
+                                        is.close();
+                                    } else if (imgUrl.startsWith("file:///android_asset/")) {
+                                        String assetPath = imgUrl.replace("file:///android_asset/", "");
+                                        java.io.InputStream is = getAssets().open(assetPath);
+                                        bitmap = BitmapFactory.decodeStream(is);
+                                        is.close();
+                                    }
+                                    if (bitmap != null) {
+                                        int maxW = 180;
+                                        if (bitmap.getWidth() > maxW) {
+                                            int targetH = (int) ((double) bitmap.getHeight() / bitmap.getWidth() * maxW);
+                                            bitmap = Bitmap.createScaledBitmap(bitmap, maxW, targetH, true);
+                                        }
+                                        printerService.setAlignment(1, null);
+                                        printerService.printBitmap(bitmap, null);
+                                        printerService.lineWrap(1, null);
+                                    }
+                                } catch (Exception imgErr) {
+                                    imgErr.printStackTrace();
+                                }
+                            }
                         } else if ("cols".equals(t)) {
                             String left = c.optString("left");
                             String right = c.optString("right");
