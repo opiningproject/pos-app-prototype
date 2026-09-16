@@ -16,6 +16,7 @@
   <title>POS App</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="html2canvas.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -65,320 +66,46 @@
       margin-bottom: 20px;
     }
 
-    /* ===== Receipt Design (Matches printReciept.html / Figma) ===== */
-    .receipt-thermal {
-      width: 390px;
-      max-width: 100%;
-      background-color: #FFFFFF;
-      border-radius: 0;
-      padding: 32px 24px 28px 24px;
-      box-shadow: none;
-      color: #111827;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      margin: 0 auto;
-    }
+    /* ===== Receipt Design ===== */
 
-    /* Header */
-    .receipt-thermal .header-logo {
-      display: block;
-      margin: 0 auto 16px;
-      width: 59px;
-      height: 59px;
-      border-radius: 50%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(1.1);
-    }
+  .rp-shop-title { font-size:28px; font-weight:600; text-align:center; color:#000; margin-bottom:4px; letter-spacing:-0.01em; }
+  .rp-shop-info { font-size:24px; font-weight:400; text-align:center; color:#000; line-height:1.4; }
+  .rp-shop-phone { font-size:24px; font-weight:400; text-align:center; color:#000; line-height:1.4; margin-bottom:24px; }
+  .rp-section-divider { display:flex; align-items:center; text-align:center; color:#000; font-size:24px; font-weight:500; margin:24px 0; }
+  .rp-section-divider::before, .rp-section-divider::after { content:''; flex:1; border-bottom:3px dashed #000; }
+  .rp-section-divider::before { margin-right:12px; }
+  .rp-section-divider::after { margin-left:12px; }
+  .rp-info-row { display:flex; font-size:24px; line-height:1.5; margin-bottom:3px; }
+  .rp-info-label { width:180px; flex-shrink:0; color:#000; }
+  .rp-info-value { color:#000; }
+  .rp-klant-name { font-size:24px; font-weight:500; color:#000; margin-bottom:2px; }
+  .rp-klant-address { font-size:24px; color:#000; line-height:1.4; }
+  .rp-klant-phone { font-size:24px; color:#000; margin-top:12px; margin-bottom:16px; }
+  .rp-note-box { border:2px solid #000; padding:16px; background:#FFFFFF; font-size:24px; line-height:1.5; color:#000; }
+  .rp-item-row { display:flex; align-items:flex-start; font-size:24px; line-height:1.4; }
+  .rp-item-qty { width:40px; flex-shrink:0; color:#000; }
+  .rp-item-name { flex:1; font-weight:500; color:#000; }
+  .rp-item-price { font-weight:500; color:#000; text-align:right; white-space:nowrap; }
+  .rp-item-mods { margin-left:40px; margin-top:4px; font-size:24px; font-weight:500; color:#000; line-height:1.4; }
+  .rp-dashed { border-top:1px dashed #000; margin:12px 0; }
+  .rp-total-row { display:flex; justify-content:space-between; align-items:center; font-size:24px; line-height:1.6; margin-bottom:4px; color:#000; }
+  .rp-total-row.rp-bold { font-weight:600; }
+  .rp-footer { font-size:24px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#000; }
 
-    .receipt-thermal .shop-title {
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      color: #111827;
-      margin-bottom: 4px;
-      letter-spacing: -0.01em;
-    }
-
-    .receipt-thermal .shop-info-line {
-      font-size: 14px;
-      font-weight: 400;
-      text-align: center;
-      color: #111827;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .shop-phone {
-      font-size: 14px;
-      font-weight: 400;
-      text-align: center;
-      color: #111827;
-      line-height: 1.4;
-      margin-bottom: 24px;
-    }
-
-    /* Section Divider with dashed line */
-    .receipt-thermal .section-divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: #111827;
-      font-size: 14px;
-      font-weight: 600;
-      margin: 24px 0;
-      width: 100%;
-    }
-
-    .receipt-thermal .section-divider::before,
-    .receipt-thermal .section-divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px dashed #9CA3AF;
-    }
-
-    .receipt-thermal .section-divider::before {
-      margin-right: 12px;
-    }
-
-    .receipt-thermal .section-divider::after {
-      margin-left: 12px;
-    }
-
-    /* Info Grid */
-    .receipt-thermal .info-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .receipt-thermal .info-label {
-      color: #111827;
-      flex-shrink: 0;
-    }
-
-    .receipt-thermal .info-value {
-      color: #111827;
-      text-align: right;
-    }
-
-    /* Customer Section */
-    .receipt-thermal .klant-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 2px;
-    }
-
-    .receipt-thermal .klant-address {
-      font-size: 14px;
-      color: #111827;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .klant-phone {
-      font-size: 14px;
-      color: #111827;
-      margin-top: 12px;
-      margin-bottom: 16px;
-    }
-
-    .receipt-thermal .delivery-note-box {
-      border: 1px solid #E5E7EB;
-      border-radius: 0;
-      padding: 16px;
-      background-color: #FFFFFF;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #111827;
-    }
-
-    /* Order Items */
-    .receipt-thermal .order-items {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .receipt-thermal .order-item {
-      margin-bottom: 0;
-    }
-
-    .receipt-thermal .item-row {
-      display: flex;
-      align-items: flex-start;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .item-qty {
-      width: 24px;
-      flex-shrink: 0;
-      color: #111827;
-    }
-
-    .receipt-thermal .item-name {
-      flex: 1;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .receipt-thermal .item-price {
-      font-weight: 600;
-      color: #111827;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .receipt-thermal .item-modifiers {
-      margin-left: 24px;
-      margin-top: 4px;
-      font-size: 14px;
-      color: #6B7280;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .dashed-line-separator {
-      border-top: 1px dashed #D1D5DB;
-      margin: 12px 0;
-      width: 100%;
-    }
-
-    /* Totals */
-    .receipt-thermal .totals-section {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .receipt-thermal .total-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.6;
-      margin-bottom: 4px;
-      margin-top: 0 !important;
-      padding: 0 !important;
-      border: none !important;
-      color: #111827;
-    }
-
-    .receipt-thermal .total-row .total-label,
-    .receipt-thermal .total-row .total-value {
-      font-weight: 400;
-    }
-
-    .receipt-thermal .total-row.font-semibold {
-      font-weight: 600;
-    }
-
-    .receipt-thermal .total-row.font-bold,
-    .receipt-thermal .total-row.font-bold .total-label,
-    .receipt-thermal .total-row.font-bold .total-value {
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    /* Footer Notice */
-    .receipt-thermal .footer-notice {
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 32px;
-      line-height: 1.4;
-      color: #111827;
-    }
-
-    #receipt-print-area-wrapper {
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
-      visibility: hidden;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-    }
-
-    #receipt-print-area-wrapper.is-printing {
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      visibility: visible !important;
-      width: 390px !important;
+  @media print {
+    body > * { display: none !important; }
+    #receipt-print-wrapper { display: block !important; }
+    #receipt-print-area {
+      display: block !important;
+      position: static !important;
+      width: 80mm !important;
       max-width: 100% !important;
-      height: auto !important;
-      overflow: visible !important;
-      z-index: 99999 !important;
-      background: #fff !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 8mm 4mm !important;
     }
-
-    @media print {
-      html,
-      body {
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
-        background: #fff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        display: block !important;
-        float: none !important;
-      }
-
-      body > *:not(#receipt-print-area-wrapper) {
-        display: none !important;
-      }
-
-      #receipt-print-area-wrapper {
-        display: block !important;
-        visibility: visible !important;
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 80mm !important;
-        max-width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
-        overflow: visible !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-        float: none !important;
-      }
-
-      #receipt-print-area,
-      .receipt-thermal {
-        display: block !important;
-        visibility: visible !important;
-        width: 80mm !important;
-        max-width: 100% !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 8mm 4mm !important;
-        margin: 0 auto !important;
-        background-color: #FFFFFF !important;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-        color: #111827 !important;
-      }
-
-      #receipt-print-area * {
-        visibility: visible !important;
-        box-sizing: border-box !important;
-      }
-
-      .receipt-thermal .delivery-note-box {
-        background-color: #FFFFFF !important;
-        border: 1px solid #111827 !important;
-      }
-
-      @page {
-        size: 80mm auto;
-        margin: 0;
-      }
-    }
+    @page { margin: 0; size: 80mm auto; }
+  }
 
     body {
       background: #f0f0f0;
@@ -716,6 +443,8 @@
     .page.active {
       display: flex;
     }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     @keyframes slideUp {
       from {
@@ -4173,7 +3902,7 @@
                     <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600"
                       fill="#333" font-family="Poppins,sans-serif">—</text>
                     <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
-                      fill="#aaa" font-family="Poppins,sans-serif">m</text>
+                      fill="#aaa" font-family="Poppins,sans-serif">min</text>
                   </svg>
 
                   <div id="d-cancelled-badge"
@@ -5546,118 +5275,35 @@
     </div>
   </div>
 
-  <!-- ===== HIDDEN RECEIPT AREA (direct child of body for silent print) ===== -->
-  <div id="receipt-print-area-wrapper">
-    <div class="receipt-thermal" id="receipt-print-area">
-
-      <!-- Logo & Restaurant Header -->
-      <img class="header-logo" id="pr-shop-logo" alt="Restaurant logo"
-        src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
-      <div class="shop-title" id="pr-shop-name">The Hague Pizza</div>
-      <div class="shop-info-line" id="pr-shop-addr1">Tochtatraat 40</div>
-      <div class="shop-info-line" id="pr-shop-addr2">3036 SK, Rotterdam</div>
-      <div class="shop-phone" id="pr-shop-phone">010-21-4622</div>
-
-      <!-- Section: Info -->
-      <div class="section-divider">Info</div>
-      <div class="info-row">
-        <span class="info-label">Bestelnr.</span>
-        <span class="info-value" id="pr-info-oid">250621 A 31</span>
+  <!-- ===== HIDDEN RECEIPT AREA — direct body child for @media print ===== -->
+  <div id="receipt-print-wrapper" style="display:none">
+    <div id="receipt-print-area">
+      <div id="pr-logo-box" style="text-align:center;margin-bottom:12px;display:none"><img id="pr-logo" src="" alt="" style="max-width:200px;max-height:120px;object-fit:contain"></div>
+      <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
+      <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
+      <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
+      <div class="rp-shop-phone" id="pr-shop-phone">010-21-4622</div>
+      <div class="rp-section-divider">Info</div>
+      <div class="rp-info-row"><span class="rp-info-label">Bestelnr.</span><span class="rp-info-value" id="pr-oid">—</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">Besteld op:</span><span class="rp-info-value" id="pr-date">—</span></div>
+      <div class="rp-info-row" id="pr-wished-row"><span class="rp-info-label" id="pr-wished-label">Bezorgtijd:</span><span class="rp-info-value" id="pr-wished">—</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">Betaalwijze:</span><span class="rp-info-value" id="pr-pay">—</span></div>
+      <div class="rp-section-divider">Klant</div>
+      <div class="rp-klant-name" id="pr-cust-name">—</div>
+      <div class="rp-klant-address" id="pr-cust-addr1">—</div>
+      <div class="rp-klant-address" id="pr-cust-addr2"></div>
+      <div class="rp-klant-phone" id="pr-cust-phone"></div>
+      <div class="rp-note-box" id="pr-note-box" style="display:none"><div id="pr-note"></div></div>
+      <div class="rp-section-divider">Bestelling</div>
+      <div id="pr-items"></div>
+      <div class="rp-dashed"></div>
+      <div id="pr-breakdown"></div>
+      <div style="margin-top:24px">
+        <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
+        <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value" id="pr-btw-num">NL865792768B01</span></div>
+        <div class="rp-info-row"><span class="rp-info-label">KVK-nummer:</span><span class="rp-info-value" id="pr-kvk-num">91850347</span></div>
       </div>
-      <div class="info-row">
-        <span class="info-label">Besteld op:</span>
-        <span class="info-value" id="pr-info-date">wo 21-06-2025 21:58</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label" id="pr-info-wished-label">Bezorgtijd:</span>
-        <span class="info-value" id="pr-info-wished">22:30 (ZSM)</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Betaalwijze:</span>
-        <span class="info-value" id="pr-info-pay">Online betaald</span>
-      </div>
-
-      <!-- Section: Klant -->
-      <div class="section-divider">Klant</div>
-      <div class="klant-name" id="pr-cust-name">Serdar Orman</div>
-      <div class="klant-address" id="pr-cust-addr1">Tochtstraat 40</div>
-      <div class="klant-address" id="pr-cust-addr2">3036 SK Rotterdam</div>
-      <div class="klant-phone" id="pr-cust-phone">0614522453</div>
-
-      <!-- Delivery Instructions Box -->
-      <div class="delivery-note-box" id="pr-note-container">
-        <div id="pr-note">Please deliver at the green door.<br>When arrive call me</div>
-      </div>
-
-      <!-- Section: Bestelling -->
-      <div class="section-divider">Bestelling</div>
-
-      <div class="order-items" id="pr-items">
-        <div class="order-item">
-          <div class="item-row">
-            <span class="item-qty">1</span>
-            <span class="item-name">Pizza Pollo</span>
-            <span class="item-price">€ 38.75</span>
-          </div>
-          <div class="item-modifiers">
-            <div>+ Bell pepper</div>
-            <div>+ Onion</div>
-          </div>
-        </div>
-        <div class="dashed-line-separator"></div>
-        <div class="order-item">
-          <div class="item-row">
-            <span class="item-qty">1</span>
-            <span class="item-name">Cola Zero</span>
-            <span class="item-price">€ 2.75</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section: Totals -->
-      <div class="dashed-line-separator"></div>
-
-      <div class="totals-section" id="pr-breakdown">
-        <div class="total-row">
-          <span class="total-label">Subtotal</span>
-          <span class="total-value">€ 41.50</span>
-        </div>
-        <div class="total-row">
-          <span class="total-label">Statiegeld € 0,15 x 1</span>
-          <span class="total-value">€ 0,15</span>
-        </div>
-        <div class="total-row">
-          <span class="total-label">Totaal</span>
-          <span class="total-value">€ 41,65</span>
-        </div>
-        <div class="dashed-line-separator"></div>
-        <div class="total-row font-bold">
-          <span class="total-label">Nog te betalen</span>
-          <span class="total-value">€ 00,00</span>
-        </div>
-      </div>
-
-      <!-- Section: Tax & Registration Info -->
-      <div style="margin-top: 24px;" id="r-btw-section">
-        <div class="info-row">
-          <span class="info-label">Btw 9%:</span>
-          <span class="info-value" id="pr-btw">€ 2.75</span>
-        </div>
-        <div class="info-row" id="pr-btw-row">
-          <span class="info-label">BTW-nummer:</span>
-          <span class="info-value" id="pr-btw-num">NL865792768B01</span>
-        </div>
-        <div class="info-row" id="pr-kvk-row">
-          <span class="info-label">KVK-nummer:</span>
-          <span class="info-value" id="pr-kvk-num">91850347</span>
-        </div>
-      </div>
-
-      <!-- Footer Notice -->
-      <div class="footer-notice">
-        Btw bedankt voor uw bestelling.<br>Bestel online via de website!
-      </div>
-
+      <div class="rp-footer" style="padding-bottom:48px">Bedankt voor uw bestelling. Bestel online via de website!</div>
     </div>
   </div>
 
@@ -5726,7 +5372,7 @@
         create_delivery_btn: 'Create new delivery order', create_takeaway_btn: 'Create new takeaway order',
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
-        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
+        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
@@ -6135,25 +5781,18 @@
 
     function formatRemainingHoursAndMins(totalMins) {
       totalMins = parseInt(totalMins, 10);
-      if (isNaN(totalMins) || totalMins === 0) return '0 min';
+      if (isNaN(totalMins) || totalMins <= 0) return '0 m';
 
-      var isOverdue = totalMins < 0;
-      var absMins = Math.abs(totalMins);
-
-      if (isOverdue) {
-        return '-' + absMins + ' min';
-      }
-
-      if (absMins >= 60) {
-        var hours = Math.floor(absMins / 60);
-        var mins = absMins % 60;
+      if (totalMins > 120) {
+        var hours = Math.floor(totalMins / 60);
+        var mins = totalMins % 60;
         if (mins > 0) {
-          return hours + 'h ' + mins + ' min';
+          return hours + 'h ' + mins + 'm';
         } else {
           return hours + 'h';
         }
       } else {
-        return absMins + ' min';
+        return totalMins + ' m';
       }
     }
 
@@ -6953,15 +6592,14 @@
       }
 
       var targetMins = mins;
-      var rawExpTime = (cachedOrder && (cachedOrder.expected_delivery_time || cachedOrder.delivery_time)) || (cardEl && cardEl.getAttribute('data-expected-delivery-time'));
-      if (rawExpTime) {
-        var parsedExp = parseDeliveryTimeMs(rawExpTime);
-        if (parsedExp) {
+      if (cachedOrder && cachedOrder.expected_delivery_time) {
+        var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
+        if (!isNaN(parsedExp) && parsedExp > Date.now()) {
           targetMins = Math.round((parsedExp - Date.now()) / 60000);
         }
       }
       var schedMinsEl = document.getElementById('d-sched-mins');
-      if (schedMinsEl && targetMins !== undefined && targetMins !== null) {
+      if (schedMinsEl && targetMins) {
         schedMinsEl.textContent = formatRemainingHoursAndMins(targetMins);
       }
 
@@ -6971,7 +6609,7 @@
       var timerRing = document.getElementById('d-timer-ring');
       if (timerSvg) {
         var clockGroup = timerSvg.querySelector('g.sched-clock');
-        if (isScheduledOrder || (targetMins && targetMins > 120)) {
+        if (isScheduledOrder && targetMins > 120) {
           if (timerRing) {
             timerRing.setAttribute('stroke', '#e0e0e0');
             timerRing.setAttribute('stroke-dashoffset', '138.23');
@@ -7206,13 +6844,25 @@
         var ring = document.getElementById('d-timer-ring');
         var num = document.getElementById('d-timer-num');
         var lbl = document.getElementById('d-timer-label');
-        if (isScheduled) {
+        if (isScheduled && displayMins > 120) {
           if (ring) { ring.setAttribute('stroke', '#e0e0e0'); ring.setAttribute('stroke-dashoffset', '138.23'); }
           var hrs = Math.round(displayMins / 60);
           var lbl2 = hrs >= 24 ? Math.round(hrs / 24) + 'd' : hrs + 'h';
           if (num) { num.setAttribute('fill', '#aaa'); num.setAttribute('font-size', '13'); num.setAttribute('y', '27'); num.textContent = lbl2; }
           if (lbl) lbl.textContent = '';
+          // show hourglass
+          var dClockGroup = timerSvg ? timerSvg.querySelector('g.sched-clock') : null;
+          if (!dClockGroup && timerSvg) {
+            dClockGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            dClockGroup.setAttribute('class', 'sched-clock');
+            dClockGroup.innerHTML = '<path d="M19 17 L29 17 L24 24 L29 31 L19 31 L24 24 Z" fill="none" stroke="#aaa" stroke-width="1.6" stroke-linejoin="round"></path><line x1="19" y1="17" x2="29" y2="17" stroke="#aaa" stroke-width="1.6" stroke-linecap="round"></line><line x1="19" y1="31" x2="29" y2="31" stroke="#aaa" stroke-width="1.6" stroke-linecap="round"></line><path d="M20 18.5 L28 18.5 L24 23 Z" fill="#aaa" opacity="0.5"></path><path d="M22.5 30 L25.5 30 L24 27.5 Z" fill="#aaa" opacity="0.5"></path>';
+            timerSvg.appendChild(dClockGroup);
+          }
+          if (dClockGroup) dClockGroup.style.display = 'block';
         } else {
+          // countdown (regular or scheduled <= 120 min)
+          var dClockGroup2 = timerSvg ? timerSvg.querySelector('g.sched-clock') : null;
+          if (dClockGroup2) dClockGroup2.style.display = 'none';
           var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
           if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
           var textColor = isLate ? '#c62828' : '#333';
@@ -7379,27 +7029,81 @@
     function onPrintClick(btn) {
       if (_printing) return;
       _printing = true;
-      // quick press effect only (no text change) — it prints instantly
+      var origHTML = btn ? btn.innerHTML : null;
       if (btn) {
-        btn.style.transition = 'transform 0.08s ease, opacity 0.08s ease';
-        btn.style.transform = 'scale(0.96)';
-        btn.style.opacity = '0.7';
-        setTimeout(function () { if (btn) { btn.style.transform = ''; btn.style.opacity = ''; } }, 130);
+        btn.disabled = true;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;vertical-align:middle;transform-box:fill-box;transform-origin:center;"><path d="M12 2a10 10 0 1 0 10 10" /></svg>';
       }
-      try { silentPrint(); } catch (e) { console.warn(e); }
-      setTimeout(function () { _printing = false; }, 1500);   // guard against double-tap
+      showPrintToast();
+      function resetBtn() {
+        _printing = false;
+        hidePrintToast();
+        if (btn) { btn.disabled = false; btn.innerHTML = origHTML; }
+      }
+      setTimeout(function() {
+        try { silentPrint(resetBtn); } catch (e) { console.warn(e); resetBtn(); }
+      }, 50);
     }
 
-    function silentPrint() {
+    var _printToastEl = null;
+    function showPrintToast() {
+      if (_printToastEl) return;
+      var el = document.createElement('div');
+      el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;z-index:99999;font-family:Poppins,sans-serif;white-space:nowrap;';
+      el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;flex-shrink:0;transform-box:fill-box;transform-origin:center;"><path d="M12 2a10 10 0 1 0 10 10"/></svg> Printen...';
+      document.body.appendChild(el);
+      _printToastEl = el;
+    }
+    function hidePrintToast() {
+      if (_printToastEl) { _printToastEl.remove(); _printToastEl = null; }
+    }
+
+    function silentPrint(onDone) {
       populatePrintPage();
-      // var wrapper = document.getElementById('receipt-print-area-wrapper');
-      // if (wrapper) wrapper.classList.add('is-printing');
-      if (window.AndroidPrinter && typeof window.AndroidPrinter.printReceipt === 'function') {
-        printReceiptNative();
+      if (window.AndroidPrinter && typeof window.AndroidPrinter.printBitmap === 'function' && typeof html2canvas === 'function') {
+        var logoImg = document.getElementById('pr-logo');
+        if (logoImg && window._restaurantLogoBase64) {
+          logoImg.src = window._restaurantLogoBase64;
+        }
+        var logoSrc = logoImg && logoImg.src && !logoImg.src.startsWith('data:') ? logoImg.src : null;
+        function doRender() {
+          var area = document.getElementById('receipt-print-area');
+          var wrapper = document.getElementById('receipt-print-wrapper');
+          var prevWrapperStyle = wrapper.getAttribute('style') || '';
+          var prevAreaStyle = area.getAttribute('style') || '';
+          wrapper.style.cssText = 'display:block;position:fixed;top:-9999px;left:0;background:#fff;';
+          area.style.cssText = 'display:block;width:576px;padding:16px;background:#fff;box-sizing:border-box;';
+          html2canvas(area, { scale: 1, backgroundColor: '#ffffff', useCORS: true, logging: false, width: 576 }).then(function(canvas) {
+            wrapper.setAttribute('style', prevWrapperStyle);
+            area.setAttribute('style', prevAreaStyle);
+            window.AndroidPrinter.printBitmap(canvas.toDataURL('image/png'));
+            if (onDone) onDone();
+          }).catch(function(e) {
+            wrapper.setAttribute('style', prevWrapperStyle);
+            area.setAttribute('style', prevAreaStyle);
+            console.warn('html2canvas failed', e);
+            if (onDone) onDone();
+          });
+        }
+        if (logoSrc) {
+          var img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = function() {
+            var c = document.createElement('canvas');
+            c.width = img.width; c.height = img.height;
+            c.getContext('2d').drawImage(img, 0, 0);
+            try { logoImg.src = c.toDataURL('image/png'); } catch(e) {}
+            doRender();
+          };
+          img.onerror = function() { doRender(); };
+          img.src = logoSrc;
+        } else {
+          doRender();
+        }
       } else {
         try { window.print(); } catch (e) { console.warn('window.print failed', e); }
+        if (onDone) onDone();
       }
-
     }
 
     function formatPrintOrderTime(orderObj) {
@@ -7479,7 +7183,7 @@
 
       // Info Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '------------------ Info ------------------\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '.................. Info ..................\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7519,7 +7223,7 @@
 
       // Klant Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '------------------ Klant ------------------\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '.................. Klant ..................\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7553,7 +7257,7 @@
 
       // Bestelling Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '--------------- Bestelling ---------------\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '............... Bestelling ...............\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7601,8 +7305,9 @@
             }
           }
 
-          var lineLeft = qty + '  ' + name;
-          c.push({ t: 'cols', left: lineLeft, right: eur(itemTotal), wl: 22, wr: 10 });
+          c.push({ t: 'bold', v: 1 });
+          c.push({ t: 'cols', left: qty + '  ' + name, right: eur(itemTotal), wl: 22, wr: 10 });
+          c.push({ t: 'bold', v: 0 });
           if (subText) {
             var parts = String(subText).split(/,\s*/);
             parts.forEach(function (p) {
@@ -7610,7 +7315,7 @@
             });
           }
           if (idx < rawItems.length - 1) {
-            c.push({ t: 'text', v: '--------------------------------\n' });
+            c.push({ t: 'text', v: '................................\n' });
           }
         });
       } else {
@@ -7618,7 +7323,7 @@
         c.push({ t: 'cols', left: '1  Bestelling #' + fallbackOid, right: eur(o.totalAmt || o.price || 0), wl: 22, wr: 10 });
       }
 
-      c.push({ t: 'text', v: '--------------------------------\n' });
+      c.push({ t: 'text', v: '................................\n' });
 
       // Breakdown calculations
       var totalDepositAmt = 0;
@@ -7699,9 +7404,9 @@
       }
 
       // Grand Total
-      c.push({ t: 'size', v: 22 }, { t: 'bold', v: 0 }, { t: 'cols', left: 'Totaal', right: eur(grandTotal), wl: 22, wr: 10 });
+      c.push({ t: 'size', v: 22 }, { t: 'bold', v: 1 }, { t: 'cols', left: 'Totaal', right: eur(grandTotal), wl: 22, wr: 10 }, { t: 'bold', v: 0 });
 
-      c.push({ t: 'text', v: '--------------------------------\n' });
+      c.push({ t: 'text', v: '................................\n' });
 
       // Nog te betalen
       var rawCash = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived || full.paid_amount || full.paidAmount;
@@ -7717,7 +7422,7 @@
       }
 
       c.push({ t: 'bold', v: 1 }, { t: 'cols', left: 'Nog te betalen', right: (isPaid && !cashGiven) ? '€ 0,00' : eur(dueAmt), wl: 18, wr: 14 }, { t: 'bold', v: 0 });
-      c.push({ t: 'text', v: '--------------------------------\n' });
+      c.push({ t: 'text', v: '................................\n' });
       c.push({ t: 'feed', n: 1 });
 
       // BTW & Registration info
@@ -7774,10 +7479,15 @@
 
       var defaultLogoSvg = "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E";
 
-      var logoEl = document.getElementById('pr-shop-logo');
-      if (logoEl) {
-        logoEl.src = logoUrl || defaultLogoSvg;
-        logoEl.style.display = 'block';
+      var logoBox = document.getElementById('pr-logo-box');
+      var logoImg = document.getElementById('pr-logo');
+      if (logoBox && logoImg) {
+        if (logoUrl) {
+          logoImg.src = logoUrl;
+          logoBox.style.display = 'block';
+        } else {
+          logoBox.style.display = 'none';
+        }
       }
 
       var shopNameEl = document.getElementById('pr-shop-name');
@@ -7803,7 +7513,7 @@
       }
 
       // Bestelnr.
-      var oidEl = document.getElementById('pr-info-oid');
+      var oidEl = document.getElementById('pr-oid');
       if (oidEl) {
         var rawOidVal = (o.oid || o.order_number || full.oid || full.order_number || (o.id || full.id || ''));
         if (rawOidVal) rawOidVal = String(rawOidVal).replace('#', '');
@@ -7811,7 +7521,7 @@
       }
 
       // Besteld op
-      var dateEl = document.getElementById('pr-info-date');
+      var dateEl = document.getElementById('pr-date');
       if (dateEl) {
         var rawDate = o.created_at || full.created_at || full.order_date || '';
         var printDateStr = '';
@@ -7825,16 +7535,18 @@
       }
 
       // Bezorgtijd / Afhaaltijd
-      var wishedLblEl = document.getElementById('pr-info-wished-label');
+      var wishedLblEl = document.getElementById('pr-wished-label');
       if (wishedLblEl) {
         wishedLblEl.textContent = isCollection ? 'Afhaaltijd:' : 'Bezorgtijd:';
       }
-      var wishedEl = document.getElementById('pr-info-wished');
+      var wishedEl = document.getElementById('pr-wished');
       if (wishedEl) {
         var timeStr = formatPrintOrderTime(o);
+        var fullOrderData = o.fullOrder || o;
+        var isSchedOrder = checkIsScheduledOrder(fullOrderData) || checkIsScheduledOrder(o);
         if (!timeStr || /^\(?zsm\)?$/i.test(timeStr) || /^asap$/i.test(timeStr)) {
           wishedEl.textContent = '(zsm)';
-        } else if (timeStr.toUpperCase().indexOf('(ZSM)') !== -1) {
+        } else if (isSchedOrder) {
           wishedEl.textContent = timeStr;
         } else {
           wishedEl.textContent = timeStr + ' (ZSM)';
@@ -7842,7 +7554,7 @@
       }
 
       // Betaalwijze
-      var payEl = document.getElementById('pr-info-pay');
+      var payEl = document.getElementById('pr-pay');
       if (payEl) {
         var payTypeVal = String(o.payment_type !== undefined ? o.payment_type : (full.payment_type !== undefined ? full.payment_type : (o.payment_status !== undefined ? o.payment_status : '')));
         var isCash = (payTypeVal === '2' || payTypeVal === 'cash' || payTypeVal === 'Cash' || o.payment_status === 2 || o.payment_status === '2' || !isPaid);
@@ -7887,7 +7599,7 @@
       }
 
       // Customer Note Box
-      var noteBox = document.getElementById('pr-note-container');
+      var noteBox = document.getElementById('pr-note-box');
       var noteEl = document.getElementById('pr-note');
       var noteVal = o.note || full.delivery_note || full.save_note || full.note || '';
       if (noteVal) {
@@ -7952,23 +7664,21 @@
               }
             }
 
-            return '<div class="order-item">'
-              + '<div class="item-row">'
-              + '<span class="item-qty">' + qty + '</span>'
-              + '<span class="item-name">' + name + '</span>'
-              + '<span class="item-price">' + fmt(itemTotal) + '</span>'
+            return '<div class="rp-item-row">'
+              + '<span class="rp-item-qty">' + qty + '</span>'
+              + '<span class="rp-item-name">' + name + '</span>'
+              + '<span class="rp-item-price">' + fmt(itemTotal) + '</span>'
               + '</div>'
-              + (subTextFormatted ? '<div class="item-modifiers">' + subTextFormatted + '</div>' : '')
-              + '</div>';
+              + (subTextFormatted ? '<div class="rp-item-mods">' + subTextFormatted + '</div>' : '');
           });
-          itemsEl.innerHTML = itemsHtmlArr.join('<div class="dashed-line-separator"></div>');
+          itemsEl.innerHTML = itemsHtmlArr.join('<div class="rp-dashed"></div>');
         } else if (!raw) {
-          itemsEl.innerHTML = '<div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Pizza Pollo</span><span class="item-price">€ 38,75</span></div><div class="item-modifiers"><div>+ Bell pepper</div><div>+ Onion</div></div></div><div class="dashed-line-separator"></div><div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Cola Zero</span><span class="item-price">€ 2,75</span></div></div>';
+          itemsEl.innerHTML = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Pizza Pollo</span><span class="rp-item-price">€ 38,75</span></div><div class="rp-item-mods"><div>+ Bell pepper</div><div>+ Onion</div></div><div class="rp-dashed"></div><div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Cola Zero</span><span class="rp-item-price">€ 2,75</span></div>';
           depositGroups['0.15'] = { rate: 0.15, rateLabel: '0,15', count: 1 };
           calculatedSubtotal = 41.50;
         } else {
           var fallbackOid = String(o.oid || o.order_number || full.oid || full.order_number || '').replace('#', '');
-          itemsEl.innerHTML = '<div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Bestelling ' + fallbackOid + '</span><span class="item-price">' + fmt(o.totalAmt || o.price || 0) + '</span></div></div>';
+          itemsEl.innerHTML = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling ' + fallbackOid + '</span><span class="rp-item-price">' + fmt(o.totalAmt || o.price || 0) + '</span></div>';
         }
       }
 
@@ -8020,62 +7730,51 @@
       if (bdEl) {
         var bHtml = '';
         // 1. Subtotal
-        bHtml += '<div class="total-row"><span class="total-label">Subtotaal</span><span class="total-value">' + fmt(subtotal) + '</span></div>';
+        bHtml += '<div class="rp-total-row"><span>Subtotaal</span><span>' + fmt(subtotal) + '</span></div>';
 
         // 2. Statiegeld
         Object.keys(depositGroups).forEach(function (k) {
           var group = depositGroups[k];
           var depAmt = group.count * group.rate;
-          bHtml += '<div class="total-row"><span class="total-label">Statiegeld € ' + group.rateLabel + ' x ' + group.count + '</span><span class="total-value">' + fmt(depAmt) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Statiegeld € ' + group.rateLabel + ' x ' + group.count + '</span><span>' + fmt(depAmt) + '</span></div>';
         });
 
         // 3. Transaction Costs
         if (customerFee > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Transaction Costs</span><span class="total-value">' + fmt(customerFee) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Transaction Costs</span><span>' + fmt(customerFee) + '</span></div>';
         }
 
         // 4. Delivery
         if (shipping > 0 || isDelivery) {
-          bHtml += '<div class="total-row"><span class="total-label">Bezorging</span><span class="total-value">' + fmt(shipping) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Bezorging</span><span>' + fmt(shipping) + '</span></div>';
         }
 
         // 5. Service fee
         if (service > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Servicekosten</span><span class="total-value">' + fmt(service) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Servicekosten</span><span>' + fmt(service) + '</span></div>';
         }
 
         // 6. Tip
         if (tip > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Fooi</span><span class="total-value">' + fmt(tip) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Fooi</span><span>' + fmt(tip) + '</span></div>';
         }
 
         // 7. Reward / Discount
         if (redeemDiscount > 0) {
-          bHtml += '<div class="total-row"><span class="total-label" style="color:#d81b60;font-weight:600">Reward</span><span class="total-value" style="color:#d81b60;font-weight:600">- ' + fmt(redeemDiscount) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span style="color:#d81b60;font-weight:600">Reward</span><span style="color:#d81b60;font-weight:600">- ' + fmt(redeemDiscount) + '</span></div>';
         } else if (discount > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Korting</span><span class="total-value">- ' + fmt(discount) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Korting</span><span>- ' + fmt(discount) + '</span></div>';
         }
 
         // Totaal
-        bHtml += '<div class="total-row"><span class="total-label">Totaal</span><span class="total-value">' + fmt(grandTotal) + '</span></div>';
+        bHtml += '<div class="rp-total-row"><span>Totaal</span><span>' + fmt(grandTotal) + '</span></div>';
 
         // Dashed Line Separator
-        bHtml += '<div class="dashed-line-separator"></div>';
+        bHtml += '<div class="rp-dashed"></div>';
 
-        // Nog te betalen
-        var rawCash = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived || full.paid_amount || full.paidAmount;
-        var cashGiven = parseFloat(rawCash);
-        var dueAmt = 0;
-
-        if (isPaid) {
-          dueAmt = 0;
-        } else if (!isNaN(cashGiven) && cashGiven > 0) {
-          dueAmt = Math.abs(cashGiven - grandTotal);
-        } else {
-          dueAmt = grandTotal;
-        }
-
-        bHtml += '<div class="total-row font-bold"><span class="total-label">Nog te betalen</span><span class="total-value">' + ((isPaid && !cashGiven) ? '€ 00,00' : fmt(dueAmt)) + '</span></div>';
+        // Nog te betalen: online betaald = 0, contant = volledig bedrag
+        var dueAmt = isPaid ? 0 : grandTotal;
+        bHtml += '<div class="rp-total-row rp-bold"><span>Nog te betalen</span><span>' + fmt(dueAmt) + '</span></div>';
 
         bdEl.innerHTML = bHtml;
       }
@@ -9891,6 +9590,20 @@
                 if (logoEl) { logoEl.src = formattedLogo; logoEl.style.display = 'block'; }
                 var valLogoEl = document.getElementById('val-shop-logo');
                 if (valLogoEl) { valLogoEl.src = formattedLogo; valLogoEl.style.display = 'block'; }
+                // Pre-cache logo as base64 so silentPrint doesn't need to fetch it
+                (function(url) {
+                  var preImg = new Image();
+                  preImg.crossOrigin = 'anonymous';
+                  preImg.onload = function() {
+                    try {
+                      var c = document.createElement('canvas');
+                      c.width = preImg.width; c.height = preImg.height;
+                      c.getContext('2d').drawImage(preImg, 0, 0);
+                      window._restaurantLogoBase64 = c.toDataURL('image/png');
+                    } catch(e) {}
+                  };
+                  preImg.src = url;
+                })(formattedLogo);
               }
 
               var delTime = (res.delivery_time !== undefined && res.delivery_time !== null) ? res.delivery_time : res.delivery_mins;
@@ -10123,9 +9836,8 @@
           var numEl = tcol ? tcol.querySelector('text') : null;
           if (!tcol || !ring || !numEl) return;
           var subEl = numEl.nextElementSibling && numEl.nextElementSibling.tagName === 'text' ? numEl.nextElementSibling : null;
+          var isScheduled = remaining > 120;
           var isLate = remaining <= 0;
-          var isScheduled = remaining > 120 && !isLate;
-          var absMins = Math.abs(remaining);
           var whenEl = card.querySelector('.oc-when');
           if (whenEl) {
             var rawData = card._rawOrderData || (window._liveOrdersMap && (window._liveOrdersMap[card.dataset.oid] || window._liveOrdersMap[card.dataset.oid ? card.dataset.oid.replace('#', '') : '']));
@@ -10156,7 +9868,8 @@
               whenEl.textContent = t('otime_asap');
             }
           }
-          var showHourglass = isScheduled;
+          var displayVal = isLate ? Math.abs(remaining) : remaining;
+          var showHourglass = isScheduled || remaining > 120 || displayVal > 120;
           var svgEl = tcol ? tcol.querySelector('svg') : null;
           var clockGroup = svgEl ? svgEl.querySelector('g.sched-clock') : null;
 
@@ -10181,8 +9894,10 @@
             tcol.classList.remove('late', 'urgent');
           } else {
             if (numEl) numEl.style.display = '';
+            if (subEl) subEl.style.display = '';
             if (clockGroup) clockGroup.style.display = 'none';
 
+            numEl.setAttribute('y', '24');
             var color = isLate ? '#c62828' : remaining <= 15 ? '#f59800' : '#4caf50';
             var textColor = isLate ? '#c62828' : '#333';
             var offset;
@@ -10199,50 +9914,9 @@
             ring.setAttribute('stroke', color);
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
-
-            if (isLate) {
-              numEl.setAttribute('font-size', absMins >= 100 ? '10' : '12');
-              numEl.setAttribute('y', '24');
-              numEl.textContent = '-' + absMins;
-              if (subEl) {
-                subEl.style.display = '';
-                subEl.textContent = 'min';
-                subEl.setAttribute('font-size', '8.5');
-                subEl.setAttribute('fill', textColor);
-              }
-            } else if (absMins >= 60) {
-              var h = Math.floor(absMins / 60);
-              var m = absMins % 60;
-              if (m > 0) {
-                numEl.setAttribute('font-size', '10');
-                numEl.setAttribute('y', '24');
-                numEl.textContent = h + 'h' + m;
-                if (subEl) {
-                  subEl.style.display = '';
-                  subEl.textContent = 'min';
-                  subEl.setAttribute('font-size', '8.5');
-                  subEl.setAttribute('fill', textColor);
-                }
-              } else {
-                numEl.setAttribute('font-size', '12');
-                numEl.setAttribute('y', '27');
-                numEl.textContent = h + 'h';
-                if (subEl) {
-                  subEl.style.display = 'none';
-                }
-              }
-            } else {
-              numEl.setAttribute('font-size', absMins >= 100 ? '11' : '14');
-              numEl.setAttribute('y', '24');
-              numEl.textContent = absMins;
-              if (subEl) {
-                subEl.style.display = '';
-                subEl.textContent = 'min';
-                subEl.setAttribute('font-size', '8.5');
-                subEl.setAttribute('fill', '#aaa');
-              }
-            }
-
+            numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
+            numEl.textContent = displayVal;
+            if (subEl) { subEl.textContent = 'm'; subEl.setAttribute('fill', '#aaa'); }
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
             else if (remaining <= 15) tcol.classList.add('urgent');
@@ -10343,7 +10017,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
         '</svg></div>' +
         '<div class="mcol">' +
         '<div class="dname">' + dname + '</div>' +
@@ -10362,7 +10036,10 @@
         });
       }
       setTimeout(function () {
-        try { silentPrint(); } catch (e) { console.warn('Accept card print failed:', e); }
+        showPrintToast();
+        setTimeout(function() {
+          try { silentPrint(hidePrintToast); } catch (e) { console.warn('Accept card print failed:', e); hidePrintToast(); }
+        }, 50);
       }, 150);
     }
 
@@ -10391,7 +10068,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10455,7 +10132,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10528,7 +10205,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10574,7 +10251,12 @@
 
       goPage('orders');
       // Print AFTER the UI has updated and popup has closed
-      setTimeout(function () { try { silentPrint(); } catch (e) { console.warn('print failed', e); } }, 150);
+      setTimeout(function () {
+        showPrintToast();
+        setTimeout(function() {
+          try { silentPrint(hidePrintToast); } catch (e) { console.warn('print failed', e); hidePrintToast(); }
+        }, 50);
+      }, 150);
     }
 
     function reorderNewList(changedCard) {
@@ -11069,15 +10751,14 @@
         subheaderHtml = '<div class="oc-when oc-when-asap" data-i18n="otime_asap">' + t('otime_asap') + '</div>';
       }
 
-      // Calculate prep time (default 35 mins, or from expected_delivery_time / delivery_time)
+      // Calculate prep time (default 35 mins, or from expected_delivery_time)
       var mins = 35;
       var targetTimeMs = Date.now() + mins * 60000;
-      var rawExpTime = order.expected_delivery_time || order.delivery_time;
-      if (rawExpTime) {
-        var parsedTime = parseDeliveryTimeMs(rawExpTime);
-        if (parsedTime) {
+      if (order.expected_delivery_time) {
+        var parsedTime = Date.parse(order.expected_delivery_time.replace(' ', 'T'));
+        if (!isNaN(parsedTime)) {
           targetTimeMs = parsedTime;
-          mins = Math.round((targetTimeMs - Date.now()) / 60000);
+          mins = Math.max(1, Math.round((targetTimeMs - Date.now()) / 60000));
         }
       }
 
@@ -11126,7 +10807,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="8.5" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
         '</svg>' +
         '</div>' +
         '<div class="mcol">' +

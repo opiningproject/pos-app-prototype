@@ -65,320 +65,46 @@
       margin-bottom: 20px;
     }
 
-    /* ===== Receipt Design (Matches printReciept.html / Figma) ===== */
-    .receipt-thermal {
-      width: 390px;
-      max-width: 100%;
-      background-color: #FFFFFF;
-      border-radius: 0;
-      padding: 32px 24px 28px 24px;
-      box-shadow: none;
-      color: #111827;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      margin: 0 auto;
-    }
+    /* ===== Receipt Design ===== */
 
-    /* Header */
-    .receipt-thermal .header-logo {
-      display: block;
-      margin: 0 auto 16px;
-      width: 59px;
-      height: 59px;
-      border-radius: 50%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(1.1);
-    }
+  .rp-shop-title { font-size:16px; font-weight:600; text-align:center; color:#111827; margin-bottom:4px; letter-spacing:-0.01em; }
+  .rp-shop-info { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; }
+  .rp-shop-phone { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; margin-bottom:24px; }
+  .rp-section-divider { display:flex; align-items:center; text-align:center; color:#111827; font-size:14px; font-weight:500; margin:24px 0; }
+  .rp-section-divider::before, .rp-section-divider::after { content:''; flex:1; border-bottom:1px dashed #9CA3AF; }
+  .rp-section-divider::before { margin-right:12px; }
+  .rp-section-divider::after { margin-left:12px; }
+  .rp-info-row { display:flex; font-size:14px; line-height:1.5; margin-bottom:3px; }
+  .rp-info-label { width:110px; flex-shrink:0; color:#111827; }
+  .rp-info-value { color:#111827; }
+  .rp-klant-name { font-size:14px; font-weight:500; color:#111827; margin-bottom:2px; }
+  .rp-klant-address { font-size:14px; color:#111827; line-height:1.4; }
+  .rp-klant-phone { font-size:14px; color:#111827; margin-top:12px; margin-bottom:16px; }
+  .rp-note-box { border:1px solid #E5E7EB; padding:16px; background:#FFFFFF; font-size:14px; line-height:1.5; color:#111827; }
+  .rp-item-row { display:flex; align-items:flex-start; font-size:14px; line-height:1.4; }
+  .rp-item-qty { width:24px; flex-shrink:0; color:#111827; }
+  .rp-item-name { flex:1; font-weight:500; color:#111827; }
+  .rp-item-price { font-weight:500; color:#111827; text-align:right; white-space:nowrap; }
+  .rp-item-mods { margin-left:24px; margin-top:4px; font-size:14px; color:#374151; line-height:1.4; }
+  .rp-dashed { border-top:1px dashed #D1D5DB; margin:12px 0; }
+  .rp-total-row { display:flex; justify-content:space-between; align-items:center; font-size:14px; line-height:1.6; margin-bottom:4px; color:#111827; }
+  .rp-total-row.rp-bold { font-weight:600; }
+  .rp-footer { font-size:14px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#111827; }
 
-    .receipt-thermal .shop-title {
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      color: #111827;
-      margin-bottom: 4px;
-      letter-spacing: -0.01em;
-    }
-
-    .receipt-thermal .shop-info-line {
-      font-size: 14px;
-      font-weight: 400;
-      text-align: center;
-      color: #111827;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .shop-phone {
-      font-size: 14px;
-      font-weight: 400;
-      text-align: center;
-      color: #111827;
-      line-height: 1.4;
-      margin-bottom: 24px;
-    }
-
-    /* Section Divider with dashed line */
-    .receipt-thermal .section-divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: #111827;
-      font-size: 14px;
-      font-weight: 600;
-      margin: 24px 0;
-      width: 100%;
-    }
-
-    .receipt-thermal .section-divider::before,
-    .receipt-thermal .section-divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px dashed #9CA3AF;
-    }
-
-    .receipt-thermal .section-divider::before {
-      margin-right: 12px;
-    }
-
-    .receipt-thermal .section-divider::after {
-      margin-left: 12px;
-    }
-
-    /* Info Grid */
-    .receipt-thermal .info-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .receipt-thermal .info-label {
-      color: #111827;
-      flex-shrink: 0;
-    }
-
-    .receipt-thermal .info-value {
-      color: #111827;
-      text-align: right;
-    }
-
-    /* Customer Section */
-    .receipt-thermal .klant-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 2px;
-    }
-
-    .receipt-thermal .klant-address {
-      font-size: 14px;
-      color: #111827;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .klant-phone {
-      font-size: 14px;
-      color: #111827;
-      margin-top: 12px;
-      margin-bottom: 16px;
-    }
-
-    .receipt-thermal .delivery-note-box {
-      border: 1px solid #E5E7EB;
-      border-radius: 0;
-      padding: 16px;
-      background-color: #FFFFFF;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #111827;
-    }
-
-    /* Order Items */
-    .receipt-thermal .order-items {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .receipt-thermal .order-item {
-      margin-bottom: 0;
-    }
-
-    .receipt-thermal .item-row {
-      display: flex;
-      align-items: flex-start;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .item-qty {
-      width: 24px;
-      flex-shrink: 0;
-      color: #111827;
-    }
-
-    .receipt-thermal .item-name {
-      flex: 1;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .receipt-thermal .item-price {
-      font-weight: 600;
-      color: #111827;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .receipt-thermal .item-modifiers {
-      margin-left: 24px;
-      margin-top: 4px;
-      font-size: 14px;
-      color: #6B7280;
-      line-height: 1.4;
-    }
-
-    .receipt-thermal .dashed-line-separator {
-      border-top: 1px dashed #D1D5DB;
-      margin: 12px 0;
-      width: 100%;
-    }
-
-    /* Totals */
-    .receipt-thermal .totals-section {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .receipt-thermal .total-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.6;
-      margin-bottom: 4px;
-      margin-top: 0 !important;
-      padding: 0 !important;
-      border: none !important;
-      color: #111827;
-    }
-
-    .receipt-thermal .total-row .total-label,
-    .receipt-thermal .total-row .total-value {
-      font-weight: 400;
-    }
-
-    .receipt-thermal .total-row.font-semibold {
-      font-weight: 600;
-    }
-
-    .receipt-thermal .total-row.font-bold,
-    .receipt-thermal .total-row.font-bold .total-label,
-    .receipt-thermal .total-row.font-bold .total-value {
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    /* Footer Notice */
-    .receipt-thermal .footer-notice {
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 32px;
-      line-height: 1.4;
-      color: #111827;
-    }
-
-    #receipt-print-area-wrapper {
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
-      visibility: hidden;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-    }
-
-    #receipt-print-area-wrapper.is-printing {
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      visibility: visible !important;
-      width: 390px !important;
+  @media print {
+    body > * { display: none !important; }
+    #receipt-print-wrapper { display: block !important; }
+    #receipt-print-area {
+      display: block !important;
+      position: static !important;
+      width: 80mm !important;
       max-width: 100% !important;
-      height: auto !important;
-      overflow: visible !important;
-      z-index: 99999 !important;
-      background: #fff !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 8mm 4mm !important;
     }
-
-    @media print {
-      html,
-      body {
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
-        background: #fff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        display: block !important;
-        float: none !important;
-      }
-
-      body > *:not(#receipt-print-area-wrapper) {
-        display: none !important;
-      }
-
-      #receipt-print-area-wrapper {
-        display: block !important;
-        visibility: visible !important;
-        position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 80mm !important;
-        max-width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
-        overflow: visible !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-        float: none !important;
-      }
-
-      #receipt-print-area,
-      .receipt-thermal {
-        display: block !important;
-        visibility: visible !important;
-        width: 80mm !important;
-        max-width: 100% !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 8mm 4mm !important;
-        margin: 0 auto !important;
-        background-color: #FFFFFF !important;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-        color: #111827 !important;
-      }
-
-      #receipt-print-area * {
-        visibility: visible !important;
-        box-sizing: border-box !important;
-      }
-
-      .receipt-thermal .delivery-note-box {
-        background-color: #FFFFFF !important;
-        border: 1px solid #111827 !important;
-      }
-
-      @page {
-        size: 80mm auto;
-        margin: 0;
-      }
-    }
+    @page { margin: 0; size: 80mm auto; }
+  }
 
     body {
       background: #f0f0f0;
@@ -5546,118 +5272,34 @@
     </div>
   </div>
 
-  <!-- ===== HIDDEN RECEIPT AREA (direct child of body for silent print) ===== -->
-  <div id="receipt-print-area-wrapper">
-    <div class="receipt-thermal" id="receipt-print-area">
-
-      <!-- Logo & Restaurant Header -->
-      <img class="header-logo" id="pr-shop-logo" alt="Restaurant logo"
-        src="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E">
-      <div class="shop-title" id="pr-shop-name">The Hague Pizza</div>
-      <div class="shop-info-line" id="pr-shop-addr1">Tochtatraat 40</div>
-      <div class="shop-info-line" id="pr-shop-addr2">3036 SK, Rotterdam</div>
-      <div class="shop-phone" id="pr-shop-phone">010-21-4622</div>
-
-      <!-- Section: Info -->
-      <div class="section-divider">Info</div>
-      <div class="info-row">
-        <span class="info-label">Bestelnr.</span>
-        <span class="info-value" id="pr-info-oid">250621 A 31</span>
+  <!-- ===== HIDDEN RECEIPT AREA — direct body child for @media print ===== -->
+  <div id="receipt-print-wrapper" style="display:none">
+    <div id="receipt-print-area">
+      <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
+      <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
+      <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
+      <div class="rp-shop-phone" id="pr-shop-phone">010-21-4622</div>
+      <div class="rp-section-divider">Info</div>
+      <div class="rp-info-row"><span class="rp-info-label">Bestelnr.</span><span class="rp-info-value" id="pr-oid">—</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">Besteld op:</span><span class="rp-info-value" id="pr-date">—</span></div>
+      <div class="rp-info-row" id="pr-wished-row"><span class="rp-info-label" id="pr-wished-label">Bezorgtijd:</span><span class="rp-info-value" id="pr-wished">—</span></div>
+      <div class="rp-info-row"><span class="rp-info-label">Betaalwijze:</span><span class="rp-info-value" id="pr-pay">—</span></div>
+      <div class="rp-section-divider">Klant</div>
+      <div class="rp-klant-name" id="pr-cust-name">—</div>
+      <div class="rp-klant-address" id="pr-cust-addr1">—</div>
+      <div class="rp-klant-address" id="pr-cust-addr2"></div>
+      <div class="rp-klant-phone" id="pr-cust-phone"></div>
+      <div class="rp-note-box" id="pr-note-box" style="display:none"><div id="pr-note"></div></div>
+      <div class="rp-section-divider">Bestelling</div>
+      <div id="pr-items"></div>
+      <div class="rp-dashed"></div>
+      <div id="pr-breakdown"></div>
+      <div style="margin-top:24px">
+        <div class="rp-info-row"><span class="rp-info-label">Btw 9%:</span><span class="rp-info-value" id="pr-btw">€ 0,00</span></div>
+        <div class="rp-info-row"><span class="rp-info-label">BTW-nummer:</span><span class="rp-info-value" id="pr-btw-num">NL865792768B01</span></div>
+        <div class="rp-info-row"><span class="rp-info-label">KVK-nummer:</span><span class="rp-info-value" id="pr-kvk-num">91850347</span></div>
       </div>
-      <div class="info-row">
-        <span class="info-label">Besteld op:</span>
-        <span class="info-value" id="pr-info-date">wo 21-06-2025 21:58</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label" id="pr-info-wished-label">Bezorgtijd:</span>
-        <span class="info-value" id="pr-info-wished">22:30 (ZSM)</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Betaalwijze:</span>
-        <span class="info-value" id="pr-info-pay">Online betaald</span>
-      </div>
-
-      <!-- Section: Klant -->
-      <div class="section-divider">Klant</div>
-      <div class="klant-name" id="pr-cust-name">Serdar Orman</div>
-      <div class="klant-address" id="pr-cust-addr1">Tochtstraat 40</div>
-      <div class="klant-address" id="pr-cust-addr2">3036 SK Rotterdam</div>
-      <div class="klant-phone" id="pr-cust-phone">0614522453</div>
-
-      <!-- Delivery Instructions Box -->
-      <div class="delivery-note-box" id="pr-note-container">
-        <div id="pr-note">Please deliver at the green door.<br>When arrive call me</div>
-      </div>
-
-      <!-- Section: Bestelling -->
-      <div class="section-divider">Bestelling</div>
-
-      <div class="order-items" id="pr-items">
-        <div class="order-item">
-          <div class="item-row">
-            <span class="item-qty">1</span>
-            <span class="item-name">Pizza Pollo</span>
-            <span class="item-price">€ 38.75</span>
-          </div>
-          <div class="item-modifiers">
-            <div>+ Bell pepper</div>
-            <div>+ Onion</div>
-          </div>
-        </div>
-        <div class="dashed-line-separator"></div>
-        <div class="order-item">
-          <div class="item-row">
-            <span class="item-qty">1</span>
-            <span class="item-name">Cola Zero</span>
-            <span class="item-price">€ 2.75</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section: Totals -->
-      <div class="dashed-line-separator"></div>
-
-      <div class="totals-section" id="pr-breakdown">
-        <div class="total-row">
-          <span class="total-label">Subtotal</span>
-          <span class="total-value">€ 41.50</span>
-        </div>
-        <div class="total-row">
-          <span class="total-label">Statiegeld € 0,15 x 1</span>
-          <span class="total-value">€ 0,15</span>
-        </div>
-        <div class="total-row">
-          <span class="total-label">Totaal</span>
-          <span class="total-value">€ 41,65</span>
-        </div>
-        <div class="dashed-line-separator"></div>
-        <div class="total-row font-bold">
-          <span class="total-label">Nog te betalen</span>
-          <span class="total-value">€ 00,00</span>
-        </div>
-      </div>
-
-      <!-- Section: Tax & Registration Info -->
-      <div style="margin-top: 24px;" id="r-btw-section">
-        <div class="info-row">
-          <span class="info-label">Btw 9%:</span>
-          <span class="info-value" id="pr-btw">€ 2.75</span>
-        </div>
-        <div class="info-row" id="pr-btw-row">
-          <span class="info-label">BTW-nummer:</span>
-          <span class="info-value" id="pr-btw-num">NL865792768B01</span>
-        </div>
-        <div class="info-row" id="pr-kvk-row">
-          <span class="info-label">KVK-nummer:</span>
-          <span class="info-value" id="pr-kvk-num">91850347</span>
-        </div>
-      </div>
-
-      <!-- Footer Notice -->
-      <div class="footer-notice">
-        Btw bedankt voor uw bestelling.<br>Bestel online via de website!
-      </div>
-
+      <div class="rp-footer" style="padding-bottom:48px">Bedankt voor uw bestelling. Bestel online via de website!</div>
     </div>
   </div>
 
@@ -7774,12 +7416,6 @@
 
       var defaultLogoSvg = "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E";
 
-      var logoEl = document.getElementById('pr-shop-logo');
-      if (logoEl) {
-        logoEl.src = logoUrl || defaultLogoSvg;
-        logoEl.style.display = 'block';
-      }
-
       var shopNameEl = document.getElementById('pr-shop-name');
       if (shopNameEl) shopNameEl.textContent = resName || 'The Hague Pizza';
 
@@ -7803,7 +7439,7 @@
       }
 
       // Bestelnr.
-      var oidEl = document.getElementById('pr-info-oid');
+      var oidEl = document.getElementById('pr-oid');
       if (oidEl) {
         var rawOidVal = (o.oid || o.order_number || full.oid || full.order_number || (o.id || full.id || ''));
         if (rawOidVal) rawOidVal = String(rawOidVal).replace('#', '');
@@ -7811,7 +7447,7 @@
       }
 
       // Besteld op
-      var dateEl = document.getElementById('pr-info-date');
+      var dateEl = document.getElementById('pr-date');
       if (dateEl) {
         var rawDate = o.created_at || full.created_at || full.order_date || '';
         var printDateStr = '';
@@ -7825,11 +7461,11 @@
       }
 
       // Bezorgtijd / Afhaaltijd
-      var wishedLblEl = document.getElementById('pr-info-wished-label');
+      var wishedLblEl = document.getElementById('pr-wished-label');
       if (wishedLblEl) {
         wishedLblEl.textContent = isCollection ? 'Afhaaltijd:' : 'Bezorgtijd:';
       }
-      var wishedEl = document.getElementById('pr-info-wished');
+      var wishedEl = document.getElementById('pr-wished');
       if (wishedEl) {
         var timeStr = formatPrintOrderTime(o);
         if (!timeStr || /^\(?zsm\)?$/i.test(timeStr) || /^asap$/i.test(timeStr)) {
@@ -7842,7 +7478,7 @@
       }
 
       // Betaalwijze
-      var payEl = document.getElementById('pr-info-pay');
+      var payEl = document.getElementById('pr-pay');
       if (payEl) {
         var payTypeVal = String(o.payment_type !== undefined ? o.payment_type : (full.payment_type !== undefined ? full.payment_type : (o.payment_status !== undefined ? o.payment_status : '')));
         var isCash = (payTypeVal === '2' || payTypeVal === 'cash' || payTypeVal === 'Cash' || o.payment_status === 2 || o.payment_status === '2' || !isPaid);
@@ -7887,7 +7523,7 @@
       }
 
       // Customer Note Box
-      var noteBox = document.getElementById('pr-note-container');
+      var noteBox = document.getElementById('pr-note-box');
       var noteEl = document.getElementById('pr-note');
       var noteVal = o.note || full.delivery_note || full.save_note || full.note || '';
       if (noteVal) {
@@ -7952,23 +7588,21 @@
               }
             }
 
-            return '<div class="order-item">'
-              + '<div class="item-row">'
-              + '<span class="item-qty">' + qty + '</span>'
-              + '<span class="item-name">' + name + '</span>'
-              + '<span class="item-price">' + fmt(itemTotal) + '</span>'
+            return '<div class="rp-item-row">'
+              + '<span class="rp-item-qty">' + qty + '</span>'
+              + '<span class="rp-item-name">' + name + '</span>'
+              + '<span class="rp-item-price">' + fmt(itemTotal) + '</span>'
               + '</div>'
-              + (subTextFormatted ? '<div class="item-modifiers">' + subTextFormatted + '</div>' : '')
-              + '</div>';
+              + (subTextFormatted ? '<div class="rp-item-mods">' + subTextFormatted + '</div>' : '');
           });
-          itemsEl.innerHTML = itemsHtmlArr.join('<div class="dashed-line-separator"></div>');
+          itemsEl.innerHTML = itemsHtmlArr.join('<div class="rp-dashed"></div>');
         } else if (!raw) {
-          itemsEl.innerHTML = '<div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Pizza Pollo</span><span class="item-price">€ 38,75</span></div><div class="item-modifiers"><div>+ Bell pepper</div><div>+ Onion</div></div></div><div class="dashed-line-separator"></div><div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Cola Zero</span><span class="item-price">€ 2,75</span></div></div>';
+          itemsEl.innerHTML = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Pizza Pollo</span><span class="rp-item-price">€ 38,75</span></div><div class="rp-item-mods"><div>+ Bell pepper</div><div>+ Onion</div></div><div class="rp-dashed"></div><div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Cola Zero</span><span class="rp-item-price">€ 2,75</span></div>';
           depositGroups['0.15'] = { rate: 0.15, rateLabel: '0,15', count: 1 };
           calculatedSubtotal = 41.50;
         } else {
           var fallbackOid = String(o.oid || o.order_number || full.oid || full.order_number || '').replace('#', '');
-          itemsEl.innerHTML = '<div class="order-item"><div class="item-row"><span class="item-qty">1</span><span class="item-name">Bestelling ' + fallbackOid + '</span><span class="item-price">' + fmt(o.totalAmt || o.price || 0) + '</span></div></div>';
+          itemsEl.innerHTML = '<div class="rp-item-row"><span class="rp-item-qty">1</span><span class="rp-item-name">Bestelling ' + fallbackOid + '</span><span class="rp-item-price">' + fmt(o.totalAmt || o.price || 0) + '</span></div>';
         }
       }
 
@@ -8020,47 +7654,47 @@
       if (bdEl) {
         var bHtml = '';
         // 1. Subtotal
-        bHtml += '<div class="total-row"><span class="total-label">Subtotaal</span><span class="total-value">' + fmt(subtotal) + '</span></div>';
+        bHtml += '<div class="rp-total-row"><span>Subtotaal</span><span>' + fmt(subtotal) + '</span></div>';
 
         // 2. Statiegeld
         Object.keys(depositGroups).forEach(function (k) {
           var group = depositGroups[k];
           var depAmt = group.count * group.rate;
-          bHtml += '<div class="total-row"><span class="total-label">Statiegeld € ' + group.rateLabel + ' x ' + group.count + '</span><span class="total-value">' + fmt(depAmt) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Statiegeld € ' + group.rateLabel + ' x ' + group.count + '</span><span>' + fmt(depAmt) + '</span></div>';
         });
 
         // 3. Transaction Costs
         if (customerFee > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Transaction Costs</span><span class="total-value">' + fmt(customerFee) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Transaction Costs</span><span>' + fmt(customerFee) + '</span></div>';
         }
 
         // 4. Delivery
         if (shipping > 0 || isDelivery) {
-          bHtml += '<div class="total-row"><span class="total-label">Bezorging</span><span class="total-value">' + fmt(shipping) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Bezorging</span><span>' + fmt(shipping) + '</span></div>';
         }
 
         // 5. Service fee
         if (service > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Servicekosten</span><span class="total-value">' + fmt(service) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Servicekosten</span><span>' + fmt(service) + '</span></div>';
         }
 
         // 6. Tip
         if (tip > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Fooi</span><span class="total-value">' + fmt(tip) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Fooi</span><span>' + fmt(tip) + '</span></div>';
         }
 
         // 7. Reward / Discount
         if (redeemDiscount > 0) {
-          bHtml += '<div class="total-row"><span class="total-label" style="color:#d81b60;font-weight:600">Reward</span><span class="total-value" style="color:#d81b60;font-weight:600">- ' + fmt(redeemDiscount) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span style="color:#d81b60;font-weight:600">Reward</span><span style="color:#d81b60;font-weight:600">- ' + fmt(redeemDiscount) + '</span></div>';
         } else if (discount > 0) {
-          bHtml += '<div class="total-row"><span class="total-label">Korting</span><span class="total-value">- ' + fmt(discount) + '</span></div>';
+          bHtml += '<div class="rp-total-row"><span>Korting</span><span>- ' + fmt(discount) + '</span></div>';
         }
 
         // Totaal
-        bHtml += '<div class="total-row"><span class="total-label">Totaal</span><span class="total-value">' + fmt(grandTotal) + '</span></div>';
+        bHtml += '<div class="rp-total-row"><span>Totaal</span><span>' + fmt(grandTotal) + '</span></div>';
 
         // Dashed Line Separator
-        bHtml += '<div class="dashed-line-separator"></div>';
+        bHtml += '<div class="rp-dashed"></div>';
 
         // Nog te betalen
         var rawCash = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived || full.paid_amount || full.paidAmount;
@@ -8075,7 +7709,7 @@
           dueAmt = grandTotal;
         }
 
-        bHtml += '<div class="total-row font-bold"><span class="total-label">Nog te betalen</span><span class="total-value">' + ((isPaid && !cashGiven) ? '€ 00,00' : fmt(dueAmt)) + '</span></div>';
+        bHtml += '<div class="rp-total-row rp-bold"><span>Nog te betalen</span><span>' + ((isPaid && !cashGiven) ? '€ 00,00' : fmt(dueAmt)) + '</span></div>';
 
         bdEl.innerHTML = bHtml;
       }
