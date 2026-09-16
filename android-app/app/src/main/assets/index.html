@@ -7004,7 +7004,7 @@
       }
       setTimeout(function() {
         try { silentPrint(resetBtn); } catch (e) { console.warn(e); resetBtn(); }
-      }, 1000);
+      }, 500);
     }
 
     var _printToastEl = null;
@@ -10180,7 +10180,7 @@
         detailBtn0.style.pointerEvents = 'none';
         detailBtn0.innerHTML = '<div class="accept-spinner"></div>';
       }
-      setTimeout(finishAcceptFromDetail, 500);
+      setTimeout(finishAcceptFromDetail, 500); // 0.5s spinner, then close popup
     }
 
     function finishAcceptFromDetail() {
@@ -10245,10 +10245,10 @@
 
       goPage('orders');
       showAcceptedToast(null);
-      // Print AFTER the UI has updated and popup has closed
+      // Print 1s after popup closes so UI is fully settled
       setTimeout(function () {
         try { silentPrint(function(){}); } catch (e) { console.warn('print failed', e); }
-      }, 300);
+      }, 1000);
     }
 
     function reorderNewList(changedCard) {
