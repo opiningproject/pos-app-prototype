@@ -16,7 +16,6 @@
   <title>POS App</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-  <script src="html2canvas.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -68,29 +67,29 @@
 
     /* ===== Receipt Design ===== */
 
-  .rp-shop-title { font-size:28px; font-weight:600; text-align:center; color:#000; margin-bottom:4px; letter-spacing:-0.01em; }
-  .rp-shop-info { font-size:24px; font-weight:400; text-align:center; color:#000; line-height:1.4; }
-  .rp-shop-phone { font-size:24px; font-weight:400; text-align:center; color:#000; line-height:1.4; margin-bottom:24px; }
-  .rp-section-divider { display:flex; align-items:center; text-align:center; color:#000; font-size:24px; font-weight:500; margin:24px 0; }
-  .rp-section-divider::before, .rp-section-divider::after { content:''; flex:1; border-bottom:3px dashed #000; }
+  .rp-shop-title { font-size:16px; font-weight:600; text-align:center; color:#111827; margin-bottom:4px; letter-spacing:-0.01em; }
+  .rp-shop-info { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; }
+  .rp-shop-phone { font-size:14px; font-weight:400; text-align:center; color:#111827; line-height:1.4; margin-bottom:24px; }
+  .rp-section-divider { display:flex; align-items:center; text-align:center; color:#111827; font-size:14px; font-weight:500; margin:24px 0; }
+  .rp-section-divider::before, .rp-section-divider::after { content:''; flex:1; border-bottom:1px dashed #9CA3AF; }
   .rp-section-divider::before { margin-right:12px; }
   .rp-section-divider::after { margin-left:12px; }
-  .rp-info-row { display:flex; font-size:24px; line-height:1.5; margin-bottom:3px; }
-  .rp-info-label { width:180px; flex-shrink:0; color:#000; }
-  .rp-info-value { color:#000; }
-  .rp-klant-name { font-size:24px; font-weight:500; color:#000; margin-bottom:2px; }
-  .rp-klant-address { font-size:24px; color:#000; line-height:1.4; }
-  .rp-klant-phone { font-size:24px; color:#000; margin-top:12px; margin-bottom:16px; }
-  .rp-note-box { border:2px solid #000; padding:16px; background:#FFFFFF; font-size:24px; line-height:1.5; color:#000; }
-  .rp-item-row { display:flex; align-items:flex-start; font-size:24px; line-height:1.4; }
-  .rp-item-qty { width:40px; flex-shrink:0; color:#000; }
-  .rp-item-name { flex:1; font-weight:500; color:#000; }
-  .rp-item-price { font-weight:500; color:#000; text-align:right; white-space:nowrap; }
-  .rp-item-mods { margin-left:40px; margin-top:4px; font-size:24px; font-weight:500; color:#000; line-height:1.4; }
-  .rp-dashed { border-top:1px dashed #000; margin:12px 0; }
-  .rp-total-row { display:flex; justify-content:space-between; align-items:center; font-size:24px; line-height:1.6; margin-bottom:4px; color:#000; }
+  .rp-info-row { display:flex; font-size:14px; line-height:1.5; margin-bottom:3px; }
+  .rp-info-label { width:110px; flex-shrink:0; color:#111827; }
+  .rp-info-value { color:#111827; }
+  .rp-klant-name { font-size:14px; font-weight:500; color:#111827; margin-bottom:2px; }
+  .rp-klant-address { font-size:14px; color:#111827; line-height:1.4; }
+  .rp-klant-phone { font-size:14px; color:#111827; margin-top:12px; margin-bottom:16px; }
+  .rp-note-box { border:1px solid #E5E7EB; padding:16px; background:#FFFFFF; font-size:14px; line-height:1.5; color:#111827; }
+  .rp-item-row { display:flex; align-items:flex-start; font-size:14px; line-height:1.4; }
+  .rp-item-qty { width:24px; flex-shrink:0; color:#111827; }
+  .rp-item-name { flex:1; font-weight:500; color:#111827; }
+  .rp-item-price { font-weight:500; color:#111827; text-align:right; white-space:nowrap; }
+  .rp-item-mods { margin-left:24px; margin-top:4px; font-size:14px; color:#374151; line-height:1.4; }
+  .rp-dashed { border-top:1px dashed #D1D5DB; margin:12px 0; }
+  .rp-total-row { display:flex; justify-content:space-between; align-items:center; font-size:14px; line-height:1.6; margin-bottom:4px; color:#111827; }
   .rp-total-row.rp-bold { font-weight:600; }
-  .rp-footer { font-size:24px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#000; }
+  .rp-footer { font-size:14px; font-weight:600; text-align:center; margin-top:32px; line-height:1.4; color:#111827; }
 
   @media print {
     body > * { display: none !important; }
@@ -443,8 +442,6 @@
     .page.active {
       display: flex;
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
 
     @keyframes slideUp {
       from {
@@ -3902,7 +3899,7 @@
                     <text id="d-timer-num" x="24" y="26" text-anchor="middle" font-size="14" font-weight="600"
                       fill="#333" font-family="Poppins,sans-serif">—</text>
                     <text id="d-timer-label" x="24" y="36" text-anchor="middle" font-size="9" font-weight="500"
-                      fill="#aaa" font-family="Poppins,sans-serif">min</text>
+                      fill="#aaa" font-family="Poppins,sans-serif">m</text>
                   </svg>
 
                   <div id="d-cancelled-badge"
@@ -5278,7 +5275,6 @@
   <!-- ===== HIDDEN RECEIPT AREA — direct body child for @media print ===== -->
   <div id="receipt-print-wrapper" style="display:none">
     <div id="receipt-print-area">
-      <div id="pr-logo-box" style="text-align:center;margin-bottom:12px;display:none"><img id="pr-logo" src="" alt="" style="max-width:200px;max-height:120px;object-fit:contain"></div>
       <div class="rp-shop-title" id="pr-shop-name">The Hague Pizza</div>
       <div class="rp-shop-info" id="pr-shop-addr1">Tochtstraat 40</div>
       <div class="rp-shop-info" id="pr-shop-addr2">3036 SK, Rotterdam</div>
@@ -5372,7 +5368,7 @@
         create_delivery_btn: 'Create new delivery order', create_takeaway_btn: 'Create new takeaway order',
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
-        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
+        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
@@ -5781,18 +5777,25 @@
 
     function formatRemainingHoursAndMins(totalMins) {
       totalMins = parseInt(totalMins, 10);
-      if (isNaN(totalMins) || totalMins <= 0) return '0 m';
+      if (isNaN(totalMins) || totalMins === 0) return '0 min';
 
-      if (totalMins > 120) {
-        var hours = Math.floor(totalMins / 60);
-        var mins = totalMins % 60;
+      var isOverdue = totalMins < 0;
+      var absMins = Math.abs(totalMins);
+
+      if (isOverdue) {
+        return '-' + absMins + ' min';
+      }
+
+      if (absMins >= 60) {
+        var hours = Math.floor(absMins / 60);
+        var mins = absMins % 60;
         if (mins > 0) {
-          return hours + 'h ' + mins + 'm';
+          return hours + 'h ' + mins + ' min';
         } else {
           return hours + 'h';
         }
       } else {
-        return totalMins + ' m';
+        return absMins + ' min';
       }
     }
 
@@ -6592,14 +6595,15 @@
       }
 
       var targetMins = mins;
-      if (cachedOrder && cachedOrder.expected_delivery_time) {
-        var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
-        if (!isNaN(parsedExp) && parsedExp > Date.now()) {
+      var rawExpTime = (cachedOrder && (cachedOrder.expected_delivery_time || cachedOrder.delivery_time)) || (cardEl && cardEl.getAttribute('data-expected-delivery-time'));
+      if (rawExpTime) {
+        var parsedExp = parseDeliveryTimeMs(rawExpTime);
+        if (parsedExp) {
           targetMins = Math.round((parsedExp - Date.now()) / 60000);
         }
       }
       var schedMinsEl = document.getElementById('d-sched-mins');
-      if (schedMinsEl && targetMins) {
+      if (schedMinsEl && targetMins !== undefined && targetMins !== null) {
         schedMinsEl.textContent = formatRemainingHoursAndMins(targetMins);
       }
 
@@ -6609,7 +6613,7 @@
       var timerRing = document.getElementById('d-timer-ring');
       if (timerSvg) {
         var clockGroup = timerSvg.querySelector('g.sched-clock');
-        if (isScheduledOrder && targetMins > 120) {
+        if (isScheduledOrder || (targetMins && targetMins > 120)) {
           if (timerRing) {
             timerRing.setAttribute('stroke', '#e0e0e0');
             timerRing.setAttribute('stroke-dashoffset', '138.23');
@@ -6844,25 +6848,13 @@
         var ring = document.getElementById('d-timer-ring');
         var num = document.getElementById('d-timer-num');
         var lbl = document.getElementById('d-timer-label');
-        if (isScheduled && displayMins > 120) {
+        if (isScheduled) {
           if (ring) { ring.setAttribute('stroke', '#e0e0e0'); ring.setAttribute('stroke-dashoffset', '138.23'); }
           var hrs = Math.round(displayMins / 60);
           var lbl2 = hrs >= 24 ? Math.round(hrs / 24) + 'd' : hrs + 'h';
           if (num) { num.setAttribute('fill', '#aaa'); num.setAttribute('font-size', '13'); num.setAttribute('y', '27'); num.textContent = lbl2; }
           if (lbl) lbl.textContent = '';
-          // show hourglass
-          var dClockGroup = timerSvg ? timerSvg.querySelector('g.sched-clock') : null;
-          if (!dClockGroup && timerSvg) {
-            dClockGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-            dClockGroup.setAttribute('class', 'sched-clock');
-            dClockGroup.innerHTML = '<path d="M19 17 L29 17 L24 24 L29 31 L19 31 L24 24 Z" fill="none" stroke="#aaa" stroke-width="1.6" stroke-linejoin="round"></path><line x1="19" y1="17" x2="29" y2="17" stroke="#aaa" stroke-width="1.6" stroke-linecap="round"></line><line x1="19" y1="31" x2="29" y2="31" stroke="#aaa" stroke-width="1.6" stroke-linecap="round"></line><path d="M20 18.5 L28 18.5 L24 23 Z" fill="#aaa" opacity="0.5"></path><path d="M22.5 30 L25.5 30 L24 27.5 Z" fill="#aaa" opacity="0.5"></path>';
-            timerSvg.appendChild(dClockGroup);
-          }
-          if (dClockGroup) dClockGroup.style.display = 'block';
         } else {
-          // countdown (regular or scheduled <= 120 min)
-          var dClockGroup2 = timerSvg ? timerSvg.querySelector('g.sched-clock') : null;
-          if (dClockGroup2) dClockGroup2.style.display = 'none';
           var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
           if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
           var textColor = isLate ? '#c62828' : '#333';
@@ -7029,81 +7021,27 @@
     function onPrintClick(btn) {
       if (_printing) return;
       _printing = true;
-      var origHTML = btn ? btn.innerHTML : null;
+      // quick press effect only (no text change) — it prints instantly
       if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;vertical-align:middle;transform-box:fill-box;transform-origin:center;"><path d="M12 2a10 10 0 1 0 10 10" /></svg>';
+        btn.style.transition = 'transform 0.08s ease, opacity 0.08s ease';
+        btn.style.transform = 'scale(0.96)';
+        btn.style.opacity = '0.7';
+        setTimeout(function () { if (btn) { btn.style.transform = ''; btn.style.opacity = ''; } }, 130);
       }
-      showPrintToast();
-      function resetBtn() {
-        _printing = false;
-        hidePrintToast();
-        if (btn) { btn.disabled = false; btn.innerHTML = origHTML; }
-      }
-      setTimeout(function() {
-        try { silentPrint(resetBtn); } catch (e) { console.warn(e); resetBtn(); }
-      }, 50);
+      try { silentPrint(); } catch (e) { console.warn(e); }
+      setTimeout(function () { _printing = false; }, 1500);   // guard against double-tap
     }
 
-    var _printToastEl = null;
-    function showPrintToast() {
-      if (_printToastEl) return;
-      var el = document.createElement('div');
-      el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;z-index:99999;font-family:Poppins,sans-serif;white-space:nowrap;';
-      el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;flex-shrink:0;transform-box:fill-box;transform-origin:center;"><path d="M12 2a10 10 0 1 0 10 10"/></svg> Printen...';
-      document.body.appendChild(el);
-      _printToastEl = el;
-    }
-    function hidePrintToast() {
-      if (_printToastEl) { _printToastEl.remove(); _printToastEl = null; }
-    }
-
-    function silentPrint(onDone) {
+    function silentPrint() {
       populatePrintPage();
-      if (window.AndroidPrinter && typeof window.AndroidPrinter.printBitmap === 'function' && typeof html2canvas === 'function') {
-        var logoImg = document.getElementById('pr-logo');
-        if (logoImg && window._restaurantLogoBase64) {
-          logoImg.src = window._restaurantLogoBase64;
-        }
-        var logoSrc = logoImg && logoImg.src && !logoImg.src.startsWith('data:') ? logoImg.src : null;
-        function doRender() {
-          var area = document.getElementById('receipt-print-area');
-          var wrapper = document.getElementById('receipt-print-wrapper');
-          var prevWrapperStyle = wrapper.getAttribute('style') || '';
-          var prevAreaStyle = area.getAttribute('style') || '';
-          wrapper.style.cssText = 'display:block;position:fixed;top:-9999px;left:0;background:#fff;';
-          area.style.cssText = 'display:block;width:576px;padding:16px;background:#fff;box-sizing:border-box;';
-          html2canvas(area, { scale: 1, backgroundColor: '#ffffff', useCORS: true, logging: false, width: 576 }).then(function(canvas) {
-            wrapper.setAttribute('style', prevWrapperStyle);
-            area.setAttribute('style', prevAreaStyle);
-            window.AndroidPrinter.printBitmap(canvas.toDataURL('image/png'));
-            if (onDone) onDone();
-          }).catch(function(e) {
-            wrapper.setAttribute('style', prevWrapperStyle);
-            area.setAttribute('style', prevAreaStyle);
-            console.warn('html2canvas failed', e);
-            if (onDone) onDone();
-          });
-        }
-        if (logoSrc) {
-          var img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = function() {
-            var c = document.createElement('canvas');
-            c.width = img.width; c.height = img.height;
-            c.getContext('2d').drawImage(img, 0, 0);
-            try { logoImg.src = c.toDataURL('image/png'); } catch(e) {}
-            doRender();
-          };
-          img.onerror = function() { doRender(); };
-          img.src = logoSrc;
-        } else {
-          doRender();
-        }
+      // var wrapper = document.getElementById('receipt-print-area-wrapper');
+      // if (wrapper) wrapper.classList.add('is-printing');
+      if (window.AndroidPrinter && typeof window.AndroidPrinter.printReceipt === 'function') {
+        printReceiptNative();
       } else {
         try { window.print(); } catch (e) { console.warn('window.print failed', e); }
-        if (onDone) onDone();
       }
+
     }
 
     function formatPrintOrderTime(orderObj) {
@@ -7183,7 +7121,7 @@
 
       // Info Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '.................. Info ..................\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '------------------ Info ------------------\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7223,7 +7161,7 @@
 
       // Klant Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '.................. Klant ..................\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '------------------ Klant ------------------\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7257,7 +7195,7 @@
 
       // Bestelling Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '............... Bestelling ...............\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '--------------- Bestelling ---------------\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7305,9 +7243,8 @@
             }
           }
 
-          c.push({ t: 'bold', v: 1 });
-          c.push({ t: 'cols', left: qty + '  ' + name, right: eur(itemTotal), wl: 22, wr: 10 });
-          c.push({ t: 'bold', v: 0 });
+          var lineLeft = qty + '  ' + name;
+          c.push({ t: 'cols', left: lineLeft, right: eur(itemTotal), wl: 22, wr: 10 });
           if (subText) {
             var parts = String(subText).split(/,\s*/);
             parts.forEach(function (p) {
@@ -7315,7 +7252,7 @@
             });
           }
           if (idx < rawItems.length - 1) {
-            c.push({ t: 'text', v: '................................\n' });
+            c.push({ t: 'text', v: '--------------------------------\n' });
           }
         });
       } else {
@@ -7323,7 +7260,7 @@
         c.push({ t: 'cols', left: '1  Bestelling #' + fallbackOid, right: eur(o.totalAmt || o.price || 0), wl: 22, wr: 10 });
       }
 
-      c.push({ t: 'text', v: '................................\n' });
+      c.push({ t: 'text', v: '--------------------------------\n' });
 
       // Breakdown calculations
       var totalDepositAmt = 0;
@@ -7404,9 +7341,9 @@
       }
 
       // Grand Total
-      c.push({ t: 'size', v: 22 }, { t: 'bold', v: 1 }, { t: 'cols', left: 'Totaal', right: eur(grandTotal), wl: 22, wr: 10 }, { t: 'bold', v: 0 });
+      c.push({ t: 'size', v: 22 }, { t: 'bold', v: 0 }, { t: 'cols', left: 'Totaal', right: eur(grandTotal), wl: 22, wr: 10 });
 
-      c.push({ t: 'text', v: '................................\n' });
+      c.push({ t: 'text', v: '--------------------------------\n' });
 
       // Nog te betalen
       var rawCash = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived || full.paid_amount || full.paidAmount;
@@ -7422,7 +7359,7 @@
       }
 
       c.push({ t: 'bold', v: 1 }, { t: 'cols', left: 'Nog te betalen', right: (isPaid && !cashGiven) ? '€ 0,00' : eur(dueAmt), wl: 18, wr: 14 }, { t: 'bold', v: 0 });
-      c.push({ t: 'text', v: '................................\n' });
+      c.push({ t: 'text', v: '--------------------------------\n' });
       c.push({ t: 'feed', n: 1 });
 
       // BTW & Registration info
@@ -7479,17 +7416,6 @@
 
       var defaultLogoSvg = "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='1'%20y='1'%20width='62'%20height='62'%20rx='8'%20fill='none'%20stroke='%23111827'%20stroke-width='2'%20stroke-dasharray='4%204'/%3E%3Ctext%20x='32'%20y='29'%20font-size='9'%20font-weight='600'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3ELOGO%3C/text%3E%3Ctext%20x='32'%20y='42'%20font-size='6'%20text-anchor='middle'%20fill='%23111827'%20font-family='sans-serif'%3Erestaurant%3C/text%3E%3C/svg%3E";
 
-      var logoBox = document.getElementById('pr-logo-box');
-      var logoImg = document.getElementById('pr-logo');
-      if (logoBox && logoImg) {
-        if (logoUrl) {
-          logoImg.src = logoUrl;
-          logoBox.style.display = 'block';
-        } else {
-          logoBox.style.display = 'none';
-        }
-      }
-
       var shopNameEl = document.getElementById('pr-shop-name');
       if (shopNameEl) shopNameEl.textContent = resName || 'The Hague Pizza';
 
@@ -7542,11 +7468,9 @@
       var wishedEl = document.getElementById('pr-wished');
       if (wishedEl) {
         var timeStr = formatPrintOrderTime(o);
-        var fullOrderData = o.fullOrder || o;
-        var isSchedOrder = checkIsScheduledOrder(fullOrderData) || checkIsScheduledOrder(o);
         if (!timeStr || /^\(?zsm\)?$/i.test(timeStr) || /^asap$/i.test(timeStr)) {
           wishedEl.textContent = '(zsm)';
-        } else if (isSchedOrder) {
+        } else if (timeStr.toUpperCase().indexOf('(ZSM)') !== -1) {
           wishedEl.textContent = timeStr;
         } else {
           wishedEl.textContent = timeStr + ' (ZSM)';
@@ -7772,9 +7696,20 @@
         // Dashed Line Separator
         bHtml += '<div class="rp-dashed"></div>';
 
-        // Nog te betalen: online betaald = 0, contant = volledig bedrag
-        var dueAmt = isPaid ? 0 : grandTotal;
-        bHtml += '<div class="rp-total-row rp-bold"><span>Nog te betalen</span><span>' + fmt(dueAmt) + '</span></div>';
+        // Nog te betalen
+        var rawCash = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived || full.paid_amount || full.paidAmount;
+        var cashGiven = parseFloat(rawCash);
+        var dueAmt = 0;
+
+        if (isPaid) {
+          dueAmt = 0;
+        } else if (!isNaN(cashGiven) && cashGiven > 0) {
+          dueAmt = Math.abs(cashGiven - grandTotal);
+        } else {
+          dueAmt = grandTotal;
+        }
+
+        bHtml += '<div class="rp-total-row rp-bold"><span>Nog te betalen</span><span>' + ((isPaid && !cashGiven) ? '€ 00,00' : fmt(dueAmt)) + '</span></div>';
 
         bdEl.innerHTML = bHtml;
       }
@@ -9590,20 +9525,6 @@
                 if (logoEl) { logoEl.src = formattedLogo; logoEl.style.display = 'block'; }
                 var valLogoEl = document.getElementById('val-shop-logo');
                 if (valLogoEl) { valLogoEl.src = formattedLogo; valLogoEl.style.display = 'block'; }
-                // Pre-cache logo as base64 so silentPrint doesn't need to fetch it
-                (function(url) {
-                  var preImg = new Image();
-                  preImg.crossOrigin = 'anonymous';
-                  preImg.onload = function() {
-                    try {
-                      var c = document.createElement('canvas');
-                      c.width = preImg.width; c.height = preImg.height;
-                      c.getContext('2d').drawImage(preImg, 0, 0);
-                      window._restaurantLogoBase64 = c.toDataURL('image/png');
-                    } catch(e) {}
-                  };
-                  preImg.src = url;
-                })(formattedLogo);
               }
 
               var delTime = (res.delivery_time !== undefined && res.delivery_time !== null) ? res.delivery_time : res.delivery_mins;
@@ -9836,8 +9757,9 @@
           var numEl = tcol ? tcol.querySelector('text') : null;
           if (!tcol || !ring || !numEl) return;
           var subEl = numEl.nextElementSibling && numEl.nextElementSibling.tagName === 'text' ? numEl.nextElementSibling : null;
-          var isScheduled = remaining > 120;
           var isLate = remaining <= 0;
+          var isScheduled = remaining > 120 && !isLate;
+          var absMins = Math.abs(remaining);
           var whenEl = card.querySelector('.oc-when');
           if (whenEl) {
             var rawData = card._rawOrderData || (window._liveOrdersMap && (window._liveOrdersMap[card.dataset.oid] || window._liveOrdersMap[card.dataset.oid ? card.dataset.oid.replace('#', '') : '']));
@@ -9868,8 +9790,7 @@
               whenEl.textContent = t('otime_asap');
             }
           }
-          var displayVal = isLate ? Math.abs(remaining) : remaining;
-          var showHourglass = isScheduled || remaining > 120 || displayVal > 120;
+          var showHourglass = isScheduled;
           var svgEl = tcol ? tcol.querySelector('svg') : null;
           var clockGroup = svgEl ? svgEl.querySelector('g.sched-clock') : null;
 
@@ -9894,10 +9815,8 @@
             tcol.classList.remove('late', 'urgent');
           } else {
             if (numEl) numEl.style.display = '';
-            if (subEl) subEl.style.display = '';
             if (clockGroup) clockGroup.style.display = 'none';
 
-            numEl.setAttribute('y', '24');
             var color = isLate ? '#c62828' : remaining <= 15 ? '#f59800' : '#4caf50';
             var textColor = isLate ? '#c62828' : '#333';
             var offset;
@@ -9914,9 +9833,50 @@
             ring.setAttribute('stroke', color);
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
-            numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
-            numEl.textContent = displayVal;
-            if (subEl) { subEl.textContent = 'm'; subEl.setAttribute('fill', '#aaa'); }
+
+            if (isLate) {
+              numEl.setAttribute('font-size', absMins >= 100 ? '10' : '12');
+              numEl.setAttribute('y', '24');
+              numEl.textContent = '-' + absMins;
+              if (subEl) {
+                subEl.style.display = '';
+                subEl.textContent = 'min';
+                subEl.setAttribute('font-size', '8.5');
+                subEl.setAttribute('fill', textColor);
+              }
+            } else if (absMins >= 60) {
+              var h = Math.floor(absMins / 60);
+              var m = absMins % 60;
+              if (m > 0) {
+                numEl.setAttribute('font-size', '10');
+                numEl.setAttribute('y', '24');
+                numEl.textContent = h + 'h' + m;
+                if (subEl) {
+                  subEl.style.display = '';
+                  subEl.textContent = 'min';
+                  subEl.setAttribute('font-size', '8.5');
+                  subEl.setAttribute('fill', textColor);
+                }
+              } else {
+                numEl.setAttribute('font-size', '12');
+                numEl.setAttribute('y', '27');
+                numEl.textContent = h + 'h';
+                if (subEl) {
+                  subEl.style.display = 'none';
+                }
+              }
+            } else {
+              numEl.setAttribute('font-size', absMins >= 100 ? '11' : '14');
+              numEl.setAttribute('y', '24');
+              numEl.textContent = absMins;
+              if (subEl) {
+                subEl.style.display = '';
+                subEl.textContent = 'min';
+                subEl.setAttribute('font-size', '8.5');
+                subEl.setAttribute('fill', '#aaa');
+              }
+            }
+
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
             else if (remaining <= 15) tcol.classList.add('urgent');
@@ -10017,7 +9977,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
         '</svg></div>' +
         '<div class="mcol">' +
         '<div class="dname">' + dname + '</div>' +
@@ -10036,10 +9996,7 @@
         });
       }
       setTimeout(function () {
-        showPrintToast();
-        setTimeout(function() {
-          try { silentPrint(hidePrintToast); } catch (e) { console.warn('Accept card print failed:', e); hidePrintToast(); }
-        }, 50);
+        try { silentPrint(); } catch (e) { console.warn('Accept card print failed:', e); }
       }, 150);
     }
 
@@ -10068,7 +10025,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10132,7 +10089,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10205,7 +10162,7 @@
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
           '<circle cx="24" cy="24" r="22" fill="none" stroke="#4caf50" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
           '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+          '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
           '</svg></div>' +
           '<div class="mcol">' +
           '<div class="dname">' + dname + '</div>' +
@@ -10251,12 +10208,7 @@
 
       goPage('orders');
       // Print AFTER the UI has updated and popup has closed
-      setTimeout(function () {
-        showPrintToast();
-        setTimeout(function() {
-          try { silentPrint(hidePrintToast); } catch (e) { console.warn('print failed', e); hidePrintToast(); }
-        }, 50);
-      }, 150);
+      setTimeout(function () { try { silentPrint(); } catch (e) { console.warn('print failed', e); } }, 150);
     }
 
     function reorderNewList(changedCard) {
@@ -10751,14 +10703,15 @@
         subheaderHtml = '<div class="oc-when oc-when-asap" data-i18n="otime_asap">' + t('otime_asap') + '</div>';
       }
 
-      // Calculate prep time (default 35 mins, or from expected_delivery_time)
+      // Calculate prep time (default 35 mins, or from expected_delivery_time / delivery_time)
       var mins = 35;
       var targetTimeMs = Date.now() + mins * 60000;
-      if (order.expected_delivery_time) {
-        var parsedTime = Date.parse(order.expected_delivery_time.replace(' ', 'T'));
-        if (!isNaN(parsedTime)) {
+      var rawExpTime = order.expected_delivery_time || order.delivery_time;
+      if (rawExpTime) {
+        var parsedTime = parseDeliveryTimeMs(rawExpTime);
+        if (parsedTime) {
           targetTimeMs = parsedTime;
-          mins = Math.max(1, Math.round((targetTimeMs - Date.now()) / 60000));
+          mins = Math.round((targetTimeMs - Date.now()) / 60000);
         }
       }
 
@@ -10807,7 +10760,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="8.5" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
         '</svg>' +
         '</div>' +
         '<div class="mcol">' +
