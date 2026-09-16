@@ -521,12 +521,7 @@
 
         var payTypeStr = String(order.payment_type !== undefined ? order.payment_type : (order.pay || ''));
         var isCash = (payTypeStr === '2' || payTypeStr === 'cash' || payTypeStr === 'Cash' || order.payment_status === 2 || order.payment_status === '2');
-        var payText = 'Online betaald';
-        if (isCash) {
-          payText = isColl ? 'Contant bij afhalen' : 'Contant bij bezorging';
-        } else if (order.pay && order.pay !== 'Paid') {
-          payText = order.pay;
-        }
+        var payText = isCash ? 'Contant betaling' : 'Online betaald';
         document.getElementById('val-pay').textContent = payText;
         if (order.name) document.getElementById('val-name').textContent = order.name;
         if (order.address) document.getElementById('val-addr1').textContent = order.address;

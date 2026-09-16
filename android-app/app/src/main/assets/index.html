@@ -744,10 +744,7 @@
     #p-detail.closing {
       display: flex;
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       z-index: 50;
       animation: slideDown 0.22s cubic-bezier(0.4, 0, 1, 1) both;
     }
@@ -4038,8 +4035,7 @@
               </div>
             </div>
             <div id="d-order-menu-backdrop" onclick="toggleOrderMenu()"
-              style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:250">
-            </div>
+              style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:250"></div>
             <div id="d-order-menu" style="display:none">
               <div class="d-menu-item neutral" onclick="openChangeTime()">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
@@ -4067,8 +4063,7 @@
               </div>
             </div>
             <div id="d-time-backdrop" onclick="closeChangeTime()"
-              style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:300">
-            </div>
+              style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
             <div id="d-time-modal"
               style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
               <div onclick="closeChangeTime()"
@@ -4094,8 +4089,7 @@
                 style="width:100%;height:42px;margin-top:24px;font-size:15px;font-weight:500;color:#fff;background:#0172af;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Bevestigen</button>
             </div>
             <div id="d-note-backdrop" onclick="closeAddNote()"
-              style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:300">
-            </div>
+              style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
             <div id="d-note-modal"
               style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
               <div onclick="closeAddNote()"
@@ -4115,8 +4109,7 @@
                 style="width:100%;height:42px;margin-top:12px;font-size:15px;font-weight:500;color:#111;background:#fff;border:none;border-radius:100px;cursor:pointer;font-family:'Poppins',sans-serif">Verwijderen</button>
             </div>
             <div id="d-cancel-backdrop" onclick="closeCancelConfirm()"
-              style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:300">
-            </div>
+              style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300"></div>
             <div id="d-cancel-modal"
               style="display:none;position:fixed;left:24px;right:24px;top:50%;transform:translateY(-50%);background:#fff;border-radius:16px;padding:24px;z-index:310;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
               <div data-i18n="d_cancel_confirm_title"
@@ -4805,7 +4798,7 @@
 
           <!-- Discard confirmation modal -->
           <div id="co-discard-backdrop" onclick="coDiscardCancel()"
-            style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:300;border-radius:28px 28px 0 0">
+            style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:300;border-radius:28px 28px 0 0">
           </div>
           <div id="co-discard-modal"
             style="display:none;position:absolute;bottom:0;left:0;right:0;z-index:301;background:#fff;border-radius:20px 20px 0 0;padding:24px 16px calc(env(safe-area-inset-bottom) + 24px)">
@@ -5676,7 +5669,7 @@
       Simuleer nieuwe bestelling</button>
   </div>
 
-  <script src="api.js"></script>
+  <script src="api.js?v=2"></script>
   <script>
     // Clock
     function updateClock() {
@@ -5733,7 +5726,7 @@
         create_delivery_btn: 'Create new delivery order', create_takeaway_btn: 'Create new takeaway order',
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
-        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
+        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
@@ -5763,12 +5756,12 @@
         login_welcome: 'Welcome back', login_subtitle: 'Log in to continue', login_username: 'Username', login_password: 'Password', login_signin: 'Sign in',
         login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device', login_legal_terms: 'Terms of Service', login_legal_privacy: 'Privacy Policy', legal_terms_title: 'Terms of Service', legal_privacy_title: 'Privacy Policy', legal_updated: 'Last updated',
         co_discard_title: 'You have unsaved changes', co_discard_keep: 'Keep editing', co_discard_discard: 'Discard',
-        dash_online_paid: 'Paid online', dash_cash: 'Cash payment',
+        dash_online_paid: 'Online betaald', dash_cash: 'Contant betaling',
         login_error: 'Incorrect username or password', sim_new_order: 'Simulate new order', dash_cancelled_orders: 'cancelled orders',
         refund_done: 'Refunded', refund_pending: 'Refund in progress', refund_none: 'No refund required',
         otime_asap: 'ASAP', otime_asap_full: 'As soon as possible', otime_minutes: 'min', otime_hours: 'hours', otime_today: 'Today', otime_tomorrow: 'Tomorrow',
         oc_move_kitchen: 'Move to kitchen', oc_move_delivery: 'Move to delivery', oc_move_archive: 'Complete order',
-        oc_pay_paid: 'Paid online', oc_pay_card: 'Paid online', oc_pay_cash: 'Cash payment', oc_auto_archived: 'Auto-archived',
+        oc_pay_paid: 'Online betaald', oc_pay_card: 'Online betaald', oc_pay_cash: 'Contant betaling', oc_auto_archived: 'Auto-archived',
         filter_by: 'Filter by', filter_reset: 'Reset', filter_search: 'Search options...', filter_is: 'Is', filter_isnot: 'Is not',
         filter_cat_status: 'Status', filter_cat_updated: 'Updated at', filter_cat_created: 'Created at', filter_cat_customer: 'Customer', filter_cat_source: 'Source', filter_cat_tags: 'Tagged with',
         filter_opt_new: 'New', filter_opt_kitchen: 'Kitchen', filter_opt_delivering: 'Delivering',
@@ -6118,20 +6111,49 @@
       }
     }
 
+    function parseDeliveryTimeMs(expStr) {
+      if (!expStr) return null;
+      var str = String(expStr).trim();
+      if (!str || str.toUpperCase() === 'ASAP' || str.toLowerCase() === 'null') return null;
+
+      if (str.indexOf('-') !== -1 || str.indexOf('/') !== -1) {
+        var parsedMs = Date.parse(str.replace(' ', 'T'));
+        if (!isNaN(parsedMs)) return parsedMs;
+      }
+      if (str.indexOf(':') !== -1) {
+        var parts = str.split(' ')[0].split(':');
+        var h = parseInt(parts[0], 10);
+        var m = parseInt(parts[1], 10);
+        if (!isNaN(h) && !isNaN(m)) {
+          var d = new Date();
+          d.setHours(h, m, 0, 0);
+          return d.getTime();
+        }
+      }
+      return null;
+    }
+
     function formatRemainingHoursAndMins(totalMins) {
       totalMins = parseInt(totalMins, 10);
-      if (isNaN(totalMins) || totalMins <= 0) return '0 m';
+      if (isNaN(totalMins) || totalMins === 0) return '0 min';
 
-      if (totalMins > 120) {
-        var hours = Math.floor(totalMins / 60);
-        var mins = totalMins % 60;
+      var isOverdue = totalMins < 0;
+      var absMins = Math.abs(totalMins);
+
+      if (isOverdue) {
+        return '-' + absMins + ' min';
+      }
+
+      if (absMins >= 60) {
+        var hours = Math.floor(absMins / 60);
+        var mins = absMins % 60;
         if (mins > 0) {
-          return hours + 'h ' + mins + 'm';
+          return hours + 'h ' + mins + ' min';
         } else {
           return hours + 'h';
         }
       } else {
-        return totalMins + ' m';
+        return absMins + ' min';
       }
     }
 
@@ -6522,19 +6544,7 @@
         ? (rawSub - totalDepositAmt)
         : (rawSub > calculatedSubtotal && totalDepositAmt > 0 ? (rawSub - totalDepositAmt) : calculatedSubtotal);
 
-      var deliveryCharge = parseFloat(
-        order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || order.delivery_price || order.shipping_charge || order.delivery ||
-        (order.data && (order.data.delivery_charge || order.data.shipping || order.data.shipping_fee || order.data.delivery_fee || order.data.delivery_price || order.data.shipping_charge || order.data.delivery)) ||
-        0
-      );
-
-      var isDeliveryOrder = (
-        order.order_type == '1' || order.order_type == 1 ||
-        String(order.order_type || '').toLowerCase() === 'delivery' ||
-        String(order.type || '').toLowerCase() === 'delivery' ||
-        (order.data && (order.data.order_type == '1' || order.data.order_type == 1 || String(order.data.order_type || '').toLowerCase() === 'delivery')) ||
-        (window._detailCard && (window._detailCard.getAttribute('data-order-type') === '1' || String(window._detailCard.getAttribute('data-order-type') || '').toLowerCase() === 'delivery'))
-      );
+      var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || 0);
       var platformCharge = parseFloat(order.platform_charge || order.service_fee || order.service_charge || 0);
       var tipAmt = parseFloat(order.tip || order.tip_amount || 0);
       var discountAmt = parseFloat(order.discount_amount || order.discount || (order.redeem_discount === undefined ? order.reward : 0) || 0);
@@ -6591,7 +6601,7 @@
       }
 
       // Delivery fee
-      if (deliveryCharge > 0 || isDeliveryOrder) {
+      if (deliveryCharge > 0 || order.order_type == '1') {
         html += '  <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#333">';
         html += '    <span data-i18n="d_shipping">' + t('d_shipping') + '</span>';
         html += '    <span>€ ' + deliveryCharge.toFixed(2) + '</span>';
@@ -6673,12 +6683,18 @@
       }
 
       // Populate order status & address
-      var isCollection = (order.order_type == '2');
-      var street = userDetails.street_name || '';
-      var house = userDetails.house_no || '';
-      var city = userDetails.city || '';
-      var zipcode = userDetails.zipcode || '';
+      var isCollection = (
+        order.order_type == '2' || order.order_type == 2 ||
+        String(order.order_type || '').toLowerCase() === 'collection' ||
+        String(order.type || '').toLowerCase() === 'collection' ||
+        (order.data && (order.data.order_type == '2' || order.data.order_type == 2 || String(order.data.order_type || '').toLowerCase() === 'collection'))
+      );
+      var street = userDetails.street_name || order.street_name || order.street || (order.address ? order.address.split(',')[0] : '') || '';
+      var house = userDetails.house_no || order.house_no || order.house || '';
+      var city = userDetails.city || order.city || (order.address ? (order.address.split(',')[1] || '') : '') || '';
+      var zipcode = userDetails.zipcode || order.zipcode || order.postcode || '';
       var streetAndHouse = (street + ' ' + house).trim();
+      if (!streetAndHouse && order.address) streetAndHouse = order.address.trim();
       var fullSingleLineAddr = [streetAndHouse, city, zipcode].filter(Boolean).join(', ');
 
       var orderTypeLbl = document.getElementById('d-order-type-label');
@@ -6686,7 +6702,7 @@
         if (isCollection) {
           orderTypeLbl.textContent = t('d_pickup_full');
         } else {
-          orderTypeLbl.textContent = streetAndHouse + (city ? ', ' + city : '');
+          orderTypeLbl.textContent = streetAndHouse ? (streetAndHouse + (city ? ', ' + city.trim() : '')) : (order.customer_name || t('d_delivery'));
         }
       }
       var statusEl = document.getElementById('d-header-status');
@@ -6937,14 +6953,15 @@
       }
 
       var targetMins = mins;
-      if (cachedOrder && cachedOrder.expected_delivery_time) {
-        var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
-        if (!isNaN(parsedExp) && parsedExp > Date.now()) {
+      var rawExpTime = (cachedOrder && (cachedOrder.expected_delivery_time || cachedOrder.delivery_time)) || (cardEl && cardEl.getAttribute('data-expected-delivery-time'));
+      if (rawExpTime) {
+        var parsedExp = parseDeliveryTimeMs(rawExpTime);
+        if (parsedExp) {
           targetMins = Math.round((parsedExp - Date.now()) / 60000);
         }
       }
       var schedMinsEl = document.getElementById('d-sched-mins');
-      if (schedMinsEl && targetMins) {
+      if (schedMinsEl && targetMins !== undefined && targetMins !== null) {
         schedMinsEl.textContent = formatRemainingHoursAndMins(targetMins);
       }
 
@@ -7086,17 +7103,32 @@
       var addrParts = (addr || '').split('||');
       var streetAddr = addrParts[0];
       var cityAddr = addrParts[1] || '';
-      var isDelivery = (type === 'Delivery' && streetAddr && streetAddr !== 'Collection order' && streetAddr !== 'Restaurant');
+      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
+
+      var isDelivery = (
+        type === 'Delivery' || type === '1' ||
+        (cachedOrder && (cachedOrder.order_type == '1' || cachedOrder.order_type == 1 || String(cachedOrder.order_type || '').toLowerCase() === 'delivery'))
+      );
+      if (type === 'Collection' || type === '2' || (cachedOrder && (cachedOrder.order_type == '2' || cachedOrder.order_type == 2 || String(cachedOrder.order_type || '').toLowerCase() === 'collection'))) {
+        isDelivery = false;
+      }
+
       var orderTypeLbl = document.getElementById('d-order-type-label');
       if (orderTypeLbl) {
-        if (type === 'Collection') { orderTypeLbl.textContent = t('d_pickup_full'); }
-        else {
+        if (!isDelivery) {
+          orderTypeLbl.textContent = t('d_pickup_full');
+        } else {
           var pmT = (cityAddr || '').match(/^\s*(\d{4}\s?[A-Za-z]{2})\s+(.+)$/);
           var cityNameT = pmT ? pmT[2] : cityAddr;
-          orderTypeLbl.textContent = streetAddr + (cityNameT ? ', ' + cityNameT : '');
+          var displayAddr = streetAddr + (cityNameT ? ', ' + cityNameT : '');
+          if (!displayAddr.trim() && cachedOrder) {
+            var s = cachedOrder.street_name || (cachedOrder.order_user_details && cachedOrder.order_user_details.street_name) || cachedOrder.address || '';
+            var c = cachedOrder.city || (cachedOrder.order_user_details && cachedOrder.order_user_details.city) || '';
+            displayAddr = s + (c ? ', ' + c : '');
+          }
+          orderTypeLbl.textContent = displayAddr.trim() || name || t('d_delivery');
         }
       }
-      var cachedOrder = (cardEl && cardEl._rawOrderData) || (window._liveOrdersMap && window._liveOrdersMap[id]) || (window._liveOrdersMap && window._liveOrdersMap[oid.replace('#', '')]) || window._detailOrderRaw;
       updatePopupHeaderTime(cachedOrder, cardEl, mins);
       var fullSingleLineAddr = [streetAddr, cityAddr].filter(Boolean).join(', ');
       var custAddrBlock = document.getElementById('d-customer-addr-block');
@@ -7184,8 +7216,23 @@
           var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
           if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
           var textColor = isLate ? '#c62828' : '#333';
-          if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '26'); num.textContent = displayMins; }
-          if (lbl) { lbl.textContent = 'm'; lbl.setAttribute('fill', '#aaa'); }
+          if (isLate) {
+            if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', displayMins >= 100 ? '11' : '13'); num.setAttribute('y', '26'); num.textContent = '-' + displayMins; }
+            if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#c62828'); }
+          } else if (displayMins >= 60) {
+            var h = Math.floor(displayMins / 60);
+            var m = displayMins % 60;
+            if (num) {
+              num.setAttribute('fill', textColor);
+              num.setAttribute('font-size', m > 0 ? '11' : '13');
+              num.setAttribute('y', '26');
+              num.textContent = m > 0 ? (h + 'h' + m) : (h + 'h');
+            }
+            if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); }
+          } else {
+            if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '26'); num.textContent = displayMins; }
+            if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); }
+          }
         }
       }
 
@@ -7472,7 +7519,7 @@
 
       // Klant Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '.................. Klant ..................\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '------------------ Klant ------------------\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7506,7 +7553,7 @@
 
       // Bestelling Section
       c.push({ t: 'align', v: 'center' });
-      c.push({ t: 'size', v: 22 }, { t: 'text', v: '............... Bestelling ...............\n' });
+      c.push({ t: 'size', v: 22 }, { t: 'text', v: '--------------- Bestelling ---------------\n' });
       c.push({ t: 'align', v: 'left' });
       c.push({ t: 'size', v: 22 });
 
@@ -7559,19 +7606,19 @@
           if (subText) {
             var parts = String(subText).split(/,\s*/);
             parts.forEach(function (p) {
-              c.push({ t: 'text', v: '   + ' + p.trim() + '\n' });
+              c.push({ t: 'text', v: '   ' + p.trim() + '\n' });
             });
           }
           if (idx < rawItems.length - 1) {
-            c.push({ t: 'text', v: '................................\n' });
+            c.push({ t: 'text', v: '--------------------------------\n' });
           }
         });
       } else {
         var fallbackOid = String(o.oid || o.order_number || full.oid || full.order_number || '').replace('#', '');
-        c.push({ t: 'cols', left: '1  Bestelling ' + fallbackOid, right: eur(o.totalAmt || o.price || 0), wl: 22, wr: 10 });
+        c.push({ t: 'cols', left: '1  Bestelling #' + fallbackOid, right: eur(o.totalAmt || o.price || 0), wl: 22, wr: 10 });
       }
 
-      c.push({ t: 'text', v: '................................\n' });
+      c.push({ t: 'text', v: '--------------------------------\n' });
 
       // Breakdown calculations
       var totalDepositAmt = 0;
@@ -7615,7 +7662,7 @@
           : (subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount));
 
       // 1. Subtotal
-      c.push({ t: 'cols', left: 'Subtotal', right: eur(subtotal), wl: 22, wr: 10 });
+      c.push({ t: 'cols', left: 'Subtotaal', right: eur(subtotal), wl: 22, wr: 10 });
 
       // 2. Statiegeld
       Object.keys(depositGroups).forEach(function (k) {
@@ -7670,7 +7717,7 @@
       }
 
       c.push({ t: 'bold', v: 1 }, { t: 'cols', left: 'Nog te betalen', right: (isPaid && !cashGiven) ? '€ 0,00' : eur(dueAmt), wl: 18, wr: 14 }, { t: 'bold', v: 0 });
-      c.push({ t: 'text', v: '................................\n' });
+      c.push({ t: 'text', v: '--------------------------------\n' });
       c.push({ t: 'feed', n: 1 });
 
       // BTW & Registration info
@@ -7687,7 +7734,7 @@
       // Footer
       c.push({ t: 'align', v: 'center' });
       c.push({ t: 'bold', v: 1 });
-      c.push({ t: 'text', v: 'Btw bedankt voor uw bestelling.\nBestel online via de website!\n' });
+      c.push({ t: 'text', v: 'Bedankt voor uw bestelling. Bestel\nonline via de website!\n' });
       c.push({ t: 'bold', v: 0 });
       c.push({ t: 'feed', n: 4 });
       c.push({ t: 'cut' });
@@ -10076,8 +10123,9 @@
           var numEl = tcol ? tcol.querySelector('text') : null;
           if (!tcol || !ring || !numEl) return;
           var subEl = numEl.nextElementSibling && numEl.nextElementSibling.tagName === 'text' ? numEl.nextElementSibling : null;
-          var isScheduled = remaining > 120;
           var isLate = remaining <= 0;
+          var isScheduled = remaining > 120 && !isLate;
+          var absMins = Math.abs(remaining);
           var whenEl = card.querySelector('.oc-when');
           if (whenEl) {
             var rawData = card._rawOrderData || (window._liveOrdersMap && (window._liveOrdersMap[card.dataset.oid] || window._liveOrdersMap[card.dataset.oid ? card.dataset.oid.replace('#', '') : '']));
@@ -10108,8 +10156,7 @@
               whenEl.textContent = t('otime_asap');
             }
           }
-          var displayVal = isLate ? Math.abs(remaining) : remaining;
-          var showHourglass = isScheduled || remaining > 120 || displayVal > 120;
+          var showHourglass = isScheduled;
           var svgEl = tcol ? tcol.querySelector('svg') : null;
           var clockGroup = svgEl ? svgEl.querySelector('g.sched-clock') : null;
 
@@ -10134,10 +10181,8 @@
             tcol.classList.remove('late', 'urgent');
           } else {
             if (numEl) numEl.style.display = '';
-            if (subEl) subEl.style.display = '';
             if (clockGroup) clockGroup.style.display = 'none';
 
-            numEl.setAttribute('y', '24');
             var color = isLate ? '#c62828' : remaining <= 15 ? '#f59800' : '#4caf50';
             var textColor = isLate ? '#c62828' : '#333';
             var offset;
@@ -10154,9 +10199,50 @@
             ring.setAttribute('stroke', color);
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
-            numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
-            numEl.textContent = displayVal;
-            if (subEl) { subEl.textContent = 'm'; subEl.setAttribute('fill', '#aaa'); }
+
+            if (isLate) {
+              numEl.setAttribute('font-size', absMins >= 100 ? '10' : '12');
+              numEl.setAttribute('y', '24');
+              numEl.textContent = '-' + absMins;
+              if (subEl) {
+                subEl.style.display = '';
+                subEl.textContent = 'min';
+                subEl.setAttribute('font-size', '8.5');
+                subEl.setAttribute('fill', textColor);
+              }
+            } else if (absMins >= 60) {
+              var h = Math.floor(absMins / 60);
+              var m = absMins % 60;
+              if (m > 0) {
+                numEl.setAttribute('font-size', '10');
+                numEl.setAttribute('y', '24');
+                numEl.textContent = h + 'h' + m;
+                if (subEl) {
+                  subEl.style.display = '';
+                  subEl.textContent = 'min';
+                  subEl.setAttribute('font-size', '8.5');
+                  subEl.setAttribute('fill', textColor);
+                }
+              } else {
+                numEl.setAttribute('font-size', '12');
+                numEl.setAttribute('y', '27');
+                numEl.textContent = h + 'h';
+                if (subEl) {
+                  subEl.style.display = 'none';
+                }
+              }
+            } else {
+              numEl.setAttribute('font-size', absMins >= 100 ? '11' : '14');
+              numEl.setAttribute('y', '24');
+              numEl.textContent = absMins;
+              if (subEl) {
+                subEl.style.display = '';
+                subEl.textContent = 'min';
+                subEl.setAttribute('font-size', '8.5');
+                subEl.setAttribute('fill', '#aaa');
+              }
+            }
+
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
             else if (remaining <= 15) tcol.classList.add('urgent');
@@ -10983,14 +11069,15 @@
         subheaderHtml = '<div class="oc-when oc-when-asap" data-i18n="otime_asap">' + t('otime_asap') + '</div>';
       }
 
-      // Calculate prep time (default 35 mins, or from expected_delivery_time)
+      // Calculate prep time (default 35 mins, or from expected_delivery_time / delivery_time)
       var mins = 35;
       var targetTimeMs = Date.now() + mins * 60000;
-      if (order.expected_delivery_time) {
-        var parsedTime = Date.parse(order.expected_delivery_time.replace(' ', 'T'));
-        if (!isNaN(parsedTime)) {
+      var rawExpTime = order.expected_delivery_time || order.delivery_time;
+      if (rawExpTime) {
+        var parsedTime = parseDeliveryTimeMs(rawExpTime);
+        if (parsedTime) {
           targetTimeMs = parsedTime;
-          mins = Math.max(1, Math.round((targetTimeMs - Date.now()) / 60000));
+          mins = Math.round((targetTimeMs - Date.now()) / 60000);
         }
       }
 
@@ -11039,7 +11126,7 @@
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f0f0f0" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="22" fill="none" stroke="#f59800" stroke-width="2" stroke-dasharray="144.51" stroke-dashoffset="144.51" stroke-linecap="round" transform="rotate(-90 24 24)"/>' +
         '<text x="24" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#333" font-family="Poppins,sans-serif">' + mins + '</text>' +
-        '<text x="24" y="35" text-anchor="middle" font-size="9" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">m</text>' +
+        '<text x="24" y="35" text-anchor="middle" font-size="8.5" font-weight="500" fill="#aaa" font-family="Poppins,sans-serif">min</text>' +
         '</svg>' +
         '</div>' +
         '<div class="mcol">' +
