@@ -5765,7 +5765,7 @@
         var hours = Math.floor(totalMins / 60);
         var mins = totalMins % 60;
         if (mins > 0) {
-          return hours + 'h ' + mins + 'm';
+          return hours + 'h ' + mins + 'min';
         } else {
           return hours + 'h';
         }
@@ -7005,7 +7005,7 @@
       }
       setTimeout(function() {
         try { silentPrint(resetBtn); } catch (e) { console.warn(e); resetBtn(); }
-      }, 50);
+      }, 300);
     }
 
     var _printToastEl = null;
@@ -7013,7 +7013,7 @@
       if (_printToastEl) return;
       var el = document.createElement('div');
       el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;z-index:99999;font-family:Poppins,sans-serif;white-space:nowrap;';
-      el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite;flex-shrink:0;transform-box:fill-box;transform-origin:center;"><path d="M12 2a10 10 0 1 0 10 10"/></svg> Printen...';
+      el.innerHTML = 'Printen...';
       document.body.appendChild(el);
       _printToastEl = el;
     }
@@ -7521,12 +7521,16 @@
       if (payEl) {
         var payTypeVal = String(o.payment_type !== undefined ? o.payment_type : (full.payment_type !== undefined ? full.payment_type : (o.payment_status !== undefined ? o.payment_status : '')));
         var isCash = (payTypeVal === '2' || payTypeVal === 'cash' || payTypeVal === 'Cash' || o.payment_status === 2 || o.payment_status === '2' || !isPaid);
-        var payStr = isPaid ? 'Online betaald' : (isCollection ? 'Contant bij afhalen' : 'Contant bij bezorging');
         var cashRec = o.cashReceived || full.cash_received || full.cashReceived || o.cash_received;
-        if (!isPaid && cashRec) {
-          var cAmt = parseFloat(cashRec);
-          if (!isNaN(cAmt) && cAmt > 0) {
-            payStr += ' (€ ' + cAmt.toFixed(2).replace('.', ',') + ')';
+        var payStr;
+        if (isPaid) {
+          payStr = 'Online betaald';
+        } else {
+          var cashAmt = cashRec ? parseFloat(cashRec) : NaN;
+          if (!isNaN(cashAmt) && cashAmt > 0) {
+            payStr = 'Contant (€ ' + cashAmt.toFixed(2).replace('.', ',') + ')';
+          } else {
+            payStr = 'Contant';
           }
         }
         payEl.textContent = payStr;
@@ -9879,7 +9883,7 @@
             numEl.setAttribute('fill', textColor);
             numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
             numEl.textContent = displayVal;
-            if (subEl) { subEl.textContent = 'm'; subEl.setAttribute('fill', '#aaa'); }
+            if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
             else if (remaining <= 15) tcol.classList.add('urgent');
@@ -10002,7 +10006,7 @@
         showPrintToast();
         setTimeout(function() {
           try { silentPrint(hidePrintToast); } catch (e) { console.warn('Accept card print failed:', e); hidePrintToast(); }
-        }, 50);
+        }, 300);
       }, 150);
     }
 
@@ -10218,7 +10222,7 @@
         showPrintToast();
         setTimeout(function() {
           try { silentPrint(hidePrintToast); } catch (e) { console.warn('print failed', e); hidePrintToast(); }
-        }, 50);
+        }, 300);
       }, 150);
     }
 
