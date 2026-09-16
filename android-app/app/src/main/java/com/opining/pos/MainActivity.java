@@ -302,7 +302,7 @@ public class MainActivity extends Activity {
                                         is.close();
                                     }
                                     if (bitmap != null) {
-                                        int maxW = 180;
+                                        int maxW = 576;
                                         if (bitmap.getWidth() > maxW) {
                                             int targetH = (int) ((double) bitmap.getHeight() / bitmap.getWidth() * maxW);
                                             bitmap = Bitmap.createScaledBitmap(bitmap, maxW, targetH, true);
