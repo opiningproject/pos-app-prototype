@@ -6570,12 +6570,15 @@
       }
 
       var targetMins = mins;
+      var _detailExpMs = null;
       if (cachedOrder && cachedOrder.expected_delivery_time) {
         var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
         if (!isNaN(parsedExp) && parsedExp > Date.now()) {
           targetMins = Math.round((parsedExp - Date.now()) / 60000);
+          _detailExpMs = parsedExp;
         }
       }
+      window._detailTargetMs = _detailExpMs || (Date.now() + (targetMins || 0) * 60000);
       var schedMinsEl = document.getElementById('d-sched-mins');
       if (schedMinsEl && targetMins) {
         schedMinsEl.textContent = formatRemainingHoursAndMins(targetMins);
@@ -7095,6 +7098,9 @@
       if (isSched && timeOnly) {
         return timeOnly;
       }
+      if (timeOnly) {
+        return timeOnly + ' (zsm)';
+      }
       return '(zsm)';
     }
 
@@ -7509,10 +7515,8 @@
         var isSchedOrder = checkIsScheduledOrder(fullOrderData) || checkIsScheduledOrder(o);
         if (!timeStr || /^\(?zsm\)?$/i.test(timeStr) || /^asap$/i.test(timeStr)) {
           wishedEl.textContent = '(zsm)';
-        } else if (isSchedOrder) {
-          wishedEl.textContent = timeStr;
         } else {
-          wishedEl.textContent = timeStr + ' (ZSM)';
+          wishedEl.textContent = timeStr;
         }
       }
 
@@ -7521,7 +7525,8 @@
       if (payEl) {
         var payTypeVal = String(o.payment_type !== undefined ? o.payment_type : (full.payment_type !== undefined ? full.payment_type : (o.payment_status !== undefined ? o.payment_status : '')));
         var isCash = (payTypeVal === '2' || payTypeVal === 'cash' || payTypeVal === 'Cash' || o.payment_status === 2 || o.payment_status === '2' || !isPaid);
-        var cashRec = o.cashReceived || full.cash_received || full.cashReceived || o.cash_received;
+        var cashRec = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received
+                   || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived;
         var payStr;
         if (isPaid) {
           payStr = 'Online betaald';
@@ -9924,6 +9929,35 @@
     initLiveTimers();
     refreshLiveTimers();
     setInterval(refreshLiveTimers, 30000);
+
+    setInterval(function() {
+      var pDetail = document.getElementById('p-detail');
+      if (!pDetail || !pDetail.classList.contains('active')) return;
+      if (!window._detailTargetMs) return;
+      var ring = document.getElementById('d-timer-ring');
+      var num = document.getElementById('d-timer-num');
+      var lbl = document.getElementById('d-timer-label');
+      if (!ring || !num || !lbl) return;
+      var remainingMs = window._detailTargetMs - Date.now();
+      var remaining = Math.round(remainingMs / 60000);
+      var isLate = remaining <= 0;
+      var displayMins = isLate ? Math.abs(remaining) : remaining;
+      var isScheduled = remaining > 120;
+      if (isScheduled) return;
+      var prepTime = 35;
+      var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
+      var color = isLate ? '#c62828' : (remaining <= 15 ? '#f59800' : '#4caf50');
+      var textColor = isLate ? '#c62828' : '#333';
+      ring.setAttribute('stroke', color);
+      ring.setAttribute('stroke-dashoffset', offset);
+      num.setAttribute('fill', textColor);
+      num.setAttribute('font-size', displayMins >= 100 ? '11' : '14');
+      num.setAttribute('y', '26');
+      num.textContent = displayMins;
+      num.style.display = '';
+      lbl.textContent = 'min';
+      lbl.style.display = '';
+    }, 60000);
 
     // Keep screen awake while app is open & in foreground (Web Screen Wake Lock API)
     var _appWakeLock = null;
