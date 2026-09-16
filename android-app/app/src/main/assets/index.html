@@ -5375,7 +5375,7 @@
         d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
-        app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'accepted',
+        app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'Order confirmed',
         hdr_sales_analysis: 'Sales analysis',
         d_wished_label: 'Requested:', d_delivery: 'Delivery', d_pickup: 'Collection', d_pickup_full: 'Being collected',
         d_subtotal: 'Subtotal', d_shipping: 'Delivery', d_service: 'Service fee', d_tip: 'Tip',
@@ -5465,7 +5465,7 @@
         d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
         d_to_kitchen: 'Naar keuken', d_to_delivery: 'Naar bezorging', d_ready: 'Gereed', d_to_archive: 'Bestelling afronden', d_accept: 'Accepteren',
         accept_label: 'Accepteren',
-        app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'geaccepteerd',
+        app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'Bestelling bevestigd',
         hdr_sales_analysis: 'Verkoopanalyse',
         d_wished_label: 'Gewenst:', d_delivery: 'Bezorging', d_pickup: 'Afhaal', d_pickup_full: 'Wordt afgehaald',
         d_subtotal: 'Subtotaal', d_shipping: 'Bezorging', d_service: 'Servicekosten', d_tip: 'Fooi',
@@ -10247,6 +10247,7 @@
       if (actionFooter) actionFooter.style.display = 'block';
 
       goPage('orders');
+      showAcceptedToast(null);
       // Print AFTER the UI has updated and popup has closed
       setTimeout(function () {
         try { silentPrint(function(){}); } catch (e) { console.warn('print failed', e); }
