@@ -5759,7 +5759,7 @@
 
     function formatRemainingHoursAndMins(totalMins) {
       totalMins = parseInt(totalMins, 10);
-      if (isNaN(totalMins) || totalMins <= 0) return '0 m';
+      if (isNaN(totalMins) || totalMins <= 0) return '0 min';
 
       if (totalMins > 120) {
         var hours = Math.floor(totalMins / 60);
@@ -5770,7 +5770,7 @@
           return hours + 'h';
         }
       } else {
-        return totalMins + ' m';
+        return totalMins + ' min';
       }
     }
 
