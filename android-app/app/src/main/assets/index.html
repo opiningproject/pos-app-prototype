@@ -6844,10 +6844,18 @@
           // countdown (regular or scheduled <= 120 min)
           var dClockGroup2 = timerSvg ? timerSvg.querySelector('g.sched-clock') : null;
           if (dClockGroup2) dClockGroup2.style.display = 'none';
-          var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
+          var offset;
+          if (isLate) {
+            var autoArchiveDetailEl = document.getElementById('settings-auto-archive-mins');
+            var autoArchiveDetailMins = parseInt((autoArchiveDetailEl || { textContent: '90' }).textContent, 10) || 90;
+            var lateProgressDetail = Math.max(0, Math.min(1, displayMins / autoArchiveDetailMins));
+            offset = Math.max(0, 138.23 * (1 - lateProgressDetail));
+          } else {
+            offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
+          }
           if (ring) { ring.setAttribute('stroke', color); ring.setAttribute('stroke-dashoffset', offset); }
           var textColor = isLate ? '#c62828' : '#333';
-          if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '26'); num.textContent = displayMins; num.style.display = ''; }
+          if (num) { num.setAttribute('fill', textColor); num.setAttribute('font-size', '14'); num.setAttribute('y', '26'); num.textContent = (isLate ? '-' : '') + displayMins; num.style.display = ''; }
           if (lbl) { lbl.textContent = 'min'; lbl.setAttribute('fill', '#aaa'); lbl.style.display = ''; }
         }
       }
@@ -9881,7 +9889,7 @@
             ring.setAttribute('stroke-dashoffset', offset);
             numEl.setAttribute('fill', textColor);
             numEl.setAttribute('font-size', displayVal >= 100 ? '11' : '14');
-            numEl.textContent = displayVal;
+            numEl.textContent = (isLate ? '-' : '') + displayVal;
             if (subEl) { subEl.textContent = 'min'; subEl.setAttribute('fill', '#aaa'); }
             tcol.classList.remove('late', 'urgent');
             if (isLate) tcol.classList.add('late');
@@ -9939,7 +9947,15 @@
       var isScheduled = remaining > 120;
       if (isScheduled) return;
       var prepTime = 35;
-      var offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
+      var offset;
+      if (isLate) {
+        var autoArchiveIvEl = document.getElementById('settings-auto-archive-mins');
+        var autoArchiveIvMins = parseInt((autoArchiveIvEl || { textContent: '90' }).textContent, 10) || 90;
+        var lateProgressIv = Math.max(0, Math.min(1, displayMins / autoArchiveIvMins));
+        offset = Math.max(0, 138.23 * (1 - lateProgressIv));
+      } else {
+        offset = displayMins >= prepTime ? 138.23 : Math.max(0, Math.min(138.23, (displayMins / prepTime) * 138.23));
+      }
       var color = isLate ? '#c62828' : (remaining <= 15 ? '#f59800' : '#4caf50');
       var textColor = isLate ? '#c62828' : '#333';
       ring.setAttribute('stroke', color);
@@ -9947,7 +9963,7 @@
       num.setAttribute('fill', textColor);
       num.setAttribute('font-size', displayMins >= 100 ? '11' : '14');
       num.setAttribute('y', '26');
-      num.textContent = displayMins;
+      num.textContent = (isLate ? '-' : '') + displayMins;
       num.style.display = '';
       lbl.textContent = 'min';
       lbl.style.display = '';
