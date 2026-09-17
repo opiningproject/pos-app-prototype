@@ -6374,7 +6374,7 @@
       localOrder.wished = order.wished || localOrder.wished || 'ASAP';
       localOrder.type = order.type || (order.order_type == '2' ? 'Collection' : 'Delivery');
       localOrder.order_type = order.order_type || localOrder.order_type;
-      localOrder.pay = (order.pay || order.payment_status === 'Paid' || order.payment_status === 1) ? 'Paid' : 'Unpaid';
+      localOrder.pay = order.pay !== undefined ? order.pay : (order.payment_status !== undefined ? order.payment_status : (localOrder.pay || ''));
       localOrder.payment_status = order.payment_status !== undefined ? order.payment_status : localOrder.payment_status;
 
       var u = order.order_user_details || order.user_details || {};
@@ -6573,7 +6573,7 @@
       var _detailExpMs = null;
       if (cachedOrder && cachedOrder.expected_delivery_time) {
         var parsedExp = Date.parse(String(cachedOrder.expected_delivery_time).replace(' ', 'T'));
-        if (!isNaN(parsedExp) && parsedExp > Date.now()) {
+        if (!isNaN(parsedExp)) {
           targetMins = Math.round((parsedExp - Date.now()) / 60000);
           _detailExpMs = parsedExp;
         }
@@ -6791,7 +6791,7 @@
       var currentRemaining = Math.round((targetMs - Date.now()) / 60000);
       var minsNum = currentRemaining;
       if (minsNum === 0) minsNum = parseInt(mins, 10) || 35;
-      var isLate = minsNum <= 0;
+      var isLate = minsNum < 0;
       var isScheduled = minsNum > 90;
       var displayMins = Math.abs(minsNum);
       var color = isLate ? '#c62828' : displayMins <= 15 ? '#f59800' : '#4caf50';
@@ -7110,7 +7110,8 @@
       var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch (e) { }
       var full = o.fullOrder || o;
       var isColl = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
-      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1 || full.pay === 'Paid' || full.payment_status === 'Paid' || full.payment_status === 1;
+      var payRawNative = String(o.pay !== undefined ? o.pay : (full.pay !== undefined ? full.pay : ''));
+      var isPaid = payRawNative === 'Paid' || payRawNative === '1' || o.pay === 1 || o.payment_status === 'Paid' || o.payment_status === 1 || full.payment_status === 'Paid' || full.payment_status === 1;
 
       var eur = function (n) { return '€ ' + (parseFloat(n) || 0).toFixed(2).replace('.', ','); };
       var now = new Date(), pad = function (n) { return String(n).padStart(2, '0'); };
@@ -7425,7 +7426,8 @@
       }
       var full = o.fullOrder || o;
       var isCollection = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
-      var isPaid = o.pay === 'Paid' || o.payment_status === 'Paid' || o.payment_status === 1 || full.pay === 'Paid' || full.payment_status === 'Paid' || full.payment_status === 1;
+      var payRawHtml = String(o.pay !== undefined ? o.pay : (full.pay !== undefined ? full.pay : ''));
+      var isPaid = payRawHtml === 'Paid' || payRawHtml === '1' || o.pay === 1 || o.payment_status === 'Paid' || o.payment_status === 1 || full.payment_status === 'Paid' || full.payment_status === 1;
 
       function fmt(n) { return '€ ' + (parseFloat(n) || 0).toFixed(2).replace('.', ','); }
       var now = new Date();
@@ -9942,7 +9944,7 @@
       if (!ring || !num || !lbl) return;
       var remainingMs = window._detailTargetMs - Date.now();
       var remaining = Math.round(remainingMs / 60000);
-      var isLate = remaining <= 0;
+      var isLate = remaining < 0;
       var displayMins = isLate ? Math.abs(remaining) : remaining;
       var isScheduled = remaining > 120;
       if (isScheduled) return;
