@@ -6688,6 +6688,10 @@
         window._detailReturnPage = 'dashboard';
         window._detailReturnTab = 'dash-details';
       }
+      if (next === 'cancelled_screen') {
+        window._detailReturnPage = 'dashboard';
+        window._detailReturnTab = 'dash-cancelled';
+      }
       closeOrderToast();
       window._detailCard = cardEl || null;
       window._detailOid = oid;
@@ -6732,7 +6736,7 @@
         if (headerMenu) headerMenu.style.display = 'flex';
         if (schedBlock) schedBlock.style.display = 'none';
         if (timerCard) timerCard.style.display = 'block';
-        var isCompletedFooter = (next === 'completed_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+        var isCompletedFooter = (next === 'completed_screen' || next === 'cancelled_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
         if (actionFooter) actionFooter.style.display = isCompletedFooter ? 'none' : 'block';
         window._isCompletedDetail = isCompletedFooter;
         var menuChangeTime = document.querySelector('#d-order-menu .d-menu-item[onclick="openChangeTime()"]');
@@ -6840,24 +6844,31 @@
       var deliveryEl = document.getElementById('settings-delivery-mins');
       var takeawayEl = document.getElementById('settings-takeaway-mins');
       var prepTime = parseInt((deliveryEl || takeawayEl || { textContent: '45' }).textContent, 10) || 45;
-      var isCompletedOrder = (next === 'completed_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+      var isCompletedOrder = (next === 'completed_screen' || next === 'cancelled_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
       var timerSvg = timerCard ? timerCard.querySelector('svg') : null;
       var checkEl = timerCard ? timerCard.querySelector('.d-completed-check') : null;
 
+      var isCancelledOrder = (next === 'cancelled_screen');
       if (isCompletedOrder) {
         if (actionFooter) actionFooter.style.display = 'none';
         if (timerSvg) timerSvg.style.display = 'none';
-        if (!checkEl && timerCard) {
-          var rightContainer = timerCard.querySelector('div');
-          if (rightContainer) {
-            checkEl = document.createElement('div');
-            checkEl.className = 'd-completed-check';
-            checkEl.style.cssText = 'display: flex; width: 72px; height: 72px; border-radius: 50%; background: transparent; border: 2px solid #e0e0e0; align-items: center; justify-content: center; flex-shrink: 0;';
-            checkEl.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
-            rightContainer.appendChild(checkEl);
+        if (isCancelledOrder) {
+          // Cancelled: show red X badge, hide green checkmark
+          if (checkEl) checkEl.style.display = 'none';
+        } else {
+          // Completed: show green checkmark, hide cancelled badge via CSS class (mode-completed-order)
+          if (!checkEl && timerCard) {
+            var rightContainer = timerCard.querySelector('div');
+            if (rightContainer) {
+              checkEl = document.createElement('div');
+              checkEl.className = 'd-completed-check';
+              checkEl.style.cssText = 'display: flex; width: 72px; height: 72px; border-radius: 50%; background: transparent; border: 2px solid #e0e0e0; align-items: center; justify-content: center; flex-shrink: 0;';
+              checkEl.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+              rightContainer.appendChild(checkEl);
+            }
+          } else if (checkEl) {
+            checkEl.style.display = 'flex';
           }
-        } else if (checkEl) {
-          checkEl.style.display = 'flex';
         }
       } else {
         if (actionFooter) actionFooter.style.display = isUnaccepted ? 'none' : 'block';
