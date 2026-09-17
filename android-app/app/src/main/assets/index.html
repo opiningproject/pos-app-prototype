@@ -493,7 +493,8 @@
     }
 
     /* All page headers: tight 16px padding (overrides the safe-area media-query rules) */
-    .page>.page-header {
+    .page>.page-header,
+    #p-legal .page-header {
       padding: 16px !important;
       min-height: 0 !important;
     }
@@ -563,7 +564,7 @@
     #d-order-menu .d-menu-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 16px;
       padding: 15px 16px;
       cursor: pointer;
       font-size: 14px;
@@ -705,7 +706,7 @@
     }
 
     #p-detail.mode-completed-order #d-action-footer {
-      display: block !important;
+      display: none !important;
     }
 
     /* Mode 4: CANCELLED ORDER DESIGN */
@@ -3906,9 +3907,8 @@
                   </svg>
 
                   <div id="d-cancelled-badge"
-                    style="display:none;width:72px;height:72px;border-radius:50%;background:rgb(253, 236, 234);align-items:center;justify-content:center;flex-shrink:0">
+                    style="display:none;width:72px;height:72px;border-radius:50%;background:transparent;border:2px solid #e0e0e0;align-items:center;justify-content:center;flex-shrink:0">
                     <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="11" stroke="#c62828" stroke-width="1.8"></circle>
                       <path d="M8 8l8 8M16 8l-8 8" stroke="#c62828" stroke-width="2" stroke-linecap="round"></path>
                     </svg>
                   </div>
@@ -4875,7 +4875,7 @@
       <div id="p-legal"
         style="display:none;position:absolute;inset:0;background:#fff;z-index:600;flex-direction:column">
         <div class="page-header"
-          style="position:relative;border-radius:0;z-index:10;padding:32px 24px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
+          style="position:relative;border-radius:0;z-index:10;padding:16px;background:#fff;border-bottom:1.5px solid #f3f3f3;flex-shrink:0">
           <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:14px">
               <div onclick="closeLegal()"
@@ -4887,7 +4887,7 @@
               </div>
             </div>
             <span id="legal-title"
-              style="position:absolute;left:50%;transform:translateX(-50%);font-size:20px;font-weight:600;color:#111;white-space:nowrap"></span>
+              style="position:absolute;left:50%;transform:translateX(-50%);font-size:18px;font-weight:600;color:#111;white-space:nowrap"></span>
           </div>
         </div>
         <div id="legal-scroll"
@@ -5372,7 +5372,7 @@
         create_delivery_btn: 'Create new delivery order', create_takeaway_btn: 'Create new takeaway order',
         hdr_products: 'Products', dd_products: 'Products', dd_choices: 'Choices menu', dd_categories: 'Categories',
         tab_menu_all: 'All', tab_menu_active: 'Active', tab_menu_concept: 'Draft', tab_menu_archived: 'Archived',
-        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label',
+        d_new_customer: 'New Customer', d_open_map: 'Open Map', d_paid: 'Paid online', d_cash: 'Cash payment', d_print_label: 'Print label', d_cancel_pickup: 'Pickup cancelled', d_cancel_refund: 'Refund in progress', d_cancel_cash: 'Not collected',
         d_to_kitchen: 'To kitchen', d_to_delivery: 'To delivery', d_ready: 'Ready', d_to_archive: 'Complete order', d_accept: 'Accept',
         accept_label: 'Accept',
         app_simulate: 'Simulate', toast_new_order: 'New order', toast_view: 'View', toast_accepted: 'Order confirmed',
@@ -5462,7 +5462,7 @@
         create_delivery_btn: 'Nieuwe bezorgbestelling aanmaken', create_takeaway_btn: 'Nieuwe afhaalbestelling aanmaken',
         hdr_products: 'Producten', dd_products: 'Producten', dd_choices: 'Keuzemenu', dd_categories: 'Categorieën',
         tab_menu_all: 'Alle', tab_menu_active: 'Actief', tab_menu_concept: 'Concept', tab_menu_archived: 'Gearchiveerd',
-        d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label',
+        d_new_customer: 'Nieuwe klant', d_open_map: 'Open kaart', d_paid: 'Online betaald', d_cash: 'Contant betaling', d_print_label: 'Print label', d_cancel_pickup: 'Afhaal geannuleerd', d_cancel_refund: 'Terugbetaling bezig', d_cancel_cash: 'Niet geïnd',
         d_to_kitchen: 'Naar keuken', d_to_delivery: 'Naar bezorging', d_ready: 'Gereed', d_to_archive: 'Bestelling afronden', d_accept: 'Accepteren',
         accept_label: 'Accepteren',
         app_simulate: 'Simuleer', toast_new_order: 'Nieuwe bestelling', toast_view: 'Bekijken', toast_accepted: 'Bestelling bevestigd',
@@ -5648,13 +5648,15 @@
       }
 
       if (count !== null && count !== undefined) {
+        var cancelledCount = window._cancelledOrdersCount || 0;
+        var displayCount = Math.max(0, parseInt(count) - cancelledCount);
         var countEl = document.getElementById('nav-orders-count');
         if (countEl) {
-          countEl.textContent = String(count);
+          countEl.textContent = String(displayCount);
         } else {
           var subEl = document.getElementById('nav-orders-sub');
           if (subEl) {
-            subEl.innerHTML = '<span id="nav-orders-count">' + count + '</span> <span data-i18n="nav_completed_orders">' + t('nav_completed_orders') + '</span>';
+            subEl.innerHTML = '<span id="nav-orders-count">' + displayCount + '</span> <span data-i18n="nav_completed_orders">' + t('nav_completed_orders') + '</span>';
           }
         }
       }
@@ -5691,13 +5693,26 @@
 
     function fetchTodayOrdersCount() {
       if (typeof API !== 'undefined' && API.getSummary) {
-        API.getSummary({ type: 'summary' })
-          .then(function (res) {
-            if (res) updateTodayOrdersCount(res);
-          })
-          .catch(function (err) {
-            console.error('Failed to fetch getSummary count for nav:', err);
-          });
+        Promise.all([
+          API.getSummary({ type: 'summary' }),
+          API.getSummary({ type: 'cancelled' })
+        ]).then(function (results) {
+          var res = results[0];
+          var cancelledRaw = results[1];
+          var cancelledData = (cancelledRaw && cancelledRaw.data) ? cancelledRaw.data : cancelledRaw;
+          var cancelledList = [];
+          if (Array.isArray(cancelledData)) cancelledList = cancelledData;
+          else if (cancelledData && Array.isArray(cancelledData.cancel)) cancelledList = cancelledData.cancel;
+          else if (cancelledData && Array.isArray(cancelledData.canceled)) cancelledList = cancelledData.canceled;
+          else if (cancelledData && Array.isArray(cancelledData.cancelled_orders)) cancelledList = cancelledData.cancelled_orders;
+          else if (cancelledData && cancelledData.data && Array.isArray(cancelledData.data)) cancelledList = cancelledData.data;
+          else if (cancelledData && cancelledData.data && cancelledData.data.cancel && Array.isArray(cancelledData.data.cancel)) cancelledList = cancelledData.data.cancel;
+          else if (cancelledData && cancelledData.data && cancelledData.data.canceled && Array.isArray(cancelledData.data.canceled)) cancelledList = cancelledData.data.canceled;
+          window._cancelledOrdersCount = cancelledList.length;
+          if (res) updateTodayOrdersCount(res);
+        }).catch(function (err) {
+          console.error('Failed to fetch getSummary count for nav:', err);
+        });
       }
     }
 
@@ -6316,8 +6331,9 @@
 
       var orderTypeLbl = document.getElementById('d-order-type-label');
       if (orderTypeLbl) {
+        var isCancelledDetail = (window._detailNext === 'cancelled_screen');
         if (isCollection) {
-          orderTypeLbl.textContent = t('d_pickup_full');
+          orderTypeLbl.textContent = isCancelledDetail ? t('d_cancel_pickup') : t('d_pickup_full');
         } else {
           orderTypeLbl.textContent = streetAndHouse ? (streetAndHouse + (city ? ', ' + city.trim() : '')) : (order.customer_name || t('d_delivery'));
         }
@@ -6676,6 +6692,7 @@
       window._detailCard = cardEl || null;
       window._detailOid = oid;
       window._detailId = id;
+      window._detailNext = next;
       var isUnaccepted = !!isNewOrderPopup;
       var backBtn = document.getElementById('d-back-btn');
       var headerMenu = document.getElementById('d-header-menu');
@@ -6715,7 +6732,32 @@
         if (headerMenu) headerMenu.style.display = 'flex';
         if (schedBlock) schedBlock.style.display = 'none';
         if (timerCard) timerCard.style.display = 'block';
-        if (actionFooter) actionFooter.style.display = 'block';
+        var isCompletedFooter = (next === 'completed_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+        if (actionFooter) actionFooter.style.display = isCompletedFooter ? 'none' : 'block';
+        window._isCompletedDetail = isCompletedFooter;
+        var menuChangeTime = document.querySelector('#d-order-menu .d-menu-item[onclick="openChangeTime()"]');
+        var menuAddNote = document.querySelector('#d-order-menu .d-menu-item[onclick="openAddNote()"]');
+        var menuCancel = document.querySelector('#d-order-menu .d-menu-item[onclick="cancelOrder()"]');
+        var menuPrintOnly = document.getElementById('d-menu-print-only');
+        if (!menuPrintOnly) {
+          menuPrintOnly = document.createElement('div');
+          menuPrintOnly.id = 'd-menu-print-only';
+          menuPrintOnly.className = 'd-menu-item neutral';
+          menuPrintOnly.setAttribute('onclick', 'closeOrderMenu(); silentPrint(window._detailCard || document.querySelector(".order-card[data-id=\'" + (window._detailId || "") + "\']"));');
+          menuPrintOnly.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 9V3h12v6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="9" width="18" height="9" rx="2" stroke="#111" stroke-width="2"/><path d="M6 18v3h12v-3" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Print bon</span>';
+          document.getElementById('d-order-menu').appendChild(menuPrintOnly);
+        }
+        if (isCompletedFooter) {
+          if (menuChangeTime) menuChangeTime.style.display = 'none';
+          if (menuAddNote) menuAddNote.style.display = 'none';
+          if (menuCancel) menuCancel.style.display = 'none';
+          if (menuPrintOnly) menuPrintOnly.style.display = 'flex';
+        } else {
+          if (menuChangeTime) menuChangeTime.style.display = '';
+          if (menuAddNote) menuAddNote.style.display = '';
+          if (menuCancel) menuCancel.style.display = '';
+          if (menuPrintOnly) menuPrintOnly.style.display = 'none';
+        }
         if (detailHeaderEl) detailHeaderEl.classList.remove('d-new-header');
       }
 
@@ -6798,7 +6840,7 @@
       var deliveryEl = document.getElementById('settings-delivery-mins');
       var takeawayEl = document.getElementById('settings-takeaway-mins');
       var prepTime = parseInt((deliveryEl || takeawayEl || { textContent: '45' }).textContent, 10) || 45;
-      var isCompletedOrder = (next === 'completed_screen' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+      var isCompletedOrder = (next === 'completed_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
       var timerSvg = timerCard ? timerCard.querySelector('svg') : null;
       var checkEl = timerCard ? timerCard.querySelector('.d-completed-check') : null;
 
@@ -6810,8 +6852,8 @@
           if (rightContainer) {
             checkEl = document.createElement('div');
             checkEl.className = 'd-completed-check';
-            checkEl.style.cssText = 'display: flex; width: 72px; height: 72px; border-radius: 50%; background: rgb(232, 245, 233); align-items: center; justify-content: center; flex-shrink: 0;';
-            checkEl.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#4caf50" stroke-width="1.8"></circle><path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+            checkEl.style.cssText = 'display: flex; width: 72px; height: 72px; border-radius: 50%; background: transparent; border: 2px solid #e0e0e0; align-items: center; justify-content: center; flex-shrink: 0;';
+            checkEl.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M7 12.5l3.5 3.5 6.5-7" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
             rightContainer.appendChild(checkEl);
           }
         } else if (checkEl) {
@@ -6903,10 +6945,21 @@
       showAdminNote((cardEl && cardEl.dataset.adminNote) || '');
       var payBadge = document.getElementById('d-pay-badge');
       var isCash = (pay === '2' || pay === 2 || String(pay) === '2' || pay === 'Cash' || (cardEl && cardEl.dataset && cardEl.dataset.paymentType === '2'));
+      var isCancelledScreen = (next === 'cancelled_screen');
       var payKey = isCash ? 'd_cash' : 'd_paid';
       if (payBadge) {
         payBadge.dataset.payKey = payKey;
-        if (isCash) {
+        if (isCancelledScreen) {
+          if (isCash) {
+            payBadge.innerHTML = t('d_cancel_cash');
+            payBadge.style.color = '#b45309';
+            payBadge.style.background = '#fef3c7';
+          } else {
+            payBadge.innerHTML = t('d_cancel_refund');
+            payBadge.style.color = '#c62828';
+            payBadge.style.background = '#fdecea';
+          }
+        } else if (isCash) {
           payBadge.innerHTML = t('d_cash');
           payBadge.style.color = '#c62828';
           payBadge.style.background = '#fdecea';
@@ -8368,17 +8421,93 @@
 
     function loadDashData(type) {
       console.log('Fetching sales summary data for type:', type);
-      API.getSummary({ type: type })
-        .then(function (responseData) {
-          console.log('getSummary API success:', responseData);
-          var dashData = (responseData && responseData.data) ? responseData.data : responseData;
-          if (dashData) {
-            renderDashData(type, dashData);
+      if (type === 'summary') {
+        Promise.all([
+          API.getSummary({ type: 'summary' }),
+          API.getSummary({ type: 'cancelled' })
+        ]).then(function (results) {
+          var summaryRaw = results[0];
+          var cancelledRaw = results[1];
+          console.log('Summary raw:', JSON.stringify(summaryRaw));
+          console.log('Cancelled raw:', JSON.stringify(cancelledRaw));
+          var summaryData = (summaryRaw && summaryRaw.data) ? summaryRaw.data : summaryRaw;
+          var cancelledData = (cancelledRaw && cancelledRaw.data) ? cancelledRaw.data : cancelledRaw;
+
+          // Extract cancelled list from all known structures
+          var cancelledList = [];
+          if (Array.isArray(cancelledData)) cancelledList = cancelledData;
+          else if (cancelledData && Array.isArray(cancelledData.cancel)) cancelledList = cancelledData.cancel;
+          else if (cancelledData && Array.isArray(cancelledData.canceled)) cancelledList = cancelledData.canceled;
+          else if (cancelledData && Array.isArray(cancelledData.cancelled_orders)) cancelledList = cancelledData.cancelled_orders;
+          else if (cancelledData && cancelledData.data && Array.isArray(cancelledData.data)) cancelledList = cancelledData.data;
+          else if (cancelledData && cancelledData.data && cancelledData.data.cancel && Array.isArray(cancelledData.data.cancel)) cancelledList = cancelledData.data.cancel;
+          else if (cancelledData && cancelledData.data && cancelledData.data.canceled && Array.isArray(cancelledData.data.canceled)) cancelledList = cancelledData.data.canceled;
+          console.log('Cancelled list length:', cancelledList.length, cancelledList);
+
+          var cancelTotalAmount = 0, cancelOnlineAmount = 0, cancelCashAmount = 0;
+          var cancelOnlineCount = 0, cancelCashCount = 0;
+          cancelledList.forEach(function (o) {
+            var amt = parseFloat(o.total_amount || 0);
+            cancelTotalAmount += amt;
+            var isCash = (String(o.payment_type) === '2' || String(o.payment_type_text || '').toLowerCase() === 'cash' || String(o.payment_status) === '2');
+            if (isCash) { cancelCashAmount += amt; cancelCashCount++; }
+            else { cancelOnlineAmount += amt; cancelOnlineCount++; }
+          });
+          console.log('Cancel totals:', cancelTotalAmount, cancelOnlineAmount, cancelCashAmount);
+
+          // Extract revenue object from all known structures
+          var rev = null;
+          if (summaryData && summaryData.summary && summaryData.summary.revenue) rev = summaryData.summary.revenue;
+          else if (summaryData && summaryData.revenue) rev = summaryData.revenue;
+          else if (summaryData && summaryData.data && summaryData.data.summary && summaryData.data.summary.revenue) rev = summaryData.data.summary.revenue;
+          else if (summaryData && summaryData.data && summaryData.data.revenue) rev = summaryData.data.revenue;
+          console.log('Revenue before:', rev ? JSON.stringify(rev) : 'not found');
+
+          if (rev) {
+            rev.total_amount = Math.max(0, parseFloat(rev.total_amount || 0) - cancelTotalAmount).toFixed(2);
+            rev.online_amount = Math.max(0, parseFloat(rev.online_amount || 0) - cancelOnlineAmount).toFixed(2);
+            rev.cash_amount = Math.max(0, parseFloat(rev.cash_amount || 0) - cancelCashAmount).toFixed(2);
+            rev.online_count = Math.max(0, parseInt(rev.online_count || 0) - cancelOnlineCount);
+            rev.cash_count = Math.max(0, parseInt(rev.cash_count || 0) - cancelCashCount);
+            console.log('Revenue after:', JSON.stringify(rev));
           }
-        })
-        .catch(function (err) {
+
+          // Also subtract cancelled from orders card
+          var ord = null;
+          if (summaryData && summaryData.summary && summaryData.summary.orders) ord = summaryData.summary.orders;
+          else if (summaryData && summaryData.orders) ord = summaryData.orders;
+          else if (summaryData && summaryData.data && summaryData.data.summary && summaryData.data.summary.orders) ord = summaryData.data.summary.orders;
+          else if (summaryData && summaryData.data && summaryData.data.orders) ord = summaryData.data.orders;
+          if (ord) {
+            cancelledList.forEach(function (o) {
+              var amt = parseFloat(o.total_amount || 0);
+              var isCollection = (String(o.order_type) === '2' || String(o.order_type_text || '').toLowerCase() === 'collection' || String(o.order_type_text || '').toLowerCase() === 'takeaway');
+              ord.total_count = Math.max(0, parseInt(ord.total_count || 0) - 1);
+              if (isCollection) {
+                ord.takeaway_count = Math.max(0, parseInt(ord.takeaway_count || 0) - 1);
+                ord.takeaway_amount = Math.max(0, parseFloat(ord.takeaway_amount || 0) - amt).toFixed(2);
+              } else {
+                ord.delivery_count = Math.max(0, parseInt(ord.delivery_count || 0) - 1);
+                ord.delivery_amount = Math.max(0, parseFloat(ord.delivery_amount || 0) - amt).toFixed(2);
+              }
+            });
+          }
+
+          if (summaryData) renderDashData('summary', summaryData);
+        }).catch(function (err) {
           console.error('getSummary API error:', err);
         });
+      } else {
+        API.getSummary({ type: type })
+          .then(function (responseData) {
+            console.log('getSummary API success:', responseData);
+            var dashData = (responseData && responseData.data) ? responseData.data : responseData;
+            if (dashData) renderDashData(type, dashData);
+          })
+          .catch(function (err) {
+            console.error('getSummary API error:', err);
+          });
+      }
     }
 
     function renderDashData(type, data) {
@@ -9132,6 +9261,12 @@
                 var safeCatName = String(catName).replace(/'/g, "\\'");
 
                 var inactiveCount = 0;
+                var catItems = (catObj && typeof catObj === 'object')
+                  ? (Array.isArray(catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
+                    ? (catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
+                    : (menuData[catName] || []))
+                  : (menuData[catName] || []);
+
                 if (catObj && typeof catObj === 'object') {
                   if (catObj.inactiveDIshCount !== undefined && catObj.inactiveDIshCount !== null) {
                     inactiveCount = parseInt(catObj.inactiveDIshCount, 10) || 0;
@@ -9142,11 +9277,7 @@
                   } else if (catObj.inactive_count !== undefined && catObj.inactive_count !== null) {
                     inactiveCount = parseInt(catObj.inactive_count, 10) || 0;
                   } else {
-                    var items = Array.isArray(catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
-                      ? (catObj.items || catObj.products || catObj.dish || catObj.dishes_details)
-                      : (menuData[catName] || []);
-
-                    inactiveCount = items.filter(function (it) {
+                    inactiveCount = catItems.filter(function (it) {
                       if (typeof it === 'object' && it !== null) {
                         if (it.status === 0 || it.status === '0' || it.is_active === 0 || it.is_active === false) return true;
                       }
@@ -9155,6 +9286,21 @@
                     }).length;
                   }
                 }
+
+                // Apply local menuState overrides on top of API count
+                catItems.forEach(function (it) {
+                  var itemName = typeof it === 'string' ? it : (it.name || it.name_en || it.name_nl || it.product_name || it.title || '');
+                  var key = catName + '|' + itemName;
+                  if (menuState[key] === false) {
+                    // locally disabled — make sure counted
+                    var apiSaysInactive = (typeof it === 'object' && it !== null && (it.status === 0 || it.status === '0' || it.is_active === 0 || it.is_active === false));
+                    if (!apiSaysInactive) inactiveCount++;
+                  } else if (menuState[key] === true) {
+                    // locally re-enabled — subtract if API counted it inactive
+                    var apiSaysInactive2 = (typeof it === 'object' && it !== null && (it.status === 0 || it.status === '0' || it.is_active === 0 || it.is_active === false));
+                    if (apiSaysInactive2) inactiveCount = Math.max(0, inactiveCount - 1);
+                  }
+                });
 
                 var sub = inactiveCount > 0
                   ? inactiveCount + ' item' + (inactiveCount > 1 ? 's' : '') + ' niet beschikbaar'
