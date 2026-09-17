@@ -5717,23 +5717,17 @@
     }
 
     function openCompletedOrdersScreen() {
+      window._pendingDashTab = 'dash-summary';
       goPage('dashboard');
-      setTimeout(function () {
-        var detailsTab = document.querySelector('#dash-tabs .tab[onclick*="dash-details"]');
-        if (detailsTab) switchDashTab(detailsTab, 'dash-details');
-      }, 50);
     }
 
     function goBackFromDetail() {
       var returnPage = window._detailReturnPage || 'orders';
       var returnTab = window._detailReturnTab || null;
-      goPage(returnPage);
       if (returnPage === 'dashboard' && returnTab) {
-        setTimeout(function () {
-          var tabEl = document.querySelector('#dash-tabs .tab[onclick*="' + returnTab + '"]');
-          if (tabEl) switchDashTab(tabEl, returnTab);
-        }, 50);
+        window._pendingDashTab = returnTab;
       }
+      goPage(returnPage);
     }
 
     var NAV_STATUSBAR = '#333333';
@@ -5764,10 +5758,19 @@
           if (defaultTab) switchTab(defaultTab, 'new');
         }
       } else if (p !== 'create-order') {
-        var firstTabBar = targetPage.querySelector('.tabs');
-        if (firstTabBar) {
-          var firstTab = firstTabBar.querySelector('.tab');
-          if (firstTab) try { firstTab.click(); } catch (e) { }
+        if (p === 'dashboard' && window._pendingDashTab) {
+          var pendingTab = window._pendingDashTab;
+          window._pendingDashTab = null;
+          setTimeout(function () {
+            var tabEl = document.querySelector('#dash-tabs .tab[onclick*="' + pendingTab + '"]');
+            if (tabEl) switchDashTab(tabEl, pendingTab);
+          }, 50);
+        } else {
+          var firstTabBar = targetPage.querySelector('.tabs');
+          if (firstTabBar) {
+            var firstTab = firstTabBar.querySelector('.tab');
+            if (firstTab) try { firstTab.click(); } catch (e) { }
+          }
         }
       }
     }
