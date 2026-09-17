@@ -7526,9 +7526,9 @@
       // Betaalwijze
       var payEl = document.getElementById('pr-pay');
       if (payEl) {
-        var payRaw = o.pay !== undefined && o.pay !== null ? o.pay : (full.pay !== undefined && full.pay !== null ? full.pay : (full.payment_type !== undefined ? full.payment_type : (o.payment_type !== undefined ? o.payment_type : (full.payment_status !== undefined ? full.payment_status : ''))));
-        var payRawStr = String(payRaw);
-        var isCashReceipt = (payRawStr === '2' || payRawStr === 'cash' || payRawStr === 'Cash' || !isPaid);
+        var payTypeFull = String(full.payment_type !== undefined ? full.payment_type : (o.payment_type !== undefined ? o.payment_type : ''));
+        var cashAmtFull = parseFloat(full.cash_amount || o.cash_amount || 0);
+        var isCashReceipt = (payTypeFull === '2' || cashAmtFull > 0);
         var cashRec = o.cash_amount || o.cashAmount || o.cashReceived || o.cash_received
                    || full.cash_amount || full.cashAmount || full.cash_received || full.cashReceived;
         var payStr;
