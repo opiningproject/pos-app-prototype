@@ -6179,7 +6179,7 @@
         ? (rawSub - totalDepositAmt)
         : (rawSub > calculatedSubtotal && totalDepositAmt > 0 ? (rawSub - totalDepositAmt) : calculatedSubtotal);
 
-      var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || 0);
+      var deliveryCharge = parseFloat(order.delivery_charge || order.shipping || order.shipping_fee || order.delivery_fee || (order.data && (order.data.delivery_charge || order.data.shipping || order.data.delivery_fee)) || 0);
       var platformCharge = parseFloat(order.platform_charge || order.service_fee || order.service_charge || 0);
       var tipAmt = parseFloat(order.tip || order.tip_amount || 0);
       var discountAmt = parseFloat(order.discount_amount || order.discount || (order.redeem_discount === undefined ? order.reward : 0) || 0);
@@ -7388,7 +7388,9 @@
         if (rawCustFee !== undefined && rawCustFee !== null) customerFee = Math.abs(parseFloat(rawCustFee) || 0);
       }
 
-      var shipping = o.shipping !== undefined ? parseFloat(o.shipping) : parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shippingFromLocal = (o.shipping !== undefined && parseFloat(o.shipping) > 0) ? parseFloat(o.shipping) : null;
+      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shipping = shippingFromLocal !== null ? shippingFromLocal : shippingFromFull;
       var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
       var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
       var tip = o.tip !== undefined ? parseFloat(o.tip) : parseFloat(full.tip || full.tip_amount || 0);
@@ -7750,7 +7752,9 @@
         if (rawCustFee !== undefined && rawCustFee !== null) customerFee = Math.abs(parseFloat(rawCustFee) || 0);
       }
 
-      var shipping = o.shipping !== undefined ? parseFloat(o.shipping) : parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shippingFromLocal = (o.shipping !== undefined && parseFloat(o.shipping) > 0) ? parseFloat(o.shipping) : null;
+      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shipping = shippingFromLocal !== null ? shippingFromLocal : shippingFromFull;
       var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
       var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
       var tip = o.tip !== undefined ? parseFloat(o.tip) : parseFloat(full.tip || full.tip_amount || 0);
