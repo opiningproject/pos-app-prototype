@@ -6150,7 +6150,9 @@
 
         // Render item row
         var optionsText = extractItemAttributes(item);
+        var itemNote = item.note || item.special_instructions || item.comment || item.remarks || (dishObj && (dishObj.note || dishObj.special_instructions)) || '';
         var subtextHtml = optionsText ? '<div style="font-size:13px;color:#777;margin-top:2px">' + optionsText + '</div>' : '';
+        if (itemNote) subtextHtml += '<div style="font-size:13px;color:#555;font-style:italic;margin-top:2px">' + itemNote + '</div>';
 
         html += '  <div onclick="onDishClick()" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;font-size:15px;color:#111;cursor:pointer;border-top:1px solid #f0f0f0;padding:10px 0;">';
         html += '    <div style="display:flex;gap:12px;align-items:flex-start;flex:1;padding-right:12px">';
