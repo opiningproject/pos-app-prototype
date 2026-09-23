@@ -7320,7 +7320,9 @@
           }
           var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
           calculatedSubtotal += itemTotal;
-          var subText = it.note || extractItemAttributes(it);
+          var itemNote = it.note || it.special_instructions || it.comment || it.remarks || (dishObj && (dishObj.note || dishObj.special_instructions)) || '';
+          var subText = extractItemAttributes(it) || '';
+          if (itemNote) subText = subText ? (subText + ', ' + itemNote) : itemNote;
 
           if (!o.depositGroups) {
             var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
@@ -7391,7 +7393,7 @@
       }
 
       var shippingFromLocal = (o.shipping !== undefined && parseFloat(o.shipping) > 0) ? parseFloat(o.shipping) : null;
-      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || (full.data && (full.data.delivery_charge || full.data.shipping || full.data.delivery_fee || full.data.shipping_fee)) || 0);
       var shipping = shippingFromLocal !== null ? shippingFromLocal : shippingFromFull;
       var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
       var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
@@ -7681,12 +7683,14 @@
             }
             var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
             calculatedSubtotal += itemTotal;
-            var subText = it.note || extractItemAttributes(it);
+            var itemNote = it.note || it.special_instructions || it.comment || it.remarks || (dishObj && (dishObj.note || dishObj.special_instructions)) || '';
+            var subText = extractItemAttributes(it);
             var subTextFormatted = '';
             if (subText) {
               var parts = String(subText).split(/,\s*/);
               subTextFormatted = parts.map(function (p) { return '<div>+ ' + p.trim() + '</div>'; }).join('');
             }
+            if (itemNote) subTextFormatted += '<div style="font-style:italic">' + itemNote + '</div>';
 
             if (!o.depositGroups) {
               var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
@@ -7755,7 +7759,7 @@
       }
 
       var shippingFromLocal = (o.shipping !== undefined && parseFloat(o.shipping) > 0) ? parseFloat(o.shipping) : null;
-      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || 0);
+      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || (full.data && (full.data.delivery_charge || full.data.shipping || full.data.delivery_fee || full.data.shipping_fee)) || 0);
       var shipping = shippingFromLocal !== null ? shippingFromLocal : shippingFromFull;
       var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
       var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
