@@ -6158,7 +6158,7 @@
         var itemNote = item.note || item.notes || item.special_instructions || item.instruction || item.instructions || item.comment || item.remarks || item.dish_note || item.customer_note ||
           (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
         var subtextHtml = optionsText ? '<div style="font-size:13px;color:#777;margin-top:2px">' + optionsText + '</div>' : '';
-        if (itemNote) subtextHtml += '<div style="font-size:13px;color:#555;font-style:italic;margin-top:2px">' + itemNote + '</div>';
+        if (itemNote) subtextHtml += '<div style="font-size:13px;color:#555;margin-top:2px">' + itemNote + '</div>';
 
         html += '  <div onclick="onDishClick()" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;font-size:15px;color:#111;cursor:pointer;border-top:1px solid #f0f0f0;padding:10px 0;">';
         html += '    <div style="display:flex;gap:12px;align-items:flex-start;flex:1;padding-right:12px">';
@@ -7184,7 +7184,7 @@
     // Build the 80mm text receipt and send it to the SUNMI printer.
     function printReceiptNative() {
       var o = {}; try { o = JSON.parse(localStorage.getItem('posCurrentOrder')) || {}; } catch (e) { }
-      var full = o.fullOrder || o;
+      var full = o.fullOrder || window._detailOrderRaw || o;
       var isColl = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
       var payRawNative = String(o.pay !== undefined ? o.pay : (full.pay !== undefined ? full.pay : ''));
       var isPaid = payRawNative === 'Paid' || payRawNative === '1' || o.pay === 1 || o.payment_status === 'Paid' || o.payment_status === 1 || full.payment_status === 'Paid' || full.payment_status === 1;
@@ -7327,7 +7327,8 @@
           }
           var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
           calculatedSubtotal += itemTotal;
-          var itemNote = it.note || it.special_instructions || it.comment || it.remarks || (dishObj && (dishObj.note || dishObj.special_instructions)) || '';
+          var itemNote = it.note || it.notes || it.special_instructions || it.instruction || it.instructions || it.comment || it.remarks || it.dish_note || it.customer_note ||
+            (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
           var subText = extractItemAttributes(it) || '';
           if (itemNote) subText = subText ? (subText + ', ' + itemNote) : itemNote;
 
@@ -7400,7 +7401,9 @@
       }
 
       var shippingFromLocal = (o.shipping !== undefined && parseFloat(o.shipping) > 0) ? parseFloat(o.shipping) : null;
-      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || (full.data && (full.data.delivery_charge || full.data.shipping || full.data.delivery_fee || full.data.shipping_fee)) || 0);
+      var shippingFromFull = parseFloat(full.delivery_charge || full.shipping || full.shipping_fee || full.delivery_fee || full.delivery || full.delivery_cost || full.shipping_cost ||
+        (full.data && (full.data.delivery_charge || full.data.shipping || full.data.delivery_fee || full.data.shipping_fee || full.data.delivery || full.data.delivery_cost)) || 0);
+      console.log('[POS] native print shipping: local=', shippingFromLocal, 'full=', shippingFromFull, 'full keys=', Object.keys(full || {}));
       var shipping = shippingFromLocal !== null ? shippingFromLocal : shippingFromFull;
       var isDelivery = o.isDeliveryOrder !== undefined ? o.isDeliveryOrder : (shipping > 0 || full.order_type == '1');
       var service = o.service !== undefined ? parseFloat(o.service) : parseFloat(full.platform_charge || full.service_fee || full.service_charge || 0);
@@ -7504,7 +7507,7 @@
       if (raw) {
         try { o = JSON.parse(raw) || {}; } catch (e) { o = {}; }
       }
-      var full = o.fullOrder || o;
+      var full = o.fullOrder || window._detailOrderRaw || o;
       var isCollection = o.type === 'Collection' || o.order_type == '2' || full.type === 'Collection' || full.order_type == '2';
       var payRawHtml = String(o.pay !== undefined ? o.pay : (full.pay !== undefined ? full.pay : ''));
       var isPaid = payRawHtml === 'Paid' || payRawHtml === '1' || o.pay === 1 || o.payment_status === 'Paid' || o.payment_status === 1 || full.payment_status === 'Paid' || full.payment_status === 1;
@@ -7690,14 +7693,15 @@
             }
             var itemTotal = (dishPrice * qty) + paidIngTotal + dishIngsTotal;
             calculatedSubtotal += itemTotal;
-            var itemNote = it.note || it.special_instructions || it.comment || it.remarks || (dishObj && (dishObj.note || dishObj.special_instructions)) || '';
+            var itemNote = it.note || it.notes || it.special_instructions || it.instruction || it.instructions || it.comment || it.remarks || it.dish_note || it.customer_note ||
+              (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
             var subText = extractItemAttributes(it);
             var subTextFormatted = '';
             if (subText) {
               var parts = String(subText).split(/,\s*/);
               subTextFormatted = parts.map(function (p) { return '<div>+ ' + p.trim() + '</div>'; }).join('');
             }
-            if (itemNote) subTextFormatted += '<div style="font-style:italic">' + itemNote + '</div>';
+            if (itemNote) subTextFormatted += '<div>' + itemNote + '</div>';
 
             if (!o.depositGroups) {
               var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
