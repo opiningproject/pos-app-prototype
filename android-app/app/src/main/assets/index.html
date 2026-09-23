@@ -6213,9 +6213,7 @@
         redeemDiscount = Math.abs(parseFloat(rawRedeem) || 0);
       }
 
-      var totalAmt = (order.total_amount !== undefined && order.total_amount !== null && order.total_amount > 0)
-        ? parseFloat(order.total_amount)
-        : (subtotal + totalDepositAmt + deliveryCharge + platformCharge + customerFee + tipAmt - discountAmt - redeemDiscount);
+      var totalAmt = subtotal + totalDepositAmt + deliveryCharge + platformCharge + customerFee + tipAmt - discountAmt - redeemDiscount;
 
       html += '<div style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px">';
 
@@ -7415,10 +7413,7 @@
         if (rawRed !== null) redeemDiscount = Math.abs(parseFloat(rawRed) || 0);
       }
 
-      var grandTotal = o.totalAmt !== undefined ? parseFloat(o.totalAmt) :
-        ((full.total_amount !== undefined && full.total_amount !== null && full.total_amount > 0)
-          ? parseFloat(full.total_amount)
-          : (subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount));
+      var grandTotal = subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount;
 
       // 1. Subtotal
       c.push({ t: 'cols', left: 'Subtotaal', right: eur(subtotal), wl: 22, wr: 10 });
@@ -7782,10 +7777,7 @@
         if (rawRed !== null) redeemDiscount = Math.abs(parseFloat(rawRed) || 0);
       }
 
-      var grandTotal = o.totalAmt !== undefined ? parseFloat(o.totalAmt) :
-        ((full.total_amount !== undefined && full.total_amount !== null && full.total_amount > 0)
-          ? parseFloat(full.total_amount)
-          : (subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount));
+      var grandTotal = subtotal + totalDepositAmt + shipping + service + customerFee + tip - discount - redeemDiscount;
 
       if (!raw) grandTotal = 41.65;
 
