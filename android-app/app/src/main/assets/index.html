@@ -6157,6 +6157,7 @@
         var optionsText = extractItemAttributes(item);
         var itemNote = item.note || item.notes || item.special_instructions || item.instruction || item.instructions || item.comment || item.remarks || item.dish_note || item.customer_note ||
           (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
+        if (itemNote) itemNote = String(itemNote).replace(/^["']+|["']+$/g, '').trim();
         var subtextHtml = optionsText ? '<div style="font-size:13px;color:#777;margin-top:2px">' + optionsText + '</div>' : '';
         if (itemNote) subtextHtml += '<div style="font-size:13px;color:#555;margin-top:2px">' + itemNote + '</div>';
 
@@ -7327,6 +7328,7 @@
           calculatedSubtotal += itemTotal;
           var itemNote = it.note || it.notes || it.special_instructions || it.instruction || it.instructions || it.comment || it.remarks || it.dish_note || it.customer_note ||
             (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
+          if (itemNote) itemNote = String(itemNote).replace(/^["']+|["']+$/g, '').trim();
           var subText = extractItemAttributes(it) || '';
           if (itemNote) subText = subText ? (subText + ', ' + itemNote) : itemNote;
 
@@ -7690,6 +7692,7 @@
             calculatedSubtotal += itemTotal;
             var itemNote = it.note || it.notes || it.special_instructions || it.instruction || it.instructions || it.comment || it.remarks || it.dish_note || it.customer_note ||
               (dishObj && (dishObj.note || dishObj.notes || dishObj.special_instructions || dishObj.instruction)) || '';
+            if (itemNote) itemNote = String(itemNote).replace(/^["']+|["']+$/g, '').trim();
             var subText = extractItemAttributes(it);
             var subTextFormatted = '';
             if (subText) {
