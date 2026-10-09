@@ -22,11 +22,17 @@ function handleTokenExpiration(responseData, httpStatus) {
   );
 
   if (isExpired) {
-    localStorage.removeItem('auth_token');
-    if (typeof doLogout === 'function') {
-      doLogout();
-    } else if (typeof window.doLogout === 'function') {
-      window.doLogout();
+    // Try to stay logged in: silently re-login with the saved credentials first.
+    // Only fall back to the login screen if that is not possible / fails.
+    if (typeof window !== 'undefined' && typeof window.handleSessionExpired === 'function') {
+      window.handleSessionExpired();
+    } else {
+      localStorage.removeItem('auth_token');
+      if (typeof doLogout === 'function') {
+        doLogout();
+      } else if (typeof window.doLogout === 'function') {
+        window.doLogout();
+      }
     }
   }
   return isExpired;

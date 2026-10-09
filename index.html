@@ -4868,6 +4868,28 @@
         </div>
       </div>
 
+      <!-- "Welcome back" quick-continue screen (fallback when still remembered but logged out) -->
+      <div id="p-welcome"
+        style="display:none;position:absolute;inset:0;background:#fff;z-index:505;flex-direction:column;overflow-y:auto">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px;margin-bottom:56px">
+          <img src="logo.png" alt="Opining" style="width:120px;height:auto;display:block;margin:0 auto 32px">
+          <div class="s-card" style="padding:24px;border-radius:12px;text-align:center">
+            <div data-i18n="welcome_back" style="font-size:22px;font-weight:500;color:#111;margin-bottom:8px">Welkom terug</div>
+            <div id="welcome-name" style="font-size:16px;font-weight:500;color:#555;margin-bottom:24px;word-break:break-all">—</div>
+            <div id="welcome-error" data-i18n="welcome_error"
+              style="display:none;font-size:13px;color:#e53935;text-align:center;margin-bottom:12px">Doorgaan mislukt. Probeer het opnieuw.</div>
+            <button id="welcome-continue-btn" data-i18n="welcome_continue" onclick="continueSavedLogin()"
+              style="width:100%;height:44px;background:#111;color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif">Doorgaan</button>
+            <div data-i18n="welcome_other" onclick="useAnotherProfile()"
+              style="margin-top:16px;font-size:14px;color:#0172af;cursor:pointer">Ander profiel gebruiken</div>
+          </div>
+        </div>
+        <div style="flex-shrink:0;display:flex;justify-content:center;gap:24px;padding:0 24px 24px">
+          <span class="login-legal-link" onclick="openLegal('privacy')" data-i18n="login_legal_privacy">Privacybeleid</span>
+          <span class="login-legal-link" onclick="openLegal('terms')" data-i18n="login_legal_terms">Algemene voorwaarden</span>
+        </div>
+      </div>
+
       <!-- Legal page (Terms / Privacy), sits above the login screen -->
       <div id="p-legal"
         style="display:none;position:absolute;inset:0;background:#fff;z-index:600;flex-direction:column">
@@ -5396,7 +5418,7 @@
         pause_continue: 'Continue', pause_reopen: 'You can reopen your store at any time.',
         pause_paused: 'Orders paused',
         login_welcome: 'Welcome back', login_subtitle: 'Log in to continue', login_username: 'Username', login_password: 'Password', login_signin: 'Sign in',
-        login_title: 'Sign in', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device', login_legal_terms: 'Terms of Service', login_legal_privacy: 'Privacy Policy', legal_terms_title: 'Terms of Service', legal_privacy_title: 'Privacy Policy', legal_updated: 'Last updated',
+        login_title: 'Sign in', welcome_back: 'Welcome back', welcome_continue: 'Continue', welcome_other: 'Use another profile', welcome_error: 'Could not continue. Please try again.', login_email: 'E-mail', login_forgot: 'Forgot your password?', login_remember: 'Remember me on this device', login_legal_terms: 'Terms of Service', login_legal_privacy: 'Privacy Policy', legal_terms_title: 'Terms of Service', legal_privacy_title: 'Privacy Policy', legal_updated: 'Last updated',
         co_discard_title: 'You have unsaved changes', co_discard_keep: 'Keep editing', co_discard_discard: 'Discard',
         dash_online_paid: 'Paid online', dash_cash: 'Cash payment',
         login_error: 'Incorrect username or password', sim_new_order: 'Simulate new order', dash_cancelled_orders: 'cancelled orders',
@@ -5486,7 +5508,7 @@
         pause_continue: 'Doorgaan', pause_reopen: 'Je kunt op elk moment je winkel weer openen.',
         pause_paused: 'Bestellingen gepauzeerd',
         login_welcome: 'Welkom terug', login_subtitle: 'Log in om door te gaan', login_username: 'Gebruikersnaam', login_password: 'Wachtwoord', login_signin: 'Aanmelden',
-        login_title: 'Aanmelden', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat', login_legal_terms: 'Algemene voorwaarden', login_legal_privacy: 'Privacybeleid', legal_terms_title: 'Algemene voorwaarden', legal_privacy_title: 'Privacybeleid', legal_updated: 'Laatst bijgewerkt',
+        login_title: 'Aanmelden', welcome_back: 'Welkom terug', welcome_continue: 'Doorgaan', welcome_other: 'Ander profiel gebruiken', welcome_error: 'Doorgaan mislukt. Probeer het opnieuw.', login_email: 'E-mail', login_forgot: 'Je wachtwoord vergeten?', login_remember: 'Onthoud mij op dit apparaat', login_legal_terms: 'Algemene voorwaarden', login_legal_privacy: 'Privacybeleid', legal_terms_title: 'Algemene voorwaarden', legal_privacy_title: 'Privacybeleid', legal_updated: 'Laatst bijgewerkt',
         co_discard_title: 'Je hebt niet-opgeslagen wijzigingen', co_discard_keep: 'Doorgaan met bewerken', co_discard_discard: 'Verwerpen',
         dash_online_paid: 'Online betaald', dash_cash: 'Contant betaling',
         login_error: 'Onjuiste gebruikersnaam of wachtwoord', sim_new_order: 'Simuleer nieuwe bestelling', dash_cancelled_orders: 'geannuleerde bestellingen',
@@ -10491,6 +10513,7 @@
       err.style.display = 'none';
       document.getElementById('p-login').style.display = 'none';
       localStorage.setItem('auth_token', token || 'session_active');
+      persistPendingCreds();
       fetchRestaurantDetails();
       fetchSummaryAfterLogin();
       renderMenuCatList();
@@ -10514,10 +10537,89 @@
       }
     };
 
+    /* ===== Stay logged in: remember credentials + silent auto re-login ===== */
+    function _b64(s) { try { return btoa(unescape(encodeURIComponent(s))); } catch (e) { return ''; } }
+    function _unb64(s) { try { return decodeURIComponent(escape(atob(s))); } catch (e) { return ''; } }
+    function saveCreds(email, password) {
+      try { localStorage.setItem('saved_email', _b64(email)); localStorage.setItem('saved_pass', _b64(password)); } catch (e) { }
+    }
+    function getSavedCreds() {
+      try {
+        var e = localStorage.getItem('saved_email'), p = localStorage.getItem('saved_pass');
+        if (e && p) { var email = _unb64(e), password = _unb64(p); if (email && password) return { email: email, password: password }; }
+      } catch (e) { }
+      return null;
+    }
+    function clearCreds() { try { localStorage.removeItem('saved_email'); localStorage.removeItem('saved_pass'); } catch (e) { } window._pendingCreds = null; }
+    function persistPendingCreds() {
+      if (window._pendingCreds && window._pendingCreds.email && window._pendingCreds.password) {
+        saveCreds(window._pendingCreds.email, window._pendingCreds.password);
+      }
+      window._pendingCreds = null;
+    }
+    var _reloginPromise = null, _lastReloginTs = 0;
+    function attemptSilentReLogin() {
+      if (_reloginPromise) return _reloginPromise;
+      var creds = getSavedCreds();
+      if (!creds) return Promise.reject(new Error('no saved credentials'));
+      var now = Date.now();
+      if (now - _lastReloginTs < 5000) return Promise.reject(new Error('relogin cooldown'));
+      _lastReloginTs = now;
+      _reloginPromise = API.login(creds.email, creds.password)
+        .then(function (data) {
+          var token = (data && (data.token || (data.data && data.data.token) || data.access_token || (data.data && data.data.access_token))) || 'session_active';
+          localStorage.setItem('auth_token', token);
+          return token;
+        })
+        .finally(function () { _reloginPromise = null; });
+      return _reloginPromise;
+    }
+    // Called by api.js when the server reports the session/token expired.
+    window.handleSessionExpired = function () {
+      attemptSilentReLogin()
+        .then(function () { if (typeof loadOrders === 'function') loadOrders(); })
+        .catch(function () {
+          localStorage.removeItem('auth_token');
+          if (getSavedCreds()) { showWelcomeBack(); }
+          else if (typeof doLogout === 'function') { doLogout(); }
+        });
+    };
+
+    // "Welcome back" quick-continue screen: shown when we still remember the
+    // account but the session is gone and silent re-login did not go through.
+    function showWelcomeBack() {
+      var creds = getSavedCreds();
+      if (!creds) { if (typeof doLogout === 'function') doLogout(); return; }
+      var nameEl = document.getElementById('welcome-name'); if (nameEl) nameEl.textContent = creds.email;
+      var errEl = document.getElementById('welcome-error'); if (errEl) errEl.style.display = 'none';
+      var pl = document.getElementById('p-login'); if (pl) pl.style.display = 'none';
+      var pw = document.getElementById('p-welcome'); if (pw) pw.style.display = 'flex';
+    }
+    function continueSavedLogin() {
+      var btn = document.getElementById('welcome-continue-btn');
+      var errEl = document.getElementById('welcome-error'); if (errEl) errEl.style.display = 'none';
+      if (btn) { btn.dataset.orig = btn.textContent; btn.textContent = (currentLang === 'en' ? 'Please wait...' : 'Bezig...'); btn.disabled = true; }
+      _lastReloginTs = 0; // user-initiated: skip the cooldown
+      attemptSilentReLogin()
+        .then(function () {
+          var pw = document.getElementById('p-welcome'); if (pw) pw.style.display = 'none';
+          fetchRestaurantDetails(); fetchSummaryAfterLogin(); renderMenuCatList();
+          if (typeof loadOrders === 'function') loadOrders();
+          goPage('orders');
+        })
+        .catch(function () { if (errEl) errEl.style.display = 'block'; })
+        .finally(function () { if (btn) { btn.textContent = btn.dataset.orig || 'Doorgaan'; btn.disabled = false; } });
+    }
+    function useAnotherProfile() {
+      var pw = document.getElementById('p-welcome'); if (pw) pw.style.display = 'none';
+      if (typeof doLogout === 'function') doLogout();
+    }
+
     function doLogin() {
       var u = document.getElementById('login-user').value.trim();
       var p = document.getElementById('login-pass').value;
       var err = document.getElementById('login-error');
+      window._pendingCreds = { email: u, password: p };
 
       // Disable inputs and button during request
       var btn = document.querySelector('#p-login button');
@@ -10553,6 +10655,7 @@
           }
 
           localStorage.setItem('auth_token', token);
+          persistPendingCreds();
           fetchRestaurantDetails();
           fetchSummaryAfterLogin();
           renderMenuCatList();
@@ -10848,6 +10951,7 @@
       if (f) f.innerHTML = loginFlagSvg(currentLang);
     }
     function doLogout() {
+      clearCreds();
       localStorage.removeItem('auth_token');
       localStorage.removeItem('pos_token');
       localStorage.removeItem('posCurrentOrder');
@@ -11325,6 +11429,16 @@
       fetchRestaurantDetails();
       fetchSummaryAfterLogin();
       renderMenuCatList();
+    } else if (getSavedCreds()) {
+      // No valid session, but we remember the login -> sign back in automatically.
+      attemptSilentReLogin()
+        .then(function () {
+          loadOrders();
+          fetchRestaurantDetails();
+          fetchSummaryAfterLogin();
+          renderMenuCatList();
+        })
+        .catch(function () { showWelcomeBack(); });
     } else {
       doLogout();
     }
