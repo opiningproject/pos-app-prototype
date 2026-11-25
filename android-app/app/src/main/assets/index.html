@@ -6138,11 +6138,21 @@
         var priceStr = itemPrice.toFixed(2);
 
         // Check deposit parameter inside dish object or item object
+        if (items.indexOf(item) === 0) {
+          console.log('[POS] deposit debug item keys:', Object.keys(item));
+          console.log('[POS] deposit debug dishObj keys:', Object.keys(dishObj));
+          console.log('[POS] deposit debug item deposit fields: deposite=', item.deposite, 'deposit=', item.deposit, 'statiegeld=', item.statiegeld, 'bottle_deposit=', item.bottle_deposit, 'eco_deposit=', item.eco_deposit);
+          console.log('[POS] deposit debug dishObj deposit fields: deposite=', dishObj.deposite, 'deposit=', dishObj.deposit, 'statiegeld=', dishObj.statiegeld, 'bottle_deposit=', dishObj.bottle_deposit, 'eco_deposit=', dishObj.eco_deposit);
+        }
         var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
           (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
             (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
-              (item.deposite !== undefined && item.deposite !== null ? item.deposite :
-                (item.deposit !== undefined && item.deposit !== null ? item.deposit : item.statiegeld))));
+              (dishObj.bottle_deposit !== undefined && dishObj.bottle_deposit !== null ? dishObj.bottle_deposit :
+                (item.deposite !== undefined && item.deposite !== null ? item.deposite :
+                  (item.deposit !== undefined && item.deposit !== null ? item.deposit :
+                    (item.statiegeld !== undefined && item.statiegeld !== null ? item.statiegeld :
+                      (item.bottle_deposit !== undefined && item.bottle_deposit !== null ? item.bottle_deposit :
+                        (item.eco_deposit !== undefined ? item.eco_deposit : item.deposit_amount))))))));
 
         if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
           var depRate = 0;
@@ -7366,8 +7376,12 @@
             var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
               (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
                 (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
-                  (it.deposite !== undefined && it.deposite !== null ? it.deposite :
-                    (it.deposit !== undefined && it.deposit !== null ? it.deposit : it.statiegeld))));
+                  (dishObj.bottle_deposit !== undefined && dishObj.bottle_deposit !== null ? dishObj.bottle_deposit :
+                    (it.deposite !== undefined && it.deposite !== null ? it.deposite :
+                      (it.deposit !== undefined && it.deposit !== null ? it.deposit :
+                        (it.statiegeld !== undefined && it.statiegeld !== null ? it.statiegeld :
+                          (it.bottle_deposit !== undefined && it.bottle_deposit !== null ? it.bottle_deposit :
+                            (it.eco_deposit !== undefined ? it.eco_deposit : it.deposit_amount))))))));
             if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
               var depRate = 0, depLabel = '';
               var strDep = String(rawDep).trim();
@@ -7735,8 +7749,12 @@
               var rawDep = dishObj.deposite !== undefined && dishObj.deposite !== null ? dishObj.deposite :
                 (dishObj.deposit !== undefined && dishObj.deposit !== null ? dishObj.deposit :
                   (dishObj.statiegeld !== undefined && dishObj.statiegeld !== null ? dishObj.statiegeld :
-                    (it.deposite !== undefined && it.deposite !== null ? it.deposite :
-                      (it.deposit !== undefined && it.deposit !== null ? it.deposit : it.statiegeld))));
+                    (dishObj.bottle_deposit !== undefined && dishObj.bottle_deposit !== null ? dishObj.bottle_deposit :
+                      (it.deposite !== undefined && it.deposite !== null ? it.deposite :
+                        (it.deposit !== undefined && it.deposit !== null ? it.deposit :
+                          (it.statiegeld !== undefined && it.statiegeld !== null ? it.statiegeld :
+                            (it.bottle_deposit !== undefined && it.bottle_deposit !== null ? it.bottle_deposit :
+                              (it.eco_deposit !== undefined ? it.eco_deposit : it.deposit_amount))))))));
               if (rawDep !== undefined && rawDep !== null && rawDep !== 0 && rawDep !== '0' && rawDep !== false) {
                 var depRate = 0, depLabel = '';
                 var strDep = String(rawDep).trim();
