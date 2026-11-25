@@ -6696,7 +6696,7 @@
       if (!pDetail) return;
       var statusVal = String((order && (order.order_status !== undefined ? order.order_status : order.status)) || '');
       var isCancelled = (statusVal === '7' || statusVal === 'cancelled' || next === 'cancelled_screen' || next === 'cancelled');
-      var isCompletedOrder = (statusVal === '6' || statusVal === 'completed' || next === 'completed_screen' || next === 'archive');
+      var isCompletedOrder = (statusVal === '6' || statusVal === 'completed' || next === 'completed_screen');
 
       pDetail.classList.remove('mode-new-order', 'mode-live-order', 'mode-completed-order', 'mode-cancelled-order');
 
@@ -6777,7 +6777,7 @@
         if (headerMenu) headerMenu.style.display = 'flex';
         if (schedBlock) schedBlock.style.display = 'none';
         if (timerCard) timerCard.style.display = 'block';
-        var isCompletedFooter = (next === 'completed_screen' || next === 'cancelled_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+        var isCompletedFooter = (next === 'completed_screen' || next === 'cancelled_screen' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
         if (actionFooter) actionFooter.style.display = isCompletedFooter ? 'none' : 'block';
         window._isCompletedDetail = isCompletedFooter;
         var menuChangeTime = document.querySelector('#d-order-menu .d-menu-item[onclick="openChangeTime()"]');
@@ -6885,7 +6885,7 @@
       var deliveryEl = document.getElementById('settings-delivery-mins');
       var takeawayEl = document.getElementById('settings-takeaway-mins');
       var prepTime = parseInt((deliveryEl || takeawayEl || { textContent: '45' }).textContent, 10) || 45;
-      var isCompletedOrder = (next === 'completed_screen' || next === 'cancelled_screen' || next === 'archive' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
+      var isCompletedOrder = (next === 'completed_screen' || next === 'cancelled_screen' || (cardEl && cardEl.closest && (cardEl.closest('#dash-details') || cardEl.closest('#t-archive'))));
       var timerSvg = timerCard ? timerCard.querySelector('svg') : null;
       var checkEl = timerCard ? timerCard.querySelector('.d-completed-check') : null;
 
